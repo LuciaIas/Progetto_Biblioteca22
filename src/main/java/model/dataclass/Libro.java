@@ -10,5 +10,8 @@ package model.dataclass;
  * @author lucia
  */
 public class Libro {
+    String autore;
+    String titolo;
     public void ooooooooo(String dioporco){}
+    
 }
