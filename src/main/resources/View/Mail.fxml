@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1020.0" stylesheets="/CSS/StyleDashboard.css" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.MailController">
+   
+   <top>
+      <VBox style="-fx-background-color: white; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 10, 0, 0, 2);" BorderPane.alignment="CENTER">
+         <children>
+            <HBox alignment="CENTER_LEFT" prefHeight="80.0" spacing="20.0">
+               <padding>
+                  <Insets left="30.0" right="30.0" />
+               </padding>
+               <children>
+                  
+                  <VBox alignment="CENTER_LEFT">
+                     <children>
+                        <Label styleClass="page-title" text="Comunicazioni Ritardi Prestiti 📧" />
+                        <Label styleClass="label-subtitle" text="Storico delle email inviate dal sistema." />
+                     </children>
+                  </VBox>
+                  
+                  <Pane HBox.hgrow="ALWAYS" />
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </top>
+
+   <center>
+      <VBox spacing="20.0" style="-fx-background-color: #f4f7fa;">
+         <padding>
+            <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
+         </padding>
+         <children>
+            
+            <HBox alignment="CENTER_LEFT" spacing="15.0">
+               <children>
+                  
+                  <Pane HBox.hgrow="ALWAYS" />
+                  
+                  <Label fx:id="lblTotalUsers" style="-fx-text-fill: #1A2980; -fx-font-weight: bold;" text="Sincronizzazione..." />
+               </children>
+            </HBox>
+
+            <ScrollPane fitToWidth="true" hbarPolicy="NEVER" style="-fx-background-color: transparent;" vbarPolicy="AS_NEEDED" VBox.vgrow="ALWAYS">
+               <content>
+                  <VBox fx:id="emailContainer" spacing="10.0" style="-fx-background-color: transparent;" />
+               </content>
+            </ScrollPane>
+            
+         </children>
+      </VBox>
+   </center>
+   
+</BorderPane>

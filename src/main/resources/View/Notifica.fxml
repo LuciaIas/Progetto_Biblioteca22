@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.Pane?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="113.0" prefWidth="339.0" styleClass="action-card" stylesheets="/CSS/StyleDashboard.css" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.NotificaController">
+   <children>
+      <Label layoutX="20.0" layoutY="20.0" styleClass="action-title" text="AZIONE SUGGERITA" />
+      
+      <Label fx:id="numRit" layoutX="20.0" layoutY="45.0" styleClass="action-value" text="Ci sono 98 prestiti in ritardo" />
+   </children>
+</Pane>
