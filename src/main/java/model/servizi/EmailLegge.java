@@ -1,0 +1,86 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package model.servizi;
+
+/**
+ *
+ * @author nicol
+ */
+import model.dataclass.EmailInfo;
+import java.util.ArrayList;
+import java.util.Properties;
+import javax.mail.*;
+
+public class EmailLegge {
+
+    private static final String username = "progettoGruppo22@gmail.com";
+    
+    private static final String password = "fkmc eprk dmsf wwox"; 
+
+public static ArrayList<EmailInfo> leggiPostaInviata() {
+    
+    ArrayList<EmailInfo> listaEmail = new ArrayList<>(); 
+
+    try {
+       
+        Properties props = new Properties();
+        props.put("mail.store.protocol", "imaps");
+        props.put("mail.imaps.host", "imap.gmail.com");
+        props.put("mail.imaps.port", "993");
+        props.put("mail.imaps.ssl.trust", "imap.gmail.com");
+
+       
+        Session session = Session.getInstance(props);
+        Store store = session.getStore("imaps");
+        store.connect("imap.gmail.com", username, password); 
+
+        Folder sentFolder = store.getFolder("[Gmail]/Sent Mail");
+        if (!sentFolder.exists()) sentFolder = store.getFolder("[Gmail]/Posta inviata");
+        
+        sentFolder.open(Folder.READ_ONLY);
+
+   
+        
+        int totaleMessaggi = sentFolder.getMessageCount();
+        int numeroDaLeggere = 40; 
+        int start = Math.max(1, totaleMessaggi - numeroDaLeggere + 1);
+        int end = totaleMessaggi;
+
+        Message[] messages;
+        if (totaleMessaggi > 0) {
+            messages = sentFolder.getMessages(start, end);
+        } else {
+            messages = new Message[0];
+        }
+
+        for (int i = messages.length - 1; i >= 0; i--) {
+            Message msg = messages[i];
+            
+            String sogg = msg.getSubject();
+            String dest = "Sconosciuto";
+            try {
+                
+                if (msg.getRecipients(Message.RecipientType.TO) != null) {
+                    dest = msg.getRecipients(Message.RecipientType.TO)[0].toString();
+                }
+            } catch (Exception ex) { }
+            
+          
+            EmailInfo info = new EmailInfo(sogg, dest, msg.getSentDate());
+            listaEmail.add(info);
+        }
+
+        
+        sentFolder.close(false);
+        store.close();
+
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    
+    return listaEmail;
+}
+}
