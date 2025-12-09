@@ -1,0 +1,280 @@
+/* =============================================================================
+ * THEME: GESTIONE UTENTI (Electric Cobalt - VERSIONE FINAL)
+ * File: StyleUtenti.css
+ * ============================================================================= */
+
+.root {
+    -fx-font-family: "Segoe UI Emoji", "Segoe UI", sans-serif;
+    /* Immagine di sfondo (assicurati che il file esista!) */
+    -fx-background-image: url("../Images/background_utenti.jpg");
+    -fx-background-size: cover;
+    -fx-background-position: center;
+}
+
+/* ================= HEADER & RICERCA ================= */
+
+.page-title {
+    -fx-font-size: 28px;
+    -fx-font-weight: 900;
+    -fx-text-fill: #1A2980;
+}
+
+.label-subtitle {
+    -fx-font-size: 13px;
+    -fx-text-fill: #7f8fa6;
+    -fx-font-weight: bold;
+}
+
+/* Barra di Ricerca */
+.search-bar {
+    -fx-background-radius: 30;
+    -fx-background-color: white;
+    -fx-border-color: #dcdde1;
+    -fx-border-radius: 30;
+    -fx-padding: 8 15;
+    -fx-font-size: 13px;
+    -fx-text-fill: #2f3640;
+}
+
+.search-bar:focused {
+    -fx-border-color: #26D0CE;
+    -fx-effect: dropshadow(three-pass-box, rgba(38, 208, 206, 0.2), 8, 0, 0, 0);
+}
+
+/* Bottone + NUOVO */
+.button-accent {
+    -fx-background-color: linear-gradient(to right, #1A2980, #26D0CE);
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 12px;
+    -fx-background-radius: 30;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(three-pass-box, rgba(26, 41, 128, 0.3), 10, 0, 0, 2);
+}
+.button-accent:hover {
+    -fx-scale-x: 1.02;
+    -fx-background-color: linear-gradient(to right, #26D0CE, #1A2980);
+}
+
+/* ================= FILTRI ================= */
+
+.menu-button-custom {
+    -fx-background-color: white;
+    -fx-background-radius: 20;
+    -fx-border-color: #dcdde1;
+    -fx-border-radius: 20;
+    -fx-text-fill: #2f3542;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+}
+.menu-button-custom:hover {
+    -fx-border-color: #1A2980;
+    -fx-text-fill: #1A2980;
+}
+
+/* ================= LISTA UTENTI (CARD) ================= */
+
+/* --- 1. Riga Utente NORMALE (Bianca) --- */
+.user-row {
+    -fx-background-color: white;
+    -fx-background-radius: 10;
+    -fx-border-color: transparent;
+    -fx-border-width: 1;
+    -fx-border-radius: 10;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 5, 0, 0, 2);
+    -fx-min-height: 80px; /* Altezza minima fissa */
+    -fx-alignment: CENTER_LEFT;
+}
+
+.user-row:hover {
+    -fx-border-color: #26D0CE;
+    -fx-effect: dropshadow(three-pass-box, rgba(38, 208, 206, 0.15), 8, 0, 0, 2);
+}
+
+/* --- 2. Riga Utente BLOCCATO (Rossa/Rosa) --- */
+.user-row-blocked {
+    -fx-background-color: #fff0f0; /* Sfondo rosa chiaro */
+    -fx-background-radius: 10;
+    -fx-border-color: #ffcccc;     /* Bordo rosso */
+    -fx-border-width: 1;
+    -fx-border-radius: 10;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 5, 0, 0, 2);
+    -fx-min-height: 80px;
+    -fx-alignment: CENTER_LEFT;
+}
+
+.user-row-blocked:hover {
+    -fx-border-color: #ff6b6b;
+    -fx-effect: dropshadow(three-pass-box, rgba(255, 107, 107, 0.15), 8, 0, 0, 2);
+}
+
+/* --- Testi --- */
+.row-title {
+    -fx-font-size: 14px;
+    -fx-font-weight: 800;
+    -fx-text-fill: #1A2980;
+}
+.row-subtitle {
+    -fx-font-size: 12px;
+    -fx-text-fill: #7f8fa6;
+}
+
+/* ================= ICONE & BADGE ================= */
+
+/* Icona Blu (Attivo) */
+.icon-container-blue {
+    -fx-background-color: #eaf2ff;
+    -fx-background-radius: 50%;
+    -fx-min-width: 45px;
+    -fx-min-height: 45px;
+    -fx-alignment: center;
+}
+
+/* Icona Rossa (Bloccato) */
+.icon-container-red {
+    -fx-background-color: rgba(255, 107, 107, 0.15);
+    -fx-background-radius: 50%;
+    -fx-min-width: 45px;
+    -fx-min-height: 45px;
+    -fx-alignment: center;
+}
+
+/* Etichetta VERDE (Attivo) */
+.tag-success {
+    -fx-background-color: rgba(46, 204, 113, 0.15);
+    -fx-text-fill: #2ecc71;
+    -fx-font-size: 11px;
+    -fx-font-weight: 800;
+    -fx-padding: 5 12;
+    -fx-background-radius: 15;
+}
+
+/* Etichetta ROSSA (Blacklist) */
+.tag-danger {
+    -fx-background-color: rgba(255, 107, 107, 0.15);
+    -fx-text-fill: #ff6b6b;
+    -fx-font-size: 11px;
+    -fx-font-weight: 800;
+    -fx-padding: 5 12;
+    -fx-background-radius: 15;
+}
+
+/* ================= BOTTONI AZIONE ================= */
+
+.icon-button {
+    -fx-background-color: transparent;
+    -fx-cursor: hand;
+    -fx-font-size: 14px;
+    -fx-text-fill: #7f8fa6;
+    -fx-padding: 5;
+}
+.icon-button:hover {
+    -fx-scale-x: 1.2;
+    -fx-scale-y: 1.2;
+    -fx-text-fill: #1A2980;
+}
+
+/* Bottone SBLOCCA (Verde) */
+.button-outline-success {
+    -fx-background-color: transparent;
+    -fx-border-color: #2ecc71;
+    -fx-border-radius: 20;
+    -fx-text-fill: #2ecc71;
+    -fx-font-weight: bold;
+    -fx-font-size: 10px;
+    -fx-cursor: hand;
+    -fx-padding: 5 15;
+}
+.button-outline-success:hover {
+    -fx-background-color: #2ecc71;
+    -fx-text-fill: white;
+}
+
+/* Bottone BLOCCA (Rosso) */
+.button-outline-danger {
+    -fx-background-color: transparent;
+    -fx-border-color: #ff6b6b;
+    -fx-border-radius: 20;
+    -fx-text-fill: #ff6b6b;
+    -fx-font-weight: bold;
+    -fx-font-size: 10px;
+    -fx-cursor: hand;
+    -fx-padding: 5 15;
+}
+.button-outline-danger:hover {
+    -fx-background-color: #ff6b6b;
+    -fx-text-fill: white;
+}
+
+/* ScrollBar (Invisibile/Pulita) */
+.scroll-bar:vertical { -fx-background-color: transparent; }
+.scroll-bar:vertical .thumb { -fx-background-color: #cbd5e0; -fx-background-radius: 10; }
+
+/* StyleIDCard.css - (Estratto essenziale per questo form) */
+
+.id-card-body {
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 20, 0, 0, 5);
+    -fx-background-radius: 15;
+    -fx-background-color: white; /* Sfondo bianco carta */
+}
+
+.card-header {
+    -fx-font-size: 18px;
+    -fx-font-weight: 900;
+    -fx-text-fill: #1A2980;
+}
+
+.card-subheader {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #e74c3c; /* Rosso matricola */
+}
+
+.field-label {
+    -fx-font-size: 10px;
+    -fx-text-fill: #7f8fa6;
+    -fx-font-weight: 900;
+}
+
+/* Input stile "Stampato" */
+.printed-input-bold {
+    -fx-background-color: #f5f6fa;
+    -fx-background-radius: 5;
+    -fx-border-color: transparent transparent #1A2980 transparent;
+    -fx-border-width: 0 0 2 0;
+    -fx-text-fill: #2d3436;
+    -fx-font-size: 16px;
+    -fx-font-weight: 900;
+    -fx-padding: 5;
+}
+
+.printed-input-small {
+    -fx-background-color: #f5f6fa;
+    -fx-background-radius: 5;
+    -fx-border-color: transparent transparent #ccc transparent;
+    -fx-border-width: 0 0 1 0;
+    -fx-text-fill: #2d3436;
+    -fx-font-size: 13px;
+    -fx-padding: 5;
+}
+
+.btn-save {
+    -fx-background-color: #1A2980;
+    -fx-text-fill: white;
+    -fx-font-weight: 900;
+    -fx-background-radius: 5;
+    -fx-cursor: hand;
+    -fx-padding: 10 20;
+}
+.btn-save:hover { -fx-background-color: #243B55; }
+
+.btn-cancel {
+    -fx-background-color: transparent;
+    -fx-text-fill: #7f8fa6;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+}
+.btn-cancel:hover { -fx-text-fill: #c0392b; }

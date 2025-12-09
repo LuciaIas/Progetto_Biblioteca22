@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1020.0" spacing="20.0" stylesheets="/CSS/StyleDashboard.css" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.Catalogo.CatalogoController">
+   
+   <children>
+      
+    <HBox alignment="CENTER_LEFT" 
+      prefHeight="80.0" 
+      minHeight="80.0" 
+      spacing="15.0" 
+      style="-fx-background-color: white; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 10, 0, 0, 2);">
+    
+    <padding>
+        <Insets left="30.0" right="30.0" />
+    </padding>
+
+    <children>
+        <Label styleClass="page-title" text="Catalogo Libri 📚" />
+        
+        <Pane HBox.hgrow="ALWAYS" />
+        
+        <TextField fx:id="searchBar" prefHeight="40.0" prefWidth="350.0" promptText="Cerca per titolo, autore o ISBN..." styleClass="search-bar" />
+        
+        <Button fx:id="btnCerca" mnemonicParsing="false" prefHeight="40.0" prefWidth="100.0" styleClass="button-accent" text="CERCA" />
+        <Button fx:id="addButton" mnemonicParsing="false" prefHeight="40.0" prefWidth="100.0" styleClass="button-accent" text="AGGIUNGI" />
+    </children>
+</HBox>
+
+<ScrollPane fitToWidth="true" 
+            hbarPolicy="NEVER" 
+            vbarPolicy="AS_NEEDED" 
+            pannable="true" 
+            focusTraversable="false" 
+            style="-fx-background: #f4f7fa; -fx-background-color: transparent;" 
+            VBox.vgrow="ALWAYS">
+    <content>
+       
+       <GridPane fx:id="containerLibri" hgap="25.0" vgap="25.0" style="-fx-background-color: #f4f7fa;">
+          <padding>
+             <Insets bottom="150.0" left="30.0" right="30.0" top="30.0" />
+          </padding>
+       </GridPane>
+       
+    </content>
+</ScrollPane>
+      
+   </children>
+</VBox>

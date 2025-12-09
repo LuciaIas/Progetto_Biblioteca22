@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="900.0" stylesheets="/CSS/StyleAddPrestito.css" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.PrestitoRestituzione.AggiungiPrestitoController">
+   <children>
+      
+      <ImageView fitHeight="650.0" fitWidth="900.0" pickOnBounds="true" preserveRatio="false">
+         <image>
+            <Image url="@/Images/libri.jpg" />
+         </image>
+      </ImageView>
+      
+      <Pane style="-fx-background-color: rgba(0,0,0,0.3);" />
+
+      <VBox maxWidth="500.0" spacing="20.0" styleClass="paper-form">
+         <padding>
+            <Insets bottom="40.0" left="40.0" right="40.0" top="40.0" />
+         </padding>
+         <children>
+            
+            <HBox alignment="CENTER_LEFT" spacing="15.0">
+               <children>
+                  <Label style="-fx-font-size: 32px;" text="📝" />
+                  <VBox>
+                     <children>
+                        <Label styleClass="form-header" text="REGISTRAZIONE PRESTITO" />
+                        <Label styleClass="form-subheader" text="Compila i dati per autorizzare l'uscita del volume." />
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+            
+            <Separator styleClass="blue-separator" />
+
+            <Label styleClass="section-label" text="DATI IDENTIFICATIVI" />
+            
+            <VBox spacing="15.0">
+               <children>
+                  <VBox spacing="5.0">
+                     <Label styleClass="field-label" text="CODICE ISBN LIBRO" />
+                     <HBox spacing="10.0">
+                        <children>
+                           <TextField fx:id="txtIsbn" promptText="Scansiona o digita ISBN..." styleClass="input-field" HBox.hgrow="ALWAYS" />
+                           <Button fx:id="IsbnCheckButton" mnemonicParsing="false" styleClass="icon-button" text="🔍" />
+                        </children>
+                     </HBox>
+                     <Label fx:id="IsbnCheck" styleClass="preview-label" />
+                  </VBox>
+
+                  <VBox spacing="5.0">
+                     <Label styleClass="field-label" text="MATRICOLA UTENTE" />
+                     <HBox spacing="10.0">
+                        <children>
+                           <TextField fx:id="txtMatricola" promptText="Es. 123456" styleClass="input-field" HBox.hgrow="ALWAYS" />
+                           <Button fx:id="MatricolaCheckButton" mnemonicParsing="false" styleClass="icon-button" text="👤" />
+                        </children>
+                     </HBox>
+                     <Label fx:id="matricolaCheck" styleClass="preview-label" />
+                  </VBox>
+               </children>
+            </VBox>
+            
+            <Separator styleClass="blue-separator" />
+
+            <Label styleClass="section-label" text="TERMINI DEL PRESTITO" />
+            
+            <HBox spacing="20.0">
+               <children>
+                  <VBox spacing="5.0" HBox.hgrow="ALWAYS">
+                     <Label styleClass="field-label" text="DATA INIZIO" />
+                     <DatePicker fx:id="dateInizio" maxWidth="1.7976931348623157E308" styleClass="date-picker-modern" />
+                  </VBox>
+                  
+                  <VBox spacing="5.0" HBox.hgrow="ALWAYS">
+                     <Label styleClass="field-label" text="SCADENZA PREVISTA" />
+                     <DatePicker fx:id="dateScadenza" maxWidth="1.7976931348623157E308" styleClass="date-picker-modern" />
+                  </VBox>
+               </children>
+            </HBox>
+            
+            <Pane VBox.vgrow="ALWAYS" /> <HBox alignment="CENTER_RIGHT" spacing="15.0">
+               <children>
+                  <Button fx:id="AnnullaButton" mnemonicParsing="false" styleClass="btn-cancel" text="ANNULLA" />
+                  <Button fx:id="SalvaButton" mnemonicParsing="false" styleClass="btn-save" text="CONFERMA PRESTITO ✅" />
+               </children>
+            </HBox>
+
+         </children>
+      </VBox>
+      
+   </children>
+</StackPane>

@@ -1,0 +1,259 @@
+/* =============================================================================
+ * THEME: ELECTRIC COBALT
+ * Un design moderno, pulito e tecnologico.
+ * Palette: #1A2980 (Blu Scuro) -> #26D0CE (Ciano)
+ * ============================================================================= */
+
+/* --- IMPOSTAZIONI GENERALI --- */
+.root {
+    -fx-font-family: "Segoe UI", sans-serif; /* Font pulito di sistema */
+    -fx-background-color: #eef2f3; /* Sfondo generale grigio-bluastro molto chiaro */
+}
+
+/* --- PANNELLI (CARDS) --- */
+
+/* Sfondo bianco dei pannelli laterali (Login/Reset) */
+.pane-white {
+   -fx-background-color: #eef2f3;
+    /* Un'ombra molto leggera per staccare dal fondo */
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 15, 0, 0, 0);
+}
+
+/* Il pannello scorrevole centrale */
+.pane-gradient {
+    /* Gradiente diagonale dal Blu Scuro al Ciano */
+    -fx-background-color: linear-gradient(to bottom right, #1A2980, #26D0CE);
+    /* Ombra colorata (glow) per dare l'effetto "fluttuante" */
+    -fx-effect: dropshadow(three-pass-box, rgba(26, 41, 128, 0.4), 20, 0, 0, 0);
+}
+
+/* --- TIPOGRAFIA (TESTI) --- */
+
+/* Titolo Principale (es. "AREA RISERVATA") */
+.label-title {
+    -fx-font-size: 22px;
+    -fx-font-weight: 800; /* Extra Bold */
+    -fx-text-fill: #1A2980; /* Blu scuro */
+}
+
+/* Titolo Bianco (usato nello slider) */
+.label-title-white {
+    -fx-font-size: 18px;
+    -fx-font-weight: 800;
+    -fx-text-fill: white;
+    /* Leggera ombra sul testo per renderlo leggibile */
+    -fx-effect: dropshadow(one-pass-box, rgba(0,0,0,0.3), 2, 0, 0, 1);
+}
+
+/* Sottotitolo descrittivo */
+.label-subtitle {
+    -fx-font-size: 12px;
+    -fx-text-fill: #7f8fa6; /* Grigio medio */
+    -fx-font-weight: bold;
+}
+
+/* Etichette sopra i campi (es. "LA TUA PASSWORD") */
+.label-small {
+    -fx-font-size: 10px;
+    -fx-text-fill: #1A2980; 
+    -fx-font-weight: 800;
+    -fx-opacity: 0.8; /* Leggermente trasparente */
+    -fx-padding: 0 0 2 0; /* Un po' di spazio sotto */
+}
+
+/* Link (es. "Password dimenticata?") */
+.label-link {
+    -fx-font-size: 11px;
+    -fx-text-fill: #95a5a6;
+    -fx-cursor: hand;
+}
+.label-link:hover {
+    -fx-text-fill: #26D0CE; /* Diventa Ciano al passaggio del mouse */
+    -fx-underline: true;
+}
+
+/* --- CAMPI DI INPUT (TextField e PasswordField) --- */
+
+.text-field, .password-field {
+    -fx-background-color: #f5f6fa; /* Grigio chiarissimo, quasi bianco */
+    -fx-background-radius: 5;
+    -fx-border-color: #dcdde1; /* Bordo grigio sottile */
+    -fx-border-width: 0 0 2 0; /* Solo bordo inferiore */
+    -fx-text-fill: #2f3640; /* Testo scuro */
+    -fx-font-size: 13px;
+    -fx-padding: 8 10 8 10; /* Spaziatura interna */
+    -fx-prompt-text-fill: #b2bec3;
+}
+
+/* Quando clicchi sul campo */
+.text-field:focused, .password-field:focused {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #1A2980; /* Il bordo sotto diventa Blu Scuro */
+    /* Leggero bagliore ciano */
+    -fx-effect: dropshadow(three-pass-box, rgba(38, 208, 206, 0.15), 10, 0, 0, 0);
+}
+
+/* --- BOTTONI --- */
+
+/* Bottone Principale (Accedi/Salva) */
+.button-primary {
+    -fx-background-color: linear-gradient(to right, #1A2980, #26D0CE);
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 12px;
+    -fx-background-radius: 5;
+    -fx-cursor: hand;
+    /* Ombra sotto il bottone */
+    -fx-effect: dropshadow(three-pass-box, rgba(26, 41, 128, 0.3), 10, 0, 0, 2);
+}
+
+.button-primary:hover {
+    /* Inverte leggermente il gradiente o lo illumina */
+    -fx-background-color: linear-gradient(to right, #26D0CE, #1A2980);
+    -fx-scale-x: 1.02; /* Effetto zoom leggerissimo */
+    -fx-scale-y: 1.02;
+}
+
+.button-primary:pressed {
+    -fx-scale-x: 0.98;
+    -fx-scale-y: 0.98;
+}
+
+/* Bottone "Ghost" (Trasparente, usato nello slider) */
+.button-ghost {
+    -fx-background-color: rgba(0, 0, 0, 0.15); /* Semi-trasparente scuro */
+    -fx-border-color: white;
+    -fx-border-width: 1.5;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+    -fx-font-size: 11px;
+}
+
+.button-ghost:hover {
+    -fx-background-color: white;
+    -fx-text-fill: #1A2980; /* Il testo diventa blu */
+}
+
+/* --- CHECKBOX PERSONALIZZATA --- */
+
+.custom-checkbox {
+    -fx-cursor: hand;
+    -fx-text-fill: #7f8fa6;
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+}
+
+/* Il quadratino vuoto */
+.custom-checkbox .box {
+    -fx-background-color: white;
+    -fx-border-color: #bdc3c7;
+    -fx-border-radius: 3;
+    -fx-border-width: 1.5;
+}
+
+/* Il quadratino quando selezionato */
+.custom-checkbox:selected .box {
+    -fx-background-color: #1A2980; /* Diventa Blu */
+    -fx-border-color: #1A2980;
+}
+
+/* Il segno di spunta (v) */
+.custom-checkbox:selected .mark {
+    -fx-background-color: white;
+    -fx-shape: "M 0 0 L 2 2 L 6 -4"; /* Disegno vettoriale della spunta */
+    -fx-scale-shape: false;
+}
+
+/* Sfondo bianco CON angoli arrotondati a SINISTRA */
+.pane-white-rounded-left {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 15 0 0 15; /* TopLeft, TopRight, BotRight, BotLeft */
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 20, 0, 0, 0);
+}
+
+/* Sfondo bianco CON angoli arrotondati a DESTRA */
+.pane-white-rounded-right {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 0 15 15 0;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 20, 0, 0, 0);
+}
+
+/* Modifica anche lo slider per avere angoli dritti (o leggermente stondati se vuoi) */
+.pane-gradient {
+    -fx-background-color: linear-gradient(to bottom right, #1A2980, #26D0CE);
+    -fx-effect: dropshadow(three-pass-box, rgba(26, 41, 128, 0.4), 30, 0, 0, 0);
+    /* Rimuovi bordi se ce n'erano */
+}
+
+/* Pannello Sinistro: Arrotondato solo a sinistra */
+.pane-white-rounded-left {
+    -fx-background-color: #ffffff;
+    /* TopLeft, TopRight, BotRight, BotLeft */
+    -fx-background-radius: 15 0 0 15; 
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 20, 0, 0, 0);
+}
+
+/* Pannello Destro: Arrotondato solo a destra */
+.pane-white-rounded-right {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 0 15 15 0;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 20, 0, 0, 0);
+}
+
+/* --- STILE ALERT PERSONALIZZATO --- */
+
+/* Il contenitore principale */
+.my-alert {
+    -fx-background-color: #ffffff;
+    /* Bordo colorato per richiamare il tema */
+    -fx-border-color: #1A2980; 
+    -fx-border-width: 2px;
+    /* Rimuove sfondi grigi residui */
+    -fx-background-radius: 0; 
+}
+
+/* L'area dell'intestazione (Header) */
+.my-alert > .header-panel {
+    -fx-background-color: #ffffff;
+    -fx-padding: 10px;
+}
+
+.my-alert > .header-panel > .label {
+    -fx-font-size: 16px;
+    -fx-font-weight: 900;
+    -fx-text-fill: #1A2980; /* Titolo Blu Scuro */
+}
+
+/* Il corpo del testo (Content) */
+.my-alert > *.label.content {
+    -fx-font-size: 13px;
+    -fx-text-fill: #2f3640;
+    -fx-font-weight: normal;
+}
+
+/* L'area dei pulsanti in basso */
+.my-alert > .button-bar {
+    -fx-background-color: #ffffff;
+    -fx-padding: 10px;
+}
+
+/* IL BOTTONE "OK" (Stile Electric Cobalt) */
+.my-alert .button {
+    -fx-background-color: linear-gradient(to right, #1A2980, #26D0CE);
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 5;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(three-pass-box, rgba(26, 41, 128, 0.3), 5, 0, 0, 1);
+}
+
+.my-alert .button:hover {
+    -fx-background-color: linear-gradient(to right, #26D0CE, #1A2980);
+    -fx-scale-x: 1.02;
+}
+
+/* Rimuove l'icona brutta di default se vuoi (opzionale) */
+/* .my-alert > .header-panel > .graphic-container { -fx-padding: 0; } */

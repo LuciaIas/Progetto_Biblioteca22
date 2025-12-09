@@ -1,0 +1,118 @@
+/* =============================================================================
+ * THEME: MODULO PRESTITO (Paper Style)
+ * Palette: #1A2980 (Blu Notte) - #fcfcfc (Carta)
+ * ============================================================================= */
+
+.root {
+    -fx-font-family: "Segoe UI", sans-serif;
+}
+
+/* Il foglio di carta centrale */
+.paper-form {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 5;
+    /* Ombra realistica del foglio sul tavolo */
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 20, 0, 0, 5);
+    -fx-border-color: #e0e0e0;
+    -fx-border-width: 1;
+}
+
+/* --- TIPOGRAFIA --- */
+.form-header {
+    -fx-font-size: 22px;
+    -fx-font-weight: 900;
+    -fx-text-fill: #1A2980;
+    -fx-letter-spacing: 1px;
+}
+
+.form-subheader {
+    -fx-font-size: 12px;
+    -fx-text-fill: #7f8fa6;
+}
+
+.section-label {
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #26D0CE; /* Ciano per le sezioni */
+    -fx-padding: 5 0 5 0;
+}
+
+.field-label {
+    -fx-font-size: 10px;
+    -fx-font-weight: 900;
+    -fx-text-fill: #2d3436;
+}
+
+.preview-label {
+    -fx-font-size: 11px;
+    -fx-font-style: italic;
+    -fx-text-fill: #1A2980;
+}
+
+/* Separatori */
+.blue-separator .line {
+    -fx-border-color: #f1f2f6;
+    -fx-border-width: 1 0 0 0;
+}
+
+/* --- INPUT FIELDS --- */
+.input-field {
+    -fx-background-color: #f8f9fa;
+    -fx-border-color: #bdc3c7;
+    -fx-border-radius: 3;
+    -fx-background-radius: 3;
+    -fx-padding: 8;
+    -fx-font-size: 14px;
+    -fx-text-fill: #1A2980;
+    -fx-font-weight: bold;
+}
+.input-field:focused {
+    -fx-background-color: white;
+    -fx-border-color: #1A2980;
+    -fx-effect: dropshadow(three-pass-box, rgba(26, 41, 128, 0.1), 5, 0, 0, 0);
+}
+
+/* Date Picker */
+.date-picker-modern .text-field {
+    -fx-background-color: #f8f9fa;
+    -fx-border-color: #bdc3c7;
+    -fx-border-radius: 3;
+}
+.date-picker-modern:focused .text-field {
+    -fx-border-color: #1A2980;
+}
+
+/* --- BOTTONI --- */
+.icon-button {
+    -fx-background-color: #eaf2ff;
+    -fx-text-fill: #1A2980;
+    -fx-border-radius: 3;
+    -fx-background-radius: 3;
+    -fx-cursor: hand;
+    -fx-border-color: transparent;
+}
+.icon-button:hover {
+    -fx-background-color: #1A2980;
+    -fx-text-fill: white;
+}
+
+.btn-save {
+    -fx-background-color: linear-gradient(to right, #1A2980, #26D0CE);
+    -fx-text-fill: white;
+    -fx-font-weight: 900;
+    -fx-font-size: 13px;
+    -fx-background-radius: 30;
+    -fx-padding: 10 25;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(three-pass-box, rgba(26, 41, 128, 0.3), 8, 0, 0, 2);
+}
+.btn-save:hover { -fx-scale-x: 1.02; }
+
+.btn-cancel {
+    -fx-background-color: transparent;
+    -fx-text-fill: #7f8fa6;
+    -fx-font-weight: bold;
+    -fx-font-size: 12px;
+    -fx-cursor: hand;
+}
+.btn-cancel:hover { -fx-text-fill: #c0392b; }

@@ -1,0 +1,283 @@
+/* =============================================================================
+ * THEME: BLACKLIST (Electric Cobalt + Danger Red)
+ * ============================================================================= */
+
+.root {
+    -fx-font-family: "Segoe UI Emoji", "Segoe UI", sans-serif;
+    -fx-background-color: #f4f7fa;
+}
+
+/* --- HEADER --- */
+.page-title {
+    -fx-font-size: 28px;
+    -fx-font-weight: 900;
+    -fx-text-fill: #c0392b; /* Rosso Scuro per il titolo */
+}
+
+.label-subtitle {
+    -fx-font-size: 13px;
+    -fx-text-fill: #7f8fa6;
+    -fx-font-weight: bold;
+}
+
+.search-bar {
+    -fx-background-radius: 30;
+    -fx-background-color: white;
+    -fx-border-color: #dcdde1;
+    -fx-border-radius: 30;
+    -fx-padding: 8 15;
+    -fx-font-size: 13px;
+}
+.search-bar:focused {
+    -fx-border-color: #c0392b; /* Focus Rosso */
+    -fx-effect: dropshadow(three-pass-box, rgba(192, 57, 43, 0.2), 8, 0, 0, 0);
+}
+
+/* Bottone "SBLOCCA TUTTI" (Pieno Rosso) */
+.button-danger-filled {
+    -fx-background-color: linear-gradient(to right, #ff6b6b, #ee5253);
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 12px;
+    -fx-background-radius: 30;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(three-pass-box, rgba(238, 82, 83, 0.3), 10, 0, 0, 2);
+}
+.button-danger-filled:hover {
+    -fx-background-color: linear-gradient(to right, #ee5253, #ff6b6b);
+    -fx-scale-x: 1.02;
+}
+
+/* --- CARD RIGA BLACKLIST --- */
+.blacklist-row {
+    -fx-background-color: white;
+    -fx-background-radius: 5;
+    -fx-border-color: #fab1a0; /* Bordo rosato sottile */
+    -fx-border-width: 1;
+    
+    /* IL BORDO SINISTRO SPESSO ROSSO */
+    -fx-border-insets: 0;
+    -fx-border-width: 0 0 0 5; 
+    -fx-border-color: transparent transparent transparent #ff6b6b;
+    
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 5, 0, 0, 2);
+    -fx-cursor: hand;
+}
+.blacklist-row:hover {
+    -fx-background-color: #fff5f5; /* Sfondo rossastro al passaggio */
+    -fx-effect: dropshadow(three-pass-box, rgba(255, 107, 107, 0.15), 8, 0, 0, 2);
+}
+
+/* Testi */
+.row-title {
+    -fx-font-size: 14px;
+    -fx-font-weight: 800;
+    -fx-text-fill: #2d3436;
+}
+.row-subtitle {
+    -fx-font-size: 12px;
+    -fx-text-fill: #7f8fa6;
+}
+
+/* Badge del Motivo (es. "Ritardo Grave") */
+.tag-reason {
+    -fx-background-color: rgba(255, 107, 107, 0.1);
+    -fx-text-fill: #c0392b;
+    -fx-font-size: 10px;
+    -fx-font-weight: 800;
+    -fx-padding: 5 10;
+    -fx-background-radius: 15;
+}
+
+.tag-counter {
+    -fx-text-fill: #ff6b6b;
+    -fx-font-weight: 900;
+    -fx-font-size: 14px;
+}
+
+/* Icona Skull/Ban */
+.icon-container-red {
+    -fx-background-color: rgba(255, 107, 107, 0.15);
+    -fx-background-radius: 50%;
+    -fx-min-width: 45px;
+    -fx-min-height: 45px;
+    -fx-alignment: center;
+}
+
+/* Bottone Riammetti (Verde) */
+.button-success-outline {
+    -fx-background-color: transparent;
+    -fx-border-color: #2ecc71;
+    -fx-border-radius: 20;
+    -fx-text-fill: #2ecc71;
+    -fx-font-weight: bold;
+    -fx-font-size: 11px;
+    -fx-cursor: hand;
+    -fx-padding: 5 15;
+}
+.button-success-outline:hover {
+    -fx-background-color: #2ecc71;
+    -fx-text-fill: white;
+}
+
+/* Bottone Mail (Grigio) */
+.icon-button {
+    -fx-background-color: transparent;
+    -fx-cursor: hand;
+    -fx-font-size: 16px;
+    -fx-text-fill: #7f8fa6;
+    -fx-padding: 5;
+}
+.icon-button:hover { -fx-text-fill: #1A2980; -fx-scale-x: 1.2; -fx-scale-y: 1.2; }
+
+/* ScrollBar */
+.scroll-bar:vertical { -fx-background-color: transparent; }
+.scroll-bar:vertical .thumb { -fx-background-color: #cbd5e0; -fx-background-radius: 10; }
+
+/* =============================================================================
+ * THEME: GESTIONE UTENTI & BLACKLIST
+ * File: StyleUtenti.css
+ * ============================================================================= */
+
+.root {
+    -fx-font-family: "Segoe UI Emoji", "Segoe UI", sans-serif;
+    -fx-background-color: #f4f7fa; /* Sfondo generale */
+}
+
+/* ================= RIGHE DELLA LISTA (CARD) ================= */
+
+/* 1. Riga Utente NORMALE (Bianca) */
+.user-row {
+    -fx-background-color: white;
+    -fx-background-radius: 10;
+    -fx-border-color: transparent;
+    -fx-border-width: 1;
+    -fx-border-radius: 10;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 5, 0, 0, 2);
+    -fx-transition: all 0.2s;
+}
+
+.user-row:hover {
+    -fx-border-color: #26D0CE; /* Bordo Ciano al passaggio */
+    -fx-effect: dropshadow(three-pass-box, rgba(38, 208, 206, 0.15), 8, 0, 0, 2);
+}
+
+/* 2. Riga Utente BLOCCATO / BLACKLIST (Rossa) */
+.user-row-blocked {
+    -fx-background-color: #fff5f5; /* Sfondo Rosso Chiarissimo */
+    -fx-background-radius: 10;
+    -fx-border-color: #ffcccc;     /* Bordo Rosso Chiaro */
+    -fx-border-width: 1;
+    -fx-border-radius: 10;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 5, 0, 0, 2);
+}
+
+.user-row-blocked:hover {
+    -fx-border-color: #ff6b6b; /* Rosso Acceso al passaggio */
+    -fx-effect: dropshadow(three-pass-box, rgba(255, 107, 107, 0.15), 8, 0, 0, 2);
+}
+
+/* ================= TESTI E TITOLI ================= */
+
+.row-title {
+    -fx-font-size: 14px;
+    -fx-font-weight: 800;
+    -fx-text-fill: #1A2980; /* Blu Scuro */
+}
+
+.row-subtitle {
+    -fx-font-size: 12px;
+    -fx-text-fill: #7f8fa6; /* Grigio */
+}
+
+/* ================= ICONE (CERCHI COLORATI) ================= */
+
+/* Icona Utente Attivo (Blu) */
+.icon-container-blue {
+    -fx-background-color: #eaf2ff;
+    -fx-background-radius: 50%;
+    -fx-min-width: 45px;
+    -fx-min-height: 45px;
+    -fx-alignment: center;
+}
+
+/* Icona Utente Bloccato (Rossa) */
+.icon-container-red {
+    -fx-background-color: rgba(255, 107, 107, 0.15);
+    -fx-background-radius: 50%;
+    -fx-min-width: 45px;
+    -fx-min-height: 45px;
+    -fx-alignment: center;
+}
+
+/* ================= TAG DI STATO (ETICHETTE) ================= */
+
+/* Tag Verde (ATTIVO) */
+.tag-success {
+    -fx-background-color: rgba(46, 204, 113, 0.15); /* Verde trasparente */
+    -fx-text-fill: #2ecc71; /* Testo Verde */
+    -fx-font-size: 11px;
+    -fx-font-weight: 800;
+    -fx-padding: 5 12;
+    -fx-background-radius: 15;
+}
+
+/* Tag Rosso (BLACKLIST) */
+.tag-danger {
+    -fx-background-color: rgba(255, 107, 107, 0.15); /* Rosso trasparente */
+    -fx-text-fill: #ff6b6b; /* Testo Rosso */
+    -fx-font-size: 11px;
+    -fx-font-weight: 800;
+    -fx-padding: 5 12;
+    -fx-background-radius: 15;
+}
+
+/* ================= BOTTONI AZIONE ================= */
+
+/* Bottone Modifica (Matita) */
+.icon-button {
+    -fx-background-color: transparent;
+    -fx-cursor: hand;
+    -fx-font-size: 14px;
+    -fx-text-fill: #7f8fa6;
+    -fx-padding: 5;
+}
+.icon-button:hover {
+    -fx-text-fill: #1A2980;
+    -fx-scale-x: 1.2;
+    -fx-scale-y: 1.2;
+}
+
+/* Bottone BLOCCA (Rosso Outline) */
+.button-outline-danger {
+    -fx-background-color: transparent;
+    -fx-border-color: #ff6b6b;
+    -fx-border-radius: 20;
+    -fx-text-fill: #ff6b6b;
+    -fx-font-weight: bold;
+    -fx-font-size: 10px;
+    -fx-cursor: hand;
+    -fx-padding: 5 15;
+}
+.button-outline-danger:hover {
+    -fx-background-color: #ff6b6b;
+    -fx-text-fill: white;
+}
+
+/* Bottone SBLOCCA (Verde Outline) */
+.button-outline-success {
+    -fx-background-color: transparent;
+    -fx-border-color: #2ecc71;
+    -fx-border-radius: 20;
+    -fx-text-fill: #2ecc71;
+    -fx-font-weight: bold;
+    -fx-font-size: 10px;
+    -fx-cursor: hand;
+    -fx-padding: 5 15;
+}
+.button-outline-success:hover {
+    -fx-background-color: #2ecc71;
+    -fx-text-fill: white;
+}

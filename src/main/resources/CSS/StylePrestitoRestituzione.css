@@ -1,0 +1,193 @@
+/* =============================================================================
+ * THEME: GESTIONE PRESTITI (Electric Cobalt)
+ * Palette: #1A2980 (Blu) -> #26D0CE (Ciano)
+ * ============================================================================= */
+
+.root {
+    -fx-font-family: "Segoe UI Emoji", "Segoe UI", sans-serif;
+    -fx-background-color: #f4f7fa;
+}
+
+/* ================= HEADER & RICERCA ================= */
+
+.page-title {
+    -fx-font-size: 28px;
+    -fx-font-weight: 900;
+    -fx-text-fill: #1A2980;
+}
+
+.label-subtitle {
+    -fx-font-size: 13px;
+    -fx-text-fill: #7f8fa6;
+    -fx-font-weight: bold;
+}
+
+/* Barra di Ricerca */
+.search-bar {
+    -fx-background-radius: 30;
+    -fx-background-color: white;
+    -fx-border-color: #dcdde1;
+    -fx-border-radius: 30;
+    -fx-padding: 8 15;
+    -fx-font-size: 13px;
+    -fx-text-fill: #2f3640;
+}
+.search-bar:focused {
+    -fx-border-color: #26D0CE;
+    -fx-effect: dropshadow(three-pass-box, rgba(38, 208, 206, 0.2), 8, 0, 0, 0);
+}
+
+/* Bottone "+ NUOVO PRESTITO" */
+.button-accent {
+    -fx-background-color: linear-gradient(to right, #1A2980, #26D0CE);
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 12px;
+    -fx-background-radius: 30;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(three-pass-box, rgba(26, 41, 128, 0.3), 10, 0, 0, 2);
+}
+.button-accent:hover {
+    -fx-background-color: linear-gradient(to right, #26D0CE, #1A2980);
+    -fx-scale-x: 1.02;
+}
+
+/* ================= FILTRI ================= */
+
+.menu-button-custom {
+    -fx-background-color: white;
+    -fx-background-radius: 20;
+    -fx-border-color: #dcdde1;
+    -fx-border-radius: 20;
+    -fx-text-fill: #2f3542;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+}
+.menu-button-custom:hover {
+    -fx-border-color: #1A2980;
+    -fx-text-fill: #1A2980;
+}
+
+/* ================= LISTA PRESTITI (RIGHE CARD) ================= */
+
+/* 1. Riga ATTIVO (Standard - Bianco) */
+.loan-row-active {
+    -fx-background-color: white;
+    -fx-background-radius: 10;
+    -fx-border-color: transparent;
+    -fx-border-width: 1;
+    -fx-border-radius: 10;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 5, 0, 0, 2);
+    -fx-transition: all 0.2s;
+}
+.loan-row-active:hover {
+    -fx-border-color: #26D0CE; /* Ciano al passaggio */
+    -fx-background-color: #fcfcfc;
+    -fx-effect: dropshadow(three-pass-box, rgba(38, 208, 206, 0.15), 8, 0, 0, 2);
+}
+
+/* 2. Riga IN RITARDO (Rossa) */
+.loan-row-late {
+    -fx-background-color: #fff5f5; /* Rosso chiarissimo */
+    -fx-background-radius: 10;
+    -fx-border-color: #ffcccc;
+    -fx-border-width: 1;
+    -fx-border-radius: 10;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 5, 0, 0, 2);
+}
+.loan-row-late:hover {
+    -fx-border-color: #ff6b6b; /* Rosso Acceso */
+    -fx-effect: dropshadow(three-pass-box, rgba(255, 107, 107, 0.15), 8, 0, 0, 2);
+}
+
+/* 3. Riga PROROGATO (Viola) */
+.loan-row-extended {
+    -fx-background-color: #fbfaff; /* Viola chiarissimo */
+    -fx-background-radius: 10;
+    -fx-border-color: #d1c4e9;
+    -fx-border-width: 1;
+    -fx-border-radius: 10;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 5, 0, 0, 2);
+}
+.loan-row-extended:hover {
+    -fx-border-color: #9575cd;
+    -fx-effect: dropshadow(three-pass-box, rgba(149, 117, 205, 0.15), 8, 0, 0, 2);
+}
+
+/* 4. Riga RESTITUITO (Grigio) */
+.loan-row-returned {
+    -fx-background-color: #f8f9fa;
+    -fx-background-radius: 10;
+    -fx-border-color: #e9ecef;
+    -fx-border-width: 1;
+    -fx-border-radius: 10;
+    -fx-opacity: 0.8;
+}
+
+/* --- Testi Riga --- */
+.row-title {
+    -fx-font-size: 14px;
+    -fx-font-weight: 800;
+    -fx-text-fill: #1A2980;
+}
+.row-subtitle {
+    -fx-font-size: 11px;
+    -fx-text-fill: #7f8fa6;
+}
+
+/* ================= ICONE & BADGE ================= */
+
+/* Sfondi Icone */
+.icon-container-blue   { -fx-background-color: #eaf2ff; -fx-background-radius: 10; -fx-alignment: center; }
+.icon-container-red    { -fx-background-color: rgba(255, 107, 107, 0.15); -fx-background-radius: 10; -fx-alignment: center; }
+.icon-container-purple { -fx-background-color: rgba(155, 89, 182, 0.15); -fx-background-radius: 10; -fx-alignment: center; }
+.icon-container-green  { -fx-background-color: rgba(46, 204, 113, 0.15); -fx-background-radius: 10; -fx-alignment: center; }
+
+/* Tag Stato */
+.tag-active   { -fx-background-color: rgba(38, 208, 206, 0.15); -fx-text-fill: #1A2980; -fx-font-size: 10px; -fx-font-weight: 800; -fx-padding: 5 12; -fx-background-radius: 15; }
+.tag-late     { -fx-background-color: rgba(255, 107, 107, 0.15); -fx-text-fill: #ff6b6b; -fx-font-size: 10px; -fx-font-weight: 800; -fx-padding: 5 12; -fx-background-radius: 15; }
+.tag-extended { -fx-background-color: rgba(155, 89, 182, 0.15); -fx-text-fill: #9b59b6; -fx-font-size: 10px; -fx-font-weight: 800; -fx-padding: 5 12; -fx-background-radius: 15; }
+.tag-returned { -fx-background-color: rgba(46, 204, 113, 0.15); -fx-text-fill: #27ae60; -fx-font-size: 10px; -fx-font-weight: 800; -fx-padding: 5 12; -fx-background-radius: 15; }
+
+/* ================= BOTTONI AZIONE ================= */
+
+.icon-button {
+    -fx-background-color: transparent;
+    -fx-cursor: hand;
+    -fx-font-size: 16px;
+    -fx-padding: 5;
+    -fx-text-fill: #26D0CE;
+}
+.icon-button:hover { -fx-scale-x: 1.2; -fx-scale-y: 1.2; }
+
+.icon-button-red {
+    -fx-background-color: transparent;
+    -fx-cursor: hand;
+    -fx-font-size: 16px;
+    -fx-padding: 5;
+    -fx-text-fill: #ff6b6b;
+}
+.icon-button-red:hover { -fx-scale-x: 1.2; -fx-scale-y: 1.2; }
+
+.button-outline-success {
+    -fx-background-color: transparent;
+    -fx-border-color: #2ecc71;
+    -fx-border-radius: 20;
+    -fx-text-fill: #2ecc71;
+    -fx-font-weight: bold;
+    -fx-font-size: 10px;
+    -fx-cursor: hand;
+    -fx-padding: 5 15;
+}
+.button-outline-success:hover {
+    -fx-background-color: #2ecc71;
+    -fx-text-fill: white;
+}
+
+/* ScrollBar */
+.scroll-bar:vertical { -fx-background-color: transparent; }
+.scroll-bar:vertical .thumb { -fx-background-color: #cbd5e0; -fx-background-radius: 10; }

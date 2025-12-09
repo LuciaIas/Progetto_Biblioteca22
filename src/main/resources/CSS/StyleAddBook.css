@@ -1,0 +1,119 @@
+/* =============================================================================
+ * THEME: VINTAGE TYPEWRITER (Realismo Libro)
+ * ============================================================================= */
+
+.root {
+    -fx-font-family: "Courier New", "Consolas", monospace; /* Font macchina da scrivere */
+    /* 1. Imposta l'immagine di sfondo */
+    -fx-background-image: url("/Images/libri.jpg");
+
+    /* 2. Fai in modo che copra tutto lo spazio senza deformarsi */
+    -fx-background-size: cover;
+
+    /* 3. Non ripeterla a piastrella */
+    -fx-background-repeat: no-repeat;
+
+    /* 4. Centrala */
+    -fx-background-position: center center;
+}
+
+/* Titolo: Sembra scritto con un pennarello */
+.handwritten-title {
+    -fx-font-family: "Segoe Print", "Comic Sans MS", cursive; 
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2c3e50;
+    -fx-rotate: -2; /* Leggermente storto per realismo */
+    -fx-effect: dropshadow(one-pass-box, rgba(0,0,0,0.1), 0, 0, 1, 1);
+}
+
+/* Etichette: Piccole e discrete */
+.ink-label {
+    -fx-font-size: 12px;
+    -fx-text-fill: #555555;
+    -fx-font-weight: bold;
+    -fx-opacity: 0.8;
+}
+
+/* --- CAMPI DI TESTO (Righe del quaderno) --- */
+.ink-input {
+    -fx-background-color: rgba(0, 0, 0, 0.03); /* Leggero sfondo scuro (effetto carta usata) */
+    -fx-background-radius: 5;
+    
+    -fx-border-color: transparent transparent #888888 transparent;
+    -fx-border-width: 0 0 1 0; /* Solo riga sotto */
+    -fx-border-style: dashed; /* Tratteggiata come i moduli */
+    
+    -fx-text-fill: #1a237e; /* Blu penna a sfera */
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-padding: 5 10;
+}
+
+.ink-input:focused {
+    -fx-background-color: rgba(255, 234, 167, 0.3); /* Evidenziatore giallo chiarissimo */
+    -fx-border-color: transparent transparent #d35400 transparent;
+    -fx-border-style: solid; /* Diventa solida quando scrivi */
+}
+
+/* --- SPINNER & MENU --- */
+.ink-spinner, .ink-menu-button {
+    -fx-background-color: transparent;
+    -fx-border-color: #888888;
+    -fx-border-radius: 3;
+    -fx-border-style: dashed;
+}
+.ink-spinner .text-field {
+    -fx-background-color: transparent;
+    -fx-text-fill: #1a237e;
+}
+
+/* --- POLAROID FRAME --- */
+.polaroid-frame {
+    -fx-background-color: white;
+    -fx-padding: 8 8 25 8; /* Più spazio sotto per sembrare una polaroid */
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 8, 0, 2, 4);
+    -fx-rotate: 2; /* Foto incollata storta */
+}
+
+/* --- BOTTONI TIMBRO --- */
+.stamp-button-ok {
+    -fx-background-color: transparent;
+    -fx-text-fill: #27ae60;
+    -fx-border-color: #27ae60;
+    -fx-border-width: 3;
+    -fx-border-radius: 5;
+    -fx-font-weight: 900;
+    -fx-font-size: 14px;
+    -fx-rotate: -5; /* Timbro storto */
+    -fx-cursor: hand;
+    -fx-opacity: 0.8;
+}
+.stamp-button-ok:hover {
+    -fx-background-color: rgba(39, 174, 96, 0.1);
+    -fx-opacity: 1;
+}
+
+.stamp-button-cancel {
+    -fx-background-color: transparent;
+    -fx-text-fill: #c0392b;
+    -fx-border-color: #c0392b;
+    -fx-border-width: 2;
+    -fx-border-radius: 5;
+    -fx-font-weight: bold;
+    -fx-font-size: 12px;
+    -fx-cursor: hand;
+    -fx-opacity: 0.6;
+}
+.stamp-button-cancel:hover {
+    -fx-text-fill: red;
+    -fx-opacity: 1;
+}
+
+.ink-button-small {
+    -fx-background-color: transparent;
+    -fx-text-fill: #2980b9;
+    -fx-underline: true;
+    -fx-cursor: hand;
+    -fx-font-size: 11px;
+}

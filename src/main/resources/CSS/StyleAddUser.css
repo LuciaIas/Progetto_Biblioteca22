@@ -1,0 +1,124 @@
+/* =============================================================================
+ * THEME: ID CARD (High Contrast Version)
+ * ============================================================================= */
+
+.root {
+    -fx-font-family: "Arial", sans-serif;
+    /* Immagine di sfondo (Tavolo) */
+    -fx-background-image: url("../Images/background_utenti.jpg");
+    -fx-background-size: cover;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center center;
+}
+
+/* Corpo della Tessera */
+.id-card-body {
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.5), 30, 0, 0, 10);
+    -fx-background-radius: 15; 
+}
+
+/* --- TESTI HEADER (Molto scuri e definiti) --- */
+.card-header {
+    -fx-font-size: 20px;
+    -fx-font-weight: 900; /* Extra Bold */
+    -fx-text-fill: #0a1f4d; /* Blu Notte quasi nero */
+    -fx-letter-spacing: 2px;
+}
+
+.card-subheader {
+    -fx-font-size: 12px;
+    -fx-font-weight: 900; /* Extra Bold */
+    -fx-text-fill: #c0392b; /* Rosso Scuro (più leggibile del rosso acceso) */
+    -fx-letter-spacing: 1px;
+}
+
+/* --- ETICHETTE CAMPI (Piccole ma leggibili) --- */
+.field-label {
+    -fx-font-size: 10px; /* Aumentato leggermente */
+    -fx-text-fill: #000000; /* NERO PURO */
+    -fx-font-weight: 900; /* Grassetto massimo */
+    -fx-padding: 0 0 0 2;
+    /* Opzionale: ombra bianca dietro per staccare dal fondo */
+    -fx-effect: dropshadow(one-pass-box, rgba(255,255,255,0.8), 2, 0, 0, 0);
+}
+
+/* --- INPUT SIMULAZIONE STAMPA (Più contrasto) --- */
+.printed-input, .printed-input-bold, .printed-input-small {
+    /* Sfondo un po' più opaco (0.6 invece di 0.4) per far leggere meglio il testo */
+    -fx-background-color: rgba(255, 255, 255, 0.6); 
+    -fx-background-radius: 0;
+    -fx-border-color: transparent transparent #000000 transparent; /* Riga nera */
+    -fx-border-width: 0 0 1.5 0; /* Riga più spessa */
+    -fx-text-fill: #000000; /* Testo NERO */
+    -fx-padding: 2 5;
+}
+
+.printed-input {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold; /* Aggiunto Grassetto */
+    -fx-font-family: "Consolas", monospace;
+}
+
+.printed-input-bold {
+    -fx-font-size: 20px;
+    -fx-font-weight: 900; /* Extra Bold */
+    -fx-font-family: "Consolas", monospace;
+    -fx-text-fill: #000000;
+}
+
+.printed-input-small {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold; /* Aggiunto Grassetto */
+    -fx-font-family: "Arial", sans-serif;
+}
+
+/* Effetto Focus */
+.printed-input:focused, .printed-input-bold:focused, .printed-input-small:focused {
+    -fx-background-color: rgba(255, 255, 255, 0.9); /* Quasi bianco quando scrivi */
+    -fx-border-color: transparent transparent #1A2980 transparent;
+}
+
+/* --- FOTO TESSERA --- */
+.photo-frame {
+    -fx-background-color: white;
+    -fx-border-color: #999;
+    -fx-border-width: 1;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 5, 0, 0, 2);
+    -fx-padding: 5;
+}
+
+.link-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #1A2980;
+    -fx-font-weight: bold; /* Reso grassetto */
+    -fx-underline: true;
+    -fx-cursor: hand;
+    -fx-font-size: 11px;
+}
+
+/* --- BOTTONI AZIONE --- */
+.btn-save {
+    -fx-background-color: #1A2980;
+    -fx-text-fill: white;
+    -fx-font-weight: 900;
+    -fx-background-radius: 5;
+    -fx-padding: 10 25;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 5, 0, 0, 2);
+}
+.btn-save:hover { -fx-background-color: #0d1b40; } /* Ancora più scuro all'hover */
+
+.btn-cancel {
+    -fx-background-color: rgba(255,255,255,0.5); /* Sfondo semitrasparente per leggibilità */
+    -fx-text-fill: #444; /* Grigio scuro */
+    -fx-font-weight: 900;
+    -fx-border-color: #444;
+    -fx-border-radius: 5;
+    -fx-padding: 9 20;
+    -fx-cursor: hand;
+}
+.btn-cancel:hover { 
+    -fx-text-fill: #c0392b; 
+    -fx-border-color: #c0392b; 
+    -fx-background-color: rgba(255,255,255,0.8);
+}
