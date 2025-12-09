@@ -13,6 +13,9 @@ public class Libro {
     String autore;
     String titolo;
     String isbn;
-    public void ooooooooo(String dioporco){}
+
+    public void ooooooooo(String dioporco){
+    //Michele e scemo
+    }
     
 }
