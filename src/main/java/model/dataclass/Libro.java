@@ -10,5 +10,5 @@ package model.dataclass;
  * @author lucia
  */
 public class Libro {
-    
+    public void ooooooooo(String dioporco){}
 }
