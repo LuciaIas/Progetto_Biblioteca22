@@ -12,6 +12,7 @@ package model.dataclass;
 public class Libro {
     String autore;
     String titolo;
+    String isbn;
     public void ooooooooo(String dioporco){}
     
 }
