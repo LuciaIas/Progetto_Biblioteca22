@@ -15,7 +15,7 @@ import javafx.scene.control.Label;
  *
  * @author nicol
  */
-public class NotifyController {
+public class NotificaController {
     @FXML
     private Label numRit;
     

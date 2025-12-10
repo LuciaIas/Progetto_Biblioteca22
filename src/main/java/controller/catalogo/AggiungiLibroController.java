@@ -35,7 +35,7 @@ import javafx.stage.Stage;
  *
  * @author nicol
  */
-public class addBookController {
+public class AggiungiLibroController {
     
     @FXML
     private TextField txtTitolo;

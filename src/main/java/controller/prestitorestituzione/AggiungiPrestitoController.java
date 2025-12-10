@@ -7,7 +7,7 @@ package controller.prestitorestituzione;
 
 import model.servizi.DataBase;
 import model.dataclass.Stato;
-import model.DataClass.User;
+import model.dataclass.Utente;
 import model.servizi.Prestito;
 import java.time.LocalDate;
 import java.util.ArrayList;

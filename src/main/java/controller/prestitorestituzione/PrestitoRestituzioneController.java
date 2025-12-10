@@ -80,7 +80,7 @@ public class PrestitoRestituzioneController {
     MenuButtonInitialize();
     }
     
-    public void MenuButtonInitialize(){
+    public void menuButtonInitialize(){
     
         FilterButton.getItems().clear();
         MenuItem m1 = new MenuItem("Tutti i prestiti");
@@ -132,7 +132,7 @@ public class PrestitoRestituzioneController {
     }
     
     
-    public void SearchFunction(){
+    public void searchFunction(){
     
         ArrayList<Prestito> prestiti = DataBase.getPrestiti(),app = new ArrayList<>();
         String text = searchLoan.getText();
@@ -152,7 +152,7 @@ public class PrestitoRestituzioneController {
     }
     
     
-    public void ButtonInitialize(){
+    public void buttonInitialize(){
     
         NewLoanButton.setOnAction(eh->{
         

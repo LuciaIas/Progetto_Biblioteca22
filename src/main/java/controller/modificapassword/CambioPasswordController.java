@@ -7,7 +7,7 @@ package controller.modificapassword;
 
 
 import model.servizi.ControlloFormato;
-import Model.servizi.DataBase;
+import model.servizi.DataBase;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -24,7 +24,7 @@ import javafx.stage.Stage;
  *
  * @author nicol
  */
-public class PasswordChargeController {
+public class CambioPasswordController {
     
     @FXML
     private PasswordField NewPass;

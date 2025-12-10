@@ -25,7 +25,7 @@ import javafx.scene.layout.VBox;
  *
  * @author nicol
  */
-public class mailController {
+public class MailController {
     
     
     @FXML
