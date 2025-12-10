@@ -22,83 +22,50 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
-import mainPackage.main;
+import main.Main;
 
 
 public class OperazioniGiornaliere {
-
-    private static long ultimoResetSessione = System.currentTimeMillis();
-    
+    private static long ultimoResetSessione = System.currentTimeMillis(); 
     private static final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(2);
 
     public static void avviaTaskDiMezzanotte() {
         // 1. Calcola quanto manca alla prossima mezzanotte
-        long ritardoIniziale = calcolaRitardoVersoMezzanotte();
-      
-        long periodo = 24 * 60 * 60; //MI CALCOLO LA GIORNATA IN SECONDI
-
-     
+        long ritardoIniziale = calcolaRitardoVersoMezzanotte();    
+        long periodo = 24 * 60 * 60; //MI CALCOLO LA GIORNATA IN SECONDI    
         scheduler.scheduleAtFixedRate(() -> {
-            try {
-                
-                
-               
-                eseguiControlliAutomatici(false);
-                
+            try {           
+                eseguiControlliAutomatici(false);               
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }, ritardoIniziale, periodo, TimeUnit.SECONDS);
-        
-
-        
-        
-        
-        
-
-        long durataSessioneMillis = 3600000; 
-        
-        
+        long durataSessioneMillis = 3600000;      
         scheduler.scheduleAtFixedRate(() -> {
             Platform.runLater(() -> {
                 try {
-                    main.checkClosed(); // Controllo la chiusura
-                    if (main.stage == null || main.stage.getScene() == null) {
+                    Main.checkClosed(); // Controllo la chiusura
+                    if (Main.stage == null || Main.stage.getScene() == null) {
                         ultimoResetSessione = System.currentTimeMillis(); 
                         return;
                     }
-
-                    Parent currentRoot = main.stage.getScene().getRoot();
-
-                    
-                    if (currentRoot.getProperties().get("login") != null) {
-                      
+                    Parent currentRoot = Main.stage.getScene().getRoot();                  
+                    if (currentRoot.getProperties().get("login") != null) {                      
                         ultimoResetSessione = System.currentTimeMillis();
                         return;
-                    }
-
-                    
+                    }                  
                     long tempoPassato = System.currentTimeMillis() - ultimoResetSessione;
-
-                    if (tempoPassato > durataSessioneMillis) {
-                        
-                       
-                        
-                        
+                    if (tempoPassato > durataSessioneMillis) {                 
                         main.Main.checkClosed();
                         Platform.setImplicitExit(false); 
-
                         Alert al = new Alert(AlertType.WARNING);
                         al.setHeaderText("Sessione scaduta");
                         al.setContentText("La sessione è scaduta. Rifai il login.");
-                        al.showAndWait();
-
-                        
+                        al.showAndWait();                       
                         Stage loginStage = new Stage();
                         FXMLLoader loader = new FXMLLoader(OperazioniGiornaliere.class.getResource("/View/Access.fxml"));
                         Parent root = loader.load();
-                        
-                        
+                                     
                         root.getProperties().put("login", "login");
                         
                         Scene s = new Scene(root, 425, 500);
@@ -173,10 +140,10 @@ public class OperazioniGiornaliere {
                 stage.setX(1550);
                 stage.setY(250);
         try {
-            stage.setScene(new Scene(FXMLLoader.load(DailyTask.class.getResource("/View/notifica.fxml"))));
+            stage.setScene(new Scene(FXMLLoader.load(OperazioniGiornaliere.class.getResource("/View/notifica.fxml"))));
             stage.show();
         } catch (IOException ex) {
-            Logger.getLogger(DailyTask.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(OperazioniGiornaliere.class.getName()).log(Level.SEVERE, null, ex);
         }
                 
        
