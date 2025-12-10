@@ -6,9 +6,9 @@
  */
 package controller;
 
-import Model.DataBase;
-import Model.DataClass.User;
-import Model.EmailSender;
+import model.servizi.DataBase;
+import model.dataclass.Utente;
+import model.servizi.EmailInvia;
 import java.util.ArrayList;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;

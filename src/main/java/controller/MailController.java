@@ -5,8 +5,8 @@
  */
 package controller;
 
-import Model.DataClass.EmailInfo;
-import Model.EmailReader;
+import model.dataclass.EmailInfo;
+import model.servizi.EmailLegge;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import javafx.application.Platform;

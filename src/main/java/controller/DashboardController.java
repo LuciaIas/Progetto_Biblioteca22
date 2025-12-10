@@ -5,10 +5,10 @@
  */
 package controller;
 
-import Model.BackupService;
-import Model.DataBase;
-import Model.DataClass.Stato;
-import Model.Prestito;
+import model.servizi.Backup;
+import model.servizi.DataBase;
+import model.dataclass.Stato;
+import model.servizi.Prestito;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;

@@ -5,9 +5,9 @@
  */
 package controller;
 
-import Model.DataBase;
-import Model.DataClass.Stato;
-import Model.Prestito;
+import model.servizi.DataBase;
+import model.dataclass.Stato;
+import model.servizi.Prestito;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
