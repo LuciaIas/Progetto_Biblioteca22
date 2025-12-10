@@ -12,15 +12,10 @@ import javax.mail.internet.MimeMessage;
 import java.util.Properties;
 
 public class EmailInvia {
+private static final String username = "progettoGruppo22@gmail.com";
+private static final String password = "fzxw ejrj caqq huez"; 
+public static void inviaEmail(String recipientEmail, String subject, String body) {   
 
-    
-    private static final String username = "progettoGruppo22@gmail.com";
-    
-    private static final String password = "fzxw ejrj caqq huez"; 
-
-    public static void inviaEmail(String recipientEmail, String subject, String body) {
-        
-        
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true");           // Autenticazione richiesta
         props.put("mail.smtp.starttls.enable", "true"); // Usa TLS per sicurezza
