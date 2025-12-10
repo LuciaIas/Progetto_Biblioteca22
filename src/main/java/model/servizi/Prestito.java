@@ -32,9 +32,7 @@ public class Prestito {
 
     
     public static ArrayList<Prestito> getPrestitiByStato(ArrayList<Prestito> p, Stato s){
-    
        ArrayList<Prestito> ret = new ArrayList<>();
-       
        for(Prestito p1 : p)
            if(p1.getStato().equals(s))
                ret.add(p1);
@@ -42,8 +40,7 @@ public class Prestito {
     }
     
     
-    
-    
+
     public LocalDate getData_scadenza() {
         return data_scadenza;
     }
