@@ -172,7 +172,7 @@ public class UtentiController {
         
 
         try {
-            stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/View/addUtente.fxml"))));
+            stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/View/AddUtente.fxml"))));
             
         } catch (IOException ex) {
             Logger.getLogger(CatalogoController.class.getName()).log(Level.SEVERE, null, ex);
@@ -290,7 +290,7 @@ public class UtentiController {
             ModificaUtenteController.matricola = matricola;
 
             try {
-                stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/View/modificaUtente.fxml"))));
+                stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/View/ModificaUtente.fxml"))));
 
             } catch (IOException ex) {
                 Logger.getLogger(CatalogoController.class.getName()).log(Level.SEVERE, null, ex);
