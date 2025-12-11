@@ -79,7 +79,7 @@
                 <artifactId>javafx-maven-plugin</artifactId>
                 <version>0.0.8</version>
                 <configuration>
-                    <mainClass>mainPackage.main</mainClass> </configuration>
+                    <mainClass>main.Main</mainClass> </configuration>
             </plugin>
         </plugins>
     </build>

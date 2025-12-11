@@ -39,7 +39,7 @@ public class Main extends Application{
         //System.out.println(Model.DataBase.getUtenti());
         //System.out.println(Model.DataBase.getPrestiti());
         //Model.DataBase.GetCatalogo();
-        Parent root = FXMLLoader.load(getClass().getResource("/View/Access.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/View/Accesso.fxml"));
         s = new Scene(root,425,500);
         root.getProperties().put("login", "login");
         //s = new Scene(FXMLLoader.load(getClass().getResource("/View/dashboard.fxml")),1280,800);
