@@ -203,7 +203,7 @@ public class BlacklistController {
         // Aggiungiamo un tooltip per far capire cosa fa
         Tooltip tooltip = new Tooltip("Invia email a " + email);
         btnEmail.setTooltip(tooltip);
-        tooltip.setShowDelay(Duration.millis(100));
+       // tooltip.setShowDelay(Duration.millis(100));
         
         btnEmail.setOnAction(e -> {
             

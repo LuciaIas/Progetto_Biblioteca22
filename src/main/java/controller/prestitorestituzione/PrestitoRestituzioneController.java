@@ -342,7 +342,7 @@ private void aggiungiRigaPrestito(String titoloLibro, String isbn, String nomeUt
         
         // Tooltip per spiegare
         Tooltip ttProroga = new Tooltip("Proroga Scadenza di 15 giorni a partire da adesso");
-        ttProroga.setShowDelay(Duration.millis(100));
+       // ttProroga.setShowDelay(Duration.millis(100));
         btnProroga.setTooltip(ttProroga);
 
         btnProroga.setOnAction(e -> {       
@@ -373,7 +373,7 @@ private void aggiungiRigaPrestito(String titoloLibro, String isbn, String nomeUt
         
         Tooltip tooltip = new Tooltip("Ricorda a " + DataBase.cercaUtente(matricola).getNome() + " di riconsegnare il libro");
         btnMail.setTooltip(tooltip);
-        tooltip.setShowDelay(Duration.millis(100));
+       // tooltip.setShowDelay(Duration.millis(100));
         
         btnMail.setOnAction(eh->{
             ArrayList<Prestito> prestiti = DataBase.getPrestiti();           
