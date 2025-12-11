@@ -33,11 +33,9 @@ public class InserisciPasswordModificaController {
     
     @FXML
     private PasswordField NewPass;
-
     
     @FXML
-    private TextField NewPassVisible;
-    
+    private TextField NewPassVisible;  
     
     @FXML
     private CheckBox CheckShowPass;
@@ -49,106 +47,74 @@ public class InserisciPasswordModificaController {
     private Label BtnAnnulla;
     
     @FXML
-    public void initialize(){
-        
+    public void initialize(){       
         setCheckBox();
-        setButtonFunction();
-        
-        
+        setButtonFunction();       
     }
     
-    public void setButtonFunction(){
-    
+    public void setButtonFunction(){   
         BtnSalva.setOnAction(eh->{
             String pass;
-            if(!CheckShowPass.isSelected())
-             pass = NewPass.getText();
-          
+            if(!CheckShowPass.isSelected()) // Se password nascosta
+             pass = NewPass.getText();// Prende testo dal PasswordField         
             else
-            pass = NewPassVisible.getText();
-            
-            
+            pass = NewPassVisible.getText();// Altrimenti prende testo dal TextField
+                       
             //Controllo password e conferma password
-            if(pass.equals("")){
-                Alert err = new Alert(Alert.AlertType.WARNING);
+            if(pass.equals("")){// Controllo se campo vuoto
+                Alert err = new Alert(Alert.AlertType.WARNING);// Alert warning
                 err.setContentText("Devi inserire password");
                 err.showAndWait();
-                return;
-            }
-            
-          
-                if(DataBase.controllaPasswordBibliotecario(pass)){
-                        
-                
-            Stage PassRec = new Stage();
+                return;// Termina funzione se campo vuoto
+            }    
+                if(DataBase.controllaPasswordBibliotecario(pass)){// Controllo se la password inserita corrisponde a quella del bibliotecario           
+            Stage PassRec = new Stage();// Crea nuova finestra per cambio password
                 PassRec.setTitle("Modifica Password");
-                PassRec.setResizable(false);
-                PassRec.initModality(Modality.APPLICATION_MODAL);
+                PassRec.setResizable(false);// Non ridimensionabile
+                PassRec.initModality(Modality.APPLICATION_MODAL);// Finestra modale
             try {
-                PassRec.setScene(new Scene(FXMLLoader.load(getClass().getResource("/View/CambioPassword.fxml"))));
-            } catch (IOException ex) {
-                Logger.getLogger(DashboardController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-                
-                PassRec.showAndWait();
-                Stage u = (Stage) BtnSalva.getScene().getWindow();
-                u.close();
+                 // Imposta la scena della nuova finestra
+                PassRec.setScene(new Scene(FXMLLoader.load(getClass().getResource("/View/CambioPassword.fxml"))));// Carica l'interfaccia grafica del cambio password
+            } catch (IOException ex) {// Se il file FXML non viene caricato correttamente
+                Logger.getLogger(DashboardController.class.getName()).log(Level.SEVERE, null, ex);// Registra l'errore nel log
+            }                
+                PassRec.showAndWait();// Mostra finestra e aspetta chiusura
+                Stage u = (Stage) BtnSalva.getScene().getWindow();// Ottiene finestra corrente
+                u.close();// Chiude finestra corrente dopo aver aperto la finestra CambioPassword
                 }else{
                     
                 Alert err = new Alert(Alert.AlertType.WARNING);
                 err.setContentText("Password errata!");
                 err.showAndWait();
-                return;
-                    
-                
+                return;           
                 }
-        });
-        
-         BtnAnnulla.setOnMouseClicked(eh->{
-        
+        });       
+         BtnAnnulla.setOnMouseClicked(eh->{        
             Stage f =  (Stage) BtnAnnulla.getScene().getWindow();
-                f.close();
-            
-            
+                f.close();// Chiude finestra senza modificare nulla         
         });
     }
     
     
     public void setCheckBox(){
     showPassword(false);
-        CheckShowPass.setOnAction(eh->{
-        
+        CheckShowPass.setOnAction(eh->{       
         if(CheckShowPass.isSelected())
             showPassword(true);
         else
-            showPassword(false);
-        
-        });
-        
+            showPassword(false);        
+        });        
     }
-    
-    
-    public void showPassword(boolean yes){
-        
+       
+    public void showPassword(boolean yes){        
             if(yes){
                 NewPassVisible.setText(NewPass.getText());
                 NewPassVisible.setVisible(true);
                 NewPass.setVisible(false);
-                
-
             }else{
                 NewPass.setText(NewPassVisible.getText());
                 NewPassVisible.setVisible(false);
-                NewPass.setVisible(true);
-                
-       
-                
-            
-                        
-            }
-            
-            
-        
-    }
-    
+                NewPass.setVisible(true);        
+            }         
+    }    
 }
