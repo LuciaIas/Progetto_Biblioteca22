@@ -176,7 +176,7 @@ public class AccessoController {
                 al.showAndWait();
 
                 // Passa alla dashboard
-                model.TransizioneScena.switchSceneEffect(Main.stage, "/View/dashboard.fxml"); 
+                model.TransizioneScena.switchSceneEffect(Main.stage, "/View/Dashboard.fxml"); 
 
                 Main.stage.getProperties().remove("login");
                 Main.stage.centerOnScreen();
@@ -224,7 +224,7 @@ public class AccessoController {
                 return;
             }
 
-                model.TransizioneScena.switchSceneEffect(Main.stage, "/View/dashboard.fxml");// Passa alla dashboard
+                model.TransizioneScena.switchSceneEffect(Main.stage, "/View/Dashboard.fxml");// Passa alla dashboard
 
                 Main.stage.getProperties().remove("login");
                 Main.stage.centerOnScreen();

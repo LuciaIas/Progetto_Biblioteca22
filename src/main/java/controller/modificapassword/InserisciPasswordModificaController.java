@@ -85,7 +85,7 @@ public class InserisciPasswordModificaController {
                 PassRec.setResizable(false);
                 PassRec.initModality(Modality.APPLICATION_MODAL);
             try {
-                PassRec.setScene(new Scene(FXMLLoader.load(getClass().getResource("/View/PasswordCharge.fxml"))));
+                PassRec.setScene(new Scene(FXMLLoader.load(getClass().getResource("/View/CambioPassword.fxml"))));
             } catch (IOException ex) {
                 Logger.getLogger(DashboardController.class.getName()).log(Level.SEVERE, null, ex);
             }

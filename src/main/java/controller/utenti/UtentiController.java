@@ -35,6 +35,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import model.Configurazione;
 
 /**
  *
@@ -56,7 +57,7 @@ public class UtentiController {
     @FXML
     private TextField searchUser;
     
-    public static final short MAX_USERS=5000;
+    public static final int MAX_USERS=Configurazione.getMaxUsers();
     
     @FXML
     public void initialize(){
@@ -172,7 +173,7 @@ public class UtentiController {
         
 
         try {
-            stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/View/AddUtente.fxml"))));
+            stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/View/AggiungiUtente.fxml"))));
             
         } catch (IOException ex) {
             Logger.getLogger(CatalogoController.class.getName()).log(Level.SEVERE, null, ex);

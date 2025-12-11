@@ -60,6 +60,10 @@ public class Configurazione {
         return parseInteger("app.max_authors", 1000);
     }
     
+    public static int getMaxWrited() {
+        return parseInteger("app.max_writers", 5000);
+    }
+    
     public static int[] getTimeOpen(){
         int[] time = new int[2];
         time[0] = parseInteger("time.open.hour",7);

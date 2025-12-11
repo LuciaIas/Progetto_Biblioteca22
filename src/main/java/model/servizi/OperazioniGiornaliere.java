@@ -32,6 +32,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 import main.Main;
+import model.Configurazione;
 
 
 public class OperazioniGiornaliere {
@@ -39,7 +40,7 @@ public class OperazioniGiornaliere {
     private static long ultimoResetSessione = System.currentTimeMillis(); 
     private static final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(2);
 
-
+    private static int durataSessione = Configurazione.getSessionDuration();
      // Avvia i task automatici (Ccntrolli a mezzanotte (es. aggiornamento stato prestiti) e monitoraggio sessione utente ogni 2 secondi per timeout e scadenza).
     public static void avviaTaskDiMezzanotte() {
         
@@ -56,7 +57,7 @@ public class OperazioniGiornaliere {
             }
         }, ritardoIniziale, periodo, TimeUnit.SECONDS);
         
-        long durataSessioneMillis = 3600000; // Durata massima della sessione in millisecondi (1 ora) 
+        long durataSessioneMillis = durataSessione*60*60*1000; // Durata massima della sessione in millisecondi (1 ora) 
         
         // Task di monitoraggio sessione utente eseguito ogni 2 secondi (polling rapido)
         scheduler.scheduleAtFixedRate(() -> {
@@ -86,7 +87,7 @@ public class OperazioniGiornaliere {
                         al.showAndWait();
                         // Carica finestra di login
                         Stage loginStage = new Stage();
-                        FXMLLoader loader = new FXMLLoader(OperazioniGiornaliere.class.getResource("/View/Access.fxml"));
+                        FXMLLoader loader = new FXMLLoader(OperazioniGiornaliere.class.getResource("/View/Accesso.fxml"));
                         Parent root = loader.load();
                                      
                         root.getProperties().put("login", "login");
@@ -164,7 +165,7 @@ public class OperazioniGiornaliere {
                 stage.setX(1550);
                 stage.setY(250);
         try {
-            stage.setScene(new Scene(FXMLLoader.load(OperazioniGiornaliere.class.getResource("/View/notifica.fxml"))));
+            stage.setScene(new Scene(FXMLLoader.load(OperazioniGiornaliere.class.getResource("/View/Notifica.fxml"))));
             stage.show();
         } catch (IOException ex) {
             Logger.getLogger(OperazioniGiornaliere.class.getName()).log(Level.SEVERE, null, ex);

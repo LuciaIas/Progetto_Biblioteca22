@@ -16,6 +16,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
+import model.Configurazione;
 
 /**
  *
@@ -25,6 +26,12 @@ public class Main extends Application{
     
     public static Scene s;
     public static Stage stage;  
+    
+    //APERTURA E CHIUSURA
+    public static int[] open_time = Configurazione.getTimeOpen();
+    public static int[] close_time = Configurazione.getTimeClose();
+    
+    
     //nicolaM1@  
     public static void main(String[] args){launch(args);}
 
@@ -69,8 +76,8 @@ public class Main extends Application{
     public static void checkClosed(){
    
         LocalTime ora_attuale = LocalTime.now();
-        LocalTime orario_apertura=LocalTime.of(7, 0);
-        LocalTime orario_chiusura=LocalTime.of(20, 0);
+        LocalTime orario_apertura=LocalTime.of(open_time[0], open_time[1]);
+        LocalTime orario_chiusura=LocalTime.of(close_time[0], close_time[1]);
         boolean ServiceIsOpen = ora_attuale.isAfter(orario_apertura) && ora_attuale.isBefore(orario_chiusura);
         if(!ServiceIsOpen){
             

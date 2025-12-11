@@ -40,6 +40,7 @@ import javafx.scene.transform.Rotate;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import model.Configurazione;
 
 /**
  *
@@ -61,7 +62,7 @@ public class CatalogoController {
     @FXML
     private Button addButton;
     
-    public static final short MAX_BOOKS = 1000;  // Numero massimo di libri consentiti nel sistema
+    public static final int MAX_BOOKS = Configurazione.getMaxBooks();  // Numero massimo di libri consentiti nel sistema
     
     @FXML
     public void initialize(){ //Metodo di inizializzazione chiamato automaticamente da JavaFX all'avvio della scena   

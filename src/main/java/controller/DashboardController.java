@@ -151,7 +151,7 @@ public class DashboardController {
                 PassRec.setResizable(false);
                 PassRec.initModality(Modality.APPLICATION_MODAL);
             try {
-                PassRec.setScene(new Scene(FXMLLoader.load(getClass().getResource("/View/InserisciPasswordPerModifica.fxml"))));
+                PassRec.setScene(new Scene(FXMLLoader.load(getClass().getResource("/View/InserisciPasswordModifica.fxml"))));
             } catch (IOException ex) {
                 Logger.getLogger(DashboardController.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -163,7 +163,7 @@ public class DashboardController {
         LogoutButton.setOnAction(eh->{
         
             try {
-                Parent root =FXMLLoader.load(getClass().getResource("/View/Access.fxml"));
+                Parent root =FXMLLoader.load(getClass().getResource("/View/Accesso.fxml"));
                 Scene s = new Scene(root,425,500);
                 Main.stage.getProperties().put("login", "login");
                 Main.stage.setScene(s);
@@ -189,7 +189,7 @@ public class DashboardController {
         });      
         CatalogoLibriButton.setOnAction(eh->{     
             try {
-                 Parent root = FXMLLoader.load(getClass().getResource("/View/CatalogoLibri.fxml"));
+                 Parent root = FXMLLoader.load(getClass().getResource("/View/Catalogo.fxml"));
                  HomeBorderPane.setCenter(root);
                  evidenziaBottone(CatalogoLibriButton);
             } catch (IOException ex) {

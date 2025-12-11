@@ -30,6 +30,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import model.Configurazione;
 
 /**
  *
@@ -75,8 +76,8 @@ public class AggiungiLibroController {
     private Button RimuoviCopButton;
     
     // COSTANTI
-    public static final short MAX_AUTORS=1000; //Numero massimo autori nel sistema
-    public static final short MAX_WRITED=5000; //Numero massimo relazioni libro-autore
+    public static final int MAX_AUTORS=Configurazione.getMaxAuthors(); //Numero massimo autori nel sistema
+    public static final int MAX_WRITED=Configurazione.getMaxWrited(); //Numero massimo relazioni libro-autore
     
         
     // VARIABILI

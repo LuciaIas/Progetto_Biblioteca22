@@ -47,6 +47,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import model.Configurazione;
 
 /**
  *
@@ -69,7 +70,7 @@ public class PrestitoRestituzioneController {
     @FXML
     private TextField searchLoan;
     
-    public static final short MAX_LOAN = 10000;
+    public static final int MAX_LOAN = Configurazione.getMaxLoans();
     
     @FXML
     public void initialize(){
@@ -227,7 +228,7 @@ public class PrestitoRestituzioneController {
         
 
         try {
-            stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/View/AddPrestito.fxml"))));
+            stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/View/AggiungiPrestito.fxml"))));
             
         } catch (IOException ex) {
             Logger.getLogger(CatalogoController.class.getName()).log(Level.SEVERE, null, ex);
