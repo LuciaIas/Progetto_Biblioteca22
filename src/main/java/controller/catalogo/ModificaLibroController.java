@@ -60,24 +60,23 @@ public class ModificaLibroController {
     
     @FXML
     private Button SalvaButton;
+    
     @FXML
     private Button RimuoviCopButton;
     
-
-    public static String isbn;
-    private Libro lib;
-    private String urlIM=null;
+   // VARIABILI DI CONTROLLO
+    public static String isbn;// ISBN del libro da modificare (settato da altro controller)
+    private Libro lib;// Oggetto libro corrente
+    private String urlIM=null;// Percorso immagine copertina
    
     @FXML
-    public void initialize(){
-        lib = DataBase.cercaLibro(isbn);
-        settingForm();
-        
+    public void initialize(){//Inizializza controller
+        lib = DataBase.cercaLibro(isbn);  // Recupera il libro dal database usando l'ISBN e imposta il form
+        settingForm();       
     }
     
     public void settingForm(){
-        //File f = new File();
-        Image img = null;
+        Image img = null;// Imposta immagine copertina
         String path = lib.getUrl();
 
         try {
@@ -97,10 +96,8 @@ public class ModificaLibroController {
                 if (!path.startsWith("file:") && !path.startsWith("http")) {
                     externalPath = "file:" + path;
                 }
-
                 img = new Image(externalPath);
             }
-
         } catch (Exception e) {
             // TENTATIVO 3: Fallback (Tutto è fallito)
             System.err.println("Impossibile caricare immagine: " + path + ". Uso default.");
@@ -121,60 +118,46 @@ public class ModificaLibroController {
         ArrayList<Autore> aut = new ArrayList(); aut.addAll(lib.getAutori());
         updateAutori(aut); //SETTING AUTORI
         spinnerInitialize(); //SETTING SPINNER
-        buttonInitialize();
-        
+        buttonInitialize();       
     }
     
-    public void buttonInitialize(){
-    
-        ScegliFileButton.setOnAction(eh->{
+    public void buttonInitialize(){ 
         
+        ScegliFileButton.setOnAction(eh->{  // Bottone per scegliere copertina        
             FileChooser fc = new FileChooser();
             // Filtra per immagini (JPG, PNG)
             fc.getExtensionFilters().addAll(
             new FileChooser.ExtensionFilter("Immagini", "*.png", "*.jpg", "*.jpeg"),
             new FileChooser.ExtensionFilter("Tutti i file", "*.*")
             );
-            
-            fc.setTitle("Scegli la copertina");
-            
-            File f = fc.showOpenDialog((Stage) (ScegliFileButton.getScene().getWindow()));
-            
+           
+            fc.setTitle("Scegli la copertina");           
+            File f = fc.showOpenDialog((Stage) (ScegliFileButton.getScene().getWindow()));           
             if(f!=null){
                 imgAnteprima.setImage(new Image(f.toURI().toString()));
-                urlIM = f.toURI().toString();
-                
-            }
-            
-                
-            
-            
+                urlIM = f.toURI().toString();               
+            }           
         });
         
-        RimuoviCopButton.setOnAction(eh->{
+        RimuoviCopButton.setOnAction(eh->{// Bottone per rimuovere copertina (imposta immagine default)
             Image img = new Image(getClass().getResourceAsStream("/Images/default.jpg"));
             imgAnteprima.setImage(img);
             urlIM = "/Images/default.jpg";
         });
-        
-        
-        
+               
+        // Bottone Annulla chiude la finestra senza salvare
         AnnullaButton.setOnAction(eh->{Stage s =(Stage)AnnullaButton.getScene().getWindow();s.close();});
         
-        SalvaButton.setOnAction(eh->{
-            
-            //CONTROLLI SUI CAMPI
-  
-            
-            Libro l;
-            
+        SalvaButton.setOnAction(eh->{// Bottone Salva salva le modifiche nel database           
+            //Controlli sui campi
+            Libro l;           
             ArrayList<Autore> autori = new ArrayList<>();
             Iterator<MenuItem> it = menuAutori.getItems().iterator();
             
+            // Controlla quali autori sono selezionati
             while(it.hasNext()){
                 CustomMenuItem i = (CustomMenuItem) it.next();
-                
-                
+                               
                 if(i.getContent() instanceof CheckBox){
                 CheckBox ck = (CheckBox) i.getContent();
                 if(!ck.isSelected()) continue;
@@ -184,11 +167,9 @@ public class ModificaLibroController {
                 
                 Autore a = model.servizi.DataBase.cercaAutoreByNames(nome, cognome);
                 
-                autori.add(a);
-                
+                autori.add(a);                
                 }
-                else if(i.getContent() instanceof TextField){
-                
+                else if(i.getContent() instanceof TextField){                
                 TextField txt = (TextField) i.getContent();
                 if(txt.getText().trim().equals(""))continue;
                 String[] parti = txt.getText().trim().split(" ");
@@ -201,26 +182,26 @@ public class ModificaLibroController {
                 //System.out.println(a);
                 model.servizi.DataBase.aggiungiAutore(a);
                 autori.add(a);
-                }
-                
+                }               
             }
              
+            // Crea nuovo oggetto libro aggiornato
              l = new Libro(isbn,txtTitolo.getText().trim(),txtEditore.getText().trim(),autori,Year.of(spinAnno.getValue()),spinCopie.getValue(),urlIM);   
-                boolean modified = model.servizi.DataBase.modificaLibro(l.getIsbn(), l.getTitolo(), l.getEditore(), (l.getAnno_pubblicazione()).getValue(), l.getNumero_copieDisponibili(), urlIM, autori);
-                //System.out.println(added);
-              if(modified){
+            // Salva modifiche nel database
+             boolean modified = model.servizi.DataBase.modificaLibro(l.getIsbn(), l.getTitolo(), l.getEditore(), 
+                     (l.getAnno_pubblicazione()).getValue(), l.getNumero_copieDisponibili(), urlIM, autori);
+            
+              if(modified){// Messaggi di conferma o errore
                 Alert AL = new Alert(Alert.AlertType.INFORMATION);
                 AL.setHeaderText("Aggiornamento Catalogo");
                 AL.setContentText("Libro modificato");
                 
                 DialogPane dialogPane = AL.getDialogPane();
-
               
                 dialogPane.getStylesheets().add(
                     getClass().getResource("/CSS/StyleAccess.css").toExternalForm()
                 );
-
-                
+               
                 dialogPane.getStyleClass().add("my-alert");
                 
                 AL.showAndWait();
@@ -230,33 +211,25 @@ public class ModificaLibroController {
                 IsbnAlert.setContentText("Modifiche non completate");
                 
                 DialogPane dialogPane = IsbnAlert.getDialogPane();
-
-              
+             
                 dialogPane.getStylesheets().add(
                     getClass().getResource("/CSS/StyleAccess.css").toExternalForm()
-                );
-
-                
+                );               
                 dialogPane.getStyleClass().add("my-alert");
                 
                 IsbnAlert.showAndWait();
-            return;
-                  
-                  
+            return;                                   
               }
-                
+             
+            // Chiude la finestra dopo il salvataggio   
              Stage s = (Stage) SalvaButton.getScene().getWindow();
-             s.close();
-                
-                
-            
+             s.close();       
         });
-        
-        
+     
     }
     
     //AGGIORNAMENTO AUTORI
-    public void updateAutori(ArrayList<Autore> aut){
+    public void updateAutori(ArrayList<Autore> aut){  // Ricarica menu autori con quelli disponibili e seleziona quelli già assegnati
         ArrayList<Autore> autori = model.servizi.DataBase.getAutori();
         menuAutori.getItems().clear();
         
@@ -266,10 +239,10 @@ public class ModificaLibroController {
                 if(a1.getId()==a.getId()){
                     checkBox.setSelected(true);break;
                 }
+            // Aggiunge 4 TextField vuoti per nuovi autori
             CustomMenuItem it = new CustomMenuItem(checkBox);
             it.setHideOnClick(false);
-            menuAutori.getItems().add(it);
-        
+            menuAutori.getItems().add(it);        
         }
         CustomMenuItem[] altro = new CustomMenuItem[4];
         for(int i=0;i<4;i++){
@@ -279,19 +252,16 @@ public class ModificaLibroController {
         altro[i].setHideOnClick(false);
         }
         menuAutori.getItems().addAll(altro);
-        //System.out.println();
-                
-        
     }
 
     private void spinnerInitialize() {
+        // Spinner anno di pubblicazione: da 1500 a 2100
         SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1500, 2100, 2024, 1);
-
         spinAnno.setValueFactory(valueFactory);
         
+        // Spinner numero copie: da 0 a 500
         valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 500, 0, 1);
         spinCopie.setValueFactory(valueFactory);
     }
-    
     
 }
