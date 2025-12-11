@@ -214,7 +214,7 @@ public class CatalogoController {
                 s.setResizable(false);
                 s.initModality(Modality.APPLICATION_MODAL);
             try {
-                s.setScene(new Scene(FXMLLoader.load(getClass().getResource("/View/modificaLibro.fxml"))));
+                s.setScene(new Scene(FXMLLoader.load(getClass().getResource("/View/ModificaLibro.fxml"))));
             } catch (IOException ex) {
                 Logger.getLogger(DashboardController.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -376,7 +376,7 @@ public class CatalogoController {
                 stage.setTitle("Aggiungi Libro");
                 stage.setResizable(false);
                 stage.initModality(Modality.APPLICATION_MODAL);
-                stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/View/aggiungiLibro.fxml"))));
+                stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/View/AggiungiLibro.fxml"))));
                 stage.showAndWait();
                 updateCatalogo(DataBase.getCatalogo());
             } catch (IOException ex) { ex.printStackTrace(); }

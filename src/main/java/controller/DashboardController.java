@@ -179,7 +179,7 @@ public class DashboardController {
         DashboardButton.setOnAction(eh->{
             
             try {
-                 Parent root = FXMLLoader.load(getClass().getResource("/View/dashboard.fxml"));
+                 Parent root = FXMLLoader.load(getClass().getResource("/View/Dashboard.fxml"));
                  Scene s = DashboardButton.getScene();
                  s.setRoot(root);
                  evidenziaBottone(DashboardButton);
@@ -198,7 +198,7 @@ public class DashboardController {
         });  
         mailButton.setOnAction(eh->{    
             try {
-                 Parent root = FXMLLoader.load(getClass().getResource("/View/mail.fxml"));
+                 Parent root = FXMLLoader.load(getClass().getResource("/View/Mail.fxml"));
                  HomeBorderPane.setCenter(root);
                  evidenziaBottone(mailButton);
             } catch (IOException ex) {
@@ -207,7 +207,7 @@ public class DashboardController {
         });       
         utentiButton.setOnAction(eh->{     
             try {
-                 Parent root = FXMLLoader.load(getClass().getResource("/View/utenti.fxml"));
+                 Parent root = FXMLLoader.load(getClass().getResource("/View/Utenti.fxml"));
                  HomeBorderPane.setCenter(root);
                  evidenziaBottone(utentiButton);
             } catch (IOException ex) {

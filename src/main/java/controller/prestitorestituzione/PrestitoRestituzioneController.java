@@ -227,7 +227,7 @@ public class PrestitoRestituzioneController {
         
 
         try {
-            stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/View/addPrestito.fxml"))));
+            stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/View/AddPrestito.fxml"))));
             
         } catch (IOException ex) {
             Logger.getLogger(CatalogoController.class.getName()).log(Level.SEVERE, null, ex);

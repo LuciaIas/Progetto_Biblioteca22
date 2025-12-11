@@ -208,7 +208,7 @@ public class AccessoController {
                 al.showAndWait();
 
                 //ACCESSO ALLA DASHBOARD PRINCIPALE
-                model.TransizioneScena.switchSceneEffect(Main.stage, "/View/dashboard.fxml");
+                model.TransizioneScena.switchSceneEffect(Main.stage, "/View/Dashboard.fxml");
                 Main.stage.getProperties().remove("login");
                 Main.stage.centerOnScreen();
                 
@@ -275,7 +275,7 @@ public class AccessoController {
             
 
                      //ACCESSO ALLA DASHBOARD PRINCIPALE
-                model.TransizioneScena.switchSceneEffect(Main.stage, "/View/dashboard.fxml");
+                model.TransizioneScena.switchSceneEffect(Main.stage, "/View/Dashboard.fxml");
                 Main.stage.getProperties().remove("login");
                 Main.stage.centerOnScreen();
                 
