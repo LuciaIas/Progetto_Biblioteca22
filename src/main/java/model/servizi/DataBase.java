@@ -30,86 +30,75 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author nicol
+ * @author gruppo22
  */
+
 public class DataBase {
-    
-    static Connection conn;
+    static Connection conn; //Connessione al database condivisa tra tutti i metodi 
     static String DB_name="Biblioteca";
+   
     
-    
-    public static void DBInitialize(){
-         Connection c;
-        
+    //Inizializza la connessione al database MySQL locale. Logga eventuali eccezioni.
+    public static void initializeDB(){
+        Connection c;    
         try {
-            c = DriverManager.getConnection("jdbc:mysql://localhost/"+DB_name, "root", "");
-            
-            conn=c;
+            c = DriverManager.getConnection("jdbc:mysql://localhost/"+DB_name, "root", "");       
+            conn=c; // La connessione viene salvata nella variabile statica per riutilizzo
         } catch (SQLException ex) {
             Logger.getLogger(DataBase.class.getName()).log(Level.SEVERE, null, ex);
         }
-         
+    
     }
     
+    //==================== BIBLIOTECARIO ====================    
     
-    //FUNZIONI PER INSERIRE IL BIBLIOTECARIO
-    public static boolean InsertBibliotecario(String password){
-        if(CheckIfExistsBibliotecario())
+    //Inserisce il bibliotecario nel database se non esiste già. 
+    //La password viene memorizzata come hash SHA-256.
+    public static boolean inserisciBibliotecario(String password){
+        if(controllaEsistenzaBibliotecario())
             return false;
+        
         StringBuilder hexString;
-        try {
-            
+        try {  
+            // Calcolo hash della password
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
-
-
             byte[] encodedhash = digest.digest(password.getBytes(StandardCharsets.UTF_8));
-
             
+            // Converto hash in stringa esadecimale
             hexString = new StringBuilder(2 * encodedhash.length);
             for (int i = 0; i < encodedhash.length; i++) {
-                String hex = Integer.toHexString(0xff & encodedhash[i]);
-                
-                
+                String hex = Integer.toHexString(0xff & encodedhash[i]);                          
                 if (hex.length() == 1) {
                     hexString.append('0');
                 }
                 hexString.append(hex);
             }
-
-            
-
-        } catch (NoSuchAlgorithmException e) {
-            
+        } catch (NoSuchAlgorithmException e) {       
             throw new RuntimeException("Errore critico: Algoritmo SHA-256 non trovato.", e);
-        }
-        
+        }     
+        // Inserimento nel database
         String query = "Insert into bibliotecario values(?)";
         try {
             PreparedStatement stat= conn.prepareStatement(query);
             stat.setString(1, hexString.toString());
-            stat.execute();
-            
+            stat.execute();    
         } catch (SQLException ex) {
             return false;
         }
-        
-        
         return true;
     }
 
-    public static boolean CheckIfExistsBibliotecario(){
+    // Controlla se esiste già un bibliotecario nel database.
+    public static boolean controllaEsistenzaBibliotecario(){
         String query = "Select * from bibliotecario";
         
         try {
-            PreparedStatement stat = conn.prepareStatement(query);
-            
-            ResultSet rs = stat.executeQuery();
-            
+            PreparedStatement stat = conn.prepareStatement(query);           
+            ResultSet rs = stat.executeQuery();           
             if(rs.next())
                 return true;
             else
-                return false;
-            
+                return false;           
         } catch (SQLException ex) {
             Logger.getLogger(DataBase.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -117,58 +106,48 @@ public class DataBase {
     }
     
     
-    //FUNZIONE PER CANCELLARE L'ACCOUNT DEL BIBLIOTECARIO
-    public static boolean RemoveBibliotecario(){
-        if(!CheckIfExistsBibliotecario())
-            return false;
-        
-        String query = "delete from bibliotecario";
-        
+    //Rimuove il bibliotecario dal database, se esiste.
+    public static boolean rimuoviBibliotecario(){
+        if(!controllaEsistenzaBibliotecario())
+            return false;        
+        String query = "delete from bibliotecario";        
         try {
             PreparedStatement stat = conn.prepareStatement(query);
             stat.execute();
             return true;
         } catch (SQLException ex) {
             return false;
-        }
-        
+        }       
     }
     
-    
-    //FUNZIONE PER PRENDERE LA PASSWORD DAL DATABASE
-    public static boolean CheckPasswordBibliotecario(String password){
-        if(!CheckIfExistsBibliotecario())
-            return false;
-        
+
+    //Controlla se la password fornita corrisponde a quella memorizzata. 
+    //La password viene hashata con SHA-256 prima del confronto.
+    public static boolean controllaPasswordBibliotecario(String password){
+        if(!controllaEsistenzaBibliotecario())
+            return false;       
         StringBuilder hexString;
-        try {
-            
+        try {           
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
 
-
             byte[] encodedhash = digest.digest(password.getBytes(StandardCharsets.UTF_8));
-
-            
+  
             hexString = new StringBuilder(2 * encodedhash.length);
             for (int i = 0; i < encodedhash.length; i++) {
                 String hex = Integer.toHexString(0xff & encodedhash[i]);
-                
-                
+                                
                 if (hex.length() == 1) {
                     hexString.append('0');
                 }
                 hexString.append(hex);
             }
 
-            
-
         } catch (NoSuchAlgorithmException e) {
             
             throw new RuntimeException("Errore critico: Algoritmo SHA-256 non trovato.", e);
         }
         
-        String query = "Select * from bibliotecario where password_=?";
-        
+        String query = "Select * from bibliotecario where password_=?";       
         PreparedStatement stat;
         try {
             stat = conn.prepareStatement(query);
@@ -183,14 +162,13 @@ public class DataBase {
             return false;
         }
         return false;
-        
-    
+  
     }
     
+       //==================== LIBRI ====================
     
-    //SELECT DEI LIBRI
-    public static Catalogo GetCatalogo(){
-        
+    // Restituisce il catalogo completo dei libri con autori associati.
+    public static Catalogo getCatalogo(){       
         Catalogo libri = new Catalogo();
         List<Autore> autori = new ArrayList<>(); 
         
@@ -198,52 +176,58 @@ public class DataBase {
         String queryAutori = "Select * from autori";
         String queryScrittoda = "Select * from scritto_da where isbn=?";
         try {
+            // Leggo tutti i libri dal DB
             PreparedStatement stat = conn.prepareStatement(queryLibri);
             ResultSet rs = stat.executeQuery();
             
-            while(rs.next())
-            //isbn,titolo,editore,null,anno pubblicazione,num_copie,url
-                libri.aggiungiLibro(new Libro(rs.getString(1),rs.getString(2),rs.getString(3),null,Year.of(rs.getInt(5)),rs.getInt(4),rs.getString(6)));
-            
+            while (rs.next()) {
+                // Creo oggetto Libro mappando i campi
+                libri.aggiungiLibro(new Libro(
+                        rs.getString(1), // isbn
+                        rs.getString(2), // titolo
+                        rs.getString(3), // editore
+                        null,            // autori impostati dopo
+                        Year.of(rs.getInt(5)), // anno pubblicazione
+                        rs.getInt(4),          // numero copie
+                        rs.getString(6)        // url immagine
+                ));
+            }
+            // Leggo tutti gli autori dal DB
             stat = conn.prepareStatement(queryAutori);
             rs = stat.executeQuery();
-            //nome cognome opere dadtanascita
             while(rs.next()){
                 Autore a;
                 if(rs.getDate(5)!=null)
-                    
                 a = new Autore(rs.getString(2),rs.getString(3),rs.getInt(4),(rs.getDate(5)).toLocalDate());
                 else
                     a = new Autore(rs.getString(2),rs.getString(3),rs.getInt(4),null);
-                a.setId(rs.getInt(1));
+                a.setId(rs.getInt(1));// Salvo l'ID per associare ai libri
                 autori.add(a);
             }
             
+            // Associa gli autori ai libri tramite la tabella scritto_da
             for(Libro l : libri.getLibri()){
-            
                  List<Autore> aut = new ArrayList<>();
                  List<Integer> id = new ArrayList<>();
                  stat = conn.prepareStatement(queryScrittoda);
                  stat.setString(1, l.getIsbn());
                  rs = stat.executeQuery();
                  while(rs.next())
-                     id.add(rs.getInt(2));
+                     id.add(rs.getInt(2));// Recupero ID autori
                  
                  for(Autore a : autori)
-                     if(id.contains(a.getId()))
+                     if(id.contains(a.getId()))// Collego autore al libro
                          aut.add(a);
                  
                  l.setAutori(aut);
                  
             }
-            libri.sort();
-            return libri;
-            
+            libri.sort();// Ordina libri per titolo
+            return libri;         
         } catch (SQLException ex) {
             System.out.println("Errore sql");
             return null;
-        }
-        
+        }    
     }
     
     //SELECT DEGLI AUTORI
@@ -276,10 +260,10 @@ public class DataBase {
     }
     
     
-    //AGGIUNGERE IL LIBRO
-    public static boolean addBook(Libro l){
+    //Aggiunge un nuovo libro e le relazioni con gli autori.
+    public static boolean aggiungiLibro(Libro l){
         
-        String query = "INSERT INTO libri values(?,?,?,?,?,?)";
+       String query = "INSERT INTO libri values(?,?,?,?,?,?)";
        boolean ret = false;
         try {
             System.out.println("aggiungo libro");
@@ -296,7 +280,7 @@ public class DataBase {
             
             stat.execute();
             ret=true;
-            //SETTO LE RELAZIONI CON GLI AUTORI
+            // Creo le relazioni con gli autori
             String queryR = "Insert Into scritto_da values(?,?)";
             for(Autore a: l.getAutori()){
             
@@ -306,30 +290,23 @@ public class DataBase {
             stat1.setInt(2, a.getId());
             
             stat1.execute();
-            //ret=true;
-            
+            //ret=true;           
             }
         } catch (SQLException ex) {
            // ex.printStackTrace();
             System.out.println("eccezioneee super");
             ret=false;
-        }
-        
-        
-        
-        return ret;
-        
-        
+        }     
+        return ret;     
     }
     
-    public static Libro searchBook(String isbn){
-    
-        Catalogo c = GetCatalogo();
+    public static Libro cercaLibro(String isbn){   
+        Catalogo c = getCatalogo();
         return c.cercaPerIsbn(isbn);
     }
     
     //AGGIUNGERE AUTORE
-    public static boolean addAutore(Autore a){
+    public static boolean aggiungiAutore(Autore a){
         String query = "INSERT INTO autori(nome, cognome, num_opere, data_nascita) values(?,?,?,?)";
         try {
             PreparedStatement stat = conn.prepareStatement(query);
@@ -350,10 +327,8 @@ public class DataBase {
         
     }
     
-    public static int getNum_Autori(){
-    
+    public static int getNum_Autori(){  
         int n=-1;
-        
         String query = "SELECT COUNT(*) FROM autori;";
         try {
             PreparedStatement stat = conn.prepareStatement(query);
@@ -366,8 +341,7 @@ public class DataBase {
         return n;
     }
     
-    public static Autore SearchAutorByNames(String nome,String cognome){
-    
+    public static Autore cercaAutoreByNames(String nome,String cognome){   
         String query = "Select * from autori where nome=? and cognome=?";
         try {
             PreparedStatement stat = conn.prepareStatement(query);
@@ -389,23 +363,66 @@ public class DataBase {
         }
         
     }
+        
+     public static boolean modificaLibro(String isbn,String titolo,String editore,int anno_pubblicazione,int num_copie, String url,ArrayList<Autore> autori){    
+        String query = "UPDATE libri SET titolo = ?,editore = ?,anno_pubblicazione=?,num_copie=?,url_immagine=? WHERE isbn = ?";       
+        try {
+            PreparedStatement stat = conn.prepareStatement(query);
+            stat.setString(1, titolo);
+            stat.setString(2, editore);
+            stat.setInt(3, anno_pubblicazione);
+            stat.setInt(4, num_copie);
+            if(url==null)
+                stat.setNull(5, Types.VARCHAR);
+            else
+            stat.setString(5, url);
+            stat.setString(6, isbn);
+            stat.execute();
+            //ORA RIMUOVO GLI AUTORI
+            String queryAutori = "DELETE FROM scritto_da WHERE isbn = ? ";
+            PreparedStatement stat1 = conn.prepareStatement(queryAutori);
+            stat1.setString(1, isbn);
+            stat1.execute();
+            
+            //SETTO LE RELAZIONI CON GLI AUTORI
+            String queryR = "Insert Into scritto_da values(?,?)";
+            for(Autore a: autori){
+            
+           PreparedStatement stat2 =conn.prepareStatement(queryR);
+            
+            stat2.setString(1,isbn);
+            stat2.setInt(2, a.getId());
+            
+            stat2.execute();
+            //ret=true;            
+            }           
+            return true;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        }     
+    }
     
-    //FUNZIONI PER GLI UTENTI
-    public static ArrayList<User> getUtenti(){
     
-        ArrayList<User> us = new ArrayList<>();
+      //==================== UTENTI ====================
+    
+    //Restituisce tutti gli utenti ordinati alfabeticamente per cognome e nome.
+    public static ArrayList<Utente> getUtenti(){
+    
+        ArrayList<Utente> us = new ArrayList<>();
         String query = "Select * from utenti";
         try {
             PreparedStatement stat = conn.prepareStatement(query);
             ResultSet rs = stat.executeQuery();
             while(rs.next()){
-            
-                us.add(new User(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getBoolean(5)));
+                // Creo oggetto Utente mappando i campi dal DB
+                us.add(new Utente(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getBoolean(5)));
             
             }
-            us.sort(new Comparator<User>() {
+            us.sort(new Comparator<Utente>() {
+            // Ordino alfabeticamente
                 @Override
-                public int compare(User o1, User o2) {
+                public int compare(Utente o1, Utente o2) {
                     int a = o1.getCognome().toUpperCase().compareTo(o2.getCognome().toUpperCase());
                     if(a==0)
                         return o1.getNome().toUpperCase().compareTo(o2.getNome().toUpperCase());
@@ -419,10 +436,8 @@ public class DataBase {
         }
         
     }
-    public static boolean addUser(User u){
-    
-        String query = "INSERT INTO utenti values(?,?,?,?,?)";
-        
+    public static boolean aggiungiUtente(Utente u){   
+        String query = "INSERT INTO utenti values(?,?,?,?,?)";       
         try {
             PreparedStatement stat = conn.prepareStatement(query);
             stat.setString(1, u.getMatricola());
@@ -456,20 +471,30 @@ public class DataBase {
         return n;
     }
     
-    public static User searchUser(String matricola){
-    
-        ArrayList<User> us = getUtenti();
-        for(User u: us)
+    public static Utente cercaUtente(String matricola){
+        ArrayList<Utente> us = getUtenti();
+        for(Utente u: us)
             if(u.getMatricola().equals(matricola))
                 return u;
         return null;
     }
     
     
-    public static boolean setBlackListed(String matricola){
+    public static boolean setBlackListed(String matricola){   
+        String query = "UPDATE utenti SET Bloccato = true WHERE matricola = ?";       
+        try {
+            PreparedStatement stat = conn.prepareStatement(query);
+            stat.setString(1, matricola);
+            stat.execute();
+            return true;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        }        
+    }
     
-        String query = "UPDATE utenti SET Bloccato = true WHERE matricola = ?";
-        
+    public static boolean unsetBlackListed(String matricola){
+        String query = "UPDATE utenti SET Bloccato = false WHERE matricola = ?";       
         try {
             PreparedStatement stat = conn.prepareStatement(query);
             stat.setString(1, matricola);
@@ -479,74 +504,11 @@ public class DataBase {
             ex.printStackTrace();
             return false;
         }
-        
-    }
-    
-    public static boolean UnsetBlackListed(String matricola){
-    
-        String query = "UPDATE utenti SET Bloccato = false WHERE matricola = ?";
-        
-        try {
-            PreparedStatement stat = conn.prepareStatement(query);
-            stat.setString(1, matricola);
-            stat.execute();
-            return true;
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-            return false;
-        }
     
     }
-    
-     public static boolean modifyBook(String isbn,String titolo,String editore,int anno_pubblicazione,int num_copie, String url,ArrayList<Autore> autori){
-    
-        String query = "UPDATE libri SET titolo = ?,editore = ?,anno_pubblicazione=?,num_copie=?,url_immagine=? WHERE isbn = ?";
-        
-        try {
-            PreparedStatement stat = conn.prepareStatement(query);
-            stat.setString(1, titolo);
-            stat.setString(2, editore);
-            stat.setInt(3, anno_pubblicazione);
-            stat.setInt(4, num_copie);
-            if(url==null)
-                stat.setNull(5, Types.VARCHAR);
-            else
-            stat.setString(5, url);
-            stat.setString(6, isbn);
-            stat.execute();
-            //ORA RIMUOVO GLI AUTORI
-            String queryAutori = "DELETE FROM scritto_da WHERE isbn = ? ";
-            PreparedStatement stat1 = conn.prepareStatement(queryAutori);
-            stat1.setString(1, isbn);
-            stat1.execute();
-            
-            //SETTO LE RELAZIONI CON GLI AUTORI
-            String queryR = "Insert Into scritto_da values(?,?)";
-            for(Autore a: autori){
-            
-           PreparedStatement stat2 =conn.prepareStatement(queryR);
-            
-            stat2.setString(1,isbn);
-            stat2.setInt(2, a.getId());
-            
-            stat2.execute();
-            //ret=true;
-            
-            }
-            
-            return true;
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-            return false;
-        }
-        
-        
-    }
-    
-    public static boolean modifyUser(String matricola,String nome,String cognome,String mail){
-    
-        String query = "UPDATE utenti SET nome = ?,cognome = ?,mail=? WHERE matricola = ?";
-        
+
+    public static boolean modificaUtente(String matricola,String nome,String cognome,String mail){    
+        String query = "UPDATE utenti SET nome = ?,cognome = ?,mail=? WHERE matricola = ?";       
         try {
             PreparedStatement stat = conn.prepareStatement(query);
             stat.setString(1, nome);
@@ -563,9 +525,10 @@ public class DataBase {
         
     }
     
-    //PRESITI
-    public static ArrayList<Prestito> getPrestiti(){
+    //==================== PRESTITI ====================
     
+    //Restituisce tutti i prestiti registrati. Converte lo stato dal DB in enum Stato.
+    public static ArrayList<Prestito> getPrestiti(){   
             String query = "Select * from prestito";
             ArrayList<Prestito> p = new ArrayList<>();
             try {
@@ -599,6 +562,7 @@ public class DataBase {
                 scadenza = rs.getDate(6).toLocalDate();
             if(rs.getDate(4)!=null)
                 restituzione=rs.getDate(4).toLocalDate();
+                // Creo oggetto Prestito e lo aggiungo alla lista
                 p.add(new Prestito(rs.getString(1),rs.getString(2),rs.getDate(3).toLocalDate(),restituzione,stato,scadenza));
             }
             
@@ -612,9 +576,7 @@ public class DataBase {
     }
     
     
-    public static boolean addPrestito(Prestito p){
-    
-        
+    public static boolean aggiungiPrestito(Prestito p){      
         String query = "Insert into prestito values(?,?,?,?,?,?)";
         try {
             PreparedStatement stat = conn.prepareStatement(query);
@@ -670,8 +632,7 @@ public class DataBase {
         return n;
     }
     
-    public static boolean Restituisci(String isbn,String matricola){
-    
+    public static boolean restituisci(String isbn,String matricola){
         String query = "Update prestito set data_restituzione = CURRENT_DATE,stato_prestito = 'Restituito' where isbn=? and matricola=? and data_restituzione is null";
         try {
             PreparedStatement stat = conn.prepareStatement(query);
@@ -687,8 +648,7 @@ public class DataBase {
     }
     
     
-    public static boolean CheckPrestito(String isbn,String matricola){
-    
+    public static boolean controllaPrestito(String isbn,String matricola){  
         String query = "Select * from prestito where isbn=? and matricola=?";
         try {
             PreparedStatement stat = conn.prepareStatement(query);
@@ -705,7 +665,7 @@ public class DataBase {
     
     }
     
-    public static boolean RemovePrestito(String isbn,String matricola){
+    public static boolean rimuoviPrestito(String isbn,String matricola){
         String query = "DELETE FROM prestito WHERE isbn = ? AND matricola = ?";
         try {
             PreparedStatement stat = conn.prepareStatement(query);
@@ -721,6 +681,7 @@ public class DataBase {
         }
     }
     
+    //==================== COPIE ====================
     //FUNZIONI PER LE COPIE
     public static int getNumCopieByIsbn(String isbn){
         int n = -1;
@@ -731,9 +692,7 @@ public class DataBase {
             ResultSet rs = stat.executeQuery();
             rs.next();
             n = rs.getInt(1);
-            
-            
-            
+    
         } catch (SQLException ex) {
             ex.printStackTrace();
          
@@ -741,15 +700,13 @@ public class DataBase {
         return n;
     }
     
-    public static boolean modifyNum_copie(String isbn,boolean add){
-    
+    public static boolean modificaNum_copie(String isbn,boolean add){ 
         String query = "UPDATE libri SET num_copie=? WHERE isbn = ?";
         int num_copie = getNumCopieByIsbn(isbn);
         if(add)
             num_copie+=1;
         else    
-            num_copie-=1;
-        
+            num_copie-=1;       
         try {
             PreparedStatement stat = conn.prepareStatement(query);
             stat.setString(2, isbn);
@@ -765,10 +722,8 @@ public class DataBase {
         
     }
     
-    public static boolean setStatoPrestito(String isbn,String matricola, Stato stato){
-     
+    public static boolean setStatoPrestito(String isbn,String matricola, Stato stato){   
         String query = "UPDATE prestito SET stato_prestito = ? WHERE isbn = ?  AND matricola = ?";
-
         try {
             PreparedStatement stat = conn.prepareStatement(query);
             stat.setString(2, isbn);
@@ -791,13 +746,9 @@ public class DataBase {
                 stat.setNull(1, Types.VARCHAR);
             else
                 stat.setString(1, s1);
-            
-            
-            
-            stat.execute();
-            
-            return true;
-            
+                    
+            stat.execute();         
+            return true;           
         } catch (SQLException ex) {
             ex.printStackTrace();
             return false;
@@ -806,20 +757,16 @@ public class DataBase {
         
     }
     
-    public static boolean ProrogaPrestito(String isbn,String matricola){
-    
-        String query = "UPDATE prestito SET data_scadenza = DATE_ADD(current_date, INTERVAL 15 DAY) WHERE isbn = ?   AND matricola = ? AND data_restituzione IS NULL";
-    
+    public static boolean prorogaPrestito(String isbn,String matricola){
+        String query = "UPDATE prestito SET data_scadenza = DATE_ADD(current_date, INTERVAL 15 DAY) WHERE isbn = ?   AND matricola = ? AND data_restituzione IS NULL";   
          try {
             PreparedStatement stat = conn.prepareStatement(query);
             stat.setString(1, isbn);
             stat.setString(2, matricola);
- 
-            
+       
             stat.execute();
             
-            return true;
-            
+            return true;           
         } catch (SQLException ex) {
             ex.printStackTrace();
             return false;
@@ -827,9 +774,9 @@ public class DataBase {
         
     }
     
-    public static ArrayList<Libro> SearchUserByTitle(String titolo){
+    public static ArrayList<Libro> cercaUtenteByTitolo(String titolo){
     
-        Catalogo c = GetCatalogo();
+        Catalogo c = getCatalogo();
         ArrayList<Libro> ar = new ArrayList<>();
         for(Libro l : c.cercaPerTitolo(titolo))
             ar.add(l);
@@ -838,7 +785,7 @@ public class DataBase {
     
     }
     
-    public static boolean RemoveBook(String isbn){
+    public static boolean RimuoviLibro(String isbn){
     
         String query = "DELETE FROM libri WHERE isbn = ? ";
         
@@ -857,10 +804,8 @@ public class DataBase {
         
     }
 
-    public static boolean RemoveUser(String matricola){
-    
-        String query = "DELETE FROM utenti WHERE matricola = ? ";
-        
+    public static boolean RimuoviUtente(String matricola){   
+        String query = "DELETE FROM utenti WHERE matricola = ? ";       
          try {
             PreparedStatement stat = conn.prepareStatement(query);
             stat.setString(1, matricola);
@@ -876,7 +821,7 @@ public class DataBase {
         
     }
     
-    public static int GetNumRelationsScritto_Da(){
+    public static int getNumRelationsScritto_Da(){
         int n=0;
         String query = "SELECT COUNT(*) FROM scritto_da";
         
