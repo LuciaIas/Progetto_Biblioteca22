@@ -33,8 +33,9 @@ import javafx.stage.Stage;
 
 /**
  *
- * @author nicol
+ * @author gruppo22
  */
+
 public class AggiungiLibroController {
     
     @FXML
@@ -75,10 +76,7 @@ public class AggiungiLibroController {
     private String urlIM=null;
     @FXML
     public void initialize(){
-
-        
-        SettingForm();
-        
+        settingForm();      
     }
     
     public void settingForm(){
@@ -86,50 +84,34 @@ public class AggiungiLibroController {
         Image img = new Image(getClass().getResourceAsStream("/Images/default.jpg"));
         imgAnteprima.setImage(img);
         urlIM = "/Images/default.jpg";
-        UpdateAutori(); //SETTING AUTORI
-        SpinnerInitialize(); //SETTING SPINNER
-        ButtonInitialize();
-        
+        updateAutori(); //SETTING AUTORI
+        spinnerInitialize(); //SETTING SPINNER
+        buttonInitialize();   
     }
     
     public void buttonInitialize(){
-    
-        ScegliFileButton.setOnAction(eh->{
-        
+        ScegliFileButton.setOnAction(eh->{     
             FileChooser fc = new FileChooser();
             // Filtra per immagini (JPG, PNG)
             fc.getExtensionFilters().addAll(
             new FileChooser.ExtensionFilter("Immagini", "*.png", "*.jpg", "*.jpeg"),
             new FileChooser.ExtensionFilter("Tutti i file", "*.*")
             );
-            
-            fc.setTitle("Scegli la copertina");
-            
-            File f = fc.showOpenDialog((Stage) (ScegliFileButton.getScene().getWindow()));
-            
+            fc.setTitle("Scegli la copertina");         
+            File f = fc.showOpenDialog((Stage) (ScegliFileButton.getScene().getWindow()));        
             if(f!=null){
                 imgAnteprima.setImage(new Image(f.toURI().toString()));
-                urlIM = f.toURI().toString();
-                
-            }
-            
-                
-            
-            
-        });
-        
+                urlIM = f.toURI().toString();        
+            }        
+        });     
         RimuoviCopButton.setOnAction(eh->{
             Image img = new Image(getClass().getResourceAsStream("/Images/default.jpg"));
             imgAnteprima.setImage(img);
             urlIM = "/Images/default.jpg";
         });
-        
-        
-        
-        AnnullaButton.setOnAction(eh->{Stage s =(Stage)AnnullaButton.getScene().getWindow();s.close();});
-        
-        SalvaButton.setOnAction(eh->{
-            
+           
+        AnnullaButton.setOnAction(eh->{Stage s =(Stage)AnnullaButton.getScene().getWindow();s.close();});     
+        SalvaButton.setOnAction(eh->{       
             //CONTROLLI SUI CAMPI
             if(txtISBN.getText().trim().length()!=13){
             
@@ -139,39 +121,32 @@ public class AggiungiLibroController {
                 
                 DialogPane dialogPane = IsbnAlert.getDialogPane();
 
-              
                 dialogPane.getStylesheets().add(
                     getClass().getResource("/CSS/StyleAccess.css").toExternalForm()
                 );
-
-                
+   
                 dialogPane.getStyleClass().add("my-alert");
-                
+        
                 IsbnAlert.showAndWait();
                 return;
-            }else if(!txtISBN.getText().trim().matches("\\d+")){
-                
+            }else if(!txtISBN.getText().trim().matches("\\d+")){          
                 Alert IsbnAlert = new Alert(AlertType.ERROR);
                 IsbnAlert.setHeaderText("Codice ISBN non valido");
                 IsbnAlert.setContentText("Il codice isbn deve contenere solo numeri");
                 
                 DialogPane dialogPane = IsbnAlert.getDialogPane();
 
-              
                 dialogPane.getStylesheets().add(
                     getClass().getResource("/CSS/StyleAccess.css").toExternalForm()
                 );
-
-                
+    
                 dialogPane.getStyleClass().add("my-alert");
                 
                 IsbnAlert.showAndWait();
             return;
             }
             
-            
-            
-            
+     
             Libro l;
             
             ArrayList<Autore> autori = new ArrayList<>();
@@ -188,7 +163,7 @@ public class AggiungiLibroController {
                 String nome = parti[0];
                 String cognome = parti[1];
                 
-                Autore a = Model.DataBase.SearchAutorByNames(nome, cognome);
+                Autore a = model.servizi.DataBase.cercaAutoreByNames(nome, cognome);
                 
                 autori.add(a);
                 
@@ -226,9 +201,9 @@ public class AggiungiLibroController {
                 if(nome.equals("") & cognome.equals("")) continue;
                 
                 Autore a = new Autore(nome,cognome,0,null);
-                a.setId(Model.DataBase.getNum_Autori()+1);
+                a.setId(model.servizi.DataBase.getNum_Autori()+1);
                 //System.out.println(a);
-                Model.DataBase.addAutore(a);
+                model.servizi.DataBase.aggiungiAutore(a);
                 autori.add(a);
                 
                 
@@ -239,7 +214,7 @@ public class AggiungiLibroController {
              
              l = new Libro(txtISBN.getText().trim(),txtTitolo.getText().trim(),txtEditore.getText().trim(),autori,Year.of(spinAnno.getValue()),spinCopie.getValue(),urlIM);
              
-             if((DataBase.GetNumRelationsScritto_Da() + autori.size())>MAX_WRITED){
+             if((DataBase.getNumRelationsScritto_Da() + autori.size())>MAX_WRITED){
              
                   Alert IsbnAlert = new Alert(AlertType.ERROR);
                 IsbnAlert.setHeaderText("Errore creazione libro");
@@ -283,7 +258,7 @@ public class AggiungiLibroController {
               }
                 
                 //System.out.println(added);
-              if(Model.DataBase.addBook(l)){
+              if(model.servizi.DataBase.aggiungiLibro(l)){
                 Alert AL = new Alert(AlertType.ERROR);
                 AL.setHeaderText("Aggiornamento Catalogo");
                 AL.setContentText("Libro aggiunto al catalogo");
@@ -302,8 +277,8 @@ public class AggiungiLibroController {
               }
               
                 
-              UpdateAutori();
-              if(DataBase.GetCatalogo().getLibri().size()>=CatalogoController.MAX_BOOKS){
+              updateAutori();
+              if(DataBase.getCatalogo().getLibri().size()>=CatalogoController.MAX_BOOKS){
             
                  Alert IsbnAlert = new Alert(AlertType.ERROR);
                 IsbnAlert.setHeaderText("Chiusura Pannello");
@@ -333,7 +308,7 @@ public class AggiungiLibroController {
     
     //AGGIORNAMENTO AUTORI
     public void updateAutori(){
-        ArrayList<Autore> autori = Model.DataBase.getAutori();
+        ArrayList<Autore> autori = model.servizi.DataBase.getAutori();
         menuAutori.getItems().clear();
         
         for(Autore a : autori){
