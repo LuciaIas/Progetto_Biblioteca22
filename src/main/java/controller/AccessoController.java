@@ -36,99 +36,78 @@ import main.Main;
 public class AccessoController {
     
     //Sliding fxml
-    /** Il Pane di Login */
-    //contiene campo pswd, checkbox mostra pswd login, bottone accedi 
     @FXML
-    private Pane LoginPane; 
+    private Pane LoginPane; //Contiene campo pswd, checkbox mostra pswd login, bottone accedi 
     
-     /** Il Pane di Register */
-    //ho pswd di registraz, coferma pswd, checkbox mostra pswd, bottoni registrati
     @FXML
-    private Pane RegisterForm;
+    private Pane RegisterForm;//Contiene pswd di registraz, coferma pswd, checkbox mostra pswd, bottoni registrati
   
-     /** Il Pane di Sliding */
-    //pannello che scorre quando clicclo pulsante x passare tra login e registrazione
     @FXML
-    private Pane Sliding;
+    private Pane Sliding; //Pannello che scorre quando clicclo pulsante per passare tra login e registrazione
     
-     /** Il Button per lo Sliding */
     @FXML
-    private Button SlidingButton;
+    private Button SlidingButton; //Button per lo Sliding
     
-    /** La label che indica l'azione che si eseguirà */
     @FXML
-    private Label SwitchLabel;
+    private Label SwitchLabel;// La label che indica l'azione che si eseguirà
     
-    //sliding var
-    boolean direction=true;   
-    TranslateTransition ts;   
-    TranslateTransition tr;   
-    final double slidingTiming=1000;  
-    
-    /** Il button che eseguira il login */
-    @FXML
-    private Button LoginButton;
-    
-    /** Il button che eseguira la registrazione */
-    @FXML
-    private Button RegisterButton;
-    
-    //REGISTER FORM
-    /** Campo per nascondere la password */
-    @FXML
-    private PasswordField PassRegister;
-    
-    /** Campo per mostrare la password */
-    @FXML
-    private TextField PassRegisterVisible;
-    
-    /** Campo per nascondere la password confirm */
-    @FXML
-    private PasswordField PassConRegister;
-    
-    /** Campo per mostrare la password confirm */
-    @FXML
-    private TextField PassConRegisterVisible;
-    
-    /** Casella per settare visibile o meno la password */
-    @FXML 
-    private CheckBox CheckShowPassRegister;
-    
-    
-    //LOGIN FORM
-    /** Campo per nascondere la password */
-    @FXML
-    private PasswordField PassLogin;
-    /** Campo per mostrare la password */
-    @FXML
-    private TextField PassLoginVisible;
-    /** Casella per settare visibile o meno la password */
-    @FXML 
-    private CheckBox CheckShowPassLogin;
-   
-    /*
-    @FXML
-    private Label passwordRecovery;
-    */
+    // Variabili per animazioni sliding
+    boolean direction=true;    // true = verso registrazione, false = verso login
+    TranslateTransition ts;   // animazione sliding pane principale
+    TranslateTransition tr;   // animazione sliding form registrazione
+    final double slidingTiming=1000;  // durata animazione in millisecondi
 
     @FXML
-    public void initialize(){
+    private Button LoginButton;//Bottone per effettuare il login
+
+    @FXML
+    private Button RegisterButton;//Bottone per effettuare la registrazione 
+    
+    //REGISTER FORM
+    @FXML
+    private PasswordField PassRegister;// campo password nascosto
+    
+    @FXML
+    private TextField PassRegisterVisible; // campo password visibile
+    
+    @FXML
+    private PasswordField PassConRegister; // campo conferma password nascosto
+
+    @FXML
+    private TextField PassConRegisterVisible; // campo conferma password visibile
+
+    @FXML 
+    private CheckBox CheckShowPassRegister;// checkbox per mostrare/nascondere la password
+   
+    
+    //LOGIN FORM
+    @FXML
+    private PasswordField PassLogin;// password login nascosta
+
+    @FXML
+    private TextField PassLoginVisible; // password login visibile
+
+    @FXML 
+    private CheckBox CheckShowPassLogin;// checkbox per mostrare/nascondere password
+
+   // Inizializzazione controller
+    @FXML
+    public void initialize(){ // Configura bottoni e checkbox
         buttonInitialize();
         checkboxInitialize();
     }
-    //INIZIALIZZO FUNZIONI DI BOTTONI,CHECKBOX
 
-    public void buttonInitialize(){
+    public void buttonInitialize(){ //Configura le azioni dei bottoni e lo sliding tra i form
+ 
+        setSliding(); // Imposta sliding iniziale
         
-        //sliding setup
-        setSliding(); //SERVE PER LANCIARE IL MIO SLIDING INIZIALE
-        SlidingButton.setOnAction(eh->{
+        SlidingButton.setOnAction(eh->{  // Azione bottone sliding
             cleanForm(!direction);
             ts.play();
             tr.play();
             String text,text1;
             
-            if(direction){
+            if(direction){ // Aggiorna testo label e bottone in base alla direzione dello sliding
                 text="Non sei registrato?";
                 text1="Registrati";
             }else{
@@ -141,10 +120,9 @@ public class AccessoController {
             typewriterEffectButton(SlidingButton,text1);
         });
                 
-        //REGISTER
-        RegisterButton.setOnAction(eh->{
+        RegisterButton.setOnAction(eh->{ // Azione bottone registrazione
  
-            if(CheckShowPassRegister.isSelected()){
+            if(CheckShowPassRegister.isSelected()){// Sincronizza password visibile e nascosta
                 PassRegister.setText(PassRegisterVisible.getText());
                 PassConRegister.setText(PassConRegisterVisible.getText());
             }else{
@@ -154,45 +132,35 @@ public class AccessoController {
                      
             String password = PassRegister.getText();
             
-            if(!model.servizi.ControlloFormato.controlloFormatoPassword(password)){
-            
+            if(!model.servizi.ControlloFormato.controlloFormatoPassword(password)){// Controllo formato password
                 Alert al = new Alert(Alert.AlertType.ERROR);
                 al.setTitle("Errore Validazione"); // Titolo della finestra
                 al.setHeaderText("Password non sicura"); // Titolo interno (o mettilo a null per toglierlo)
                 al.setContentText("La password deve avere:\n- Minimo 8 caratteri\n- Una maiuscola\n- Un numero\n- Un simbolo (@#$%^&+=!)");
 
                 DialogPane dialogPane = al.getDialogPane();
-
                 dialogPane.getStylesheets().add(
                     getClass().getResource("/CSS/StyleAccess.css").toExternalForm()
                 );
-
                 dialogPane.getStyleClass().add("my-alert");
                 al.showAndWait();
                 return;
-            }
-            
-            String password1 = PassConRegister.getText();
-            
-            if(!password.equals(password1)){
-            
+            }    
+            String password1 = PassConRegister.getText();           
+            if(!password.equals(password1)){ // Controllo che password e conferma coincidano          
                 Alert al = new Alert(Alert.AlertType.ERROR);
                 al.setContentText("Le password devono coincidere");
                 al.setHeaderText("Password non corrispondenti");
-
                 DialogPane dialogPane = al.getDialogPane();
-
                 dialogPane.getStylesheets().add(
                     getClass().getResource("/CSS/StyleAccess.css").toExternalForm()
                 );
 
                 dialogPane.getStyleClass().add("my-alert");
                 al.showAndWait();
-                return;
-                
-            }
-            
-            if(model.servizi.DataBase.inserisciBibliotecario(password)){
+                return;    
+            }          
+            if(model.servizi.DataBase.inserisciBibliotecario(password)){// Inserisce bibliotecario nel DB
                 Alert al = new Alert(Alert.AlertType.INFORMATION);
                 al.setTitle("Operazione Completata");
                 al.setHeaderText("Registrazione effettuata 🚀"); // Ho aggiunto un'emoji per coerenza
@@ -207,24 +175,19 @@ public class AccessoController {
 
                 al.showAndWait();
 
-                //ACCESSO ALLA DASHBOARD PRINCIPALE
-                model.TransizioneScena.switchSceneEffect(Main.stage, "/View/Dashboard.fxml");
+                // Passa alla dashboard
+                model.TransizioneScena.switchSceneEffect(Main.stage, "/View/dashboard.fxml"); 
+
                 Main.stage.getProperties().remove("login");
                 Main.stage.centerOnScreen();
-                
-                
                 return;
-                
-
-            }else{
-                
+            }else{               
                 Alert al = new Alert(Alert.AlertType.ERROR);
                 al.setContentText("Esiste gia un bibliotecario");
                 al.setHeaderText("Registrazione fallita");
            
                 DialogPane dialogPane = al.getDialogPane();
 
-               
                 dialogPane.getStylesheets().add(
                     getClass().getResource("/CSS/StyleAccess.css").toExternalForm()
                 );
@@ -233,71 +196,52 @@ public class AccessoController {
 
                 al.showAndWait();
                 return;     
-            }               
-            
+            }                     
         });
          
-        LoginButton.setOnAction(e->{
+        LoginButton.setOnAction(e->{   // Azione bottone login
             if(CheckShowPassLogin.isSelected()){
-                PassLogin.setText(PassLoginVisible.getText());
-                
+                PassLogin.setText(PassLoginVisible.getText());               
             }else{
-                PassLoginVisible.setText(PassLogin.getText());
-                
-            }
-            
-            
+                PassLoginVisible.setText(PassLogin.getText());                
+            }         
             String password = PassLogin.getText();
-            
-            
-            
+      
             if(!model.servizi.DataBase.controllaPasswordBibliotecario(password)){
                 Alert al = new Alert(Alert.AlertType.ERROR);
                 al.setContentText("Password sbagliata");
                 al.setHeaderText("La password e sbagliata");
-                
-                   
+                             
                 DialogPane dialogPane = al.getDialogPane();
-
-              
+             
                 dialogPane.getStylesheets().add(
                     getClass().getResource("/CSS/StyleAccess.css").toExternalForm()
                 );
-
-                
+               
                 dialogPane.getStyleClass().add("my-alert");
-
-                
-                
+              
                 al.showAndWait();
                 return;
             }
-            
 
-                     //ACCESSO ALLA DASHBOARD PRINCIPALE
-                model.TransizioneScena.switchSceneEffect(Main.stage, "/View/Dashboard.fxml");
+                model.TransizioneScena.switchSceneEffect(Main.stage, "/View/dashboard.fxml");// Passa alla dashboard
+
                 Main.stage.getProperties().remove("login");
                 Main.stage.centerOnScreen();
-                
-        
-        });
-        
-   
+        }); 
     }
     
-    public void checkboxInitialize(){
+    public void checkboxInitialize(){// Configura le checkbox per mostrare/nascondere password
         CheckShowPassLogin.setOnAction(eh->{if(CheckShowPassLogin.isSelected())  showPassword(true,true); else showPassword(false,true); });
         CheckShowPassRegister.setOnAction(eh->{if(CheckShowPassRegister.isSelected()) showPassword(true,false); else showPassword(false,false); });
     }
     
     
-    public void setSliding(){
-        
+    public void setSliding(){//Imposta le animazioni di sliding dei Pane
         double moving = 325;
-        
+      
          if(direction)
-            moving*=-1;
-        
+            moving*=-1;     
         
         ts = new TranslateTransition();
         tr = new TranslateTransition();
@@ -311,16 +255,15 @@ public class AccessoController {
         ts.setDuration(Duration.millis(slidingTiming));
         tr.setDuration(Duration.millis(slidingTiming));
         
-        direction=!direction;
-        ts.setOnFinished(e->setSliding());
+        direction=!direction; // cambia direzione per prossimo sliding
+        ts.setOnFinished(e->setSliding());// loop animazione
         
     }
     
     
     //PASSWORDBOX
-    
-        /** funzione per mostrare o nascondere la password */
-    public void showPassword(boolean yes,boolean login){
+
+    public void showPassword(boolean yes,boolean login){//Mostra o nasconde la password nei form login o registrazione
         if(login){
             if(yes){
                 PassLoginVisible.setText(PassLogin.getText());
@@ -349,21 +292,15 @@ public class AccessoController {
                 PassConRegister.setText(PassConRegisterVisible.getText());
                 PassConRegisterVisible.setVisible(false);
                 PassConRegister.setVisible(true);
-            
-                
-            }
-                        
-            }
-            
-            
-        
+
+            }                       
+            }     
     }
     
     
     //FUNZIONE DI CLEAN DEL FORM
-        /** pulizia dei form */
-    public void cleanForm(boolean login){
-        
+
+    public void cleanForm(boolean login){//Pulisce i form di login o registrazione     
         if(login){
             PassRegister.clear();
             PassRegisterVisible.clear();
@@ -373,58 +310,43 @@ public class AccessoController {
         }else{
             PassLogin.clear();
             PassLoginVisible.clear();
-            CheckShowPassLogin.setSelected(false);
-        
-        }
-        
+            CheckShowPassLogin.setSelected(false);        
+        }       
     }
       
 
       //FUNZIONI UTILI PER ESTETICA
    
-    private void typewriterEffectLabel(Label label, String text) {
-    
+    private void typewriterEffectLabel(Label label, String text) {//Effetto "macchina da scrivere" per label
     label.setText("");
-    
-    
-    Timeline timeline = new Timeline();
-    
-    for (int i = 0; i < text.length(); i++) {
-    
+    Timeline timeline = new Timeline();   
+    for (int i = 0; i < text.length(); i++) {    
         final int index = i;
         final String partialText = text.substring(0, index + 1);
-        
-       
+    
         KeyFrame kf = new KeyFrame(
             Duration.millis(50 * (i + 1)), 
             e -> label.setText(partialText)
         );
         timeline.getKeyFrames().add(kf);
-    }
-    
+    }   
     timeline.play();
 }
  
-    private void typewriterEffectButton(Button b, String text) {
-
+    private void typewriterEffectButton(Button b, String text) {//Effetto "macchina da scrivere" per button
     b.setText("");
-    
-
-    Timeline timeline = new Timeline();
-    
+    Timeline timeline = new Timeline();    
     for (int i = 0; i < text.length(); i++) {
-
         final int index = i;
         final String partialText = text.substring(0, index + 1);
-
         KeyFrame kf = new KeyFrame(
             Duration.millis(50 * (i + 1)), 
             e -> b.setText(partialText)
         );
         timeline.getKeyFrames().add(kf);
-    }
-    
+    }   
     timeline.play();
 }
+
     
 }
