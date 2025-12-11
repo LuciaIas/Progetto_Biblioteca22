@@ -38,7 +38,7 @@ import javafx.util.Duration;
 
 /**
  *
- * @author nicol
+ * @author gruppo22
  */
 public class UtentiController {
     @FXML
@@ -61,13 +61,13 @@ public class UtentiController {
     @FXML
     public void initialize(){
         updateUtentiList(DataBase.getUtenti());
-        ButtonInitialize();
-        LabelInitialize();
-        MenuButtonInitialize();
+        buttonInitialize();
+        labelInitialize();
+        menuButtonInitialize();
         searchUser.setOnKeyPressed(eh->{
         
             if(eh.getCode()==KeyCode.ENTER)
-                SearchFunction();
+                searchFunction();
         });
         searchUser.textProperty().addListener((a,b,c)->{
         
@@ -79,11 +79,11 @@ public class UtentiController {
     
         public void searchFunction(){
     
-        ArrayList<User> utenti = new ArrayList<>(),app= new ArrayList<>();
+        ArrayList<Utente> utenti = new ArrayList<>(),app= new ArrayList<>();
            String text = searchUser.getText().trim();
        
            //CERCA PER ISBN PRIMA
-           User u = DataBase.searchUser(text);
+           Utente u = DataBase.cercaUtente(text);
            if(u!=null){
                utenti.add(u);
                updateUtentiList(utenti);
@@ -91,7 +91,7 @@ public class UtentiController {
            }
            utenti = DataBase.getUtenti();
         
-           for(User u1 : utenti)
+           for(Utente u1 : utenti)
                if(u1.getNome().equals(text) || u1.getCognome().equals(text) || u1.getMail().equals(text))
                    app.add(u1);
            updateUtentiList(app);
@@ -116,7 +116,7 @@ public class UtentiController {
         
         m2.setOnAction(eh->{
         
-            ArrayList<User> us = DataBase.getUtenti();
+            ArrayList<Utente> us = DataBase.getUtenti();
             us.removeIf(u -> u.isBloccato());
             FilterButton.setText(m2.getText());
             updateUtentiList(us);
@@ -125,7 +125,7 @@ public class UtentiController {
         
         m3.setOnAction(eh->{
         
-            ArrayList<User> us = DataBase.getUtenti();
+            ArrayList<Utente> us = DataBase.getUtenti();
             us.removeIf(u -> !u.isBloccato());
             FilterButton.setText(m3.getText());
             updateUtentiList(us);
@@ -180,17 +180,17 @@ public class UtentiController {
 
         stage.showAndWait();
         updateUtentiList(DataBase.getUtenti());
-        LabelInitialize();
+        labelInitialize();
             }
         });
         
     }
     
-    public void updateUtentiList(ArrayList<User> utenti){
+    public void updateUtentiList(ArrayList<Utente> utenti){
         usersContainer.getChildren().clear();
         
         
-        for(User u : utenti){
+        for(Utente u : utenti){
             aggiungiCardUtente(u.getNome(),u.getCognome(),u.getMatricola(),u.getMail(),u.isBloccato());
         }
     }
@@ -311,7 +311,7 @@ public class UtentiController {
         btnDelete.setOnAction(e -> {
             
             
-            DataBase.RemoveUser(matricola);
+            DataBase.rimuoviUtente(matricola);
             
             Alert IsbnAlert = new Alert(Alert.AlertType.INFORMATION);
                 IsbnAlert.setHeaderText("Operazione eseguita");
@@ -343,9 +343,9 @@ public class UtentiController {
             //System.out.println(isBlacklisted ? "Sblocco utente..." : "Blocco utente...");
             // logicaBloccoSblocco(matricola);
             if(!isBlacklisted)
-            Model.DataBase.setBlackListed(matricola);
+            model.servizi.DataBase.setBlackListed(matricola);
             else
-                Model.DataBase.UnsetBlackListed(matricola);
+                model.servizi.DataBase.unsetBlackListed(matricola);
             updateUtentiList(DataBase.getUtenti());
             
         });
