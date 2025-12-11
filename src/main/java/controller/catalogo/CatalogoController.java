@@ -61,84 +61,73 @@ public class CatalogoController {
     @FXML
     private Button addButton;
     
-    public static final short MAX_BOOKS = 1000; //NUMERO MASSIMO DI LIBRI NEL SISTEMA
+    public static final short MAX_BOOKS = 1000;  // Numero massimo di libri consentiti nel sistema
     
     @FXML
-    public void initialize(){
-    
-       updateCatalogo(DataBase.getCatalogo());
-       btnCerca.setOnAction(eh->{
-           
-            searchFunction();
-           
+    public void initialize(){ //Metodo di inizializzazione chiamato automaticamente da JavaFX all'avvio della scena   
+       updateCatalogo(DataBase.getCatalogo());// Visualizza tutti i libri presenti nel database all'avvio
+       btnCerca.setOnAction(eh->{ // Bottone cerca: avvia la funzione di ricerca          
+            searchFunction();           
        });
-         searchBar.textProperty().addListener((a,b,c)->{
-         
+         searchBar.textProperty().addListener((a,b,c)->{ // Aggiornamento catalogo se il campo di ricerca viene svuotato        
              if(searchBar.getText().trim().equals(""))
                 updateCatalogo(DataBase.getCatalogo());
          });
-        searchBar.setOnKeyPressed(eh->{
-        
+        searchBar.setOnKeyPressed(eh->{  // Cerca anche premendo ENTER nella searchBar       
             if(eh.getCode()==KeyCode.ENTER) 
                 searchFunction();
         });
-        addButton.setOnAction(eh->{
-        
-            launchAddBookForm();
-            
+        addButton.setOnAction(eh->{ // Bottone per aggiungere un nuovo libro      
+            launchAggiungiLibroForm();            
         });
         
         
     }
     
-    public void searchFunction(){
-    
+    public void searchFunction(){   
         Catalogo libri = new Catalogo();
            String text = searchBar.getText().trim();
-       
-           //CERCA PER ISBN PRIMA
+           
+           // Cerca prima per ISBN
            Libro l = DataBase.cercaLibro(text);
            if(l!=null){
                libri.aggiungiLibro(l);
                updateCatalogo(libri);
                return;
            }
+            // Cerca per titolo
             for(Libro l1 : DataBase.getLibriByTitolo(text))
                 libri.aggiungiLibro(l1);
             
                updateCatalogo(libri);
-               return;
-        
+               return;       
     }
         
     public void updateCatalogo(Catalogo libri){
       containerLibri.getChildren().clear();
             int colonna = 0;
             int riga = 0;
-
-        
+      
         for(Libro l : libri.getLibri()){
-            containerLibri.add(creaLibroAnimato(l), colonna, riga);
+            containerLibri.add(creaLibroAnimato(l), colonna, riga); // Card speciale per aggiungere un nuovo libro
             
             colonna++; 
-
             if (colonna == 4) {
                 colonna = 0; 
                 riga++;      
             }
-        }
-        
-        containerLibri.add(creaLibroAnimato(new Libro(null,"",null,null,null,0,"/Images/aggiungiLibro.jpg")), colonna, riga);
-        
+        }        
+        containerLibri.add(creaLibroAnimato(new Libro(null,"",null,null,null,0,"/Images/aggiungiLibro.jpg")), colonna, riga);       
     }
-    
-
-    
+        
+     /*
+    Crea una card animata per un libro. 
+    Include immagine, controlli per copie, pulsanti Modifica/Elimina, animazioni su hover.
+    Se isbn == null, diventa la card per aggiungere un nuovo libro.
+     */
     private VBox creaLibroAnimato(Libro libro) {
     
-    // =================================================================
     // 1. IMMAGINE (Livello Base)
-    // =================================================================
     ImageView imageView = new ImageView();
     try {
         String imagePath = (libro.getUrl() != null && !libro.getUrl().isEmpty()) ? libro.getUrl() : "/Images/default.jpg";
@@ -165,10 +154,7 @@ public class CatalogoController {
     imageView.setPreserveRatio(true);
     imageView.getStyleClass().add("book-cover-static");
 
-    // =================================================================
-    // 2. CONTROLLI OVERLAY (Label Copie + Bottoni)
-    // =================================================================
-    
+    // 2. CONTROLLI OVERLAY (Label Copie + Bottoni)    
     // Label Copie
     Label lblCopie = new Label();
     if (libro.getIsbn() != null) {
@@ -199,7 +185,6 @@ public class CatalogoController {
             }
         });
     }
-
     HBox buttonsBox = new HBox(15, btnMinus, btnPlus);
     buttonsBox.setAlignment(Pos.CENTER);
     
@@ -221,8 +206,7 @@ public class CatalogoController {
                 s.showAndWait();
                 updateCatalogo(DataBase.getCatalogo());
                 ModificaLibroController.isbn ="";
-    });
-    
+    });   
     Button Elimina = new Button("Elimina");
     Elimina.setStyle(btnStyle);
     Elimina.setOnAction(eh->{
@@ -233,20 +217,15 @@ public class CatalogoController {
                 IsbnAlert.setContentText("Libro rimosso");
                 
                 DialogPane dialogPane = IsbnAlert.getDialogPane();
-
               
                 dialogPane.getStylesheets().add(
                     getClass().getResource("/CSS/StyleAccess.css").toExternalForm()
-                );
-
-                
+                );              
                 dialogPane.getStyleClass().add("my-alert");
                 
                 IsbnAlert.showAndWait();
-                updateCatalogo(DataBase.getCatalogo());
-        
-    });
-    
+                updateCatalogo(DataBase.getCatalogo());        
+    });   
     HBox opME = new HBox(5,Modifica,Elimina);
     opME.setAlignment(Pos.CENTER);
     
@@ -259,9 +238,7 @@ public class CatalogoController {
     overlayControls.setVisible(false); 
     if (libro.getIsbn() == null) overlayControls.setVisible(false);
 
-    // =================================================================
     // 3. STACKPANE (Immagine + Controlli)
-    // =================================================================
     StackPane bookStack = new StackPane();
     bookStack.getChildren().addAll(imageView, overlayControls);
     
@@ -272,9 +249,7 @@ public class CatalogoController {
     // *** FIX IMPORTANTE *** : Disabilita DepthTest per evitare crash coi bottoni
     bookStack.setDepthTest(javafx.scene.DepthTest.DISABLE); 
 
-    // =================================================================
     // 4. TITOLO E CONTENITORE FINALE (VBox)
-    // =================================================================
     Label lblTitolo = new Label(libro.getTitolo() != null ? libro.getTitolo() : "Nuovo Libro");
     lblTitolo.setWrapText(true);
     lblTitolo.setMaxWidth(200);
@@ -285,9 +260,7 @@ public class CatalogoController {
     mainContainer.setAlignment(Pos.TOP_CENTER);
     mainContainer.getChildren().addAll(bookStack, lblTitolo);
     
-    // =================================================================
     // 5. ANIMAZIONI (Applicate al mainContainer per evitare sovrapposizioni)
-    // =================================================================
     Duration speed = Duration.millis(300);
 
     // Zoom su TUTTA la card (così il titolo non viene coperto)
@@ -336,21 +309,17 @@ public class CatalogoController {
         if (libro.getIsbn() != null) overlayControls.setVisible(false);
     });
     
-    // =================================================================
     // 6. GESTIONE CLICK (Aggiungi Libro)
-    // =================================================================
     if (libro.getIsbn() == null) {
         mainContainer.setCursor(Cursor.HAND);
         mainContainer.setOnMouseClicked(eh -> {
-            launchAddBookForm();
+            launchAggiungiLibroForm();
         });
     }
-
     return mainContainer;
 }
 
-    public void launchAddBookForm(){
-    
+    public void launchAggiungiLibroForm(){    
         if(DataBase.getCatalogo().getLibri().size()>=MAX_BOOKS){
             
                  Alert IsbnAlert = new Alert(AlertType.ERROR);
@@ -358,18 +327,14 @@ public class CatalogoController {
                 IsbnAlert.setContentText("Ci sono troppi Libri nel sistema");
                 
                 DialogPane dialogPane = IsbnAlert.getDialogPane();
-
               
                 dialogPane.getStylesheets().add(
                     getClass().getResource("/CSS/StyleAccess.css").toExternalForm()
                 );
-
-                
-                dialogPane.getStyleClass().add("my-alert");
-                
+               
+                dialogPane.getStyleClass().add("my-alert");                
                 IsbnAlert.showAndWait();
-                return;
-            
+                return;            
             }else
             try {
                 Stage stage = new Stage();
@@ -379,8 +344,7 @@ public class CatalogoController {
                 stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/View/AggiungiLibro.fxml"))));
                 stage.showAndWait();
                 updateCatalogo(DataBase.getCatalogo());
-            } catch (IOException ex) { ex.printStackTrace(); }
-        
+            } catch (IOException ex) { ex.printStackTrace(); }       
     }
     
 }
