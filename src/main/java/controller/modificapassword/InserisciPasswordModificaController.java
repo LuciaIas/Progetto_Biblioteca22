@@ -6,6 +6,7 @@
 package controller.modificapassword;
 
 
+import controller.DashboardController;
 import model.servizi.ControlloFormato;
 import model.servizi.DataBase;
 import java.io.IOException;
@@ -26,7 +27,7 @@ import javafx.stage.Stage;
 
 /**
  *
- * @author nicol
+ * @author gruppo22
  */
 public class InserisciPasswordModificaController {
     
@@ -50,8 +51,8 @@ public class InserisciPasswordModificaController {
     @FXML
     public void initialize(){
         
-        SetCheckBox();
-        SetButtonFunction();
+        setCheckBox();
+        setButtonFunction();
         
         
     }
@@ -76,7 +77,7 @@ public class InserisciPasswordModificaController {
             }
             
           
-                if(DataBase.CheckPasswordBibliotecario(pass)){
+                if(DataBase.controllaPasswordBibliotecario(pass)){
                         
                 
             Stage PassRec = new Stage();
@@ -114,13 +115,13 @@ public class InserisciPasswordModificaController {
     
     
     public void setCheckBox(){
-    ShowPassword(false);
+    showPassword(false);
         CheckShowPass.setOnAction(eh->{
         
         if(CheckShowPass.isSelected())
-            ShowPassword(true);
+            showPassword(true);
         else
-            ShowPassword(false);
+            showPassword(false);
         
         });
         
