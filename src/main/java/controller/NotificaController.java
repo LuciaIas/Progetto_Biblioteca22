@@ -13,25 +13,18 @@ import javafx.scene.control.Label;
 
 /**
  *
- * @author nicol
+ * @author gruppo22
  */
 public class NotificaController {
     @FXML
     private Label numRit;
     
-   
-    
     @FXML
     public void initialize(){
- 
-            int i=0;
-            
+            int i=0;         
             for(Prestito p : DataBase.getPrestiti())
                 if(p.getStato()==Stato.IN_RITARDO)
-                    i+=1;
-            
+                    i+=1;        
             numRit.setText("Ci sono "+i+" prestiti scaduti dove non sono state\nrestituite le copie, si suggerisci di inviare\n avvisi agli interessati");
-
-    }
-    
+    } 
 }

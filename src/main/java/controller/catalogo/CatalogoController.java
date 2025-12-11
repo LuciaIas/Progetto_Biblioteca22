@@ -43,10 +43,9 @@ import javafx.util.Duration;
 
 /**
  *
- * @author nicol
+ * @author gruppo22
  */
 public class CatalogoController {
-    
     @FXML
     private ScrollPane LibriScrollPane;
     
@@ -67,21 +66,21 @@ public class CatalogoController {
     @FXML
     public void initialize(){
     
-       updateCatalogo(DataBase.GetCatalogo());
+       updateCatalogo(DataBase.getCatalogo());
        btnCerca.setOnAction(eh->{
            
-            SearchFunction();
+            searchFunction();
            
        });
          searchBar.textProperty().addListener((a,b,c)->{
          
              if(searchBar.getText().trim().equals(""))
-                updateCatalogo(DataBase.GetCatalogo());
+                updateCatalogo(DataBase.getCatalogo());
          });
         searchBar.setOnKeyPressed(eh->{
         
             if(eh.getCode()==KeyCode.ENTER) 
-                SearchFunction();
+                searchFunction();
         });
         addButton.setOnAction(eh->{
         
@@ -98,13 +97,13 @@ public class CatalogoController {
            String text = searchBar.getText().trim();
        
            //CERCA PER ISBN PRIMA
-           Libro l = DataBase.searchBook(text);
+           Libro l = DataBase.cercaLibro(text);
            if(l!=null){
                libri.aggiungiLibro(l);
                updateCatalogo(libri);
                return;
            }
-            for(Libro l1 : DataBase.SearchUserByTitle(text))
+            for(Libro l1 : DataBase.getLibriByTitolo(text))
                 libri.aggiungiLibro(l1);
             
                updateCatalogo(libri);
@@ -189,14 +188,14 @@ public class CatalogoController {
         btnPlus.setOnAction(e -> {
             // Consuma l'evento per non attivare il click sulla card
             e.consume(); 
-            DataBase.modifyNum_copie(libro.getIsbn(), true);
-            updateCatalogo(DataBase.GetCatalogo()); // Ricarica la vista
+            DataBase.modificaNum_copie(libro.getIsbn(), true);
+            updateCatalogo(DataBase.getCatalogo()); // Ricarica la vista
         });
         btnMinus.setOnAction(e -> {
             e.consume();
             if( !(DataBase.getNumCopieByIsbn(libro.getIsbn())<=0) ){
-            DataBase.modifyNum_copie(libro.getIsbn(), false);
-            updateCatalogo(DataBase.GetCatalogo());
+            DataBase.modificaNum_copie(libro.getIsbn(), false);
+            updateCatalogo(DataBase.getCatalogo());
             }
         });
     }
@@ -220,7 +219,7 @@ public class CatalogoController {
                 Logger.getLogger(DashboardController.class.getName()).log(Level.SEVERE, null, ex);
             }
                 s.showAndWait();
-                updateCatalogo(DataBase.GetCatalogo());
+                updateCatalogo(DataBase.getCatalogo());
                 ModificaLibroController.isbn ="";
     });
     
@@ -228,7 +227,7 @@ public class CatalogoController {
     Elimina.setStyle(btnStyle);
     Elimina.setOnAction(eh->{
     
-        DataBase.RemoveBook(libro.getIsbn());
+        DataBase.rimuoviLibro(libro.getIsbn());
         Alert IsbnAlert = new Alert(AlertType.INFORMATION);
                 IsbnAlert.setHeaderText("Operazione eseguita");
                 IsbnAlert.setContentText("Libro rimosso");
@@ -244,7 +243,7 @@ public class CatalogoController {
                 dialogPane.getStyleClass().add("my-alert");
                 
                 IsbnAlert.showAndWait();
-                updateCatalogo(DataBase.GetCatalogo());
+                updateCatalogo(DataBase.getCatalogo());
         
     });
     
@@ -352,7 +351,7 @@ public class CatalogoController {
 
     public void launchAddBookForm(){
     
-        if(DataBase.GetCatalogo().getLibri().size()>=MAX_BOOKS){
+        if(DataBase.getCatalogo().getLibri().size()>=MAX_BOOKS){
             
                  Alert IsbnAlert = new Alert(AlertType.ERROR);
                 IsbnAlert.setHeaderText("Impossibile aggiungere libro");
@@ -379,7 +378,7 @@ public class CatalogoController {
                 stage.initModality(Modality.APPLICATION_MODAL);
                 stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/View/aggiungiLibro.fxml"))));
                 stage.showAndWait();
-                updateCatalogo(DataBase.GetCatalogo());
+                updateCatalogo(DataBase.getCatalogo());
             } catch (IOException ex) { ex.printStackTrace(); }
         
     }

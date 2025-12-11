@@ -29,7 +29,7 @@ import javafx.util.Duration;
 
 /**
  *
- * @author nicol
+ * @author gruppo22
  */
 public class BlacklistController {
     
@@ -47,25 +47,25 @@ public class BlacklistController {
     
     @FXML
     public void initialize(){
-        ArrayList<User> us =User.getUsersBlackListed(DataBase.getUtenti());
+        ArrayList<Utente> us =Utente.getUtentiBlackListed(DataBase.getUtenti());
         updateUtentiList(us);
         UnLockAllButton.setOnAction(eh->{
         
-            for(User u: us)
+            for(Utente u: us)
                 if(u.isBloccato())
-                    DataBase.UnsetBlackListed(u.getMatricola());
-            updateUtentiList(new ArrayList<User>());
+                    DataBase.unsetBlackListed(u.getMatricola());
+            updateUtentiList(new ArrayList<Utente>());
         });
         
         searchUser.setOnKeyPressed(eh->{
         
             if(eh.getCode()==KeyCode.ENTER)
-                SearchFunction();
+                searchFunction();
         });
         searchUser.textProperty().addListener((a,b,c)->{
         
             if(searchUser.getText().trim().equals(""))
-                updateUtentiList(User.getUsersBlackListed(DataBase.getUtenti()));
+                updateUtentiList(Utente.getUtentiBlackListed(DataBase.getUtenti()));
             
         });
         
@@ -73,11 +73,11 @@ public class BlacklistController {
     
      public void searchFunction(){
     
-        ArrayList<User> utenti = new ArrayList<>(),app= new ArrayList<>();
+        ArrayList<Utente> utenti = new ArrayList<>(),app= new ArrayList<>();
            String text = searchUser.getText().trim();
        
            //CERCA PER ISBN PRIMA
-           User u = DataBase.searchUser(text);
+           Utente u = DataBase.cercaUtente(text);
            if(u!=null){
                if(u.isBloccato()){
                utenti.add(u);
@@ -85,33 +85,26 @@ public class BlacklistController {
                return;
                }
            }
-           utenti = User.getUsersBlackListed(DataBase.getUtenti());
+           utenti = Utente.getUtentiBlackListed(DataBase.getUtenti());
         
-           for(User u1 : utenti)
+           for(Utente u1 : utenti)
                if(u1.getNome().equals(text) || u1.getCognome().equals(text) || u1.getMail().equals(text))
                    app.add(u1);
            updateUtentiList(app);
            
     }
         
-    public void updateUtentiList(ArrayList<User> utenti){
+    public void updateUtentiList(ArrayList<Utente> utenti){
         blacklistContainer.getChildren().clear();
-        ArrayList<User> us =User.getUsersBlackListed(DataBase.getUtenti());
+        ArrayList<Utente> us =Utente.getUtentiBlackListed(DataBase.getUtenti());
         lblTotalBlocked.setText(us.size()+" Utenti Bloccati");
         
-        for(User u : utenti){
+        for(Utente u : utenti){
             aggiungiCardUtente(u.getNome(),u.getCognome(),u.getMatricola(),u.getMail(),u.isBloccato());
         }
     }
     
-    /**
-     * Crea una riga utente e la aggiunge alla lista.
-     * @param nome Nome dell'utente
-     * @param cognome Cognome dell'utente
-     * @param matricola Matricola univoca
-     * @param email Email istituzionale
-     * @param isBlacklisted Se true, l'utente appare rosso (bloccato)
-     */
+
     private void aggiungiCardUtente(String nome, String cognome, String matricola, String email, boolean isBlacklisted) {
         
         // 1. CREAZIONE RIGA PRINCIPALE (HBox)
@@ -194,7 +187,7 @@ public class BlacklistController {
         
         btnEmail.setOnAction(e -> {
             
-            if(EmailSender.SendAvviso(email, null, nome, cognome, null)){
+            if(EmailInvia.inviaAvviso(email, null, nome, cognome, null)){
             
             Alert IsbnAlert = new Alert(Alert.AlertType.INFORMATION);
                 IsbnAlert.setHeaderText("Avviso inviato");
@@ -243,8 +236,8 @@ public class BlacklistController {
             //System.out.println(isBlacklisted ? "Sblocco utente..." : "Blocco utente...");
             // logicaBloccoSblocco(matricola);
            
-            Model.DataBase.UnsetBlackListed(matricola);
-            updateUtentiList(User.getUsersBlackListed(DataBase.getUtenti()));
+            model.servizi.DataBase.unsetBlackListed(matricola);
+            updateUtentiList(Utente.getUtentiBlackListed(DataBase.getUtenti()));
             
         });
 

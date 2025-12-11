@@ -11,8 +11,9 @@ import java.util.ArrayList;
 
 /**
  *
- * @author nicol
+ * @author gruppo22
  */
+
 public class Prestito {
     private String isbn;
     private String matricola;
@@ -30,6 +31,7 @@ public class Prestito {
         this.data_scadenza = data_scadenza;
     }
 
+     //Getter e Setter
     
     public static ArrayList<Prestito> getPrestitiByStato(ArrayList<Prestito> p, Stato s){
        ArrayList<Prestito> ret = new ArrayList<>();
@@ -40,7 +42,6 @@ public class Prestito {
     }
     
     
-
     public LocalDate getData_scadenza() {
         return data_scadenza;
     }
@@ -49,8 +50,7 @@ public class Prestito {
         this.data_scadenza = data_scadenza;
     }
 
-    
-    
+
     public String getIsbn() {
         return isbn;
     }
@@ -83,8 +83,6 @@ public class Prestito {
         this.restituzione = restituzione;
     }
 
-  
-
     public Stato getStato() {
         return stato;
     }
@@ -97,9 +95,5 @@ public class Prestito {
     public String toString() {
         return "Prestito{" + "isbn=" + isbn + ", matricola=" + matricola + ", inizio_prestito=" + inizio_prestito + ", restituzione=" + restituzione + ", data_scadenza=" + data_scadenza + ", stato=" + stato + '}';
     }
-
-    
-    
-    
-    
+  
 }

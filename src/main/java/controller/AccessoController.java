@@ -25,20 +25,14 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
-import mainPackage.main;
+import main.Main;
 
 /**
  *
- * @author 22group
- * @version 1.0
+ * @author gruppo22
  */
 
-/**
- * @brief Controller per la gestione dell'autenticazione.
- * Questa classe gestisce il login, la registrazione e il recupero password.
- * Si collega al database per verificare le credenziali e gestisce 
- * le transizioni verso la Dashboard.
- */
+
 public class AccessoController {
     
     //Sliding fxml
@@ -61,15 +55,15 @@ public class AccessoController {
     @FXML
     private Button SlidingButton;
     
-    /** La label che indica l'azione che si eseguira */
+    /** La label che indica l'azione che si eseguirà */
     @FXML
     private Label SwitchLabel;
     
     //sliding var
-    boolean direction=true;   ///< variabile che da il verso allo sliding
-    TranslateTransition ts;   ///< transizione della barra di sliding
-    TranslateTransition tr;   ///< transizione del register form
-    final double slidingTiming=1000;   ///< Setting del tempo di sliding
+    boolean direction=true;   
+    TranslateTransition ts;   
+    TranslateTransition tr;   
+    final double slidingTiming=1000;  
     
     /** Il button che eseguira il login */
     @FXML
@@ -116,20 +110,20 @@ public class AccessoController {
     @FXML
     private Label passwordRecovery;
     */
-    /** @note il metodo che starta le funzioni di inizializzazione  */
+
     @FXML
     public void initialize(){
-        ButtonInitialize();
-        CheckBoxInitialize();
+        buttonInitialize();
+        checkboxInitialize();
     }
     //INIZIALIZZO FUNZIONI DI BOTTONI,CHECKBOX
-    /** @note assegnazione funzioni dei button */
+
     public void buttonInitialize(){
         
         //sliding setup
         setSliding(); //SERVE PER LANCIARE IL MIO SLIDING INIZIALE
         SlidingButton.setOnAction(eh->{
-            CleanForm(!direction);
+            cleanForm(!direction);
             ts.play();
             tr.play();
             String text,text1;
@@ -146,14 +140,10 @@ public class AccessoController {
             typewriterEffectLabel(SwitchLabel,text);
             typewriterEffectButton(SlidingButton,text1);
         });
-        
-        
-        
-        
+                
         //REGISTER
         RegisterButton.setOnAction(eh->{
-            
-        
+ 
             if(CheckShowPassRegister.isSelected()){
                 PassRegister.setText(PassRegisterVisible.getText());
                 PassConRegister.setText(PassConRegisterVisible.getText());
@@ -161,16 +151,14 @@ public class AccessoController {
                 PassRegisterVisible.setText(PassRegister.getText());
                 PassConRegisterVisible.setText(PassConRegister.getText());
             }
-            
-            
-            
+                     
             String password = PassRegister.getText();
             
-            if(!Model.CheckFormat.CheckPasswordFormat(password)){
+            if(!model.servizi.ControlloFormato.controlloFormatoPassword(password)){
             
                 Alert al = new Alert(Alert.AlertType.ERROR);
                 al.setTitle("Errore Validazione"); // Titolo della finestra
-                al.setHeaderText("Password non sicura 🔒"); // Titolo interno (o mettilo a null per toglierlo)
+                al.setHeaderText("Password non sicura"); // Titolo interno (o mettilo a null per toglierlo)
                 al.setContentText("La password deve avere:\n- Minimo 8 caratteri\n- Una maiuscola\n- Un numero\n- Un simbolo (@#$%^&+=!)");
 
                 DialogPane dialogPane = al.getDialogPane();
@@ -180,8 +168,6 @@ public class AccessoController {
                 );
 
                 dialogPane.getStyleClass().add("my-alert");
-
-
                 al.showAndWait();
                 return;
             }
@@ -200,38 +186,31 @@ public class AccessoController {
                     getClass().getResource("/CSS/StyleAccess.css").toExternalForm()
                 );
 
-
                 dialogPane.getStyleClass().add("my-alert");
-
                 al.showAndWait();
                 return;
                 
             }
             
-            if(Model.DataBase.InsertBibliotecario(password)){
+            if(model.servizi.DataBase.inserisciBibliotecario(password)){
                 Alert al = new Alert(Alert.AlertType.INFORMATION);
                 al.setTitle("Operazione Completata");
                 al.setHeaderText("Registrazione effettuata 🚀"); // Ho aggiunto un'emoji per coerenza
                 al.setContentText("Sei stato registrato correttamente nel sistema.");
-
-               
+           
                 DialogPane dialogPane = al.getDialogPane();
-
-               
+            
                 dialogPane.getStylesheets().add(
                     getClass().getResource("/CSS/StyleAccess.css").toExternalForm()
                 );
-
                 dialogPane.getStyleClass().add("my-alert");
 
-
                 al.showAndWait();
-                
-                
-                     //ACCESSO ALLA DASHBOARD PRINCIPALE
-                Model.SceneTransition.switchSceneEffect(main.stage, "/View/dashboard.fxml");
-                main.stage.getProperties().remove("login");
-                main.stage.centerOnScreen();
+
+                //ACCESSO ALLA DASHBOARD PRINCIPALE
+                model.TransizioneScena.switchSceneEffect(Main.stage, "/View/dashboard.fxml");
+                Main.stage.getProperties().remove("login");
+                Main.stage.centerOnScreen();
                 
                 
                 return;
@@ -253,15 +232,11 @@ public class AccessoController {
                 dialogPane.getStyleClass().add("my-alert");
 
                 al.showAndWait();
-                return;
-            
-            }
-               
-                
+                return;     
+            }               
             
         });
-        
-        
+         
         LoginButton.setOnAction(e->{
             if(CheckShowPassLogin.isSelected()){
                 PassLogin.setText(PassLoginVisible.getText());
@@ -276,7 +251,7 @@ public class AccessoController {
             
             
             
-            if(!Model.DataBase.CheckPasswordBibliotecario(password)){
+            if(!model.servizi.DataBase.controllaPasswordBibliotecario(password)){
                 Alert al = new Alert(Alert.AlertType.ERROR);
                 al.setContentText("Password sbagliata");
                 al.setHeaderText("La password e sbagliata");
@@ -300,25 +275,22 @@ public class AccessoController {
             
 
                      //ACCESSO ALLA DASHBOARD PRINCIPALE
-                Model.SceneTransition.switchSceneEffect(main.stage, "/View/dashboard.fxml");
-                main.stage.getProperties().remove("login");
-                main.stage.centerOnScreen();
+                model.TransizioneScena.switchSceneEffect(Main.stage, "/View/dashboard.fxml");
+                Main.stage.getProperties().remove("login");
+                Main.stage.centerOnScreen();
                 
         
         });
         
-
-        
+   
     }
     
     public void checkboxInitialize(){
-        CheckShowPassLogin.setOnAction(eh->{if(CheckShowPassLogin.isSelected())  ShowPassword(true,true); else ShowPassword(false,true); });
-        CheckShowPassRegister.setOnAction(eh->{if(CheckShowPassRegister.isSelected()) ShowPassword(true,false); else ShowPassword(false,false); });
+        CheckShowPassLogin.setOnAction(eh->{if(CheckShowPassLogin.isSelected())  showPassword(true,true); else showPassword(false,true); });
+        CheckShowPassRegister.setOnAction(eh->{if(CheckShowPassRegister.isSelected()) showPassword(true,false); else showPassword(false,false); });
     }
     
     
-  /** @note Sliding */
-  
     public void setSliding(){
         
         double moving = 325;
@@ -347,7 +319,7 @@ public class AccessoController {
     
     //PASSWORDBOX
     
-        /** @note funzione per mostrare o nascondere la password */
+        /** funzione per mostrare o nascondere la password */
     public void showPassword(boolean yes,boolean login){
         if(login){
             if(yes){
@@ -389,7 +361,7 @@ public class AccessoController {
     
     
     //FUNZIONE DI CLEAN DEL FORM
-        /** @note pulizia dei form */
+        /** pulizia dei form */
     public void cleanForm(boolean login){
         
         if(login){
@@ -407,15 +379,9 @@ public class AccessoController {
         
     }
       
-    
-    
+
       //FUNZIONI UTILI PER ESTETICA
-    
-    
-        /** @note effetto visivo per la label
-         *  @param label e la label a cui vuoi che venga applicato l'effetto
-         *  @param text il testo che voglio che venga visualizzato
-         */
+   
     private void typewriterEffectLabel(Label label, String text) {
     
     label.setText("");
@@ -438,10 +404,7 @@ public class AccessoController {
     
     timeline.play();
 }
-     /** @note effetto visivo per il button sliding
-         *  @param b e il button a cui voglio che venga applicato l'effetto
-         *  @param text il testo che voglio che venga visualizzato
-         */
+ 
     private void typewriterEffectButton(Button b, String text) {
 
     b.setText("");

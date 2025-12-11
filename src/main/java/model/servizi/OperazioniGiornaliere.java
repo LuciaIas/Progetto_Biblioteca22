@@ -1,4 +1,13 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 
+/**
+ *
+ * @author gruppo22
+ */
 package model.servizi;
 
 import javafx.scene.Parent;
@@ -26,13 +35,19 @@ import main.Main;
 
 
 public class OperazioniGiornaliere {
+    
     private static long ultimoResetSessione = System.currentTimeMillis(); 
     private static final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(2);
 
+
+     // Avvia i task automatici (Ccntrolli a mezzanotte (es. aggiornamento stato prestiti) e monitoraggio sessione utente ogni 2 secondi per timeout e scadenza).
     public static void avviaTaskDiMezzanotte() {
-        // 1. Calcola quanto manca alla prossima mezzanotte
+        
+        // Calcola quanto manca alla prossima mezzanotte per il primo task
         long ritardoIniziale = calcolaRitardoVersoMezzanotte();    
-        long periodo = 24 * 60 * 60; //MI CALCOLO LA GIORNATA IN SECONDI    
+        long periodo = 24 * 60 * 60; // Periodo di esecuzione: 24 ore (in secondi)  
+        
+        // Task giornaliero eseguito a mezzanotte: esegue controlli automatici sui prestiti
         scheduler.scheduleAtFixedRate(() -> {
             try {           
                 eseguiControlliAutomatici(false);               
@@ -40,28 +55,36 @@ public class OperazioniGiornaliere {
                 e.printStackTrace();
             }
         }, ritardoIniziale, periodo, TimeUnit.SECONDS);
-        long durataSessioneMillis = 3600000;      
+        
+        long durataSessioneMillis = 3600000; // Durata massima della sessione in millisecondi (1 ora) 
+        
+        // Task di monitoraggio sessione utente eseguito ogni 2 secondi (polling rapido)
         scheduler.scheduleAtFixedRate(() -> {
             Platform.runLater(() -> {
                 try {
-                    Main.checkClosed(); // Controllo la chiusura
-                    if (Main.stage == null || Main.stage.getScene() == null) {
+                    Main.checkClosed(); // Controllo la chiusura della finestra principale
+                    if (Main.stage == null || Main.stage.getScene() == null) {// Se lo stage principale non esiste o non ha scene, resetta il timer
                         ultimoResetSessione = System.currentTimeMillis(); 
                         return;
                     }
-                    Parent currentRoot = Main.stage.getScene().getRoot();                  
-                    if (currentRoot.getProperties().get("login") != null) {                      
+                    
+                    Parent currentRoot = Main.stage.getScene().getRoot();   
+                    
+                    if (currentRoot.getProperties().get("login") != null) {// Se siamo sulla schermata di login, resetta il timer                   
                         ultimoResetSessione = System.currentTimeMillis();
                         return;
                     }                  
                     long tempoPassato = System.currentTimeMillis() - ultimoResetSessione;
-                    if (tempoPassato > durataSessioneMillis) {                 
+                    
+                    if (tempoPassato > durataSessioneMillis) { // Se la sessione è scaduta               
                         main.Main.checkClosed();
-                        Platform.setImplicitExit(false); 
+                        Platform.setImplicitExit(false);
+                        // Mostra alert di sessione scaduta
                         Alert al = new Alert(AlertType.WARNING);
                         al.setHeaderText("Sessione scaduta");
                         al.setContentText("La sessione è scaduta. Rifai il login.");
-                        al.showAndWait();                       
+                        al.showAndWait();
+                        // Carica finestra di login
                         Stage loginStage = new Stage();
                         FXMLLoader loader = new FXMLLoader(OperazioniGiornaliere.class.getResource("/View/Access.fxml"));
                         Parent root = loader.load();
@@ -77,7 +100,7 @@ public class OperazioniGiornaliere {
                         loginStage.show(); 
                         loginStage.setOnCloseRequest(eh->{Platform.exit();System.exit(0);});
 
-                        
+                         // Chiude tutte le altre finestre aperte
                         try {
                             javafx.collections.ObservableList<Stage> stages = com.sun.javafx.stage.StageHelper.getStages();
                             for (int i = 0; i < stages.size(); i++) {
@@ -88,7 +111,7 @@ public class OperazioniGiornaliere {
                             }
                         } catch (Exception ex) { }
                         
-                        
+                         // Reset del timer di sessione 
                         ultimoResetSessione = System.currentTimeMillis();
                     }
 
@@ -110,29 +133,30 @@ public class OperazioniGiornaliere {
         return Duration.between(now, nextHour).getSeconds();
     }
     
+    
     private static long calcolaRitardoVersoMezzanotte() {
         ZonedDateTime now = ZonedDateTime.now(ZoneId.systemDefault());
         ZonedDateTime nextMidnight = now.toLocalDate().plusDays(1).atStartOfDay(now.getZone());
         return Duration.between(now, nextMidnight).getSeconds();
     }
 
-   
-    public static void eseguiControlliAutomatici(boolean SkipNotify) {
-        
+   // Aggiorna lo stato dei prestiti in ritardo e mostra notifiche se ci sono prestiti scaduti
+    public static void eseguiControlliAutomatici(boolean SkipNotify) { 
+         
        ArrayList<Prestito> prest = DataBase.getPrestiti();
        boolean ritardi=false;
+       
+       // Controlla tutti i prestiti per identificare quelli in ritardo
        for(Prestito p : prest){
-        
-           if(p.getData_scadenza().isBefore(LocalDate.now()) && p.getRestituzione()==null)
-                        
+           if(p.getData_scadenza().isBefore(LocalDate.now()) && p.getRestituzione()==null)                   
                DataBase.setStatoPrestito(p.getIsbn(), p.getMatricola(), Stato.IN_RITARDO);
                
            if(p.getStato()==Stato.IN_RITARDO && !ritardi)
                ritardi=true;
        }
-       //NOTIFICA
-       if(ritardi && !SkipNotify){
-           
+       
+       // Mostra notifica se ci sono prestiti in ritardo e SkipNotify è false
+       if(ritardi && !SkipNotify){    
            Platform.runLater(() -> {
        Stage stage = new Stage();
                 stage.setTitle("Avviso");
@@ -145,15 +169,13 @@ public class OperazioniGiornaliere {
         } catch (IOException ex) {
             Logger.getLogger(OperazioniGiornaliere.class.getName()).log(Level.SEVERE, null, ex);
         }
-                
-       
+
                    });
        }
-       
-       
+
     }
 
-  
+    // Ferma tutti i task schedulati dal scheduler. Da usare in chiusura dell'applicazione per liberare le risorse. 
     public static void stop() {
         scheduler.shutdown();
     }

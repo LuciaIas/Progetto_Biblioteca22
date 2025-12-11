@@ -7,7 +7,7 @@
 
 /**
  *
- * @author nicol
+ * @author gruppo22
  */
 package model.servizi;
 
@@ -17,9 +17,10 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+
 public class Catalogo {
 
-    private List<Libro> libri;
+    private List<Libro> libri;// Lista che contiene gli oggetti Libro presenti nel catalogo
 
     public Catalogo() {
         this.libri = new ArrayList<>();
@@ -37,12 +38,11 @@ public class Catalogo {
         return (ArrayList<Libro>) libri;
     }
 
-    public void sort(){
-    
+    public void sort(){  //Ordina i libri in ordine alfabetico in base al titolo.
         libri.sort(new Comparator<Libro>() {
             @Override
             public int compare(Libro o1, Libro o2) {
-                return o1.getTitolo().toUpperCase().compareTo(o2.getTitolo().toUpperCase());
+                return o1.getTitolo().toUpperCase().compareTo(o2.getTitolo().toUpperCase()); //La comparazione ignora maiuscole e minuscole.
             }
         });
         
@@ -57,9 +57,9 @@ public class Catalogo {
         return null;
     }
 
-    public List<Libro> cercaPerTitolo(String titolo) {
+    public List<Libro> cercaPerTitolo(String titolo) { //Cerca tutti i libri che contengono nel titolo la stringa specificata.
         return libri.stream()
-                .filter(l -> l.getTitolo().toLowerCase().contains(titolo.toLowerCase()))
+                .filter(l -> l.getTitolo().toLowerCase().contains(titolo.toLowerCase())) //La ricerca non è case-sensitive.
                 .collect(Collectors.toList());
     }
 
@@ -68,4 +68,5 @@ public class Catalogo {
                 .filter(l -> l.getAutori().contains(autore))
                 .collect(Collectors.toList());
     }
+    
 }

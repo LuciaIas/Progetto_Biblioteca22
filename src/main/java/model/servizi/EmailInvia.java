@@ -3,6 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
+/**
+ *
+ * @author gruppo22
+ */
+
 package model.servizi;
 
 import java.time.LocalDate;
@@ -11,9 +17,13 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.util.Properties;
 
+
 public class EmailInvia {
+    
 private static final String username = "progettoGruppo22@gmail.com";
 private static final String password = "fzxw ejrj caqq huez"; 
+private static boolean ret=false;// Indica se l'invio dell'email è andato a buon fine.
+
 public static void inviaEmail(String recipientEmail, String subject, String body) {   
 
         Properties props = new Properties();
@@ -24,6 +34,7 @@ public static void inviaEmail(String recipientEmail, String subject, String body
         props.put("mail.smtp.ssl.protocols", "TLSv1.2");        
         props.put("mail.smtp.ssl.trust", "smtp.gmail.com");
         
+        // Autenticatore per fornire username e password alla sessione
         Session session = Session.getInstance(props, new Authenticator() {
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {
@@ -32,7 +43,7 @@ public static void inviaEmail(String recipientEmail, String subject, String body
         });
 
         try {
-            // 3. Creazione del Messaggio
+            // Creazione del messaggio email da inviare
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress(username)); // Mittente
             message.setRecipients(
@@ -41,35 +52,37 @@ public static void inviaEmail(String recipientEmail, String subject, String body
             );
             message.setSubject(subject);                    // Oggetto
             message.setText(body);                          // Corpo del testo
-
-            
+         
             Transport.send(message);
-
 
         } catch (MessagingException e) {
             //e.printStackTrace();
-
+            // L'eccezione è silenziata, ma si potrebbe loggare in ambiente di produzione
         }
     }
     
-    private static boolean ret=false;
-    public static boolean SendAvviso(String recipientEmail,String titolo,String nome,String cognome,LocalDate inizioPrestito){
+    public static boolean inviaAvviso(String recipientEmail,String titolo,String nome,String cognome,LocalDate inizioPrestito){
+        //Invia un avviso di mancata restituzione del libro in modo asincrono.
         
+        // Avvio dell'invio email su un nuovo thread per evitare blocchi dell'interfaccia o della logica principale
         new Thread(() -> {
-        try {
-            
-            
+        try {       
+            // Email costruita diversamente se è noto il titolo del libro o se si tratta di più libri non restituiti
             if(titolo!=null)
-            EmailInvia.inviaEmail(recipientEmail, "Mancata Restituzione del libro", "Carissimo "+nome+" "+cognome+" le chiedo gentilmente di restituire la copia di "+titolo+" presa in prestito il "+inizioPrestito);
+            EmailInvia.inviaEmail(recipientEmail, "Mancata Restituzione del libro", "Carissimo "+nome+" "+cognome+
+                    " le chiedo gentilmente di restituire la copia di "+titolo+" presa in prestito il "+inizioPrestito);
             else
-                EmailInvia.inviaEmail(recipientEmail, "Mancata Restituzione del/dei libro/i", "Carissimo "+nome+" "+cognome+" le chiedo gentilmente di restituire la/le copia/copie che ha preso in prestito dalla nostra biblioteca ");
-            ret=true;
+                EmailInvia.inviaEmail(recipientEmail, "Mancata Restituzione del/dei libro/i", "Carissimo "+nome+" "+cognome+
+                        " le chiedo gentilmente di restituire la/le copia/copie che ha preso in prestito dalla nostra biblioteca ");
+            
+            ret=true;// Segnalazione del successo dell'invio (non thread-safe)
         } catch (Exception ev) {
-            ret=false;
+            ret=false;// In caso di errore nell'invio, il flag viene impostato a falso
             //ev.printStackTrace();
            
         }
     }).start(); 
+        
         return ret;
     }
     

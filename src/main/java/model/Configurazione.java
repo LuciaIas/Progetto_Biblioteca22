@@ -11,7 +11,7 @@ import java.util.Properties;
 
 /**
  *
- * @author aless
+ * @author gruppo22
  */
 public class Configurazione {
     private static final Properties properties = new Properties();

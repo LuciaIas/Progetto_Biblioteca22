@@ -23,11 +23,11 @@ import javafx.scene.layout.VBox;
 
 /**
  *
- * @author nicol
+ * @author gruppo22
  */
+
 public class MailController {
-    
-    
+
     @FXML
     private VBox emailContainer;
     
@@ -51,7 +51,7 @@ public class MailController {
         new Thread(() -> {
             
             // Scarica le mail (operazione lenta)
-            List<EmailInfo> listaEmail = EmailReader.leggiPostaInviata();
+            List<EmailInfo> listaEmail = EmailLegge.leggiPostaInviata();
 
             // 3. TORNA AL THREAD GRAFICO per mostrare i risultati
             Platform.runLater(() -> {

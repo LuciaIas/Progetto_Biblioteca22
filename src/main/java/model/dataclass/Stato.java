@@ -7,8 +7,10 @@ package model.dataclass;
 
 /**
  *
- * @author nicol
+ * @author gruppo22
  */
+
+//Tipo enumerativo che rappresenta lo stato di un prestito
 public enum Stato {
     ATTIVO,RESTITUITO,PROROGATO,IN_RITARDO
 }

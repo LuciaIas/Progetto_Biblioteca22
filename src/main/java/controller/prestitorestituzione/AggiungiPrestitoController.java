@@ -26,7 +26,7 @@ import javafx.stage.Stage;
 
 /**
  *
- * @author nicol
+ * @author gruppo22
  */
 public class AggiungiPrestitoController {
     @FXML
@@ -65,9 +65,9 @@ public class AggiungiPrestitoController {
     @FXML
     public void initialize(){
     dateInizio.setValue(LocalDate.now());
-    ButtonInitialize();
-    ButtonCheckingInitialize();
-    InitializeProperty();
+    buttonInitialize();
+    buttonCheckingInitialize();
+    initializeProperty();
     }
     
      
@@ -239,11 +239,11 @@ public class AggiungiPrestitoController {
             
             }
             
-            if(DataBase.CheckPrestito(isbn, matricola)){
+            if(DataBase.controllaPrestito(isbn, matricola)){
                 boolean passed=false;
                 for(Prestito p : DataBase.getPrestiti())
                     if(p.getStato().equals(Stato.RESTITUITO) && p.getIsbn().equals(isbn) && p.getMatricola().equals(matricola)){
-                        DataBase.RemovePrestito(isbn, matricola);
+                        DataBase.rimuoviPrestito(isbn, matricola);
                         passed=true;
                         break;
                     }     
@@ -271,7 +271,7 @@ public class AggiungiPrestitoController {
             
                 Alert IsbnAlert = new Alert(Alert.AlertType.ERROR);
                 IsbnAlert.setHeaderText("Operazione fallita");
-                IsbnAlert.setContentText("Copie terminate di "+DataBase.searchBook(isbn).getTitolo());
+                IsbnAlert.setContentText("Copie terminate di "+DataBase.cercaLibro(isbn).getTitolo());
                 
                 DialogPane dialogPane = IsbnAlert.getDialogPane();
 
@@ -291,7 +291,7 @@ public class AggiungiPrestitoController {
             
             
             
-            if(DataBase.searchUser(matricola).isBloccato()){
+            if(DataBase.cercaUtente(matricola).isBloccato()){
             
                 Alert IsbnAlert = new Alert(Alert.AlertType.ERROR);
                 IsbnAlert.setHeaderText("Operazione fallita");
@@ -341,12 +341,12 @@ public class AggiungiPrestitoController {
             
             }
             
-            if(DataBase.addPrestito(new Prestito(isbn,matricola,inizio,null,Stato.ATTIVO,scadenza))){
-                DataBase.modifyNum_copie(isbn, false);
+            if(DataBase.aggiungiPrestito(new Prestito(isbn,matricola,inizio,null,Stato.ATTIVO,scadenza))){
+                DataBase.modificaNum_copie(isbn, false);
                  Alert IsbnAlert = new Alert(Alert.AlertType.ERROR);
                 IsbnAlert.setHeaderText("Operazione eseguita");
-                User s = DataBase.searchUser(matricola);
-                IsbnAlert.setContentText("Prestito di"+DataBase.searchBook(isbn).getTitolo()+ " confermato all'utente "+s.getNome()+" "+s.getCognome());
+                Utente s = DataBase.cercaUtente(matricola);
+                IsbnAlert.setContentText("Prestito di"+DataBase.cercaLibro(isbn).getTitolo()+ " confermato all'utente "+s.getNome()+" "+s.getCognome());
                 
                 DialogPane dialogPane = IsbnAlert.getDialogPane();
 
@@ -394,7 +394,7 @@ public class AggiungiPrestitoController {
             
                 for(int f=0;f<totale_prestiti-(PrestitoRestituzioneController.MAX_LOAN-1);f++){
                         Prestito p = pre.get(f);
-                        DataBase.RemovePrestito(p.getIsbn(), p.getMatricola());
+                        DataBase.rimuoviPrestito(p.getIsbn(), p.getMatricola());
                 }
                 }
                 
@@ -504,7 +504,7 @@ public class AggiungiPrestitoController {
                 IsbnAlert.showAndWait();
             return;
             }
-            if(DataBase.searchBook(isbn)==null){
+            if(DataBase.cercaLibro(isbn)==null){
                 
                 Alert IsbnAlert = new Alert(Alert.AlertType.ERROR);
                 IsbnAlert.setHeaderText("Codice ISBN non valido");
@@ -572,7 +572,7 @@ public class AggiungiPrestitoController {
             return;
             }
             
-            if(DataBase.searchUser(matricola)==null){
+            if(DataBase.cercaUtente(matricola)==null){
             
                 Alert IsbnAlert = new Alert(Alert.AlertType.ERROR);
                 IsbnAlert.setHeaderText("Matricola non valida");

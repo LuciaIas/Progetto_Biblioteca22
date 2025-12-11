@@ -15,14 +15,14 @@ import java.util.List;
 
 /**
  *
- * @author nicol
+ * @author gruppo22
  */
 public class Backup {
-// CONFIGURAZIONE
+    
+    // Configurazione
     private static final String DB_NAME = "biblioteca";
     private static final String DB_USER = "root";
     private static final String DB_PASS = ""; 
-    // Assicurati che questo percorso sia giusto
     private static final String MYSQL_DUMP_PATH = "C:\\xampp\\mysql\\bin\\mysqldump.exe"; 
 
     public static boolean eseguiBackup(String cartellaDestinazione) {
@@ -32,7 +32,7 @@ public class Backup {
             
             File fileDestinazione = new File(cartellaDestinazione, nomeFile);
             
-            // --- COSTRUZIONE COMANDO SICURA (LISTA) ---
+            // COSTRUZIONE COMANDO SICURA (LISTA)
             // Invece di una stringa unica, usiamo una lista. 
             // Java gestirà gli spazi nei percorsi (come "Desktop") automaticamente.
             List<String> command = new ArrayList<>();

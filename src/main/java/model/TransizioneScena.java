@@ -7,7 +7,7 @@ package model;
 
 /**
  *
- * @author nicol
+ * @author gruppo22
  */
 
 import java.io.IOException;
@@ -36,7 +36,7 @@ public static void switchSceneEffect(Stage stage, String fxmlPath) {
         // 2. Rendilo inizialmente invisibile (per fare l'effetto sorpresa)
         newRoot.setOpacity(0.0);
 
-        // 3. CAMBIO SECCO (Sostituisce subito la root, risolve tutti i bug di gerarchia)
+        // 3. Cambio secco (Sostituisce subito la root, risolve tutti i bug di gerarchia)
         stage.getScene().setRoot(newRoot);
 
         // 4. Imposta dimensioni e centra (1280x800)
@@ -44,7 +44,7 @@ public static void switchSceneEffect(Stage stage, String fxmlPath) {
         stage.setHeight(835);
         stage.centerOnScreen(); // Metodo nativo di JavaFX per centrare, più affidabile
 
-        // 5. Effetto Dissolvenza (Semplice ed Elegante)
+        // 5. Effetto Dissolvenza 
         FadeTransition fadeIn = new FadeTransition(Duration.seconds(0.5), newRoot);
         fadeIn.setFromValue(0.0);
         fadeIn.setToValue(1.0);

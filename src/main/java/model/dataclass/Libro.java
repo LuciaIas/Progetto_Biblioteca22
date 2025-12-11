@@ -10,17 +10,17 @@ import java.util.List;
 
 /**
  *
- * @author lucia
+ * @author gruppo22
  */
 public class Libro implements Comparable<Libro>{
-       // lista degli autori (nome e cognome), anno di pubblicazione, codice identificativo univoco (ISBN) e numero di copie disponibili.
+    
     private String isbn;
     private String titolo;
     private String editore;
     private List<Autore> autori;
     private Year anno_pubblicazione;
     private int numero_copieDisponibili;
-    private String url;
+    private String url; //percorso dell'immagine di copertina
 
     public Libro(String isbn, String titolo, String editore, List<Autore> autori, Year anno_pubblicazione, int numero_copieDisponibili, String url) {
         this.isbn = isbn;
@@ -32,9 +32,7 @@ public class Libro implements Comparable<Libro>{
         this.url = url;
     }
 
-
-    
-    
+    //Getter e Setter
     public String getIsbn() {
         return isbn;
     }
@@ -100,8 +98,5 @@ public class Libro implements Comparable<Libro>{
     public int compareTo(Libro o) {
         return titolo.compareTo(o.titolo);
     }
-    
-    
-    
-    
+      
 }

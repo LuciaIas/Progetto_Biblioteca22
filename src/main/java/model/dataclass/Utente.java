@@ -9,8 +9,9 @@ import java.util.ArrayList;
 
 /**
  *
- * @author nicol
+ * @author gruppo22
  */
+
 public class Utente {
     
     private String matricola;
@@ -28,7 +29,9 @@ public class Utente {
         this.bloccato = bloccato;
     }
 
-    public static ArrayList<Utente> getUsersBlackListed(ArrayList<Utente> utenti){
+    //Getter e Setter
+    
+    public static ArrayList<Utente> getUtentiBlackListed(ArrayList<Utente> utenti){
     
         ArrayList<Utente> us = new ArrayList<>();
         for(Utente u : utenti)
@@ -84,8 +87,5 @@ public class Utente {
     public String toString() {
         return "Utente{" + "matricola=" + matricola + ", nome=" + nome + ", cognome=" + cognome + ", mail=" + mail + '}';
     }
-    
-    
-    
     
 }

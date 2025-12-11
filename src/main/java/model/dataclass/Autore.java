@@ -9,7 +9,7 @@ import java.time.LocalDate;
 
 /**
  *
- * @author nicol
+ * @author gruppo22
  */
 public class Autore {
     
@@ -26,6 +26,7 @@ public class Autore {
         this.data_nascita = data_nascita;
     }
 
+    //Getter e Setter
     public int getId() {
         return id;
     }

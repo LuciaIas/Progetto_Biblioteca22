@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controller.utenti.UtentiController;
+package controller.utenti;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -15,7 +15,7 @@ import javafx.stage.Stage;
 
 /**
  *
- * @author nicol
+ * @author gruppo22
  */
 public class ModificaUtenteController {
     
@@ -119,7 +119,7 @@ public class ModificaUtenteController {
             
             //CONTROLLO MAIL
             String mail = txtEmail.getText().trim();
-            if(!Model.CheckFormat.CheckEmailFormat(mail)){
+            if(!model.servizi.ControlloFormato.controlloFormatoEmail(mail)){
             Alert IsbnAlert = new Alert(Alert.AlertType.WARNING);
                 IsbnAlert.setHeaderText("Email non valida");
                 IsbnAlert.setContentText("L'e-mail deve essere del formato \"xxx@xx.xxx\" ");
@@ -140,7 +140,7 @@ public class ModificaUtenteController {
             
             }
             
-            Model.DataBase.modifyUser(matricola, nome, cognome, mail);
+            model.servizi.DataBase.modificaUtente(matricola, nome, cognome, mail);
             Alert IsbnAlert = new Alert(Alert.AlertType.WARNING);
                 IsbnAlert.setHeaderText("Operazione eseguita");
                 IsbnAlert.setContentText("Utente modificato");

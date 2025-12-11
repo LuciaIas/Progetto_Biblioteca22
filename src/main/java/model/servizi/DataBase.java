@@ -52,8 +52,7 @@ public class DataBase {
     
     //==================== BIBLIOTECARIO ====================    
     
-    //Inserisce il bibliotecario nel database se non esiste già. 
-    //La password viene memorizzata come hash SHA-256.
+    
     public static boolean inserisciBibliotecario(String password){
         if(controllaEsistenzaBibliotecario())
             return false;
@@ -88,7 +87,6 @@ public class DataBase {
         return true;
     }
 
-    // Controlla se esiste già un bibliotecario nel database.
     public static boolean controllaEsistenzaBibliotecario(){
         String query = "Select * from bibliotecario";
         
@@ -105,8 +103,7 @@ public class DataBase {
         return false;
     }
     
-    
-    //Rimuove il bibliotecario dal database, se esiste.
+
     public static boolean rimuoviBibliotecario(){
         if(!controllaEsistenzaBibliotecario())
             return false;        
@@ -121,8 +118,6 @@ public class DataBase {
     }
     
 
-    //Controlla se la password fornita corrisponde a quella memorizzata. 
-    //La password viene hashata con SHA-256 prima del confronto.
     public static boolean controllaPasswordBibliotecario(String password){
         if(!controllaEsistenzaBibliotecario())
             return false;       
@@ -141,9 +136,7 @@ public class DataBase {
                 }
                 hexString.append(hex);
             }
-
-        } catch (NoSuchAlgorithmException e) {
-            
+        } catch (NoSuchAlgorithmException e) {  
             throw new RuntimeException("Errore critico: Algoritmo SHA-256 non trovato.", e);
         }
         
@@ -156,8 +149,7 @@ public class DataBase {
             
             if(rs.next())
                 return true;
-            
-            
+  
         } catch (SQLException ex) {
             return false;
         }
@@ -167,7 +159,7 @@ public class DataBase {
     
        //==================== LIBRI ====================
     
-    // Restituisce il catalogo completo dei libri con autori associati.
+
     public static Catalogo getCatalogo(){       
         Catalogo libri = new Catalogo();
         List<Autore> autori = new ArrayList<>(); 
@@ -230,7 +222,7 @@ public class DataBase {
         }    
     }
     
-    //SELECT DEGLI AUTORI
+    //Select degli autori
     public static ArrayList<Autore> getAutori(){
         
         ArrayList<Autore> autori = new ArrayList<>();
@@ -305,7 +297,6 @@ public class DataBase {
         return c.cercaPerIsbn(isbn);
     }
     
-    //AGGIUNGERE AUTORE
     public static boolean aggiungiAutore(Autore a){
         String query = "INSERT INTO autori(nome, cognome, num_opere, data_nascita) values(?,?,?,?)";
         try {
@@ -378,13 +369,13 @@ public class DataBase {
             stat.setString(5, url);
             stat.setString(6, isbn);
             stat.execute();
-            //ORA RIMUOVO GLI AUTORI
+            //Rimuovo gli autori
             String queryAutori = "DELETE FROM scritto_da WHERE isbn = ? ";
             PreparedStatement stat1 = conn.prepareStatement(queryAutori);
             stat1.setString(1, isbn);
             stat1.execute();
             
-            //SETTO LE RELAZIONI CON GLI AUTORI
+            //Setto le relazioni con gli autori
             String queryR = "Insert Into scritto_da values(?,?)";
             for(Autore a: autori){
             
@@ -406,7 +397,6 @@ public class DataBase {
     
       //==================== UTENTI ====================
     
-    //Restituisce tutti gli utenti ordinati alfabeticamente per cognome e nome.
     public static ArrayList<Utente> getUtenti(){
     
         ArrayList<Utente> us = new ArrayList<>();
@@ -520,10 +510,43 @@ public class DataBase {
         } catch (SQLException ex) {
             ex.printStackTrace();
             return false;
+        }   
+    }
+    
+    public static boolean isMatricolaPresent(String matricola){
+    
+        String query = "SELECT * FROM utenti where matricola=?";
+        try {
+            PreparedStatement stat = conn.prepareStatement(query);
+            stat.setString(1, matricola);
+            ResultSet rs = stat.executeQuery();
+            
+            
+            return rs.next();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
+    
+    
+    public static boolean rimuoviUtente(String matricola){   
+        String query = "DELETE FROM utenti WHERE matricola = ? ";       
+         try {
+            PreparedStatement stat = conn.prepareStatement(query);
+            stat.setString(1, matricola);
+          
+            stat.execute();
+            
+            return true;
+            
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
         }
         
-        
     }
+    
     
     //==================== PRESTITI ====================
     
@@ -682,7 +705,7 @@ public class DataBase {
     }
     
     //==================== COPIE ====================
-    //FUNZIONI PER LE COPIE
+   
     public static int getNumCopieByIsbn(String isbn){
         int n = -1;
         String query = "select num_copie from libri where isbn=?";
@@ -718,8 +741,7 @@ public class DataBase {
         } catch (SQLException ex) {
             ex.printStackTrace();
             return false;
-        }
-        
+        }   
     }
     
     public static boolean setStatoPrestito(String isbn,String matricola, Stato stato){   
@@ -770,11 +792,10 @@ public class DataBase {
         } catch (SQLException ex) {
             ex.printStackTrace();
             return false;
-        }
-        
+        }  
     }
     
-    public static ArrayList<Libro> cercaUtenteByTitolo(String titolo){
+    public static ArrayList<Libro> getLibriByTitolo(String titolo){
     
         Catalogo c = getCatalogo();
         ArrayList<Libro> ar = new ArrayList<>();
@@ -782,10 +803,9 @@ public class DataBase {
             ar.add(l);
         
         return ar;
-    
     }
     
-    public static boolean RimuoviLibro(String isbn){
+    public static boolean rimuoviLibro(String isbn){
     
         String query = "DELETE FROM libri WHERE isbn = ? ";
         
@@ -795,31 +815,14 @@ public class DataBase {
           
             stat.execute();
             
-            return true;
-            
+            return true;    
         } catch (SQLException ex) {
             ex.printStackTrace();
             return false;
         }
-        
+  
     }
 
-    public static boolean RimuoviUtente(String matricola){   
-        String query = "DELETE FROM utenti WHERE matricola = ? ";       
-         try {
-            PreparedStatement stat = conn.prepareStatement(query);
-            stat.setString(1, matricola);
-          
-            stat.execute();
-            
-            return true;
-            
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-            return false;
-        }
-        
-    }
     
     public static int getNumRelationsScritto_Da(){
         int n=0;
@@ -856,21 +859,6 @@ public class DataBase {
         }
     }
     
-    public static boolean isMatricolaPresent(String matricola){
-    
-        String query = "SELECT * FROM utenti where matricola=?";
-        try {
-            PreparedStatement stat = conn.prepareStatement(query);
-            stat.setString(1, matricola);
-            ResultSet rs = stat.executeQuery();
-            
-            
-            return rs.next();
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-            return false;
-        }
-    }
-    
+
     
 }

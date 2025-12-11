@@ -22,7 +22,7 @@ import javafx.stage.Stage;
 
 /**
  *
- * @author nicol
+ * @author gruppo22
  */
 public class CambioPasswordController {
     
@@ -50,8 +50,8 @@ public class CambioPasswordController {
     @FXML
     public void initialize(){
         
-        SetCheckBox();
-        SetButtonFunction();
+        setCheckBox();
+        setButtonFunction();
         
         
     }
@@ -79,7 +79,7 @@ public class CambioPasswordController {
                 err.setContentText("Le password non corrispodono");
                 err.showAndWait();
                 return;
-            }else if(!CheckFormat.CheckPasswordFormat(pass)){
+            }else if(!ControlloFormato.controlloFormatoPassword(pass)){
             
                 Alert al = new Alert(AlertType.ERROR);
                 al.setTitle("Errore Validazione"); // Titolo della finestra
@@ -101,8 +101,8 @@ public class CambioPasswordController {
             }
             
           
-                DataBase.RemoveBibliotecario();
-                DataBase.InsertBibliotecario(pass);
+                DataBase.rimuoviBibliotecario();
+                DataBase.inserisciBibliotecario(pass);
                  Alert IsbnAlert = new Alert(AlertType.INFORMATION);
                 IsbnAlert.setHeaderText("Password aggiornata");
                 IsbnAlert.setContentText("Modifica effettuata con successo");
@@ -136,13 +136,13 @@ public class CambioPasswordController {
     
     
     public void setCheckBox(){
-    ShowPassword(false);
+    showPassword(false);
         CheckShowPass.setOnAction(eh->{
         
         if(CheckShowPass.isSelected())
-            ShowPassword(true);
+            showPassword(true);
         else
-            ShowPassword(false);
+            showPassword(false);
         
         });
         

@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controller.utenti.UtentiController;
+package controller.utenti;
 
+import controller.utenti.UtentiController;
 import model.servizi.DataBase;
 import model.dataclass.Utente;
 import javafx.fxml.FXML;
@@ -16,7 +17,7 @@ import javafx.stage.Stage;
 
 /**
  *
- * @author nicol
+ * @author gruppo22
  */
 public class AggiungiUtenteController {
     
@@ -40,7 +41,7 @@ public class AggiungiUtenteController {
     
     @FXML
     public void initialize(){
-        ButtonInitialize();
+        buttonInitialize();
     }
     
     public void buttonInitialize(){
@@ -155,7 +156,7 @@ public class AggiungiUtenteController {
             
             //CONTROLLO MAIL
             String mail = txtEmail.getText().trim();
-            if(!Model.CheckFormat.CheckEmailFormat(mail)){
+            if(!model.servizi.ControlloFormato.controlloFormatoEmail(mail)){
             Alert IsbnAlert = new Alert(Alert.AlertType.WARNING);
                 IsbnAlert.setHeaderText("Email non valida");
                 IsbnAlert.setContentText("L'e-mail deve essere del formato \"xxx@xx.xxx\" ");
@@ -195,7 +196,7 @@ public class AggiungiUtenteController {
                 IsbnAlert.showAndWait();
             return;
             }else{
-                DataBase.addUser(new User(matricola,nome,cognome,mail,false));
+                DataBase.aggiungiUtente(new Utente(matricola,nome,cognome,mail,false));
             Alert IsbnAlert = new Alert(Alert.AlertType.INFORMATION);
                 IsbnAlert.setHeaderText("Utente aggiunto");
                 IsbnAlert.setContentText("Utente con la matricola "+matricola+" e stato correttamente inserito");

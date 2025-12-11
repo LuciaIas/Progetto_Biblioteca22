@@ -31,7 +31,7 @@ import javafx.stage.Stage;
 
 /**
  *
- * @author nicol
+ * @author gruppo22
  */
 public class ModificaLibroController {
     @FXML
@@ -70,8 +70,8 @@ public class ModificaLibroController {
    
     @FXML
     public void initialize(){
-        lib = DataBase.searchBook(isbn);
-        SettingForm();
+        lib = DataBase.cercaLibro(isbn);
+        settingForm();
         
     }
     
@@ -119,9 +119,9 @@ public class ModificaLibroController {
         txtTitolo.setText(lib.getTitolo());
         txtEditore.setText(lib.getEditore());
         ArrayList<Autore> aut = new ArrayList(); aut.addAll(lib.getAutori());
-        UpdateAutori(aut); //SETTING AUTORI
-        SpinnerInitialize(); //SETTING SPINNER
-        ButtonInitialize();
+        updateAutori(aut); //SETTING AUTORI
+        spinnerInitialize(); //SETTING SPINNER
+        buttonInitialize();
         
     }
     
@@ -182,7 +182,7 @@ public class ModificaLibroController {
                 String nome = parti[0];
                 String cognome = parti[1];
                 
-                Autore a = Model.DataBase.SearchAutorByNames(nome, cognome);
+                Autore a = model.servizi.DataBase.cercaAutoreByNames(nome, cognome);
                 
                 autori.add(a);
                 
@@ -197,16 +197,16 @@ public class ModificaLibroController {
                 if(nome.equals("") & cognome.equals("")) continue;
                 
                 Autore a = new Autore(nome,cognome,0,null);
-                a.setId(Model.DataBase.getNum_Autori()+1);
+                a.setId(model.servizi.DataBase.getNum_Autori()+1);
                 //System.out.println(a);
-                Model.DataBase.addAutore(a);
+                model.servizi.DataBase.aggiungiAutore(a);
                 autori.add(a);
                 }
                 
             }
              
              l = new Libro(isbn,txtTitolo.getText().trim(),txtEditore.getText().trim(),autori,Year.of(spinAnno.getValue()),spinCopie.getValue(),urlIM);   
-                boolean modified = Model.DataBase.modifyBook(l.getIsbn(), l.getTitolo(), l.getEditore(), (l.getAnno_pubblicazione()).getValue(), l.getNumero_copieDisponibili(), urlIM, autori);
+                boolean modified = model.servizi.DataBase.modificaLibro(l.getIsbn(), l.getTitolo(), l.getEditore(), (l.getAnno_pubblicazione()).getValue(), l.getNumero_copieDisponibili(), urlIM, autori);
                 //System.out.println(added);
               if(modified){
                 Alert AL = new Alert(Alert.AlertType.INFORMATION);
@@ -257,7 +257,7 @@ public class ModificaLibroController {
     
     //AGGIORNAMENTO AUTORI
     public void updateAutori(ArrayList<Autore> aut){
-        ArrayList<Autore> autori = Model.DataBase.getAutori();
+        ArrayList<Autore> autori = model.servizi.DataBase.getAutori();
         menuAutori.getItems().clear();
         
         for(Autore a : autori){

@@ -50,7 +50,7 @@ import javafx.util.Duration;
 
 /**
  *
- * @author nicol
+ * @author gruppo22
  */
 public class PrestitoRestituzioneController {
     
@@ -76,8 +76,8 @@ public class PrestitoRestituzioneController {
       int n=  Prestito.getPrestitiByStato(DataBase.getPrestiti(), ATTIVO).size()+Prestito.getPrestitiByStato(DataBase.getPrestiti(), Stato.IN_RITARDO).size()+Prestito.getPrestitiByStato(DataBase.getPrestiti(), Stato.PROROGATO).size();
     lblActiveLoans.setText("Prestiti attivi: "+n);
     updatePrestiti(DataBase.getPrestiti());
-    ButtonInitialize();
-    MenuButtonInitialize();
+    buttonInitialize();
+    menuButtonInitialize();
     }
     
     public void menuButtonInitialize(){
@@ -126,7 +126,7 @@ public class PrestitoRestituzioneController {
         searchLoan.setOnKeyPressed(eh->{
         
             if(eh.getCode()==KeyCode.ENTER) 
-                SearchFunction();
+                searchFunction();
         });
     
     }
@@ -139,8 +139,8 @@ public class PrestitoRestituzioneController {
         
         for(Prestito p : prestiti){
             String isbn = p.getIsbn(),matricola = p.getMatricola();
-            Libro l = DataBase.searchBook(isbn);
-            User u = DataBase.searchUser(matricola);
+            Libro l = DataBase.cercaLibro(isbn);
+            Utente u = DataBase.cercaUtente(matricola);
         
             if(isbn.equals(text.trim()) || text.trim().equals(l.getTitolo()) || text.trim().equals(matricola) || text.trim().equals(u.getNome()) || text.trim().equals(u.getCognome()) )
                 app.add(p);
@@ -188,7 +188,7 @@ public class PrestitoRestituzioneController {
             
                 for(int f=0;f<totale_prestiti-(MAX_LOAN-1);f++){
                         Prestito p = pre.get(f);
-                        DataBase.RemovePrestito(p.getIsbn(), p.getMatricola());
+                        DataBase.rimuoviPrestito(p.getIsbn(), p.getMatricola());
                 }
                 }
                 
@@ -248,8 +248,8 @@ public class PrestitoRestituzioneController {
     loansContainer.getChildren().clear();
         for(Prestito p : p1){
         
-            Libro l = DataBase.searchBook(p.getIsbn());
-            User u = DataBase.searchUser(p.getMatricola());
+            Libro l = DataBase.cercaLibro(p.getIsbn());
+            Utente u = DataBase.cercaUtente(p.getMatricola());
             
             aggiungiRigaPrestito(l.getTitolo(),l.getIsbn(),u.getNome(),u.getMatricola(),p.getData_scadenza().toString(),p.getStato());
         }
@@ -260,7 +260,7 @@ public class PrestitoRestituzioneController {
 
 private void aggiungiRigaPrestito(String titoloLibro, String isbn, String nomeUtente, String matricola, String dataScadenza, Stato statoEnum) {
     
-    User u = DataBase.searchUser(matricola);
+    Utente u = DataBase.cercaUtente(matricola);
     Prestito prest = null;
     for(Prestito p : DataBase.getPrestiti())
         if(p.getIsbn().equals(isbn) && p.getMatricola().equals(matricola))
@@ -391,7 +391,7 @@ private void aggiungiRigaPrestito(String titoloLibro, String isbn, String nomeUt
 
         btnProroga.setOnAction(e -> {
             
-            DataBase.ProrogaPrestito(isbn, matricola);
+            DataBase.prorogaPrestito(isbn, matricola);
             
                 DataBase.setStatoPrestito(isbn, matricola, Stato.PROROGATO);
             
@@ -410,8 +410,8 @@ private void aggiungiRigaPrestito(String titoloLibro, String isbn, String nomeUt
         
         btnRestituisci.setOnAction(e -> {
         
-            DataBase.Restituisci(isbn, matricola);
-            DataBase.modifyNum_copie(isbn, true);
+            DataBase.restituisci(isbn, matricola);
+            DataBase.modificaNum_copie(isbn, true);
             updatePrestiti(DataBase.getPrestiti());
         });
         actionsBox.getChildren().add(btnRestituisci);
@@ -422,7 +422,7 @@ private void aggiungiRigaPrestito(String titoloLibro, String isbn, String nomeUt
         Button btnMail = new Button("📧");
         btnMail.getStyleClass().add("icon-button-red"); 
         
-        Tooltip tooltip = new Tooltip("Ricorda a " + DataBase.searchUser(matricola).getNome() + " di riconsegnare il libro");
+        Tooltip tooltip = new Tooltip("Ricorda a " + DataBase.cercaUtente(matricola).getNome() + " di riconsegnare il libro");
         btnMail.setTooltip(tooltip);
         tooltip.setShowDelay(Duration.millis(100));
         
@@ -437,7 +437,7 @@ private void aggiungiRigaPrestito(String titoloLibro, String isbn, String nomeUt
                 if(p1.getIsbn().equals(isbn) && p1.getMatricola().equals(matricola))
                     p = p1;
             
-            if(EmailSender.SendAvviso(u.getMail(), titoloLibro, u.getNome(), u.getCognome(),p.getInizio_prestito())){
+            if(EmailInvia.inviaAvviso(u.getMail(), titoloLibro, u.getNome(), u.getCognome(),p.getInizio_prestito())){
             
             Alert IsbnAlert = new Alert(Alert.AlertType.INFORMATION);
                 IsbnAlert.setHeaderText("Avviso inviato");

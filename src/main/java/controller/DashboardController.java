@@ -31,11 +31,11 @@ import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import mainPackage.main;
+import main.Main;
 
 /**
  *
- * @author nicol
+ * @author gruppo22
  */
 public class DashboardController {
     
@@ -91,14 +91,14 @@ public class DashboardController {
         
          menuButtons = Arrays.asList(CatalogoLibriButton,DashboardButton,BLButton,mailButton,utentiButton,PrestitiRestituzioniButton);
         
-        ButtonInitialize();
-        LabelInitialize();
+        buttonInitialize();
+        labelInitialize();
         
     }
     
     public void labelInitialize(){
     
-        numLibri.setText(""+DataBase.GetCatalogo().getLibri().size());
+        numLibri.setText(""+DataBase.getCatalogo().getLibri().size());
         int i=0;
         for(Prestito p : DataBase.getPrestiti())
             if(p.getStato()==Stato.ATTIVO || p.getStato()==Stato.PROROGATO || p.getStato()==Stato.IN_RITARDO)
@@ -137,7 +137,7 @@ public class DashboardController {
 
                 // Controlliamo cosa ha cliccato
                 if (result.isPresent() && result.get() == ButtonType.OK){
-                    BackupService.eseguiBackup(f.getAbsolutePath());
+                    Backup.eseguiBackup(f.getAbsolutePath());
                 } 
             }
         
@@ -165,16 +165,15 @@ public class DashboardController {
             try {
                 Parent root =FXMLLoader.load(getClass().getResource("/View/Access.fxml"));
                 Scene s = new Scene(root,425,500);
-                main.stage.getProperties().put("login", "login");
-                main.stage.setScene(s);
+                Main.stage.getProperties().put("login", "login");
+                Main.stage.setScene(s);
                 //main.stage.centerOnScreen();
-                main.stage.setWidth(437);
-                main.stage.setHeight(500);
-                main.stage.centerOnScreen();
+                Main.stage.setWidth(437);
+                Main.stage.setHeight(500);
+                Main.stage.centerOnScreen();
             } catch (IOException ex) {
                 Logger.getLogger(DashboardController.class.getName()).log(Level.SEVERE, null, ex);
             }
-        
         });
     
         DashboardButton.setOnAction(eh->{
@@ -186,64 +185,46 @@ public class DashboardController {
                  evidenziaBottone(DashboardButton);
             } catch (IOException ex) {
                 Logger.getLogger(DashboardController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            
-            
-            
-        });
-        
-        
-        CatalogoLibriButton.setOnAction(eh->{
-        
+            }      
+        });      
+        CatalogoLibriButton.setOnAction(eh->{     
             try {
                  Parent root = FXMLLoader.load(getClass().getResource("/View/CatalogoLibri.fxml"));
                  HomeBorderPane.setCenter(root);
                  evidenziaBottone(CatalogoLibriButton);
             } catch (IOException ex) {
                 Logger.getLogger(DashboardController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            
-        });
-        
-        mailButton.setOnAction(eh->{
-        
+            }          
+        });  
+        mailButton.setOnAction(eh->{    
             try {
                  Parent root = FXMLLoader.load(getClass().getResource("/View/mail.fxml"));
                  HomeBorderPane.setCenter(root);
                  evidenziaBottone(mailButton);
             } catch (IOException ex) {
                 Logger.getLogger(DashboardController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            
-        });
-        
-        utentiButton.setOnAction(eh->{
-        
+            }          
+        });       
+        utentiButton.setOnAction(eh->{     
             try {
                  Parent root = FXMLLoader.load(getClass().getResource("/View/utenti.fxml"));
                  HomeBorderPane.setCenter(root);
                  evidenziaBottone(utentiButton);
             } catch (IOException ex) {
                 Logger.getLogger(DashboardController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        
-        });
-        
-        PrestitiRestituzioniButton.setOnAction(eh->{
-        
+            }    
+        });      
+        PrestitiRestituzioniButton.setOnAction(eh->{    
             try {
                  Parent root = FXMLLoader.load(getClass().getResource("/View/PrestitoRestituzione.fxml"));
                  HomeBorderPane.setCenter(root);
                  evidenziaBottone(PrestitiRestituzioniButton);
             } catch (IOException ex) {
                 Logger.getLogger(DashboardController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            
+            }      
         });
-        
-        
-        BLButton.setOnAction(eh->{
-        
+      
+        BLButton.setOnAction(eh->{     
             try {
                  Parent root = FXMLLoader.load(getClass().getResource("/View/BlackList.fxml"));
                  HomeBorderPane.setCenter(root);
@@ -251,10 +232,9 @@ public class DashboardController {
             } catch (IOException ex) {
                 Logger.getLogger(DashboardController.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
+          
         });
-        
-        
+      
     }
     
     private void evidenziaBottone(Button bottoneAttivo) {
@@ -269,7 +249,5 @@ public class DashboardController {
         bottoneAttivo.getStyleClass().remove("sidebar-btn"); 
         bottoneAttivo.getStyleClass().add("sidebar-btn-active"); 
     }
-    
-    
-    
+
 }

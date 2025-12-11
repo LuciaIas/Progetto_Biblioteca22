@@ -7,7 +7,7 @@ package model.dataclass;
 
 /**
  *
- * @author lucia
+ * @author gruppo22
  */
 import java.util.Date;
 
@@ -22,10 +22,18 @@ public class EmailInfo {
         this.dataInvio = dataInvio;
     }
 
-    // Getter per leggerli dopo
-    public String getOggetto() { return oggetto; }
-    public String getDestinatario() { return destinatario; }
-    public Date getDataInvio() { return dataInvio; }
+    // Getter
+    public String getOggetto() { 
+        return oggetto; 
+    }
+    
+    public String getDestinatario() { 
+        return destinatario; 
+    }
+    
+    public Date getDataInvio() { 
+        return dataInvio; 
+    }
     
     @Override
     public String toString() {
