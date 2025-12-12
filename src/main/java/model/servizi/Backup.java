@@ -23,9 +23,15 @@ public class Backup {
     private static final String DB_NAME = "biblioteca";
     private static final String DB_USER = "root";
     private static final String DB_PASS = ""; 
-    private static final String MYSQL_DUMP_PATH = "C:\\xampp\\mysql\\bin\\mysqldump.exe"; 
+    private static String MYSQL_DUMP_PATH = "C:\\xampp\\mysql\\bin\\mysqldump.exe"; 
 
+    public static void setDumpPath(String path) {
+        MYSQL_DUMP_PATH = path;
+    }
+    
     public static boolean eseguiBackup(String cartellaDestinazione) {
+        if(cartellaDestinazione==null)
+            return false;
         try {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
             String nomeFile = "Backup_" + DB_NAME + "_" + sdf.format(new Date()) + ".sql";
