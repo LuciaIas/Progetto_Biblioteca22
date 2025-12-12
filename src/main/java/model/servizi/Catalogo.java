@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
+import model.dataclass.Autore;
 
 
 public class Catalogo {
@@ -63,10 +64,16 @@ public class Catalogo {
                 .collect(Collectors.toList());
     }
 
-    public List<Libro> cercaPerAutore(String autore) {
-        return libri.stream()
-                .filter(l -> l.getAutori().contains(autore))
-                .collect(Collectors.toList());
+    public List<Libro> cercaPerAutore(Autore autore) {
+
+        List<Libro> lib = new ArrayList<Libro>();
+            for(Libro l : libri)
+                for(Autore a : l.getAutori())
+                    if(a.getId()==autore.getId())
+                        lib.add(l);
+            
+           return lib;
+        
     }
     
 }

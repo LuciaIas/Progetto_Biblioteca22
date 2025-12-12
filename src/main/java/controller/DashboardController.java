@@ -77,7 +77,7 @@ public class DashboardController {
     private ScrollPane DashboardScrollPane; //contenitore che permette lo scroll orizzontale e verticale
     
     @FXML
-    private BorderPane HomeBozrderPane; //usato per acmbiare dinamicamente la vista centrale quando si clcca un bottone del menu
+    private BorderPane HomeBorderPane; //usato per acmbiare dinamicamente la vista centrale quando si clcca un bottone del menu
     
     private List<Button> menuButtons; //lista che contiene tutti i bottoni principali del menu
     
@@ -146,7 +146,7 @@ public class DashboardController {
         
         //modifica password
         modPassButton.setOnAction(eh->{
-                 PassRec = new Stage //nuova finestra modale
+                 PassRec = new Stage(); //nuova finestra modale
                 PassRec.setTitle("Modifica Password");
                 PassRec.setResizable(false);
                 PassRec.initModality(Modality.APPLICATION_MODAL); //blocca finestra principale
