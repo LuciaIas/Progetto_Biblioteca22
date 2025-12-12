@@ -77,7 +77,6 @@ private static final String password = Configurazione.getPasswordSender();
             Transport.send(message);
 
         } catch (MessagingException e) {
-            //e.printStackTrace();
             // L'eccezione è silenziata, ma si potrebbe loggare in ambiente di produzione
         }
     }
@@ -99,8 +98,7 @@ private static final String password = Configurazione.getPasswordSender();
             ret=true;// Segnalazione del successo dell'invio (non thread-safe)
         } catch (Exception ev) {
             ret=false;// In caso di errore nell'invio, il flag viene impostato a falso
-            //ev.printStackTrace();
-           
+         
         }
     }).start(); 
         

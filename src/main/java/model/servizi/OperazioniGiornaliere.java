@@ -44,7 +44,7 @@ public class OperazioniGiornaliere {
      // Avvia i task automatici (Ccntrolli a mezzanotte (es. aggiornamento stato prestiti) e monitoraggio sessione utente ogni 2 secondi per timeout e scadenza).
     public static void avviaTaskDiMezzanotte() {
         
-        // Calcola quanto manca alla prossima mezzanotte per il primo task
+        // Calcolo quanto manca alla prossima mezzanotte per il primo task
         long ritardoIniziale = calcolaRitardoVersoMezzanotte();    
         long periodo = 24 * 60 * 60; // Periodo di esecuzione: 24 ore (in secondi)  
         
@@ -64,14 +64,14 @@ public class OperazioniGiornaliere {
             Platform.runLater(() -> {
                 try {
                     Main.checkClosed(); // Controllo la chiusura della finestra principale
-                    if (Main.stage == null || Main.stage.getScene() == null) {// Se lo stage principale non esiste o non ha scene, resetta il timer
+                    if (Main.stage == null || Main.stage.getScene() == null) {// Se lo stage principale non esiste o non ha scene, resetto il timer
                         ultimoResetSessione = System.currentTimeMillis(); 
                         return;
                     }
                     
                     Parent currentRoot = Main.stage.getScene().getRoot();   
                     
-                    if (currentRoot.getProperties().get("login") != null) {// Se siamo sulla schermata di login, resetta il timer                   
+                    if (currentRoot.getProperties().get("login") != null) {// Se siamo sulla schermata di login, resetto il timer                   
                         ultimoResetSessione = System.currentTimeMillis();
                         return;
                     }                  
@@ -101,7 +101,7 @@ public class OperazioniGiornaliere {
                         loginStage.show(); 
                         loginStage.setOnCloseRequest(eh->{Platform.exit();System.exit(0);});
 
-                         // Chiude tutte le altre finestre aperte
+                         // Chiudo tutte le altre finestre aperte
                         try {
                             javafx.collections.ObservableList<Stage> stages = com.sun.javafx.stage.StageHelper.getStages();
                             for (int i = 0; i < stages.size(); i++) {
@@ -129,8 +129,7 @@ public class OperazioniGiornaliere {
     private static long calcolaSecondiAllaProssimaOra() {
         LocalDateTime now = LocalDateTime.now();
         // Prende l'ora successiva, minuto 0, secondo 0
-        LocalDateTime nextHour = now.plusHours(1).truncatedTo(ChronoUnit.HOURS);
-        
+        LocalDateTime nextHour = now.plusHours(1).truncatedTo(ChronoUnit.HOURS);       
         return Duration.between(now, nextHour).getSeconds();
     }
     
@@ -145,8 +144,7 @@ public class OperazioniGiornaliere {
     public static void eseguiControlliAutomatici(boolean SkipNotify) { 
          
        ArrayList<Prestito> prest = DataBase.getPrestiti();
-       boolean ritardi=false;
-       
+       boolean ritardi=false;      
        // Controlla tutti i prestiti per identificare quelli in ritardo
        for(Prestito p : prest){
            if(p.getData_scadenza().isBefore(LocalDate.now()) && p.getRestituzione()==null)                   
@@ -156,7 +154,7 @@ public class OperazioniGiornaliere {
                ritardi=true;
        }
        
-       // Mostra notifica se ci sono prestiti in ritardo e SkipNotify è false
+       // Mostro notifica se ci sono prestiti in ritardo e SkipNotify è false
        if(ritardi && !SkipNotify){    
            Platform.runLater(() -> {
        Stage stage = new Stage();

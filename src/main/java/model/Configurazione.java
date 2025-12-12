@@ -18,7 +18,7 @@ public class Configurazione {
     private static final Properties properties = new Properties();
 
     static {
-        // Usa getResourceAsStream perché il file è dentro "src/main/resources"
+        // Uso getResourceAsStream perché il file è dentro "src/main/resources"
         try (InputStream input = Configurazione.class.getResourceAsStream("/config.properties")) {
             if (input != null) {
                 properties.load(input);

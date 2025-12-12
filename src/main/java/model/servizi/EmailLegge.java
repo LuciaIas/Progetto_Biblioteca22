@@ -33,7 +33,7 @@ public static ArrayList<EmailInfo> leggiPostaInviata() {
         props.put("mail.imaps.port", "993");
         props.put("mail.imaps.ssl.trust", "imap.gmail.com");
 
-        // Crea una sessione senza autenticatore (IMAPS usa lo Store)
+        // Creo una sessione senza autenticatore (IMAPS usa lo Store)
         Session session = Session.getInstance(props);
         
         // Connessione alla casella di posta tramite protocollo IMAPS
@@ -48,13 +48,13 @@ public static ArrayList<EmailInfo> leggiPostaInviata() {
         
         sentFolder.open(Folder.READ_ONLY); // Apertura in sola lettura
     
-        // Determina quanti messaggi leggere (max 40 più recenti)
+        // Determino quanti messaggi leggere (max 40 più recenti)
         int totaleMessaggi = sentFolder.getMessageCount();
         int numeroDaLeggere = 40; 
         int start = Math.max(1, totaleMessaggi - numeroDaLeggere + 1);
         int end = totaleMessaggi;
    
-        // Recupera i messaggi solo se la cartella non è vuota
+        // Recupero i messaggi solo se la cartella non è vuota
         Message[] messages;
         if (totaleMessaggi > 0) {
             messages = sentFolder.getMessages(start, end);
@@ -62,27 +62,27 @@ public static ArrayList<EmailInfo> leggiPostaInviata() {
             messages = new Message[0];
         }
 
-        // Ordina cronologicamente dal più recente al più vecchio
+        // Ordino cronologicamente dal più recente al più vecchio
         for (int i = messages.length - 1; i >= 0; i--) {
             Message msg = messages[i];
             
             String sogg = msg.getSubject();
             String dest = "Sconosciuto";
-            // Estrae il destinatario principale, se presente
+            // Estraggo il destinatario principale, se presente
             try {     
                 if (msg.getRecipients(Message.RecipientType.TO) != null) {
                     dest = msg.getRecipients(Message.RecipientType.TO)[0].toString();
                 }
             } catch (Exception ex) { 
-            // Caso raro: destinatario non leggibile o formattazione anomala
+            // Destinatario non leggibile o formattazione anomala
             }
       
-            // Crea un oggetto semplificato con le info principali dell'email
+            // Creo un oggetto semplificato con le info principali dell'email
             EmailInfo info = new EmailInfo(sogg, dest, msg.getSentDate());
             listaEmail.add(info);
         }
       
-        // Chiude cartella e connessione
+        // Chiudo cartella e connessione
         sentFolder.close(false);
         store.close();
 

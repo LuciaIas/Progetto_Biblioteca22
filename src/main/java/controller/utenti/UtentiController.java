@@ -251,8 +251,6 @@ public class UtentiController {
 
         btnEdit.setTooltip(tt1);
         btnEdit.setOnAction(e -> {
-            //System.out.println("Modifica utente: " + matricola);
-            // apriPopupModifica(matricola);
             Stage stage = new Stage();
             stage.setTitle("Modifica Utente");
             stage.setResizable(false);
@@ -267,9 +265,7 @@ public class UtentiController {
             }
 
             stage.showAndWait();
-            updateUtentiList(DataBase.getUtenti());
-            //LabelInitialize();
-            
+            updateUtentiList(DataBase.getUtenti());            
         });
         
         Button btnDelete = new Button("🗑");
@@ -302,8 +298,6 @@ public class UtentiController {
         Button btnAction = new Button(isBlacklisted ? "SBLOCCA" : "BLOCCA");
         btnAction.getStyleClass().add(isBlacklisted ? "button-outline-success" : "button-outline-danger");
         btnAction.setOnAction(e -> {
-            //System.out.println(isBlacklisted ? "Sblocco utente..." : "Blocco utente...");
-            // logicaBloccoSblocco(matricola);
             if(!isBlacklisted)
             model.servizi.DataBase.setBlackListed(matricola);
             else
