@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class EmailInviaTest {
 
-    // Avvia il server SMTP falso su localhost
+    // Avvio server SMTP falso su localhost
     @RegisterExtension
     static GreenMailExtension greenMail = new GreenMailExtension(ServerSetupTest.SMTP)
             .withConfiguration(GreenMailConfiguration.aConfig().withUser("test@mail.com", "password"));
@@ -39,9 +39,9 @@ public class EmailInviaTest {
         EmailInvia.setTestConfiguration("smtp.gmail.com", "587");
     }
 
-    /**
-     * Metodo ausiliario per modificare i campi private static final di EmailInvia
-     */
+    
+    // Metodo helper per modificare i campi private static final di EmailInvia
+     
     private void injectPrivateStaticField(String fieldName, String value) throws Exception {
         Field field = EmailInvia.class.getDeclaredField(fieldName);
         field.setAccessible(true);
@@ -51,7 +51,7 @@ public class EmailInviaTest {
         modifiersField.setAccessible(true);
         modifiersField.setInt(field, field.getModifiers() & ~Modifier.FINAL);
 
-        // Imposta il valore
+
         field.set(null, value);
     }
 
