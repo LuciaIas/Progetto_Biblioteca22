@@ -101,8 +101,6 @@ public class ModificaLibroController {
         } catch (Exception e) {
             // TENTATIVO 3: Fallback (Tutto è fallito)
             System.err.println("Impossibile caricare immagine: " + path + ". Uso default.");
-            // Assicurati di avere un'immagine "no_cover.png" nelle tue risorse
-            // Se non ce l'hai, metti img = null; ma gestiscilo nella ImageView
             try {
                 img = new Image(getClass().getResourceAsStream("/Images/default.png"));
             } catch (Exception ex) {

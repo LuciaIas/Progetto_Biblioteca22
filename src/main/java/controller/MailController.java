@@ -26,7 +26,7 @@ import javafx.scene.layout.VBox;
  * @author gruppo22
  */
 
-//questo controller è legato al file FXML e gestisce la garfica delle email inviate
+//controller gestisce la grafica delle email inviate
 public class MailController {
     @FXML
     private VBox emailContainer; //contenitore verticale dove verranno inserite le card delle email
@@ -47,13 +47,13 @@ public class MailController {
         emailContainer.getChildren().add(loading); //mostra la rotellina di caricamento
         lblTotalUsers.setText("Sincronizzazione in corso..."); //aggiorna la label per dire che sta scaricando le email
 
-        // 2. AVVIA THREAD SEPARATO (Per non bloccare l'app)
+        // 2. Avvia un thread separato (Per non bloccare l'app)
         new Thread(() -> {
             
             // Scarica le mail (operazione lenta)
             List<EmailInfo> listaEmail = EmailLegge.leggiPostaInviata();
 
-            // 3. TORNA AL THREAD GRAFICO per mostrare i risultati
+            // 3. Torna al thread grafico per mostrare i risultati
             Platform.runLater(() -> {
                 emailContainer.getChildren().clear(); // Rimuovi caricamento loading
                 
@@ -83,7 +83,7 @@ public class MailController {
         riga.setSpacing(20); //spaziatura orizzontale tra gli elementi
         riga.setPrefHeight(80); //altezza della card
         riga.setPadding(new Insets(0, 20, 0, 20)); //margini interni
-        riga.getStyleClass().add("email-row"); // Classe CSS specifica
+        riga.getStyleClass().add("email-row"); 
 
         //Icona (busta)
         StackPane iconContainer = new StackPane(); // Usa StackPane per centrare automaticamente l'icona
@@ -95,14 +95,13 @@ public class MailController {
         iconContainer.setPrefSize(size, size);
         iconContainer.setMaxSize(size, size);
 
-        // Stile (assumendo che icon-container-purple abbia il radius 50%)del cerchio
+        // Stile 
         iconContainer.getStyleClass().add("icon-container-purple");
 
         //Icona della mail inviata
         Label iconLabel = new Label("📤");
         iconLabel.setStyle("-fx-font-size: 20px;"); // Aumentato leggermente per riempire meglio
 
-        // NOTA: Rimossi setLayoutX e setLayoutY.
         // StackPane centra automaticamente il figlio.
 
         //aggiunta dell'icona al cerchio

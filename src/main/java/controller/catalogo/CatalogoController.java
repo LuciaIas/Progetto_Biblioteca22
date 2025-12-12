@@ -134,7 +134,7 @@ public class CatalogoController {
         String imagePath = (libro.getUrl() != null && !libro.getUrl().isEmpty()) ? libro.getUrl() : "/Images/default.jpg";
         Image img;
         try {
-            // Logica robusta per caricare immagini da disco o da risorse
+            // Logica per caricare immagini da disco o da risorse
             if (imagePath.contains(":") || imagePath.startsWith("file:")) {
                 if (!imagePath.startsWith("file:") && !imagePath.startsWith("http")) {
                     imagePath = "file:" + imagePath;
@@ -159,7 +159,7 @@ public class CatalogoController {
     // Label Copie
     Label lblCopie = new Label();
     if (libro.getIsbn() != null) {
-        lblCopie.setText("Copie: " + DataBase.getNumCopieByIsbn(libro.getIsbn())); // Assicurati che questo metodo esista e sia statico
+        lblCopie.setText("Copie: " + DataBase.getNumCopieByIsbn(libro.getIsbn())); 
     }
     lblCopie.setStyle("-fx-background-color: rgba(0,0,0,0.7); -fx-background-radius: 15; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 5 12; -fx-font-size: 12px;");
     
@@ -247,7 +247,6 @@ public class CatalogoController {
     DropShadow shadow = new DropShadow(10, Color.rgb(0, 0, 0, 0.3));
     imageView.setEffect(shadow);
     
-    // *** FIX IMPORTANTE *** : Disabilita DepthTest per evitare crash coi bottoni
     bookStack.setDepthTest(javafx.scene.DepthTest.DISABLE); 
 
     // 4. TITOLO E CONTENITORE FINALE (VBox)
@@ -298,7 +297,6 @@ public class CatalogoController {
         // Mostra controlli
         if (libro.getIsbn() != null) overlayControls.setVisible(true);
         
-        // *** FIX IMPORTANTE *** : Porta la card in primo piano rispetto alle altre
         mainContainer.toFront(); 
     });
 

@@ -82,7 +82,7 @@ public class UtentiController {
         ArrayList<Utente> utenti = new ArrayList<>(),app= new ArrayList<>();
            String text = searchUser.getText().trim();
            
-            //CERCA PER matricola prima
+            //Cerca per matricola 
            Utente u = DataBase.cercaUtente(text);
            if(u!=null){
                utenti.add(u);
@@ -172,14 +172,6 @@ public class UtentiController {
         }
     }
     
-    /**
-     * Crea una riga utente e la aggiunge alla lista.
-     * @param nome Nome dell'utente
-     * @param cognome Cognome dell'utente
-     * @param matricola Matricola univoca
-     * @param email Email istituzionale
-     * @param isBlacklisted Se true, l'utente appare rosso (bloccato)
-     */
     private void aggiungiCardUtente(String nome, String cognome, String matricola, String email, boolean isBlacklisted) {
         //creazione card utente
         

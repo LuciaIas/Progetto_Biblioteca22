@@ -128,7 +128,7 @@ public class BlacklistController {
     //crea card grafica per singolo utente
     private void aggiungiCardUtente(String nome, String cognome, String matricola, String email, boolean isBlacklisted) {
         
-        // 1. CREAZIONE RIGA PRINCIPALE (HBox)
+        // 1. Creazione riga principale (HBox)
         HBox riga = new HBox();
         riga.setAlignment(Pos.CENTER_LEFT);
         riga.setSpacing(20);
@@ -154,7 +154,7 @@ public class BlacklistController {
         iconContainer.setPrefSize(size, size);
         iconContainer.setMaxSize(size, size); // Impedisce che si allarghi e diventi ovale
 
-        // Stile (assicurati che nel CSS ci sia -fx-background-radius: 50%;)
+        // Stile 
         iconContainer.getStyleClass().add("icon-container-red");
 
         Label iconLabel = new Label("🚫");
