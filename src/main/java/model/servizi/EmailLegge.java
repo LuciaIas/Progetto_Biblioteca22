@@ -20,6 +20,8 @@ public class EmailLegge {
     private static final String username = Configurazione.getEmailUsername();  
     private static final String password = Configurazione.getPasswordReceiver(); 
 
+    private static String IMAP_HOST = "imap.gmail.com";
+    
 public static ArrayList<EmailInfo> leggiPostaInviata() {
     
     ArrayList<EmailInfo> listaEmail = new ArrayList<>(); 

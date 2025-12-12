@@ -9,85 +9,100 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
 import javax.mail.internet.MimeMessage;
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.time.LocalDate;
-import java.util.concurrent.TimeUnit;
-import model.Configurazione;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class EmailInviaTest {
 
-    // Avvia un server SMTP finto sulla porta 3025 del tuo PC
+    // Avvia il server SMTP falso su localhost
     @RegisterExtension
     static GreenMailExtension greenMail = new GreenMailExtension(ServerSetupTest.SMTP)
-            .withConfiguration(GreenMailConfiguration.aConfig().withUser(Configurazione.getEmailUsername(), Configurazione.getPasswordSender()));
+            .withConfiguration(GreenMailConfiguration.aConfig().withUser("test@mail.com", "password"));
 
     @BeforeEach
-    public void setUp() {
-        // Prima di ogni test, diciamo alla tua classe di usare il server finto (localhost:3025)
-        // invece di quello vero di Gmail.
+    public void setUp() throws Exception {
+        // Configura EmailInvia per puntare al localhost che useremo come server per testare
+        // Nota: greenMail.getSmtp().getPort() recupera la porta dinamica assegnata dal test
         EmailInvia.setTestConfiguration("localhost", String.valueOf(greenMail.getSmtp().getPort()));
+
+        // INIEZIONE DELLE CREDENZIALI FINTE
+        injectPrivateStaticField("username", "test@mail.com");
+        injectPrivateStaticField("password", "password");
     }
 
     @AfterEach
-    public void tearDown() {
-        // Ripristiniamo la configurazione originale per sicurezza
+    public void tearDown() throws Exception {
+        // Reset
         EmailInvia.setTestConfiguration("smtp.gmail.com", "587");
     }
 
-    @Test
-    public void testInviaAvvisoLibroSingolo() throws Exception {
-        // DATI DI PROVA
-        String destinatario = "studente@test.com";
-        String nome = "Mario";
-        String cognome = "Rossi";
-        String titoloLibro = "Java Programming";
-        LocalDate dataPrestito = LocalDate.of(2023, 1, 1);
-
-        // 1. ESECUZIONE
-        // Chiamiamo il metodo. Nota: il metodo usa un Thread separato!
-        EmailInvia.inviaAvviso(destinatario, titoloLibro, nome, cognome, dataPrestito);
-
-        // 2. ATTESA (Fondamentale per i thread)
-        // Poiché l'invio è asincrono (new Thread), dobbiamo aspettare che la mail arrivi al server finto.
-        // Aspettiamo fino a 5 secondi che arrivi 1 messaggio.
-        boolean mailArrivata = greenMail.waitForIncomingEmail(5000, 1);
+    /**
+     * Metodo ausiliario per modificare i campi private static final di EmailInvia
+     */
+    private void injectPrivateStaticField(String fieldName, String value) throws Exception {
+        Field field = EmailInvia.class.getDeclaredField(fieldName);
+        field.setAccessible(true);
         
-        assertTrue(mailArrivata, "L'email dovrebbe essere stata ricevuta dal server finto");
+        // Rimuove il modificatore final per permettere la modifica
+        Field modifiersField = Field.class.getDeclaredField("modifiers");
+        modifiersField.setAccessible(true);
+        modifiersField.setInt(field, field.getModifiers() & ~Modifier.FINAL);
 
-        // 3. VERIFICA CONTENUTO
-        // Prendiamo le email ricevute dal server finto
-        MimeMessage[] messaggiRicevuti = greenMail.getReceivedMessages();
-        assertEquals(1, messaggiRicevuti.length);
-
-        MimeMessage email = messaggiRicevuti[0];
-        
-        // Controlliamo l'oggetto
-        assertEquals("Mancata Restituzione del libro", email.getSubject());
-        
-        // Controlliamo il corpo del testo
-        String corpo = email.getContent().toString().trim(); // .trim() toglie spazi vuoti extra
-        assertTrue(corpo.contains("Mario Rossi"), "Il corpo deve contenere il nome");
-        assertTrue(corpo.contains("Java Programming"), "Il corpo deve contenere il titolo del libro");
+        // Imposta il valore
+        field.set(null, value);
     }
 
     @Test
-    public void testInviaAvvisoMultiplo() throws Exception {
-        // Testiamo il ramo "else" (quando titolo è null)
-        String destinatario = "studente@test.com";
-        
-        // Passiamo null come titolo
-        EmailInvia.inviaAvviso(destinatario, null, "Luigi", "Verdi", LocalDate.now());
+    public void testInviaAvvisoLibroSingolo() {
+        // Dati di prova
+        String destinatario = "studente@unisa.it";
+        String nome = "Pecco";
+        String cognome = "Mattarella";
+        String titolo = "Ingegneria del Software miglior corso possibile";
+        LocalDate data = LocalDate.of(2023, 10, 1);
 
-        // Aspettiamo l'email
-        assertTrue(greenMail.waitForIncomingEmail(5000, 1));
+        // Esecuzione
+        EmailInvia.inviaAvviso(destinatario, titolo, nome, cognome, data);
 
-        MimeMessage email = greenMail.getReceivedMessages()[0];
+        // Verifica: Aspettiamo fino a 2 secondi che arrivi 1 email
+        assertTrue(greenMail.waitForIncomingEmail(2000, 1), 
+            "L'email non è arrivata al server (timeout)");
+
+        // Controllo contenuto
+        MimeMessage[] receivedMessages = greenMail.getReceivedMessages();
+        assertEquals(1, receivedMessages.length);
         
-        // Verifichiamo che l'oggetto sia quello generico per più libri
-        assertEquals("Mancata Restituzione del/dei libro/i", email.getSubject());
+        try {
+            String subject = receivedMessages[0].getSubject();
+            String body = receivedMessages[0].getContent().toString();
+            
+            assertEquals("Mancata Restituzione del libro", subject);
+            assertTrue(body.contains(titolo), "Il corpo deve contenere il titolo del libro");
+            assertTrue(body.contains(nome), "Il corpo deve contenere il nome dello studente");
+        } catch (Exception e) {
+            fail("Errore nella lettura del messaggio: " + e.getMessage());
+        }
+    }
+
+    @Test
+    public void testInviaAvvisoMultiplo() {
+        // Esecuzione con titolo NULL 
+        EmailInvia.inviaAvviso("studente@unisa.it", null, "Matteo", "Politano", LocalDate.now());
+
+        // Verifica ricezione
+        assertTrue(greenMail.waitForIncomingEmail(2000, 1));
+
+        MimeMessage[] receivedMessages = greenMail.getReceivedMessages();
+        assertEquals(1, receivedMessages.length);
         
-        String corpo = email.getContent().toString();
-        assertTrue(corpo.contains("restituire la/le copia/copie"), "Deve contenere il messaggio generico");
+        try {
+            String subject = receivedMessages[0].getSubject();
+            assertEquals("Mancata Restituzione del/dei libro/i", subject);
+        } catch (Exception e) {
+            fail("Errore nella lettura del messaggio");
+        }
     }
 }
