@@ -37,67 +37,68 @@ import main.Main;
  *
  * @author gruppo22
  */
+
+//controller per la dashboard: gestisce navigazione, pulsanti menu, backup e logout
 public class DashboardController {
+     
+    @FXML
+    private Button CatalogoLibriButton; //bottone catalogo libri
     
     @FXML
-    private Button CatalogoLibriButton;
+    private Button mailButton; //bottone mail
     
     @FXML
-    private Button mailButton;
+    private Button BLButton; //bottone blacklist
     
     @FXML
-    private Button BLButton;
+    private Button DashboardButton; //bottone dashboard (home)
+    @FXML
+    private Button utentiButton; //bottone utenti
+    @FXML
+    private Button PrestitiRestituzioniButton; //bottone prestiti/restituzioni
     
     @FXML
-    private Button DashboardButton;
-    @FXML
-    private Button utentiButton;
-    @FXML
-    private Button PrestitiRestituzioniButton;
+    private Label numLibri; //mostra numero totale di libri presenti nel cataloog
     
     @FXML
-    private Label numLibri;
+    private Label numLoanAttivi; //mostra numero di prestiti attivi
     
     @FXML
-    private Label numLoanAttivi;
+    private Label numUsers; //mostra il numero di utenti registrati nel sistema
     
     @FXML
-    private Label numUsers;
-    
-    @FXML
-    private Label numScaduti;
+    private Label numScaduti; //mostra il numero di prestiti scaduti o in ritardo
 
             
     @FXML
-    private VBox DashboardBox;
+    private VBox DashboardBox; //contenitore verticale in cui possono essere inseriti altri nodi GUI
     
     @FXML
-    private ScrollPane DashboardScrollPane;
+    private ScrollPane DashboardScrollPane; //contenitore che permette lo scroll orizzontale e verticale
     
     @FXML
-    private BorderPane HomeBorderPane;
+    private BorderPane HomeBozrderPane; //usato per acmbiare dinamicamente la vista centrale quando si clcca un bottone del menu
     
-    private List<Button> menuButtons;
+    private List<Button> menuButtons; //lista che contiene tutti i bottoni principali del menu
+    
     @FXML
-    private Button LogoutButton;
+    private Button LogoutButton; //bottone per uscire dalla dashboard e tornare alla schermata di login
     @FXML
-    private Button modPassButton;
+    private Button modPassButton; //bottone per modificare la password dell'utente/bibliotecario
     @FXML
-    private Button BackupButton;
+    private Button BackupButton; //bottone per eseguire il backup dei dati della biblioteca
     
  
+    //inizializza la dashboard impostando lista bottoni e aggiornando testi delle statistiche
     @FXML
     public void initialize(){
-        
-         menuButtons = Arrays.asList(CatalogoLibriButton,DashboardButton,BLButton,mailButton,utentiButton,PrestitiRestituzioniButton);
-        
+        menuButtons = Arrays.asList(CatalogoLibriButton,DashboardButton,BLButton,mailButton,utentiButton,PrestitiRestituzioniButton); 
         buttonInitialize();
-        labelInitialize();
-        
+        labelInitialize(); 
     }
     
+    //aggiorna i valori delle etichette (libri, prestiti,utenti,scaduti) leggendo i dati dal database
     public void labelInitialize(){
-    
         numLibri.setText(""+DataBase.getCatalogo().getLibri().size());
         int i=0;
         for(Prestito p : DataBase.getPrestiti())
@@ -109,65 +110,65 @@ public class DashboardController {
         for(Prestito p : DataBase.getPrestiti())
             if(p.getStato()==Stato.IN_RITARDO)
                 i+=1;
-        numScaduti.setText(""+i);
-        
-        
+        numScaduti.setText(""+i);   
     }
     public static Stage PassRec;
+    
+    
+    //inizializza e configura tutti i bottoni della dashboard (backup, cambio password, logout e navigazione)
+    //associa a ciascun pulsante il caricamento della pagina corrispondente
     public void buttonInitialize(){
         
+        //backup dati
         BackupButton.setOnAction(eh->{
-        
-            DirectoryChooser fc = new DirectoryChooser();
+            DirectoryChooser fc = new DirectoryChooser(); //apre selettore cartelle
             // Filtra per immagini (JPG, PNG)
-            
-            
+    
             fc.setTitle("Scegli la cartella di destinazione");
             
-            File f = fc.showDialog((Stage) (BackupButton.getScene().getWindow()));
+            File f = fc.showDialog((Stage) (BackupButton.getScene().getWindow())); //ottiene cartella scelta
             
             if(f!=null){
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION); //popup conferma
                 alert.setTitle("Backup");
                 alert.setHeaderText("Eseguire il backup dei dati?");
                 alert.setContentText("Potrebbe richiedere diverso tempo in base alla quantita dei dati");
 
                 
-                Optional<ButtonType> result = alert.showAndWait();
+                Optional<ButtonType> result = alert.showAndWait(); //attende risposta utente
 
                 // Controlliamo cosa ha cliccato
                 if (result.isPresent() && result.get() == ButtonType.OK){
-                    Backup.eseguiBackup(f.getAbsolutePath());
+                    Backup.eseguiBackup(f.getAbsolutePath()); //avvia backup
                 } 
             }
-        
         });
         
-        
-        
+        //modifica password
         modPassButton.setOnAction(eh->{
-                 PassRec = new Stage();
+                 PassRec = new Stage //nuova finestra modale
                 PassRec.setTitle("Modifica Password");
                 PassRec.setResizable(false);
-                PassRec.initModality(Modality.APPLICATION_MODAL);
+                PassRec.initModality(Modality.APPLICATION_MODAL); //blocca finestra principale
+                
             try {
+                //carica la schermata di inserimento nuova password 
                 PassRec.setScene(new Scene(FXMLLoader.load(getClass().getResource("/View/InserisciPasswordModifica.fxml"))));
             } catch (IOException ex) {
                 Logger.getLogger(DashboardController.class.getName()).log(Level.SEVERE, null, ex);
             }
-                PassRec.showAndWait();
-            
-            
+                PassRec.showAndWait();  //mostra la finestra e aspetta chiusura 
         });
         
+        //logout
         LogoutButton.setOnAction(eh->{
-        
             try {
                 Parent root =FXMLLoader.load(getClass().getResource("/View/Accesso.fxml"));
                 Scene s = new Scene(root,425,500);
                 Main.stage.getProperties().put("login", "login");
                 Main.stage.setScene(s);
-                //main.stage.centerOnScreen();
+                
+                //reset dimensioni finestra
                 Main.stage.setWidth(437);
                 Main.stage.setHeight(500);
                 Main.stage.centerOnScreen();
@@ -176,26 +177,30 @@ public class DashboardController {
             }
         });
     
-        DashboardButton.setOnAction(eh->{
-            
+        //dashboard
+        DashboardButton.setOnAction(eh->{  
             try {
                  Parent root = FXMLLoader.load(getClass().getResource("/View/Dashboard.fxml"));
                  Scene s = DashboardButton.getScene();
-                 s.setRoot(root);
-                 evidenziaBottone(DashboardButton);
+                 s.setRoot(root); //sostituisce la scena corrente
+                 evidenziaBottone(DashboardButton); //evidenzia bottone
             } catch (IOException ex) {
                 Logger.getLogger(DashboardController.class.getName()).log(Level.SEVERE, null, ex);
             }      
-        });      
+        });  
+        
+        //catalogo libri
         CatalogoLibriButton.setOnAction(eh->{     
             try {
                  Parent root = FXMLLoader.load(getClass().getResource("/View/Catalogo.fxml"));
-                 HomeBorderPane.setCenter(root);
+                 HomeBorderPane.setCenter(root); //carica la pagina nel BorderPane
                  evidenziaBottone(CatalogoLibriButton);
             } catch (IOException ex) {
                 Logger.getLogger(DashboardController.class.getName()).log(Level.SEVERE, null, ex);
             }          
         });  
+        
+        //mail
         mailButton.setOnAction(eh->{    
             try {
                  Parent root = FXMLLoader.load(getClass().getResource("/View/Mail.fxml"));
@@ -204,7 +209,9 @@ public class DashboardController {
             } catch (IOException ex) {
                 Logger.getLogger(DashboardController.class.getName()).log(Level.SEVERE, null, ex);
             }          
-        });       
+        }); 
+        
+        //gestione utenti
         utentiButton.setOnAction(eh->{     
             try {
                  Parent root = FXMLLoader.load(getClass().getResource("/View/Utenti.fxml"));
@@ -213,7 +220,9 @@ public class DashboardController {
             } catch (IOException ex) {
                 Logger.getLogger(DashboardController.class.getName()).log(Level.SEVERE, null, ex);
             }    
-        });      
+        });
+        
+        //prestiti e restituzioni
         PrestitiRestituzioniButton.setOnAction(eh->{    
             try {
                  Parent root = FXMLLoader.load(getClass().getResource("/View/PrestitoRestituzione.fxml"));
@@ -224,6 +233,7 @@ public class DashboardController {
             }      
         });
       
+        //blacklist
         BLButton.setOnAction(eh->{     
             try {
                  Parent root = FXMLLoader.load(getClass().getResource("/View/BlackList.fxml"));
@@ -232,20 +242,23 @@ public class DashboardController {
             } catch (IOException ex) {
                 Logger.getLogger(DashboardController.class.getName()).log(Level.SEVERE, null, ex);
             }
-          
         });
-      
     }
     
+    //evidenzia il bottone attivo nel menu laterale rimuovendo gli stili dagli altri pulsanti
     private void evidenziaBottone(Button bottoneAttivo) {
-       //CLEAN
+        
+       //rimuove evidenziazione da tutti i bottoni
         for (Button b : menuButtons) {
             b.getStyleClass().remove("sidebar-btn-active"); 
+            
+            //garantisce che mantengano lo stile base
             if (!b.getStyleClass().contains("sidebar-btn")) {
                 b.getStyleClass().add("sidebar-btn");
             }
         }
-        //SET
+        
+        //applica stile evidenziato al bottone cliccato
         bottoneAttivo.getStyleClass().remove("sidebar-btn"); 
         bottoneAttivo.getStyleClass().add("sidebar-btn-active"); 
     }

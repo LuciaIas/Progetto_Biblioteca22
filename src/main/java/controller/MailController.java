@@ -26,26 +26,26 @@ import javafx.scene.layout.VBox;
  * @author gruppo22
  */
 
+//questo controller è legato al file FXML e gestisce la garfica delle email inviate
 public class MailController {
-
     @FXML
-    private VBox emailContainer;
+    private VBox emailContainer; //contenitore verticale dove verranno inserite le card delle email
     
+    @FXML private Label lblTotalUsers; //mostra il numero totale di email inviate
 
-    @FXML private Label lblTotalUsers; // In realtà qui mostreremo il totale email
-
+    //appena la schermata si apre, parte il caricamento delle email inviate
     @FXML
     public void initialize() {
         caricaEmailInviate();
-   
     }
-
+    
+    //inizia il metodo che recupera e mostra la lista email
     private void caricaEmailInviate() {
         // 1. Mostra un caricamento mentre scarica le mail
-        emailContainer.getChildren().clear();
+        emailContainer.getChildren().clear(); //pulisce il contenitore
         ProgressIndicator loading = new ProgressIndicator();
-        emailContainer.getChildren().add(loading);
-        lblTotalUsers.setText("Sincronizzazione in corso...");
+        emailContainer.getChildren().add(loading); //mostra la rotellina di caricamento
+        lblTotalUsers.setText("Sincronizzazione in corso..."); //aggiorna la label per dire che sta scaricando le email
 
         // 2. AVVIA THREAD SEPARATO (Per non bloccare l'app)
         new Thread(() -> {
@@ -55,16 +55,18 @@ public class MailController {
 
             // 3. TORNA AL THREAD GRAFICO per mostrare i risultati
             Platform.runLater(() -> {
-                emailContainer.getChildren().clear(); // Rimuovi caricamento
+                emailContainer.getChildren().clear(); // Rimuovi caricamento loading
                 
+                //se non ci sono email
                 if (listaEmail == null || listaEmail.isEmpty()) {
                     lblTotalUsers.setText("Nessuna email inviata trovata.");
                     return;
                 }
-
+                
+                //mostra il numero totale
                 lblTotalUsers.setText(listaEmail.size() + " Email Inviate");
 
-                // Aggiungi le card
+                // Aggiunge una card per ogni email
                 for (EmailInfo mail : listaEmail) {
                     aggiungiCardEmail(mail);
                 }
@@ -73,18 +75,18 @@ public class MailController {
         }).start();
     }
 
+    //metodo che crea una riga grafica (una mail)
     private void aggiungiCardEmail(EmailInfo mail) {
-        
-        // --- 1. RIGA CARD ---
-        HBox riga = new HBox();
-        riga.setAlignment(Pos.CENTER_LEFT);
-        riga.setSpacing(20);
-        riga.setPrefHeight(80);
-        riga.setPadding(new Insets(0, 20, 0, 20));
+        // Riga card
+        HBox riga = new HBox(); //elemen disposti in orizzontale
+        riga.setAlignment(Pos.CENTER_LEFT); //allineati a sinistra
+        riga.setSpacing(20); //spaziatura orizzontale tra gli elementi
+        riga.setPrefHeight(80); //altezza della card
+        riga.setPadding(new Insets(0, 20, 0, 20)); //margini interni
         riga.getStyleClass().add("email-row"); // Classe CSS specifica
 
-        // --- 2. ICONA (Busta) ---
-        StackPane iconContainer = new StackPane(); // Usa StackPane per centrare
+        //Icona (busta)
+        StackPane iconContainer = new StackPane(); // Usa StackPane per centrare automaticamente l'icona
 
         // Blocca le dimensioni per avere un cerchio perfetto (non ovale)
         double size = 45;
@@ -93,24 +95,25 @@ public class MailController {
         iconContainer.setPrefSize(size, size);
         iconContainer.setMaxSize(size, size);
 
-        // Stile (assumendo che icon-container-purple abbia il radius 50%)
+        // Stile (assumendo che icon-container-purple abbia il radius 50%)del cerchio
         iconContainer.getStyleClass().add("icon-container-purple");
 
-        // Etichetta
+        //Icona della mail inviata
         Label iconLabel = new Label("📤");
         iconLabel.setStyle("-fx-font-size: 20px;"); // Aumentato leggermente per riempire meglio
 
         // NOTA: Rimossi setLayoutX e setLayoutY.
         // StackPane centra automaticamente il figlio.
 
+        //aggiunta dell'icona al cerchio
         iconContainer.getChildren().add(iconLabel);
 
-        // --- 3. OGGETTO E DESTINATARIO ---
+        //Box informazioni email
         VBox boxInfo = new VBox();
         boxInfo.setAlignment(Pos.CENTER_LEFT);
         boxInfo.setPrefWidth(400); // Spazio abbondante
         
-        // Oggetto (Titolo)
+        //Oggetto (Titolo) dell'email
         String oggetto = (mail.getOggetto() != null) ? mail.getOggetto() : "(Nessun Oggetto)";
         Label lblOggetto = new Label(oggetto);
         lblOggetto.getStyleClass().add("row-title");
@@ -121,31 +124,33 @@ public class MailController {
         
         boxInfo.getChildren().addAll(lblOggetto, lblDestinatario);
 
-        // --- 4. DATA ---
+        //Box della data
         VBox boxData = new VBox();
         boxData.setAlignment(Pos.CENTER_LEFT);
         boxData.setPrefWidth(150);
         
+        //formattazione data
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
         String dataStr = (mail.getDataInvio() != null) ? sdf.format(mail.getDataInvio()) : "--/--/----";
         
+        //label "inviata il"
         Label lblDataTitle = new Label("INVIATA IL");
         lblDataTitle.setStyle("-fx-text-fill: #7f8fa6; -fx-font-size: 9px; -fx-font-weight: bold;");
+        
+        //valore della data
         Label lblDataValue = new Label(dataStr);
         lblDataValue.setStyle("-fx-text-fill: #2d3436; -fx-font-weight: bold; -fx-font-size: 12px;");
         
         boxData.getChildren().addAll(lblDataTitle, lblDataValue);
 
-        // --- 5. SPAZIATORE ---
+        //Spaziatore
         Pane spacer = new Pane();
         HBox.setHgrow(spacer, Priority.ALWAYS);
 
-        // --- 6. BOTTONE "LEGGI" ---
-
-
-        // --- 7. ASSEMBLAGGIO ---
+        //Aggiunta degli elementi all'HBox finale
         riga.getChildren().addAll(iconContainer, boxInfo, boxData, spacer);
         
+        //aggiunta al cointainer principale
         emailContainer.getChildren().add(riga);
     }
 }

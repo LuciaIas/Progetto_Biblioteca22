@@ -32,7 +32,8 @@ import main.Main;
  * @author gruppo22
  */
 
-
+//controller per eseguire login e registrazione
+//contiene logica sliding form, validazione pswd e animazioni grafiche
 public class AccessoController {
     
     //Sliding fxml
@@ -119,9 +120,10 @@ public class AccessoController {
             typewriterEffectLabel(SwitchLabel,text);
             typewriterEffectButton(SlidingButton,text1);
         });
-                
+        
+        //azione bottone registrazione
         RegisterButton.setOnAction(eh->{ // Azione bottone registrazione
- 
+            //sincronizza campi password visibili/nascosti
             if(CheckShowPassRegister.isSelected()){// Sincronizza password visibile e nascosta
                 PassRegister.setText(PassRegisterVisible.getText());
                 PassConRegister.setText(PassConRegisterVisible.getText());
@@ -132,6 +134,7 @@ public class AccessoController {
                      
             String password = PassRegister.getText();
             
+            //controllo formato password
             if(!model.servizi.ControlloFormato.controlloFormatoPassword(password)){// Controllo formato password
                 Alert al = new Alert(Alert.AlertType.ERROR);
                 al.setTitle("Errore Validazione"); // Titolo della finestra
@@ -145,7 +148,9 @@ public class AccessoController {
                 dialogPane.getStyleClass().add("my-alert");
                 al.showAndWait();
                 return;
-            }    
+            }
+            
+            //controllo conferma password
             String password1 = PassConRegister.getText();           
             if(!password.equals(password1)){ // Controllo che password e conferma coincidano          
                 Alert al = new Alert(Alert.AlertType.ERROR);
@@ -159,7 +164,9 @@ public class AccessoController {
                 dialogPane.getStyleClass().add("my-alert");
                 al.showAndWait();
                 return;    
-            }          
+            }        
+            
+            //inserimento del bibliotecario nel database
             if(model.servizi.DataBase.inserisciBibliotecario(password)){// Inserisce bibliotecario nel DB
                 Alert al = new Alert(Alert.AlertType.INFORMATION);
                 al.setTitle("Operazione Completata");
@@ -198,7 +205,8 @@ public class AccessoController {
                 return;     
             }                     
         });
-         
+        
+        //azione bottone login
         LoginButton.setOnAction(e->{   // Azione bottone login
             if(CheckShowPassLogin.isSelected()){
                 PassLogin.setText(PassLoginVisible.getText());               
@@ -223,14 +231,15 @@ public class AccessoController {
                 al.showAndWait();
                 return;
             }
-
+                
+                //passa alla dashboard
                 model.TransizioneScena.switchSceneEffect(Main.stage, "/View/Dashboard.fxml");// Passa alla dashboard
-
                 Main.stage.getProperties().remove("login");
                 Main.stage.centerOnScreen();
         }); 
     }
     
+ 
     public void checkboxInitialize(){// Configura le checkbox per mostrare/nascondere password
         CheckShowPassLogin.setOnAction(eh->{if(CheckShowPassLogin.isSelected())  showPassword(true,true); else showPassword(false,true); });
         CheckShowPassRegister.setOnAction(eh->{if(CheckShowPassRegister.isSelected()) showPassword(true,false); else showPassword(false,false); });
@@ -261,8 +270,6 @@ public class AccessoController {
     }
     
     
-    //PASSWORDBOX
-
     public void showPassword(boolean yes,boolean login){//Mostra o nasconde la password nei form login o registrazione
         if(login){
             if(yes){
@@ -298,8 +305,6 @@ public class AccessoController {
     }
     
     
-    //FUNZIONE DI CLEAN DEL FORM
-
     public void cleanForm(boolean login){//Pulisce i form di login o registrazione     
         if(login){
             PassRegister.clear();
@@ -314,9 +319,6 @@ public class AccessoController {
         }       
     }
       
-
-      //FUNZIONI UTILI PER ESTETICA
-   
     private void typewriterEffectLabel(Label label, String text) {//Effetto "macchina da scrivere" per label
     label.setText("");
     Timeline timeline = new Timeline();   
