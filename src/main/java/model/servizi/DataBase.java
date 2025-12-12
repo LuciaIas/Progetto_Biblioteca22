@@ -34,7 +34,7 @@ import java.util.logging.Logger;
  */
 
 public class DataBase {
-    static Connection conn; //Connessione al database condivisa tra tutti i metodi 
+    public static Connection conn; //Connessione al database condivisa tra tutti i metodi 
     static String DB_name="Biblioteca";
    
     
