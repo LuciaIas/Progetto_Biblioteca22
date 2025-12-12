@@ -13,11 +13,12 @@ import model.dataclass.EmailInfo;
 import java.util.ArrayList;
 import java.util.Properties;
 import javax.mail.*;
+import model.Configurazione;
 
 public class EmailLegge {
 
-    private static final String username = "progettoGruppo22@gmail.com";  
-    private static final String password = "fkmc eprk dmsf wwox"; 
+    private static final String username = Configurazione.getEmailUsername();  
+    private static final String password = Configurazione.getPasswordReceiver(); 
 
 public static ArrayList<EmailInfo> leggiPostaInviata() {
     
