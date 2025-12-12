@@ -256,7 +256,7 @@ public class UtentiController {
         Button btnEdit = new Button("✏️");
         btnEdit.getStyleClass().add("icon-button");
         Tooltip tt1= new Tooltip("Modifica");
-        // tt1.setShowDelay(Duration.millis(100));
+
         btnEdit.setTooltip(tt1);
         btnEdit.setOnAction(e -> {
             //System.out.println("Modifica utente: " + matricola);
@@ -283,7 +283,7 @@ public class UtentiController {
         Button btnDelete = new Button("🗑");
         btnDelete.getStyleClass().add("tag-danger");
         Tooltip tt= new Tooltip("Elimina");
-        //tt.setShowDelay(Duration.millis(100));
+
         btnDelete.setTooltip(new Tooltip("Elimina"));
         btnDelete.setTooltip(tt);
         btnDelete.setOnAction(e -> { 

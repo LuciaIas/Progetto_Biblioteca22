@@ -12,12 +12,12 @@ public class BackupTest {
     @TempDir
     Path tempDir;
 
-    // Salviamo il percorso originale per ripristinarlo dopo ogni test
+
     private static final String ORIGINAL_PATH = "C:\\xampp\\mysql\\bin\\mysqldump.exe";
 
     @AfterEach
     public void cleanup() {
-        // Ripristina il percorso corretto dopo ogni test per non rompere gli altri
+       
         Backup.setDumpPath(ORIGINAL_PATH);
     }
 
