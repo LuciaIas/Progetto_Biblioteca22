@@ -29,16 +29,17 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
- * @author gruppo22
+ * @brief Gestisce tutte le operazioni di connessione e query verso il database della biblioteca.
+ * Contiene metodi per bibliotecari, libri, autori, utenti, prestiti e copie.
  */
-
 public class DataBase {
     public static Connection conn; //Connessione al database condivisa tra tutti i metodi 
     static String DB_name="Biblioteca";
    
     
-    //Inizializza la connessione al database MySQL locale. Logga eventuali eccezioni.
+     /** 
+     * @brief Inizializza la connessione al database MySQL locale.
+     */
     public static void initializeDB(){
         Connection c;    
         try {
@@ -52,7 +53,11 @@ public class DataBase {
     
     //==================== BIBLIOTECARIO ====================    
     
-    
+    /**
+     * @brief Inserisce un nuovo bibliotecario con password hashata.
+     * @param password Password in chiaro.
+     * @return true se l'inserimento ha avuto successo, false altrimenti.
+     */
     public static boolean inserisciBibliotecario(String password){
         if(controllaEsistenzaBibliotecario())
             return false;
@@ -87,6 +92,10 @@ public class DataBase {
         return true;
     }
 
+     /**
+     * @brief Controlla se esiste già un bibliotecario.
+     * @return true se esiste almeno un bibliotecario, false altrimenti.
+     */
     public static boolean controllaEsistenzaBibliotecario(){
         String query = "Select * from bibliotecario";
         
@@ -103,7 +112,10 @@ public class DataBase {
         return false;
     }
     
-
+    /**
+     * @brief Rimuove il bibliotecario dal database.
+     * @return true se la rimozione ha avuto successo, false altrimenti.
+     */
     public static boolean rimuoviBibliotecario(){
         if(!controllaEsistenzaBibliotecario())
             return false;        
@@ -117,7 +129,11 @@ public class DataBase {
         }       
     }
     
-
+    /**
+     * @brief Controlla se la password fornita corrisponde a quella salvata.
+     * @param password Password in chiaro.
+     * @return true se corrisponde, false altrimenti.
+     */
     public static boolean controllaPasswordBibliotecario(String password){
         if(!controllaEsistenzaBibliotecario())
             return false;       
@@ -159,7 +175,10 @@ public class DataBase {
     
        //==================== LIBRI ====================
     
-
+    /**
+     * @brief Restituisce l'intero catalogo dei libri con autori associati.
+     * @return Catalogo completo dei libri, ordinato per titolo.
+     */
     public static Catalogo getCatalogo(){       
         Catalogo libri = new Catalogo();
         List<Autore> autori = new ArrayList<>(); 
@@ -222,7 +241,10 @@ public class DataBase {
         }    
     }
     
-    //Select degli autori
+    /**
+     * @brief Restituisce tutti gli autori presenti nel database.
+     * @return Lista di autori, null in caso di errore.
+     */
     public static ArrayList<Autore> getAutori(){
         
         ArrayList<Autore> autori = new ArrayList<>();
@@ -249,9 +271,12 @@ public class DataBase {
         
         return null;
     }
-    
-    
-    //Aggiunge un nuovo libro e le relazioni con gli autori.
+       
+    /**
+     * @brief Aggiunge un nuovo libro e associa gli autori.
+     * @param l Oggetto Libro da aggiungere.
+     * @return true se l'operazione ha avuto successo, false altrimenti.
+     */
     public static boolean aggiungiLibro(Libro l){
         
        String query = "INSERT INTO libri values(?,?,?,?,?,?)";

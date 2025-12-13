@@ -5,24 +5,44 @@
  */
 package model.servizi;
 
-/**
- *
- * @authorgruppo22
- */
 import model.dataclass.EmailInfo;
 import java.util.ArrayList;
 import java.util.Properties;
 import javax.mail.*;
 import model.Configurazione;
 
+/**
+ * @brief Classe di utilità per leggere le email inviate tramite IMAP.
+ * 
+ * Utilizza le credenziali definite nella classe {@link Configurazione} e permette
+ * di accedere alla cartella "Posta inviata" dell'account Gmail del mittente.
+ * Restituisce un elenco di oggetti {@link EmailInfo} contenenti oggetto, destinatario
+ * e data di invio delle email.
+ * 
+ * Limite massimo di lettura: 40 email più recenti.
+ * 
+ * La classe gestisce automaticamente eventuali nomi diversi della cartella "Posta inviata"
+ * in Gmail e apre la cartella in sola lettura.
+ * 
+ * @author gruppo22
+ */
 public class EmailLegge {
-
-    private static final String username = Configurazione.getEmailUsername();  
+    /** Username email mittente, letto dalla configurazione */
+    private static final String username = Configurazione.getEmailUsername(); 
+    /** Password email mittente, letta dalla configurazione */
     private static final String password = Configurazione.getPasswordReceiver(); 
-
+    /** Host IMAP di default */
     private static String IMAP_HOST = "imap.gmail.com";
     
-public static ArrayList<EmailInfo> leggiPostaInviata() {
+    /**
+     * @brief Legge le email più recenti dalla cartella "Posta inviata" dell'account.
+     * 
+     * Recupera fino a 40 messaggi più recenti, crea oggetti EmailInfo semplificati
+     * con oggetto, destinatario principale e data di invio, e li aggiunge a una lista.
+     * 
+     * @return ArrayList di EmailInfo contenente le email lette
+     */
+    public static ArrayList<EmailInfo> leggiPostaInviata() {
     
     ArrayList<EmailInfo> listaEmail = new ArrayList<>(); 
     try {     

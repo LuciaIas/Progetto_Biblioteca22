@@ -4,10 +4,6 @@
  * and open the template in the editor.
  */
 
-/**
- *
- * @author gruppo22
- */
 package model.servizi;
 
 import javafx.scene.Parent;
@@ -35,16 +31,34 @@ import main.Main;
 import model.Configurazione;
 
 
+/**
+ * @brief Classe che gestisce le operazioni giornaliere automatiche dell'applicazione.
+ * 
+ * Gestisce:
+ * - Task automatici a mezzanotte per controlli sui prestiti.
+ * - Monitoraggio sessione utente con scadenza e timeout.
+ * - Notifiche per prestiti in ritardo.
+ * 
+ * Utilizza uno scheduler per eseguire periodicamente i task e JavaFX per aggiornare l'interfaccia.
+ * 
+ * @author gruppo22
+ */
 public class OperazioniGiornaliere {
-    
-    private static long ultimoResetSessione = System.currentTimeMillis(); 
+    /** Timestamp dell'ultimo reset della sessione utente */
+    private static long ultimoResetSessione = System.currentTimeMillis();
+    /** Scheduler per eseguire task periodici */
     private static final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(2);
-
+    /** Durata della sessione in ore, letta dalla configurazione */
     private static int durataSessione = Configurazione.getSessionDuration();
-     // Avvia i task automatici (Ccntrolli a mezzanotte (es. aggiornamento stato prestiti) e monitoraggio sessione utente ogni 2 secondi per timeout e scadenza).
+    
+    /**
+     * @brief Avvia i task automatici giornalieri e di monitoraggio sessione.
+     * 
+     * Il task giornaliero viene eseguito a mezzanotte per aggiornare lo stato dei prestiti.
+     * Il task di monitoraggio sessione verifica ogni 2 secondi la scadenza della sessione
+     * e mostra un alert se la sessione è scaduta, caricando la schermata di login.
+     */
     public static void avviaTaskDiMezzanotte() {
-        
-        // Calcolo quanto manca alla prossima mezzanotte per il primo task
         long ritardoIniziale = calcolaRitardoVersoMezzanotte();    
         long periodo = 24 * 60 * 60; // Periodo di esecuzione: 24 ore (in secondi)  
         
@@ -126,6 +140,10 @@ public class OperazioniGiornaliere {
       
     }
     
+     /**
+     * @brief Calcola i secondi mancanti alla prossima ora intera.
+     * @return numero di secondi fino all'ora successiva
+     */
     private static long calcolaSecondiAllaProssimaOra() {
         LocalDateTime now = LocalDateTime.now();
         // Prendo l'ora successiva, minuto 0, secondo 0
@@ -133,16 +151,24 @@ public class OperazioniGiornaliere {
         return Duration.between(now, nextHour).getSeconds();
     }
     
-    
+    /**
+     * @brief Calcola i secondi mancanti alla mezzanotte successiva.
+     * @return numero di secondi fino alla mezzanotte
+     */
     private static long calcolaRitardoVersoMezzanotte() {
         ZonedDateTime now = ZonedDateTime.now(ZoneId.systemDefault());
         ZonedDateTime nextMidnight = now.toLocalDate().plusDays(1).atStartOfDay(now.getZone());
         return Duration.between(now, nextMidnight).getSeconds();
     }
 
-   // Aggiorna lo stato dei prestiti in ritardo e mostra notifiche se ci sono prestiti scaduti
-    public static void eseguiControlliAutomatici(boolean SkipNotify) { 
-         
+    /**
+     * @brief Esegue i controlli automatici sui prestiti.
+     * 
+     * Aggiorna lo stato dei prestiti in ritardo e mostra notifiche se ci sono prestiti scaduti.
+     * 
+     * @param SkipNotify true se non si vogliono mostrare notifiche
+     */
+    public static void eseguiControlliAutomatici(boolean SkipNotify) {          
        ArrayList<Prestito> prest = DataBase.getPrestiti();
        boolean ritardi=false;      
        // Controllo tutti i prestiti per identificare quelli in ritardo
@@ -174,7 +200,11 @@ public class OperazioniGiornaliere {
 
     }
 
-    // Ferma tutti i task schedulati dal scheduler. Da usare in chiusura dell'applicazione per liberare le risorse. 
+    /**
+     * @brief Ferma tutti i task schedulati.
+     * 
+     * Da usare in chiusura dell'applicazione per liberare le risorse.
+     */
     public static void stop() {
         scheduler.shutdown();
     }

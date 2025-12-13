@@ -14,7 +14,15 @@ import java.util.Date;
 import java.util.List;
 
 /**
- *
+ * @brief Classe di utilità per eseguire il backup del database della biblioteca.
+ * 
+ * Questa classe permette di generare un dump SQL del database specificato
+ * utilizzando l'eseguibile `mysqldump`. Include metodi per impostare il percorso
+ * dell'eseguibile e per eseguire il backup in una cartella di destinazione.
+ * 
+ * La classe gestisce automaticamente la costruzione del comando e la lettura
+ * dell'output del processo, segnalando eventuali errori.
+ * 
  * @author gruppo22
  */
 public class Backup {
@@ -25,10 +33,27 @@ public class Backup {
     private static final String DB_PASS = ""; 
     private static String MYSQL_DUMP_PATH = "C:\\xampp\\mysql\\bin\\mysqldump.exe"; 
 
-    public static void setDumpPath(String path) { // Metodo per cambiare il percorso di mysqldump
+    /**
+     * @brief Imposta il percorso dell'eseguibile mysqldump.
+     * 
+     * Utile se l'eseguibile si trova in una cartella diversa da quella di default.
+     * 
+     * @param path nuovo percorso completo dell'eseguibile mysqldump
+     */
+    public static void setDumpPath(String path) {
         MYSQL_DUMP_PATH = path;
     }
     
+     /**
+     * @brief Esegue il backup del database in una cartella di destinazione.
+     * 
+     * Il backup viene salvato come file SQL con nome che include la data e l'ora
+     * corrente. Il metodo costruisce il comando in modo sicuro e legge l'output
+     * del processo per rilevare eventuali errori.
+     * 
+     * @param cartellaDestinazione percorso della cartella in cui salvare il backup
+     * @return true se il backup è stato eseguito correttamente, false altrimenti
+     */
     public static boolean eseguiBackup(String cartellaDestinazione) {
         if(cartellaDestinazione==null)
             return false;// Backup non eseguito

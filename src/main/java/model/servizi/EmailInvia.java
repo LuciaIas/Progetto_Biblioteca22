@@ -4,11 +4,6 @@
  * and open the template in the editor.
  */
 
-/**
- *
- * @author gruppo22
- */
-
 package model.servizi;
 
 import java.time.LocalDate;
@@ -19,24 +14,55 @@ import java.util.Properties;
 import model.Configurazione;
 
 
-public class EmailInvia {
-    
-private static final String username = Configurazione.getEmailUsername();
-private static final String password = Configurazione.getPasswordSender(); 
+/**
+ * @brief Classe di utilità per inviare email tramite SMTP.
+ * 
+ * Fornisce metodi statici per inviare email singole e avvisi di mancata restituzione
+ * dei libri della biblioteca. La classe utilizza le credenziali definite nella classe
+ * Configurazione.
+ * 
+ * Supporta configurazioni di test modificabili tramite host e porta SMTP.
+ * L'invio di avvisi avviene in modalità asincrona tramite thread.
+ * 
+ * @author gruppo22
+ */
+public class EmailInvia {   
+    /** Username email mittente, letto dalla configurazione */    
+    private static final String username = Configurazione.getEmailUsername();
+    /** Password email mittente, letta dalla configurazione */
+    private static final String password = Configurazione.getPasswordSender(); 
     
     // CONFIGURAZIONE SERVER (Modificata per essere testabile)
-    // Non sono più stringhe fisse dentro il metodo, ma variabili statiche
-    private static String SMTP_HOST = "smtp.gmail.com";// Host SMTP di default
-    private static String SMTP_PORT = "587";// Porta SMTP di default
     
-    // Metodo per i TEST (Package-private, non visibile da fuori)
-    static void setTestConfiguration(String host, String port) {// Permette di cambiare host e porta
+    /** Host SMTP di default */
+    private static String SMTP_HOST = "smtp.gmail.com";
+     /** Porta SMTP di default */
+    private static String SMTP_PORT = "587";
+    
+    /** Flag per l'esito dell'invio email */
+    private static boolean ret = false;
+    
+    /**
+     * @brief Permette di modificare le configurazioni SMTP per i test.
+     * 
+     * @param host nuovo host SMTP
+     * @param port nuova porta SMTP
+     */
+    static void setTestConfiguration(String host, String port) {
         SMTP_HOST = host;
         SMTP_PORT = port;
     }
 
-    private static boolean ret = false;// Flag per esito invio email
-
+      /**
+     * @brief Invia un'email singola al destinatario specificato.
+     * 
+     * Il metodo costruisce la sessione SMTP, crea il messaggio e lo invia.
+     * La configurazione cambia automaticamente se si utilizza un server locale.
+     * 
+     * @param recipientEmail email del destinatario
+     * @param subject oggetto dell'email
+     * @param body corpo del messaggio
+     */
     public static void inviaEmail(String recipientEmail, String subject, String body) {    
         Properties props = new Properties();// Oggetto per configurazione SMTP
         props.put("mail.smtp.auth", "true");// Abilita autenticazione
@@ -82,8 +108,21 @@ private static final String password = Configurazione.getPasswordSender();
         }
     }
     
+    
+    /**
+     * @brief Invia un avviso di mancata restituzione di un libro.
+     * 
+     * L'invio avviene in modalità asincrona tramite thread. Se il titolo del libro
+     * è noto, viene incluso nel messaggio; altrimenti il messaggio è generico.
+     * 
+     * @param recipientEmail email del destinatario
+     * @param titolo titolo del libro (può essere null)
+     * @param nome nome del destinatario
+     * @param cognome cognome del destinatario
+     * @param inizioPrestito data di inizio prestito
+     * @return true se l'invio è stato avviato correttamente, false altrimenti
+     */
     public static boolean inviaAvviso(String recipientEmail,String titolo,String nome,String cognome,LocalDate inizioPrestito){
-        //Invia un avviso di mancata restituzione del libro in modo asincrono.
         
         // Avvio dell'invio email su un nuovo thread per evitare blocchi dell'interfaccia o della logica principale
         new Thread(() -> {
@@ -101,9 +140,7 @@ private static final String password = Configurazione.getPasswordSender();
             ret=false;// In caso di errore nell'invio, il flag viene impostato a falso
          
         }
-    }).start(); 
-        
+    }).start();        
         return ret;
-    }
-    
+    }    
 }
