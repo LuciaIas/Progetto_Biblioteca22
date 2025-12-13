@@ -38,7 +38,6 @@ public class Configurazione {
     
     /**
      * @brief Restituisce lo username dell'account email per l'invio.
-     * 
      * @return username dell'email
      */
     public static String getEmailUsername() {
@@ -47,7 +46,6 @@ public class Configurazione {
     
     /**
      * @brief Restituisce la password dell'account email per l'invio.
-     * 
      * @return password dell'email mittente
      */
     public static String getPasswordSender() {
@@ -56,7 +54,6 @@ public class Configurazione {
     
     /**
      * @brief Restituisce la password dell'account email per la ricezione.
-     * 
      * @return password dell'email destinatario
      */
     public static String getPasswordReceiver() {
@@ -66,7 +63,6 @@ public class Configurazione {
     // --- LIMITI (Interi) ---
       /**
      * @brief Restituisce il numero massimo di utenti consentiti.
-     * 
      * @return numero massimo di utenti
      */
     public static int getMaxUsers() {
@@ -75,7 +71,6 @@ public class Configurazione {
     
     /**
      * @brief Restituisce il numero massimo di libri consentiti.
-     * 
      * @return numero massimo di libri
      */
     public static int getMaxBooks() {
@@ -83,7 +78,6 @@ public class Configurazione {
     }
      /**
      * @brief Restituisce il numero massimo di prestiti consentiti.
-     * 
      * @return numero massimo di prestiti
      */
     public static int getMaxLoans() {
@@ -91,7 +85,6 @@ public class Configurazione {
     }
       /**
      * @brief Restituisce il numero massimo di autori consentiti.
-     * 
      * @return numero massimo di autori
      */
     public static int getMaxAuthors() {
@@ -99,7 +92,6 @@ public class Configurazione {
     }
      /**
      * @brief Restituisce il numero massimo di scrittori consentiti.
-     * 
      * @return numero massimo di scrittori
      */
     public static int getMaxWrited() {
@@ -107,7 +99,6 @@ public class Configurazione {
     }
       /**
      * @brief Restituisce l'orario di apertura della biblioteca.
-     * 
      * @return array di 2 interi: [ora, minuto]
      */
     public static int[] getTimeOpen(){
@@ -118,7 +109,6 @@ public class Configurazione {
     }
     /**
      * @brief Restituisce l'orario di chiusura della biblioteca.
-     * 
      * @return array di 2 interi: [ora, minuto]
      */
     public static int[] getTimeClose(){
@@ -129,7 +119,6 @@ public class Configurazione {
     }
      /**
      * @brief Restituisce la durata della sessione utente in ore.
-     * 
      * @return durata della sessione
      */
     public static int getSessionDuration() {

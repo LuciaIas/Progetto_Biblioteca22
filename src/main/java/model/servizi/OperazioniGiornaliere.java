@@ -33,7 +33,6 @@ import model.Configurazione;
 
 /**
  * @brief Classe che gestisce le operazioni giornaliere automatiche dell'applicazione.
- * 
  * Gestisce:
  * - Task automatici a mezzanotte per controlli sui prestiti.
  * - Monitoraggio sessione utente con scadenza e timeout.
@@ -129,15 +128,12 @@ public class OperazioniGiornaliere {
                          // Reset del timer di sessione 
                         ultimoResetSessione = System.currentTimeMillis();
                     }
-
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-            });
-            
+            });            
         }, 0, 2, TimeUnit.SECONDS); // Controllo ogni 2 secondi 
-            
-      
+                 
     }
     
      /**
@@ -163,7 +159,6 @@ public class OperazioniGiornaliere {
 
     /**
      * @brief Esegue i controlli automatici sui prestiti.
-     * 
      * Aggiorna lo stato dei prestiti in ritardo e mostra notifiche se ci sono prestiti scaduti.
      * 
      * @param SkipNotify true se non si vogliono mostrare notifiche
@@ -194,15 +189,12 @@ public class OperazioniGiornaliere {
         } catch (IOException ex) {
             Logger.getLogger(OperazioniGiornaliere.class.getName()).log(Level.SEVERE, null, ex);
         }
-
                    });
        }
-
     }
 
     /**
      * @brief Ferma tutti i task schedulati.
-     * 
      * Da usare in chiusura dell'applicazione per liberare le risorse.
      */
     public static void stop() {

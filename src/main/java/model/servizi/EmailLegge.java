@@ -13,12 +13,10 @@ import model.Configurazione;
 
 /**
  * @brief Classe di utilità per leggere le email inviate tramite IMAP.
- * 
- * Utilizza le credenziali definite nella classe {@link Configurazione} e permette
+ * Utilizza le credenziali definite nella classe Configurazione e permette
  * di accedere alla cartella "Posta inviata" dell'account Gmail del mittente.
- * Restituisce un elenco di oggetti {@link EmailInfo} contenenti oggetto, destinatario
+ * Restituisce un elenco di oggetti EmailInfo contenenti oggetto, destinatario
  * e data di invio delle email.
- * 
  * Limite massimo di lettura: 40 email più recenti.
  * 
  * La classe gestisce automaticamente eventuali nomi diversi della cartella "Posta inviata"
@@ -36,7 +34,6 @@ public class EmailLegge {
     
     /**
      * @brief Legge le email più recenti dalla cartella "Posta inviata" dell'account.
-     * 
      * Recupera fino a 40 messaggi più recenti, crea oggetti EmailInfo semplificati
      * con oggetto, destinatario principale e data di invio, e li aggiunge a una lista.
      * 

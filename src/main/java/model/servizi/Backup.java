@@ -20,11 +20,11 @@ import java.util.List;
  * utilizzando l'eseguibile `mysqldump`. Include metodi per impostare il percorso
  * dell'eseguibile e per eseguire il backup in una cartella di destinazione.
  * 
- * La classe gestisce automaticamente la costruzione del comando e la lettura
+ * La classe gestisce la costruzione del comando e la lettura
  * dell'output del processo, segnalando eventuali errori.
  * 
  * @author gruppo22
- */
+*/
 public class Backup {
     
     // --- CONFIGURAZIONE ---
@@ -35,7 +35,6 @@ public class Backup {
 
     /**
      * @brief Imposta il percorso dell'eseguibile mysqldump.
-     * 
      * Utile se l'eseguibile si trova in una cartella diversa da quella di default.
      * 
      * @param path nuovo percorso completo dell'eseguibile mysqldump
@@ -49,7 +48,7 @@ public class Backup {
      * 
      * Il backup viene salvato come file SQL con nome che include la data e l'ora
      * corrente. Il metodo costruisce il comando in modo sicuro e legge l'output
-     * del processo per rilevare eventuali errori.
+     * del processo per rilevare errori.
      * 
      * @param cartellaDestinazione percorso della cartella in cui salvare il backup
      * @return true se il backup è stato eseguito correttamente, false altrimenti
@@ -93,7 +92,6 @@ public class Backup {
             while ((line = reader.readLine()) != null) {
                 System.out.println("OUTPUT: " + line);
             }
-
             int processComplete = process.waitFor();// Attende la fine del processo
 
             if (processComplete == 0) {
@@ -103,7 +101,6 @@ public class Backup {
                 System.err.println("Errore Backup. Codice uscita: " + processComplete);
                 return false;// Backup fallito
             }
-
         } catch (Exception ex) { // Gestione di eventuali eccezioni
             ex.printStackTrace();
             return false;

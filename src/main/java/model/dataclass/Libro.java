@@ -182,7 +182,7 @@ public class Libro implements Comparable<Libro>{
     /**
      * @brief Confronta due libri in base al titolo.
      * 
-     * Metodo necessario per implementare {@link Comparable<Libro>}.
+     * Metodo necessario per implementare Comparable.
      * 
      * @param o libro da confrontare
      * @return valore negativo se questo titolo precede l'altro, 0 se uguale, positivo se segue
