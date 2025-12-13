@@ -16,17 +16,15 @@ import javafx.scene.control.Label;
  * @author gruppo22
  */
 
-//controlla la schermata che mostra le notifiche dei ritardi
-public class NotificaController {
+public class NotificaController {//controlla la schermata che mostra le notifiche dei ritardi
     @FXML
     private Label numRit; //label usato per mostrare il numero di prestiti in ritardo
     
-    //metodo chiamato automaticamente quando la finestra viene caricata 
     @FXML
-    public void initialize(){
+    public void initialize(){//metodo chiamato automaticamente quando la finestra viene caricata 
             int i=0;         
-            for(Prestito p : DataBase.getPrestiti()) //scorre tutti i prestiti
-                if(p.getStato()==Stato.IN_RITARDO) //controlla lo stato del prestito
+            for(Prestito p : DataBase.getPrestiti()) //scorro tutti i prestiti
+                if(p.getStato()==Stato.IN_RITARDO) //controllo lo stato del prestito
                     i+=1;        
             numRit.setText("Ci sono "+i+" prestiti scaduti dove non sono state\nrestituite le copie, si suggerisci di inviare\n avvisi agli interessati");
     } 

@@ -32,43 +32,36 @@ import javafx.util.Duration;
  * @author gruppo22
  */
 
-//controller per la gestione della blacklist degli utenti
-public class BlacklistController {
+
+public class BlacklistController {//Controller per la gestione della blacklist degli utenti
     
-    //contenitore grafico della lista utenti bloccati
     @FXML
-    private VBox blacklistContainer;
+    private VBox blacklistContainer;//contenitore grafico della lista utenti bloccati
     
-    //etichetta che mostra il numero totale di utenti bloccati
     @FXML
-    private Label lblTotalBlocked;
-    
-    //bottone per sbloccare tutti gli utenti
+    private Label lblTotalBlocked;//etichetta che mostra il numero totale di utenti bloccati
+       
     @FXML
-    private Button UnLockAllButton;
-    
-    //campo di ricerca utenti
+    private Button UnLockAllButton;//bottone per sbloccare tutti gli utenti
+       
     @FXML
-    private TextField searchUser;
-    
-    //inizializzazione del controller
+    private TextField searchUser;//campo di ricerca utenti
+      
     @FXML
-    public void initialize(){
-        //recupera utenti bloccati e aggiorna la lista
-        ArrayList<Utente> us =Utente.getUtentiBlackListed(DataBase.getUtenti());
+    public void initialize(){//inizializzazione del controller
+   
+        ArrayList<Utente> us =Utente.getUtentiBlackListed(DataBase.getUtenti());//recupero utenti bloccati e aggiorno la lista
         updateUtentiList(us);
         
-        //azione pulsante: sblocca tutti gli utenti
-        UnLockAllButton.setOnAction(eh->{
+        UnLockAllButton.setOnAction(eh->{//azione pulsante "sblocca tutti gli utenti"
         
             for(Utente u: us)
                 if(u.isBloccato())
                     DataBase.unsetBlackListed(u.getMatricola());
             updateUtentiList(new ArrayList<Utente>());
         });
-        
-        //esegui ricerca premendo INVIO
-        searchUser.setOnKeyPressed(eh->{
+               
+        searchUser.setOnKeyPressed(eh->{//esegui ricerca premendo INVIO
         
             if(eh.getCode()==KeyCode.ENTER)
                 searchFunction();
@@ -78,10 +71,8 @@ public class BlacklistController {
         searchUser.textProperty().addListener((a,b,c)->{
         
             if(searchUser.getText().trim().equals(""))
-                updateUtentiList(Utente.getUtentiBlackListed(DataBase.getUtenti()));
-            
-        });
-        
+                updateUtentiList(Utente.getUtentiBlackListed(DataBase.getUtenti()));           
+        });        
     }
     
     //funzione di ricerca utente
@@ -89,7 +80,7 @@ public class BlacklistController {
         ArrayList<Utente> utenti = new ArrayList<>(),app= new ArrayList<>();
            String text = searchUser.getText().trim();
        
-           //cerca per matricola (o identificatore)
+           //cerco per matricola (o identificatore)
            Utente u = DataBase.cercaUtente(text);
            if(u!=null){
                if(u.isBloccato()){
@@ -98,15 +89,15 @@ public class BlacklistController {
                return;
                }
            }
-           //filtra utenti bloccati
+           //filtro utenti bloccati
            utenti = Utente.getUtentiBlackListed(DataBase.getUtenti());
         
-           //filtra per nome, cognome o email
+           //filtro per nome, cognome o email
            for(Utente u1 : utenti)
                if(u1.getNome().equals(text) || u1.getCognome().equals(text) || u1.getMail().equals(text))
                    app.add(u1);
            
-           //aggiorna lista risultati ricerca
+           //aggiorno lista risultati ricerca
            updateUtentiList(app);
            
     }
@@ -115,11 +106,11 @@ public class BlacklistController {
     public void updateUtentiList(ArrayList<Utente> utenti){
         blacklistContainer.getChildren().clear();
         
-        //mostra numero totale bloccati
+        //mostro numero totale bloccati
         ArrayList<Utente> us =Utente.getUtentiBlackListed(DataBase.getUtenti());
         lblTotalBlocked.setText(us.size()+" Utenti Bloccati");
         
-        //crea card per ogni utente
+        //creo card per ogni utente
         for(Utente u : utenti){
             aggiungiCardUtente(u.getNome(),u.getCognome(),u.getMatricola(),u.getMail(),u.isBloccato());
         }
@@ -239,12 +230,9 @@ public class BlacklistController {
         Button btnAction = new Button("SBLOCCA");
         btnAction.getStyleClass().add("button-outline-success");
         btnAction.setOnAction(e -> {
-            //System.out.println(isBlacklisted ? "Sblocco utente..." : "Blocco utente...");
-            // logicaBloccoSblocco(matricola);
            
             model.servizi.DataBase.unsetBlackListed(matricola);
-            updateUtentiList(Utente.getUtentiBlackListed(DataBase.getUtenti()));
-            
+            updateUtentiList(Utente.getUtentiBlackListed(DataBase.getUtenti()));            
         });
 
         // 8. Aggiunta elementi alla riga

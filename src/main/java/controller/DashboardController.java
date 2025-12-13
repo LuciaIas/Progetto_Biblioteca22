@@ -38,8 +38,8 @@ import main.Main;
  * @author gruppo22
  */
 
-//controller per la dashboard: gestisce navigazione, pulsanti menu, backup e logout
-public class DashboardController {
+
+public class DashboardController {//Controller che gestisce la dashboard (navigazione, pulsanti menu, backup e logout)
      
     @FXML
     private Button CatalogoLibriButton; //bottone catalogo libri
@@ -52,6 +52,7 @@ public class DashboardController {
     
     @FXML
     private Button DashboardButton; //bottone dashboard (home)
+    
     @FXML
     private Button utentiButton; //bottone utenti
     @FXML
@@ -68,8 +69,7 @@ public class DashboardController {
     
     @FXML
     private Label numScaduti; //mostra il numero di prestiti scaduti o in ritardo
-
-            
+           
     @FXML
     private VBox DashboardBox; //contenitore verticale in cui possono essere inseriti altri nodi GUI
     
@@ -87,11 +87,9 @@ public class DashboardController {
     private Button modPassButton; //bottone per modificare la password dell'utente/bibliotecario
     @FXML
     private Button BackupButton; //bottone per eseguire il backup dei dati della biblioteca
-    
- 
-    //inizializza la dashboard impostando lista bottoni e aggiornando testi delle statistiche
+      
     @FXML
-    public void initialize(){
+    public void initialize(){ //inizializza la dashboard impostando lista bottoni e aggiornando label
         menuButtons = Arrays.asList(CatalogoLibriButton,DashboardButton,BLButton,mailButton,utentiButton,PrestitiRestituzioniButton); 
         buttonInitialize();
         labelInitialize(); 
@@ -112,9 +110,9 @@ public class DashboardController {
                 i+=1;
         numScaduti.setText(""+i);   
     }
-    public static Stage PassRec;
     
-    
+    public static Stage PassRec;// finestra usata per modifica password
+        
     //inizializza e configura tutti i bottoni della dashboard (backup, cambio password, logout e navigazione)
     //associa a ciascun pulsante il caricamento della pagina corrispondente
     public void buttonInitialize(){
@@ -122,8 +120,7 @@ public class DashboardController {
         //backup dati
         BackupButton.setOnAction(eh->{
             DirectoryChooser fc = new DirectoryChooser(); //apre selettore cartelle
-            // Filtra per immagini (JPG, PNG)
-    
+            // Filtra per immagini (JPG, PNG)    
             fc.setTitle("Scegli la cartella di destinazione");
             
             File f = fc.showDialog((Stage) (BackupButton.getScene().getWindow())); //ottiene cartella scelta
@@ -133,13 +130,12 @@ public class DashboardController {
                 alert.setTitle("Backup");
                 alert.setHeaderText("Eseguire il backup dei dati?");
                 alert.setContentText("Potrebbe richiedere diverso tempo in base alla quantita dei dati");
-
-                
-                Optional<ButtonType> result = alert.showAndWait(); //attende risposta utente
+               
+                Optional<ButtonType> result = alert.showAndWait(); //attendo risposta utente
 
                 // Controlliamo cosa ha cliccato
                 if (result.isPresent() && result.get() == ButtonType.OK){
-                    Backup.eseguiBackup(f.getAbsolutePath()); //avvia backup
+                    Backup.eseguiBackup(f.getAbsolutePath()); //avvio backup
                 } 
             }
         });
@@ -149,15 +145,15 @@ public class DashboardController {
                  PassRec = new Stage(); //nuova finestra modale
                 PassRec.setTitle("Modifica Password");
                 PassRec.setResizable(false);
-                PassRec.initModality(Modality.APPLICATION_MODAL); //blocca finestra principale
+                PassRec.initModality(Modality.APPLICATION_MODAL); //blocco finestra principale
                 
             try {
-                //carica la schermata di inserimento nuova password 
+                //carico la schermata di inserimento nuova password 
                 PassRec.setScene(new Scene(FXMLLoader.load(getClass().getResource("/View/InserisciPasswordModifica.fxml"))));
             } catch (IOException ex) {
                 Logger.getLogger(DashboardController.class.getName()).log(Level.SEVERE, null, ex);
             }
-                PassRec.showAndWait();  //mostra la finestra e aspetta chiusura 
+                PassRec.showAndWait();  //mostro la finestra e aspetto chiusura 
         });
         
         //logout
@@ -182,8 +178,8 @@ public class DashboardController {
             try {
                  Parent root = FXMLLoader.load(getClass().getResource("/View/Dashboard.fxml"));
                  Scene s = DashboardButton.getScene();
-                 s.setRoot(root); //sostituisce la scena corrente
-                 evidenziaBottone(DashboardButton); //evidenzia bottone
+                 s.setRoot(root); //sostituisco la scena corrente
+                 evidenziaBottone(DashboardButton); //evidenzio bottone
             } catch (IOException ex) {
                 Logger.getLogger(DashboardController.class.getName()).log(Level.SEVERE, null, ex);
             }      
@@ -193,7 +189,7 @@ public class DashboardController {
         CatalogoLibriButton.setOnAction(eh->{     
             try {
                  Parent root = FXMLLoader.load(getClass().getResource("/View/Catalogo.fxml"));
-                 HomeBorderPane.setCenter(root); //carica la pagina nel BorderPane
+                 HomeBorderPane.setCenter(root); //carico la pagina nel BorderPane
                  evidenziaBottone(CatalogoLibriButton);
             } catch (IOException ex) {
                 Logger.getLogger(DashboardController.class.getName()).log(Level.SEVERE, null, ex);
@@ -245,20 +241,20 @@ public class DashboardController {
         });
     }
     
-    //evidenzia il bottone attivo nel menu laterale rimuovendo gli stili dagli altri pulsanti
+    //evidenzio il bottone attivo nel menu laterale rimuovendo gli stili dagli altri pulsanti
     private void evidenziaBottone(Button bottoneAttivo) {
         
-       //rimuove evidenziazione da tutti i bottoni
+       //rimuovo evidenziazione da tutti i bottoni
         for (Button b : menuButtons) {
             b.getStyleClass().remove("sidebar-btn-active"); 
             
-            //garantisce che mantengano lo stile base
+            //garantisco che mantengano lo stile base
             if (!b.getStyleClass().contains("sidebar-btn")) {
                 b.getStyleClass().add("sidebar-btn");
             }
         }
         
-        //applica stile evidenziato al bottone cliccato
+        //applico stile evidenziato al bottone cliccato
         bottoneAttivo.getStyleClass().remove("sidebar-btn"); 
         bottoneAttivo.getStyleClass().add("sidebar-btn-active"); 
     }

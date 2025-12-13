@@ -1,6 +1,5 @@
 package controller;
-
-//importa le classi javafx 
+ 
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -27,9 +26,7 @@ import main.Main;
  * @author gruppo22
  */
 
-//controller per eseguire login e registrazione
-//contiene logica sliding form, validazione pswd e animazioni grafiche
-public class AccessoController {
+public class AccessoController {//Controller per eseguire login e registrazione
     
     //Sliding fxml
     @FXML
@@ -39,10 +36,10 @@ public class AccessoController {
     private Pane RegisterForm;//Contiene pswd di registraz, coferma pswd, checkbox mostra pswd, bottoni registrati
   
     @FXML
-    private Pane Sliding; //Pannello che scorre quando clicclo pulsante per passare tra login e registrazione
+    private Pane Sliding; //Pannello che scorre quando clicco pulsante per passare tra login e registrazione
     
     @FXML
-    private Button SlidingButton; //Button per lo Sliding
+    private Button SlidingButton; 
     
     @FXML
     private Label SwitchLabel;// La label che indica l'azione che si eseguirà
@@ -54,10 +51,10 @@ public class AccessoController {
     final double slidingTiming=1000;  // durata animazione in millisecondi
 
     @FXML
-    private Button LoginButton;//Bottone per effettuare il login
+    private Button LoginButton;
 
     @FXML
-    private Button RegisterButton;//Bottone per effettuare la registrazione 
+    private Button RegisterButton;
     
     //REGISTER FORM
     @FXML
@@ -110,15 +107,12 @@ public class AccessoController {
                 text="Sei gia registrato?";
                 text1="Accedi";
             }
-                
-            
+                           
             typewriterEffectLabel(SwitchLabel,text);
             typewriterEffectButton(SlidingButton,text1);
         });
-        
-        //azione bottone registrazione
+               
         RegisterButton.setOnAction(eh->{ // Azione bottone registrazione
-            //sincronizza campi password visibili/nascosti
             if(CheckShowPassRegister.isSelected()){// Sincronizza password visibile e nascosta
                 PassRegister.setText(PassRegisterVisible.getText());
                 PassConRegister.setText(PassConRegisterVisible.getText());
@@ -128,12 +122,11 @@ public class AccessoController {
             }
                      
             String password = PassRegister.getText();
-            
-            //controllo formato password
+
             if(!model.servizi.ControlloFormato.controlloFormatoPassword(password)){// Controllo formato password
                 Alert al = new Alert(Alert.AlertType.ERROR);
                 al.setTitle("Errore Validazione"); // Titolo della finestra
-                al.setHeaderText("Password non sicura"); // Titolo interno (o mettilo a null per toglierlo)
+                al.setHeaderText("Password non sicura"); // Titolo interno 
                 al.setContentText("La password deve avere:\n- Minimo 8 caratteri\n- Una maiuscola\n- Un numero\n- Un simbolo (@#$%^&+=!)");
 
                 DialogPane dialogPane = al.getDialogPane();
@@ -145,7 +138,6 @@ public class AccessoController {
                 return;
             }
             
-            //controllo conferma password
             String password1 = PassConRegister.getText();           
             if(!password.equals(password1)){ // Controllo che password e conferma coincidano          
                 Alert al = new Alert(Alert.AlertType.ERROR);
@@ -161,8 +153,7 @@ public class AccessoController {
                 return;    
             }        
             
-            //inserimento del bibliotecario nel database
-            if(model.servizi.DataBase.inserisciBibliotecario(password)){// Inserisce bibliotecario nel DB
+            if(model.servizi.DataBase.inserisciBibliotecario(password)){// Inserisco bibliotecario nel DB
                 Alert al = new Alert(Alert.AlertType.INFORMATION);
                 al.setTitle("Operazione Completata");
                 al.setHeaderText("Registrazione effettuata 🚀"); // Ho aggiunto un'emoji per coerenza
@@ -177,8 +168,7 @@ public class AccessoController {
 
                 al.showAndWait();
 
-                // Passa alla dashboard
-                model.TransizioneScena.switchSceneEffect(Main.stage, "/View/Dashboard.fxml"); 
+                model.TransizioneScena.switchSceneEffect(Main.stage, "/View/Dashboard.fxml");// Passa alla dashboard
 
                 Main.stage.getProperties().remove("login");
                 Main.stage.centerOnScreen();
@@ -201,7 +191,6 @@ public class AccessoController {
             }                     
         });
         
-        //azione bottone login
         LoginButton.setOnAction(e->{   // Azione bottone login
             if(CheckShowPassLogin.isSelected()){
                 PassLogin.setText(PassLoginVisible.getText());               
@@ -226,8 +215,7 @@ public class AccessoController {
                 al.showAndWait();
                 return;
             }
-                
-                //passa alla dashboard
+
                 model.TransizioneScena.switchSceneEffect(Main.stage, "/View/Dashboard.fxml");// Passa alla dashboard
                 Main.stage.getProperties().remove("login");
                 Main.stage.centerOnScreen();

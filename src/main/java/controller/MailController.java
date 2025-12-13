@@ -26,26 +26,25 @@ import javafx.scene.layout.VBox;
  * @author gruppo22
  */
 
-//controller gestisce la grafica delle email inviate
-public class MailController {
+
+public class MailController {//controller gestisce la grafica delle email inviate
     @FXML
     private VBox emailContainer; //contenitore verticale dove verranno inserite le card delle email
     
     @FXML private Label lblTotalUsers; //mostra il numero totale di email inviate
 
-    //appena la schermata si apre, parte il caricamento delle email inviate
     @FXML
-    public void initialize() {
+    public void initialize() {   //appena la schermata si apre, parte il caricamento delle email inviate
         caricaEmailInviate();
     }
     
     //inizia il metodo che recupera e mostra la lista email
     private void caricaEmailInviate() {
         // 1. Mostra un caricamento mentre scarica le mail
-        emailContainer.getChildren().clear(); //pulisce il contenitore
+        emailContainer.getChildren().clear(); //pulisco il contenitore
         ProgressIndicator loading = new ProgressIndicator();
-        emailContainer.getChildren().add(loading); //mostra la rotellina di caricamento
-        lblTotalUsers.setText("Sincronizzazione in corso..."); //aggiorna la label per dire che sta scaricando le email
+        emailContainer.getChildren().add(loading); //mostro la rotellina di caricamento
+        lblTotalUsers.setText("Sincronizzazione in corso..."); //aggiorno la label per dire che sta scaricando le email
 
         // 2. Avvia un thread separato (Per non bloccare l'app)
         new Thread(() -> {
@@ -55,7 +54,7 @@ public class MailController {
 
             // 3. Torna al thread grafico per mostrare i risultati
             Platform.runLater(() -> {
-                emailContainer.getChildren().clear(); // Rimuovi caricamento loading
+                emailContainer.getChildren().clear(); // Rimuovo caricamento loading
                 
                 //se non ci sono email
                 if (listaEmail == null || listaEmail.isEmpty()) {
@@ -63,10 +62,10 @@ public class MailController {
                     return;
                 }
                 
-                //mostra il numero totale
+                //mostro il numero totale
                 lblTotalUsers.setText(listaEmail.size() + " Email Inviate");
 
-                // Aggiunge una card per ogni email
+                // Aggiungo una card per ogni email
                 for (EmailInfo mail : listaEmail) {
                     aggiungiCardEmail(mail);
                 }
@@ -78,7 +77,7 @@ public class MailController {
     //metodo che crea una riga grafica (una mail)
     private void aggiungiCardEmail(EmailInfo mail) {
         // Riga card
-        HBox riga = new HBox(); //elemen disposti in orizzontale
+        HBox riga = new HBox(); //elementi disposti in orizzontale
         riga.setAlignment(Pos.CENTER_LEFT); //allineati a sinistra
         riga.setSpacing(20); //spaziatura orizzontale tra gli elementi
         riga.setPrefHeight(80); //altezza della card
@@ -86,9 +85,9 @@ public class MailController {
         riga.getStyleClass().add("email-row"); 
 
         //Icona (busta)
-        StackPane iconContainer = new StackPane(); // Usa StackPane per centrare automaticamente l'icona
+        StackPane iconContainer = new StackPane(); // Uso StackPane per centrare automaticamente l'icona
 
-        // Blocca le dimensioni per avere un cerchio perfetto (non ovale)
+        // Blocco le dimensioni per avere un cerchio perfetto (non ovale)
         double size = 45;
         iconContainer.setMinWidth(size);
         iconContainer.setMinHeight(size);
