@@ -245,7 +245,6 @@ public class DataBase {
             return autori;
             
         } catch (SQLException ex) {
-            //Logger.getLogger(DataBase.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         return null;
@@ -281,11 +280,9 @@ public class DataBase {
             stat1.setString(1,l.getIsbn());
             stat1.setInt(2, a.getId());
             
-            stat1.execute();
-            //ret=true;           
+            stat1.execute();          
             }
         } catch (SQLException ex) {
-           // ex.printStackTrace();
             System.out.println("eccezioneee super");
             ret=false;
         }     
@@ -384,8 +381,7 @@ public class DataBase {
             stat2.setString(1,isbn);
             stat2.setInt(2, a.getId());
             
-            stat2.execute();
-            //ret=true;            
+            stat2.execute();           
             }           
             return true;
         } catch (SQLException ex) {

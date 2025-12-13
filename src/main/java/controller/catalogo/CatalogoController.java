@@ -65,7 +65,7 @@ public class CatalogoController {
     public static final int MAX_BOOKS = Configurazione.getMaxBooks();  // Numero massimo di libri consentiti nel sistema
     
     @FXML
-    public void initialize(){ //Metodo di inizializzazione chiamato automaticamente da JavaFX all'avvio della scena   
+    public void initialize(){  
        updateCatalogo(DataBase.getCatalogo());// Visualizza tutti i libri presenti nel database all'avvio
        btnCerca.setOnAction(eh->{ // Bottone cerca: avvia la funzione di ricerca          
             searchFunction();           
@@ -89,14 +89,14 @@ public class CatalogoController {
         Catalogo libri = new Catalogo();
            String text = searchBar.getText().trim();
            
-           // Cerca prima per ISBN
+           // Cerco prima per ISBN
            Libro l = DataBase.cercaLibro(text);
            if(l!=null){
                libri.aggiungiLibro(l);
                updateCatalogo(libri);
                return;
            }
-            // Cerca per titolo
+            // Cerco per titolo
             for(Libro l1 : DataBase.getLibriByTitolo(text))
                 libri.aggiungiLibro(l1);
             
@@ -173,10 +173,10 @@ public class CatalogoController {
     // Logica Bottoni
     if (libro.getIsbn() != null) {
         btnPlus.setOnAction(e -> {
-            // Consuma l'evento per non attivare il click sulla card
+            // Consumo l'evento per non attivare il click sulla card
             e.consume(); 
             DataBase.modificaNum_copie(libro.getIsbn(), true);
-            updateCatalogo(DataBase.getCatalogo()); // Ricarica la vista
+            updateCatalogo(DataBase.getCatalogo()); // Ricarico la vista
         });
         btnMinus.setOnAction(e -> {
             e.consume();
@@ -235,7 +235,7 @@ public class CatalogoController {
     overlayControls.setAlignment(Pos.CENTER); 
     overlayControls.getChildren().addAll(lblCopie, buttonsBox,opME);
     
-    // Nascondi controlli di default
+    // Nascondo controlli di default
     overlayControls.setVisible(false); 
     if (libro.getIsbn() == null) overlayControls.setVisible(false);
 

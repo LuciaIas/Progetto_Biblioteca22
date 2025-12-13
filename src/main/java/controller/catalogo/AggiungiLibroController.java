@@ -84,7 +84,7 @@ public class AggiungiLibroController {
     private String urlIM=null; // path della copertina (di default null)
    
     @FXML
-    public void initialize(){// Metodo chiamato all'inizializzazione del controller. Configura il form con immagine di default, autori, spinner e bottoni.
+    public void initialize(){//Configura il form con immagine di default, autori, spinner e bottoni.
         settingForm();      
     }
     
@@ -204,7 +204,6 @@ public class AggiungiLibroController {
                 
                 Autore a = new Autore(nome,cognome,0,null);
                 a.setId(model.servizi.DataBase.getNum_Autori()+1);
-                //System.out.println(a);
                 model.servizi.DataBase.aggiungiAutore(a);
                 autori.add(a);        
                 }
@@ -260,7 +259,7 @@ public class AggiungiLibroController {
                 
                 AL.showAndWait();
               }                            
-              updateAutori();// aggiorna menu autori
+              updateAutori();// aggiorno menu autori
               if(DataBase.getCatalogo().getLibri().size()>=CatalogoController.MAX_BOOKS){
             
                  Alert IsbnAlert = new Alert(AlertType.ERROR);

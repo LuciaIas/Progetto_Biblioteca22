@@ -70,13 +70,13 @@ public class ModificaLibroController {
     private String urlIM=null;// Percorso immagine copertina
    
     @FXML
-    public void initialize(){//Inizializza controller
-        lib = DataBase.cercaLibro(isbn);  // Recupera il libro dal database usando l'ISBN e imposta il form
+    public void initialize(){
+        lib = DataBase.cercaLibro(isbn); // Recuperoil libro dal database usando l'ISBN e imposta il form
         settingForm();       
     }
     
     public void settingForm(){
-        Image img = null;// Imposta immagine copertina
+        Image img = null;// Imposto immagine copertina
         String path = lib.getUrl();
 
         try {
@@ -108,7 +108,7 @@ public class ModificaLibroController {
             }
         }
 
-        // Imposta l'immagine (gestendo anche il caso null finale)
+        // Imposto l'immagine (gestendo anche il caso null finale)
         imgAnteprima.setImage(img);
         urlIM = lib.getUrl();
         txtTitolo.setText(lib.getTitolo());
@@ -152,7 +152,7 @@ public class ModificaLibroController {
             ArrayList<Autore> autori = new ArrayList<>();
             Iterator<MenuItem> it = menuAutori.getItems().iterator();
             
-            // Controlla quali autori sono selezionati
+            // Controllo quali autori sono selezionati
             while(it.hasNext()){
                 CustomMenuItem i = (CustomMenuItem) it.next();
                                
@@ -177,15 +177,14 @@ public class ModificaLibroController {
                 
                 Autore a = new Autore(nome,cognome,0,null);
                 a.setId(model.servizi.DataBase.getNum_Autori()+1);
-                //System.out.println(a);
                 model.servizi.DataBase.aggiungiAutore(a);
                 autori.add(a);
                 }               
             }
              
-            // Crea nuovo oggetto libro aggiornato
+            // Creo nuovo oggetto libro aggiornato
              l = new Libro(isbn,txtTitolo.getText().trim(),txtEditore.getText().trim(),autori,Year.of(spinAnno.getValue()),spinCopie.getValue(),urlIM);   
-            // Salva modifiche nel database
+            // Salvo modifiche nel database
              boolean modified = model.servizi.DataBase.modificaLibro(l.getIsbn(), l.getTitolo(), l.getEditore(), 
                      (l.getAnno_pubblicazione()).getValue(), l.getNumero_copieDisponibili(), urlIM, autori);
             
@@ -219,7 +218,7 @@ public class ModificaLibroController {
             return;                                   
               }
              
-            // Chiude la finestra dopo il salvataggio   
+            // Chiudo la finestra dopo il salvataggio   
              Stage s = (Stage) SalvaButton.getScene().getWindow();
              s.close();       
         });
@@ -227,7 +226,7 @@ public class ModificaLibroController {
     }
     
     //AGGIORNAMENTO AUTORI
-    public void updateAutori(ArrayList<Autore> aut){  // Ricarica menu autori con quelli disponibili e seleziona quelli già assegnati
+    public void updateAutori(ArrayList<Autore> aut){  // Ricarico menu autori con quelli disponibili e seleziono quelli già assegnati
         ArrayList<Autore> autori = model.servizi.DataBase.getAutori();
         menuAutori.getItems().clear();
         
@@ -237,7 +236,7 @@ public class ModificaLibroController {
                 if(a1.getId()==a.getId()){
                     checkBox.setSelected(true);break;
                 }
-            // Aggiunge 4 TextField vuoti per nuovi autori
+            // Aggiungo 4 TextField vuoti per nuovi autori
             CustomMenuItem it = new CustomMenuItem(checkBox);
             it.setHideOnClick(false);
             menuAutori.getItems().add(it);        
