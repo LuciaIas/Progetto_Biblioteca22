@@ -59,7 +59,7 @@ public class OperazioniGiornaliere {
         
         long durataSessioneMillis = durataSessione*60*60*1000; // Durata massima della sessione in millisecondi (1 ora) 
         
-        // Task di monitoraggio sessione utente eseguito ogni 2 secondi (polling rapido)
+        // Task di monitoraggio sessione utente eseguito ogni 2 secondi 
         scheduler.scheduleAtFixedRate(() -> {
             Platform.runLater(() -> {
                 try {
@@ -121,14 +121,14 @@ public class OperazioniGiornaliere {
                 }
             });
             
-        }, 0, 2, TimeUnit.SECONDS); // Controllo ogni 2 secondi (polling rapido)
+        }, 0, 2, TimeUnit.SECONDS); // Controllo ogni 2 secondi 
             
       
     }
     
     private static long calcolaSecondiAllaProssimaOra() {
         LocalDateTime now = LocalDateTime.now();
-        // Prende l'ora successiva, minuto 0, secondo 0
+        // Prendo l'ora successiva, minuto 0, secondo 0
         LocalDateTime nextHour = now.plusHours(1).truncatedTo(ChronoUnit.HOURS);       
         return Duration.between(now, nextHour).getSeconds();
     }
@@ -145,7 +145,7 @@ public class OperazioniGiornaliere {
          
        ArrayList<Prestito> prest = DataBase.getPrestiti();
        boolean ritardi=false;      
-       // Controlla tutti i prestiti per identificare quelli in ritardo
+       // Controllo tutti i prestiti per identificare quelli in ritardo
        for(Prestito p : prest){
            if(p.getData_scadenza().isBefore(LocalDate.now()) && p.getRestituzione()==null)                   
                DataBase.setStatoPrestito(p.getIsbn(), p.getMatricola(), Stato.IN_RITARDO);

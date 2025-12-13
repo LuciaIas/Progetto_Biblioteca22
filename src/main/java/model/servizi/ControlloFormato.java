@@ -4,11 +4,6 @@
  * and open the template in the editor.
  */
 
-/**
- *
- * @author gruppo22
- */
-
 package model.servizi;
 
 import java.security.MessageDigest;

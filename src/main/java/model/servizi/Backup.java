@@ -19,19 +19,19 @@ import java.util.List;
  */
 public class Backup {
     
-    // Configurazione
+    // --- CONFIGURAZIONE ---
     private static final String DB_NAME = "biblioteca";
     private static final String DB_USER = "root";
     private static final String DB_PASS = ""; 
     private static String MYSQL_DUMP_PATH = "C:\\xampp\\mysql\\bin\\mysqldump.exe"; 
 
-    public static void setDumpPath(String path) {
+    public static void setDumpPath(String path) { // Metodo per cambiare il percorso di mysqldump
         MYSQL_DUMP_PATH = path;
     }
     
     public static boolean eseguiBackup(String cartellaDestinazione) {
         if(cartellaDestinazione==null)
-            return false;
+            return false;// Backup non eseguito
         try {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
             String nomeFile = "Backup_" + DB_NAME + "_" + sdf.format(new Date()) + ".sql";
@@ -41,7 +41,7 @@ public class Backup {
             // COSTRUZIONE COMANDO SICURA (LISTA)
             // Invece di una stringa unica, usiamo una lista. 
             // Java gestirà gli spazi nei percorsi (come "Desktop") automaticamente.
-            List<String> command = new ArrayList<>();
+            List<String> command = new ArrayList<>();// Lista dei parametri del comando
             command.add(MYSQL_DUMP_PATH); // 1. L'eseguibile
             command.add("-u");            // 2. Utente flag
             command.add(DB_USER);         // 3. Nome utente
@@ -57,29 +57,29 @@ public class Backup {
             // Stampa di debug (per vedere cosa stiamo lanciando)
             System.out.println("Eseguendo comando: " + command);
 
-            // Avvio processo DIRETTAMENTE (senza passare da cmd.exe)
+            // Avvio processo DIRETTAMENTE (senza passare dal prompt dei comandi e da cmd.exe) 
             ProcessBuilder pb = new ProcessBuilder(command);
             pb.redirectErrorStream(true); 
             Process process = pb.start();
 
-            // --- LETTURA OUTPUT ---
+            // --- LETTURA OUTPUT DEL PROCESSO ---
             BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
             String line;
             while ((line = reader.readLine()) != null) {
                 System.out.println("OUTPUT: " + line);
             }
 
-            int processComplete = process.waitFor();
+            int processComplete = process.waitFor();// Attende la fine del processo
 
             if (processComplete == 0) {
                 System.out.println("Backup riuscito: " + fileDestinazione.getAbsolutePath());
-                return true;
+                return true; // Backup riuscito
             } else {
                 System.err.println("Errore Backup. Codice uscita: " + processComplete);
-                return false;
+                return false;// Backup fallito
             }
 
-        } catch (Exception ex) {
+        } catch (Exception ex) { // Gestione di eventuali eccezioni
             ex.printStackTrace();
             return false;
         }

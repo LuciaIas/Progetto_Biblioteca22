@@ -31,34 +31,26 @@ public class Main extends Application{
     public static int[] open_time = Configurazione.getTimeOpen();
     public static int[] close_time = Configurazione.getTimeClose();
     
-    
-    //nicolaM1@  
-    public static void main(String[] args){launch(args);}
+    public static void main(String[] args){// Metodo chiamato all'avvio dell'app JavaFX
+        launch(args);
+    }
 
     @Override
     public void start(Stage stage) throws Exception {
              
         this.stage=stage;
- 
-        //ArrayList<EmailInfo> m = EmailReader.leggiPostaInviata();
-        //System.out.println(m.get(0).getOggetto());
-        //EmailSender.sendEmail("nicolamiranda81@gmail.com", "ciao", "prova");
-        //System.out.println(Model.DataBase.getUtenti());
-        //System.out.println(Model.DataBase.getPrestiti());
-        //Model.DataBase.GetCatalogo();
+
         Parent root = FXMLLoader.load(getClass().getResource("/View/Accesso.fxml"));
         s = new Scene(root,425,500);
         root.getProperties().put("login", "login");
-        //s = new Scene(FXMLLoader.load(getClass().getResource("/View/dashboard.fxml")),1280,800);
         stage.setScene(s);
         stage.setResizable(false);
         stage.centerOnScreen();
         stage.show();
         PreliminaryFunctions();
-        //BackupService.eseguiBackup("C:\\Users\\nicol\\Desktop\\");
     }
     
-    public static void PreliminaryFunctions(){
+    public static void PreliminaryFunctions(){// Metodo di inizializzazione iniziale
         checkClosed();
         model.servizi.DataBase.initializeDB();
         model.servizi.OperazioniGiornaliere.avviaTaskDiMezzanotte();
@@ -66,15 +58,13 @@ public class Main extends Application{
     }
     
     @Override
-    public void stop() throws Exception {
+    public void stop() throws Exception {// Metodo chiamato alla chiusura dell'applicazione
         OperazioniGiornaliere.stop(); 
-
         super.stop();
-        System.exit(0); 
+        System.exit(0); // Termina forzatamente il programma
 }
     
-    public static void checkClosed(){
-   
+    public static void checkClosed(){   // Metodo per verificare se il servizio è aperto
         LocalTime ora_attuale = LocalTime.now();
         LocalTime orario_apertura=LocalTime.of(open_time[0], open_time[1]);
         LocalTime orario_chiusura=LocalTime.of(close_time[0], close_time[1]);
@@ -86,10 +76,9 @@ public class Main extends Application{
             al.setHeaderText("Il servizio resta aperto dalle "+orario_apertura + " fino alle " + orario_chiusura);
             al.showAndWait();
             System.exit(0);
-            Platform.exit();
+            Platform.exit();// Chiude JavaFX correttamente
         }
     
     }
-    
-    
+   
 }

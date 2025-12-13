@@ -26,36 +26,37 @@ private static final String password = Configurazione.getPasswordSender();
     
     // CONFIGURAZIONE SERVER (Modificata per essere testabile)
     // Non sono più stringhe fisse dentro il metodo, ma variabili statiche
-    private static String SMTP_HOST = "smtp.gmail.com";
-    private static String SMTP_PORT = "587";
+    private static String SMTP_HOST = "smtp.gmail.com";// Host SMTP di default
+    private static String SMTP_PORT = "587";// Porta SMTP di default
     
     // Metodo per i TEST (Package-private, non visibile da fuori)
-    static void setTestConfiguration(String host, String port) {
+    static void setTestConfiguration(String host, String port) {// Permette di cambiare host e porta
         SMTP_HOST = host;
         SMTP_PORT = port;
     }
 
-    private static boolean ret = false;
+    private static boolean ret = false;// Flag per esito invio email
 
     public static void inviaEmail(String recipientEmail, String subject, String body) {    
-        Properties props = new Properties();
-        props.put("mail.smtp.auth", "true");
-        props.put("mail.smtp.starttls.enable", "true");
+        Properties props = new Properties();// Oggetto per configurazione SMTP
+        props.put("mail.smtp.auth", "true");// Abilita autenticazione
+        props.put("mail.smtp.starttls.enable", "true");// Abilita STARTTLS
         
         // QUI USIAMO LE VARIABILI INVECE DELLE STRINGHE FISSE
         props.put("mail.smtp.host", SMTP_HOST); 
         props.put("mail.smtp.port", SMTP_PORT);
         
         // Questo serve per evitare errori di certificati nei test
-        if (SMTP_HOST.equals("localhost")) {
-            props.put("mail.smtp.ssl.trust", "*");
-            props.put("mail.smtp.starttls.required", "false");
-            props.put("mail.smtp.checkserveridentity", "false");
-        } else {
-            props.put("mail.smtp.ssl.protocols", "TLSv1.2");        
-            props.put("mail.smtp.ssl.trust", "smtp.gmail.com");
+        if (SMTP_HOST.equals("localhost")) {// Se si usa un server locale
+            props.put("mail.smtp.ssl.trust", "*");// Accetta tutti i certificati
+            props.put("mail.smtp.starttls.required", "false");// Disabilita TLS obbligatorio
+            props.put("mail.smtp.checkserveridentity", "false");// Disabilita verifica identità server
+        } else {// Se si usa un server reale (Gmail)
+            props.put("mail.smtp.ssl.protocols", "TLSv1.2"); // Protocollo TLS       
+            props.put("mail.smtp.ssl.trust", "smtp.gmail.com");// Host attendibile
         }
-        // Autenticatore per fornire username e password alla sessione
+        
+        // Creazione della sessione con autenticazione
         Session session = Session.getInstance(props, new Authenticator() {
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {
@@ -77,7 +78,7 @@ private static final String password = Configurazione.getPasswordSender();
             Transport.send(message);
 
         } catch (MessagingException e) {
-            // L'eccezione è silenziata, ma si potrebbe loggare in ambiente di produzione
+            // L'eccezione è silenziata
         }
     }
     
@@ -95,7 +96,7 @@ private static final String password = Configurazione.getPasswordSender();
                 EmailInvia.inviaEmail(recipientEmail, "Mancata Restituzione del/dei libro/i", "Carissimo "+nome+" "+cognome+
                         " le chiedo gentilmente di restituire la/le copia/copie che ha preso in prestito dalla nostra biblioteca ");
             
-            ret=true;// Segnalazione del successo dell'invio (non thread-safe)
+            ret=true;// Segnalazione del successo dell'invio 
         } catch (Exception ev) {
             ret=false;// In caso di errore nell'invio, il flag viene impostato a falso
          
