@@ -57,10 +57,10 @@ public class CambioPasswordController {
         BtnSalva.setOnAction(eh->{
             String pass,pass1;
             if(!CheckShowPass.isSelected()){// Se la password non è visibile
-             pass = NewPass.getText();// Prende testo campo password
+             pass = NewPass.getText();// Prendo testo campo password
              pass1 = ConfirmPass.getText();
             }else{// Se la password è visibile
-            pass = NewPassVisible.getText();// Prende testo campo visibile
+            pass = NewPassVisible.getText();// Prendo testo campo visibile
              pass1 = ConfirmPassVisible.getText();
             }
             
@@ -69,9 +69,9 @@ public class CambioPasswordController {
                 Alert err = new Alert(Alert.AlertType.WARNING);
                 err.setContentText("Completa entrambi i campi delle password");
                 err.showAndWait();
-                return;// Termina la funzione se campi vuoti
+                return;// Termino la funzione se campi vuoti
                 
-            }else if(!pass.equalsIgnoreCase(pass1)){ // Controlla corrispondenza password
+            }else if(!pass.equalsIgnoreCase(pass1)){ // Controllo corrispondenza password
                 Alert err = new Alert(Alert.AlertType.ERROR);
                 err.setContentText("Le password non corrispodono");
                 err.showAndWait();
@@ -94,9 +94,9 @@ public class CambioPasswordController {
                 al.showAndWait();
                 return;                
             }
-                // Aggiorna password nel database     
-                DataBase.rimuoviBibliotecario();// Rimuove vecchia password
-                DataBase.inserisciBibliotecario(pass);// Inserisce nuova password
+                // Aggiorno password nel database     
+                DataBase.rimuoviBibliotecario();// Rimuovo vecchia password
+                DataBase.inserisciBibliotecario(pass);// Inserisco nuova password
                  Alert IsbnAlert = new Alert(AlertType.INFORMATION); // Alert informativo
                 IsbnAlert.setHeaderText("Password aggiornata");// Alert interno
                 IsbnAlert.setContentText("Modifica effettuata con successo");// Contenuto alert
@@ -107,19 +107,19 @@ public class CambioPasswordController {
                     getClass().getResource("/CSS/StyleAccess.css").toExternalForm()
                 );                
                 dialogPane.getStyleClass().add("my-alert");                
-                IsbnAlert.showAndWait();// Mostra alert conferma
+                IsbnAlert.showAndWait();// Mostro alert conferma
                 
-                Stage f =  (Stage) BtnSalva.getScene().getWindow();// Ottiene finestra corrente
-                f.close();// Chiude finestra                     
+                Stage f =  (Stage) BtnSalva.getScene().getWindow();// Ottengo finestra corrente
+                f.close();// Chiudo finestra                     
         });
         BtnAnnulla.setOnMouseClicked(eh->{       
-            Stage f =  (Stage) BtnAnnulla.getScene().getWindow();// Ottiene finestra corrente
-                f.close();// Chiude finestra senza salvare                       
+            Stage f =  (Stage) BtnAnnulla.getScene().getWindow();// Ottengo finestra corrente
+                f.close();// Chiudo finestra senza salvare                       
         });        
     }
        
     public void setCheckBox(){
-    showPassword(false);// Imposta password inizialmente nascosta
+    showPassword(false);// Imposto password inizialmente nascosta
         CheckShowPass.setOnAction(eh->{       
         if(CheckShowPass.isSelected())
             showPassword(true);// Mostra password se selezionato
@@ -130,7 +130,7 @@ public class CambioPasswordController {
         
     public void showPassword(boolean yes){       
             if(yes){// Mostra password
-                NewPassVisible.setText(NewPass.getText());// Sincronizza testo
+                NewPassVisible.setText(NewPass.getText());// Sincronizzo testo
                 NewPassVisible.setVisible(true);// Mostra campo visibile
                 NewPass.setVisible(false);// Nasconde campo password
                 

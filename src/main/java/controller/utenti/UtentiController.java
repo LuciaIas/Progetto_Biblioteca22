@@ -42,8 +42,7 @@ import model.Configurazione;
  * @author gruppo22
  */
 
-//controller principale che gestisce la schermata di amministrazione utenti
-public class UtentiController {
+public class UtentiController {//controller principale che gestisce la schermata di amministrazione utenti
     @FXML
     private VBox usersContainer; //Contenitore verticale dove vengono aggiunte le card degli utenti
     
@@ -90,7 +89,7 @@ public class UtentiController {
                return;
            }
            
-           //cerca per nome,cognome o email
+           //cerco per nome,cognome o email
            utenti = DataBase.getUtenti();
            for(Utente u1 : utenti)
                if(u1.getNome().equals(text) || u1.getCognome().equals(text) || u1.getMail().equals(text))
@@ -147,7 +146,7 @@ public class UtentiController {
                 IsbnAlert.showAndWait();
                 return;
             }else{
-                //apre finestra aggiunta utente
+                //apro finestra aggiunta utente
             Stage stage = new Stage();
             stage.setTitle("Aggiungi Utente");
             stage.setResizable(false);
@@ -288,9 +287,7 @@ public class UtentiController {
 
                 dialogPane.getStyleClass().add("my-alert");       
                 IsbnAlert.showAndWait(); 
-            updateUtentiList(DataBase.getUtenti());
-            //LabelInitialize();
-            
+            updateUtentiList(DataBase.getUtenti());           
         });
 
 
@@ -317,8 +314,6 @@ public class UtentiController {
             btnDelete,
             btnAction
         );
-
-        // Aggiungi la riga al contenitore verticale dell'interfaccia
-        usersContainer.getChildren().add(riga);
+        usersContainer.getChildren().add(riga);// Aggiungo la riga al contenitore verticale dell'interfaccia
     }
 }

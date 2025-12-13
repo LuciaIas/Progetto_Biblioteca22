@@ -20,8 +20,7 @@ import javafx.stage.Stage;
  * @author gruppo22
  */
 
-//controller associato alla finestra "Aggiungi Utente"
-public class AggiungiUtenteController {
+public class AggiungiUtenteController {//controller associato alla finestra "Aggiungi Utente"
     
     @FXML
     private TextField txtMatricola; //campo di testo per la matricola
@@ -43,7 +42,7 @@ public class AggiungiUtenteController {
     
     @FXML
     public void initialize(){
-        buttonInitialize(); //richiama la configurazione dei pulsanti 
+        buttonInitialize(); //richiamo la configurazione dei pulsanti 
     }
     
     //configurazione dei bottoni
@@ -124,9 +123,9 @@ public class AggiungiUtenteController {
             return;           
             }
             
-            //xontrollo email
+            //controllo email
             String mail = txtEmail.getText().trim();
-            if(!model.servizi.ControlloFormato.controlloFormatoEmail(mail)){ //verifica formato
+            if(!model.servizi.ControlloFormato.controlloFormatoEmail(mail)){ //verifico formato
             Alert IsbnAlert = new Alert(Alert.AlertType.WARNING);
                 IsbnAlert.setHeaderText("Email non valida");
                 IsbnAlert.setContentText("L'e-mail deve essere del formato \"xxx@xx.xxx\" ");                
@@ -152,7 +151,7 @@ public class AggiungiUtenteController {
                 IsbnAlert.showAndWait();
             return;
             }else{
-                //salvataggio utente, crea nuovo utente e lo aggiunge al database
+                //salvataggio utente, creo nuovo utente e lo aggiungo al database
                 DataBase.aggiungiUtente(new Utente(matricola,nome,cognome,mail,false));
                 
                 //conferma operazione riuscita
@@ -168,7 +167,7 @@ public class AggiungiUtenteController {
                 
                 //controllo limite massimo utenti
                 if(DataBase.getNumUser()>=UtentiController.MAX_USERS){
-                Alert rt = new Alert(Alert.AlertType.ERROR);//mostra errore
+                Alert rt = new Alert(Alert.AlertType.ERROR);//mostro errore
                 rt.setHeaderText("Chiusura Pannello");
                 rt.setContentText("Troppi utenti registrati al sistema");
                 DialogPane dialogPane1 = rt.getDialogPane();
@@ -177,7 +176,7 @@ public class AggiungiUtenteController {
                 );
                 dialogPane1.getStyleClass().add("my-alert");       
                 rt.showAndWait();
-                Stage opp = (Stage)SalvaButton.getScene().getWindow(); //chiude la finestra di aggiunta utente
+                Stage opp = (Stage)SalvaButton.getScene().getWindow(); //chiudo la finestra di aggiunta utente
                 opp.close();
                 }
             return;       

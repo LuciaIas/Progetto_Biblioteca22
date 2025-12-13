@@ -76,10 +76,10 @@ public class PrestitoRestituzioneController {
       int n=  Prestito.getPrestitiByStato(DataBase.getPrestiti(), ATTIVO).size()+Prestito.getPrestitiByStato(DataBase.getPrestiti(), Stato.IN_RITARDO).size()
               +Prestito.getPrestitiByStato(DataBase.getPrestiti(), Stato.PROROGATO).size();
       //n rappresenta il totale dei prestiti “non ancora restituiti” (attivi, in ritardo o prorogati)
-    lblActiveLoans.setText("Prestiti attivi: "+n);// Aggiorna label
-    updatePrestiti(DataBase.getPrestiti()); // Mostra tutti i prestiti
-    buttonInitialize();// Inizializza pulsanti
-    menuButtonInitialize();// Inizializza menu filtraggio
+    lblActiveLoans.setText("Prestiti attivi: "+n);// Aggiorno label
+    updatePrestiti(DataBase.getPrestiti()); // Mostro tutti i prestiti
+    buttonInitialize();// Inizializzo pulsanti
+    menuButtonInitialize();// Inizializzo menu filtraggio
     }
     
     public void menuButtonInitialize(){   
@@ -88,7 +88,7 @@ public class PrestitoRestituzioneController {
         MenuItem m2 = new MenuItem("Solo in corso");
         MenuItem m3 = new MenuItem("Solo in ritardo");
         MenuItem m4 = new MenuItem("Restituiti(Storico)");
-        FilterButton.getItems().addAll(m1,m2,m3,m4);// Aggiunge filtri al menu
+        FilterButton.getItems().addAll(m1,m2,m3,m4);// Aggiungo filtri al menu
         
         m1.setOnAction(eh->{// Mostra tutti i prestiti
             FilterButton.setText("Tutti i prestiti");
@@ -138,12 +138,12 @@ public class PrestitoRestituzioneController {
             Libro l = DataBase.cercaLibro(isbn);
             Utente u = DataBase.cercaUtente(matricola);
         
-            // Confronta input con ISBN, titolo, matricola, nome o cognome
+            // Confronto input con ISBN, titolo, matricola, nome o cognome
             if(isbn.equals(text.trim()) || text.trim().equals(l.getTitolo()) || text.trim().equals(matricola) || text.trim().equals(u.getNome()) 
                     || text.trim().equals(u.getCognome()) )
-                app.add(p);// Aggiunge prestito alla lista filtrata            
+                app.add(p);// Aggiungo prestito alla lista filtrata            
         }           
-        updatePrestiti(app);// Aggiorna visualizzazione          
+        updatePrestiti(app);// Aggiorno visualizzazione          
     }
     
     
@@ -151,20 +151,20 @@ public class PrestitoRestituzioneController {
         NewLoanButton.setOnAction(eh->{        
             int totale_prestiti = DataBase.getPrestiti().size();
             
-            if(totale_prestiti>=MAX_LOAN){// Controlla limite massimo prestiti            
+            if(totale_prestiti>=MAX_LOAN){// Controllo limite massimo prestiti            
             int i = 0;
             ArrayList<Prestito> pre = DataBase.getPrestiti();
             for(Prestito p : pre)
                 if(p.getStato()==Stato.RESTITUITO)
-                    i+=1;// Conta prestiti già restituiti
+                    i+=1;// Conto prestiti già restituiti
                 
-            if(totale_prestiti-i<MAX_LOAN){// Se necessario, rimuove prestiti vecchi                
+            if(totale_prestiti-i<MAX_LOAN){// Se necessario, rimuovo prestiti vecchi                
                 Alert conf = new Alert(AlertType.CONFIRMATION);
                 conf.setHeaderText("Azione necessaria");
                 conf.setContentText("Per aggiungere prestiti e necessario svuotare i prestiti memorizzati in memoria, vuoi che rimuovo gli ultimi prestiti che risultano gia restituiti partendo dal piu vecchio?");
                 Optional<ButtonType> confirm = conf.showAndWait();
                 if(confirm.isPresent() && confirm.get() == ButtonType.OK){
-                pre.sort(new Comparator<Prestito>() {// Ordina per data restituzione
+                pre.sort(new Comparator<Prestito>() {// Ordino per data restituzione
                     @Override
                     public int compare(Prestito o1, Prestito o2) {
                         LocalDate d1 = o1.getRestituzione();
@@ -178,7 +178,7 @@ public class PrestitoRestituzioneController {
                 });            
                 for(int f=0;f<totale_prestiti-(MAX_LOAN-1);f++){
                         Prestito p = pre.get(f);
-                        DataBase.rimuoviPrestito(p.getIsbn(), p.getMatricola());// Rimuove prestiti vecchi
+                        DataBase.rimuoviPrestito(p.getIsbn(), p.getMatricola());// Rimuovo prestiti vecchi
                 }
                 }               
             }else{// Se non è possibile aggiungere           
@@ -197,7 +197,7 @@ public class PrestitoRestituzioneController {
                 return;    
             }     
             }
-        // Apri finestra AggiungiPrestito   
+        // Apro finestra AggiungiPrestito   
         Stage stage = new Stage();
         stage.setTitle("Concedi Prestito");
         stage.setResizable(false);
@@ -208,7 +208,7 @@ public class PrestitoRestituzioneController {
             Logger.getLogger(CatalogoController.class.getName()).log(Level.SEVERE, null, ex);// Scrivo l'errore nei log come messaggio grave
         }
         stage.showAndWait();
-        // Aggiorna contatore prestiti attivi e lista
+        // Aggiorno contatore prestiti attivi e lista
         int n=  Prestito.getPrestitiByStato(DataBase.getPrestiti(), ATTIVO).size()+Prestito.getPrestitiByStato(DataBase.getPrestiti(), Stato.IN_RITARDO).size()
                 +Prestito.getPrestitiByStato(DataBase.getPrestiti(), Stato.PROROGATO).size();
         // n contiene il numero totale di prestiti “attivi” o non ancora restituiti
@@ -218,7 +218,7 @@ public class PrestitoRestituzioneController {
     
     }
     
-    public void updatePrestiti(ArrayList<Prestito> p1){// Aggiorna lista prestiti sullo schermo
+    public void updatePrestiti(ArrayList<Prestito> p1){// Aggiorno lista prestiti sullo schermo
     loansContainer.getChildren().clear(); // Pulizia container
         for(Prestito p : p1){       
             Libro l = DataBase.cercaLibro(p.getIsbn());
@@ -232,7 +232,7 @@ private void aggiungiRigaPrestito(String titoloLibro, String isbn, String nomeUt
     Prestito prest = null;
     for(Prestito p : DataBase.getPrestiti())
         if(p.getIsbn().equals(isbn) && p.getMatricola().equals(matricola))
-            prest = p;// Trova prestito corrispondente   
+            prest = p;// Trovo prestito corrispondente   
     HBox riga = new HBox();// Contenitore orizzontale per la riga
     riga.setAlignment(Pos.CENTER_LEFT);
     riga.setSpacing(20);
@@ -412,7 +412,7 @@ private void aggiungiRigaPrestito(String titoloLibro, String isbn, String nomeUt
         actionsBox.getChildren().add(btnMail);
     }  
     riga.getChildren().addAll(iconContainer, boxLibro, boxUtente, boxData, spacer, lblStato, actionsBox);
-    loansContainer.getChildren().add(riga);// Aggiunge riga al container
+    loansContainer.getChildren().add(riga);// Aggiungo riga al container
 }
     
 }

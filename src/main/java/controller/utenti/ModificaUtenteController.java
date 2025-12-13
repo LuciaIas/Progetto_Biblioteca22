@@ -18,8 +18,7 @@ import javafx.stage.Stage;
  * @author gruppo22
  */
 
-//controller che gestisce la finestra per modificare i dati di un utente
-public class ModificaUtenteController {
+public class ModificaUtenteController {//controller che gestisce la finestra per modificare i dati di un utente
     
     @FXML
     private Label lblMatricola; //label che mostra la matricola dell'utente selezionato
@@ -119,11 +118,6 @@ public class ModificaUtenteController {
                 IsbnAlert.showAndWait();
                 Stage s = (Stage)btnSalva.getScene().getWindow(); ///chiusura finestra
                 s.close();
-            });
-            
-            
-        
-        
-    }
-    
+            });   
+    }   
 }

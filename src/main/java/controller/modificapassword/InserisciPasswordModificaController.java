@@ -56,31 +56,31 @@ public class InserisciPasswordModificaController {
         BtnSalva.setOnAction(eh->{
             String pass;
             if(!CheckShowPass.isSelected()) // Se password nascosta
-             pass = NewPass.getText();// Prende testo dal PasswordField         
+             pass = NewPass.getText();// Prendo testo dal PasswordField         
             else
-            pass = NewPassVisible.getText();// Altrimenti prende testo dal TextField
+            pass = NewPassVisible.getText();// Altrimenti prendo testo dal TextField
                        
             //Controllo password e conferma password
             if(pass.equals("")){// Controllo se campo vuoto
                 Alert err = new Alert(Alert.AlertType.WARNING);// Alert warning
                 err.setContentText("Devi inserire password");
                 err.showAndWait();
-                return;// Termina funzione se campo vuoto
+                return;// Termino funzione se campo vuoto
             }    
                 if(DataBase.controllaPasswordBibliotecario(pass)){// Controllo se la password inserita corrisponde a quella del bibliotecario           
-            Stage PassRec = new Stage();// Crea nuova finestra per cambio password
+            Stage PassRec = new Stage();// Creo nuova finestra per cambio password
                 PassRec.setTitle("Modifica Password");
                 PassRec.setResizable(false);// Non ridimensionabile
                 PassRec.initModality(Modality.APPLICATION_MODAL);// Finestra modale
             try {
-                 // Imposta la scena della nuova finestra
-                PassRec.setScene(new Scene(FXMLLoader.load(getClass().getResource("/View/CambioPassword.fxml"))));// Carica l'interfaccia grafica del cambio password
+                 // Imposto la scena della nuova finestra
+                PassRec.setScene(new Scene(FXMLLoader.load(getClass().getResource("/View/CambioPassword.fxml"))));// Carico l'interfaccia grafica del cambio password
             } catch (IOException ex) {// Se il file FXML non viene caricato correttamente
-                Logger.getLogger(DashboardController.class.getName()).log(Level.SEVERE, null, ex);// Registra l'errore nel log
+                Logger.getLogger(DashboardController.class.getName()).log(Level.SEVERE, null, ex);// Registro l'errore nel log
             }                
-                PassRec.showAndWait();// Mostra finestra e aspetta chiusura
-                Stage u = (Stage) BtnSalva.getScene().getWindow();// Ottiene finestra corrente
-                u.close();// Chiude finestra corrente dopo aver aperto la finestra CambioPassword
+                PassRec.showAndWait();// Mostro finestra e aspetto chiusura
+                Stage u = (Stage) BtnSalva.getScene().getWindow();// Ottengo finestra corrente
+                u.close();// Chiudo finestra corrente dopo aver aperto la finestra CambioPassword
                 }else{
                     
                 Alert err = new Alert(Alert.AlertType.WARNING);
@@ -91,7 +91,7 @@ public class InserisciPasswordModificaController {
         });       
          BtnAnnulla.setOnMouseClicked(eh->{        
             Stage f =  (Stage) BtnAnnulla.getScene().getWindow();
-                f.close();// Chiude finestra senza modificare nulla         
+                f.close();// Chiudo finestra senza modificare nulla         
         });
     }
     

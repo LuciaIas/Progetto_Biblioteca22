@@ -64,7 +64,7 @@ public class AggiungiPrestitoController {
     
     @FXML
     public void initialize(){// Metodo chiamato all'apertura della finestra
-    dateInizio.setValue(LocalDate.now());// Imposta data inizio come oggi
+    dateInizio.setValue(LocalDate.now());// Imposto data inizio come oggi
     buttonInitialize();
     buttonCheckingInitialize();
     initializeProperty();// Listener su ISBN e matricola
@@ -72,25 +72,25 @@ public class AggiungiPrestitoController {
        
     public void initializeProperty(){    
         txtIsbn.textProperty().addListener( (a,b,c) ->{// Se cambia il testo dell’ISBN       
-            CompletedCheckIsbn=false;// Disattiva validazione precedente
-            IsbnCheck.setText("");// Cancella testo di conferma
+            CompletedCheckIsbn=false;// Disattivo validazione precedente
+            IsbnCheck.setText("");// Cancello testo di conferma
         } );
                 
         txtMatricola.textProperty().addListener( (a,b,c) ->{ // Se cambia la matricola       
-            CompletedCheckMatricola=false;// Disattiva validazione precedente
-            matricolaCheck.setText("");// Cancella testo di conferma
+            CompletedCheckMatricola=false;// Disattivo validazione precedente
+            matricolaCheck.setText("");// Cancello testo di conferma
         } );  
     }
     
     public void buttonInitialize(){
         AnnullaButton.setOnAction(eh->{        
             Stage s = (Stage) AnnullaButton.getScene().getWindow();
-            s.close();// Chiude la finestra senza salvare
+            s.close();// Chiudo la finestra senza salvare
         });
         
         SalvaButton.setOnAction(eh->{       
-            String isbn = txtIsbn.getText().trim();// Legge testo ISBN e rimuove spazi
-            String matricola = txtMatricola.getText().trim();// Legge testo matricola e rimuove spazi
+            String isbn = txtIsbn.getText().trim();// Leggo testo ISBN e rimuove spazi
+            String matricola = txtMatricola.getText().trim();// Leggo testo matricola e rimuove spazi
            
             //CONTROLLI PER MATRICOLA E ISBN
             if(!CompletedCheckIsbn && !CompletedCheckMatricola){
@@ -101,12 +101,12 @@ public class AggiungiPrestitoController {
                 
                 DialogPane dialogPane = IsbnAlert.getDialogPane();// Personalizzazione dialog             
                 dialogPane.getStylesheets().add(
-                    getClass().getResource("/CSS/StyleAccess.css").toExternalForm()// Applica CSS personalizzato
+                    getClass().getResource("/CSS/StyleAccess.css").toExternalForm()// Applico CSS personalizzato
                 );               
                 dialogPane.getStyleClass().add("my-alert");// Classe CSS alert
                 
-                IsbnAlert.showAndWait();// Mostra alert e attende chiusura
-                return; // Termina evento Salva   
+                IsbnAlert.showAndWait();// Mostro alert e attendo chiusura
+                return; // Termino evento Salva   
                 
             }else if(!CompletedCheckIsbn){ // Se non controllato solo ISBN
             
@@ -139,12 +139,12 @@ public class AggiungiPrestitoController {
                 return;
             }
             
-            LocalDate inizio = dateInizio.getValue(); // Legge data inizio prestito
+            LocalDate inizio = dateInizio.getValue(); // Leggo data inizio prestito
             
             if(inizio==null) // Se non impostata
-                inizio = LocalDate.now();// Imposta come oggi
+                inizio = LocalDate.now();// Imposto come oggi
             
-            LocalDate scadenza = dateScadenza.getValue();// Legge data scadenza prestito
+            LocalDate scadenza = dateScadenza.getValue();// Leggo data scadenza prestito
             if(scadenza==null){// Se non impostata
             
                 Alert IsbnAlert = new Alert(Alert.AlertType.ERROR); // Alert errore
@@ -161,7 +161,7 @@ public class AggiungiPrestitoController {
                 return;     
             }
             
-            if(scadenza.isBefore(inizio)){// Controlla se la data di scadenza è prima della data inizio
+            if(scadenza.isBefore(inizio)){// Controllo se la data di scadenza è prima della data inizio
             
                 Alert IsbnAlert = new Alert(Alert.AlertType.ERROR);
                 IsbnAlert.setHeaderText("Operazione impossibile");
@@ -177,7 +177,7 @@ public class AggiungiPrestitoController {
                 return;     
             }
             
-            if(inizio.isBefore(LocalDate.now())){// Controlla se data inizio è nel passato
+            if(inizio.isBefore(LocalDate.now())){// Controllo se data inizio è nel passato
                 Alert IsbnAlert = new Alert(Alert.AlertType.ERROR);
                 IsbnAlert.setHeaderText("Operazione impossibile");
                 IsbnAlert.setContentText("Hai impostato una data di inizio prestito antecedente a quella odierna");
@@ -196,7 +196,7 @@ public class AggiungiPrestitoController {
                 boolean passed=false; // Flag per prestito restituito
                 for(Prestito p : DataBase.getPrestiti())// Ciclo tutti i prestiti
                     if(p.getStato().equals(Stato.RESTITUITO) && p.getIsbn().equals(isbn) && p.getMatricola().equals(matricola)){
-                        DataBase.rimuoviPrestito(isbn, matricola);// Rimuove prestito restituito precedente
+                        DataBase.rimuoviPrestito(isbn, matricola);// Rimuovo prestito restituito precedente
                         passed=true;
                         break;
                     }     
@@ -216,7 +216,7 @@ public class AggiungiPrestitoController {
                 }
             }
             
-            if(DataBase.getNumCopieByIsbn(isbn)<=0){// Controlla se ci sono copie disponibili            
+            if(DataBase.getNumCopieByIsbn(isbn)<=0){// Controllo se ci sono copie disponibili            
                 Alert IsbnAlert = new Alert(Alert.AlertType.ERROR);
                 IsbnAlert.setHeaderText("Operazione fallita");
                 IsbnAlert.setContentText("Copie terminate di "+DataBase.cercaLibro(isbn).getTitolo());
@@ -231,7 +231,7 @@ public class AggiungiPrestitoController {
                 return;
             }
 
-            if(DataBase.cercaUtente(matricola).isBloccato()){// Controlla se l'utente è bloccato           
+            if(DataBase.cercaUtente(matricola).isBloccato()){// Controllo se l'utente è bloccato           
                 Alert IsbnAlert = new Alert(Alert.AlertType.ERROR);
                 IsbnAlert.setHeaderText("Operazione fallita");
                 IsbnAlert.setContentText("L'utente risulta bloccato");
@@ -252,8 +252,8 @@ public class AggiungiPrestitoController {
             int count=0;
             for(Prestito p : prestiti)
                 if(p.getMatricola().equals(mat1) && p.getStato()!=Stato.RESTITUITO)
-                    count+=1;// Conta libri attivi
-            if(count>=3){// Se ha già 3 libri        
+                    count+=1;// Conto libri attivi
+            if(count>=3){// Se ho già 3 libri        
                 Alert IsbnAlert = new Alert(Alert.AlertType.ERROR);
                 IsbnAlert.setHeaderText("Operazione fallita");
                 IsbnAlert.setContentText("L'utente risulta avere ancora 3 libri da restituire");
@@ -267,9 +267,9 @@ public class AggiungiPrestitoController {
                 IsbnAlert.showAndWait();
                 return; 
             }
-            // Aggiunge il prestito al database
+            // Aggiungo il prestito al database
             if(DataBase.aggiungiPrestito(new Prestito(isbn,matricola,inizio,null,Stato.ATTIVO,scadenza))){
-                DataBase.modificaNum_copie(isbn, false);// Riduce il numero di copie disponibili
+                DataBase.modificaNum_copie(isbn, false);// Riduco il numero di copie disponibili
                 
                 Alert IsbnAlert = new Alert(Alert.AlertType.ERROR);
                 IsbnAlert.setHeaderText("Operazione eseguita");
@@ -282,7 +282,7 @@ public class AggiungiPrestitoController {
                 );
                 dialogPane.getStyleClass().add("my-alert");
                 
-                IsbnAlert.showAndWait();// Mostra conferma prestito
+                IsbnAlert.showAndWait();// Mostro conferma prestito
                      
                 int totale_prestiti = DataBase.getPrestiti().size();
                 
@@ -291,15 +291,15 @@ public class AggiungiPrestitoController {
             ArrayList<Prestito> pre = DataBase.getPrestiti();
             for(Prestito p : pre)
                 if(p.getStato()==Stato.RESTITUITO)
-                    i+=1;// Conta prestiti già restituiti
+                    i+=1;// Conto prestiti già restituiti
                 
             if(totale_prestiti-i<PrestitoRestituzioneController.MAX_LOAN){// Se bisogna rimuovere prestiti            
                 Alert conf = new Alert(AlertType.CONFIRMATION);
                 conf.setHeaderText("Azione necessaria");
                 conf.setContentText("Per aggiungere prestiti e necessario svuotare i prestiti memorizzati in memoria, vuoi che rimuovo gli ultimi prestiti che risultano gia restituiti partendo dal piu vecchio?");
-                Optional<ButtonType> confirm = conf.showAndWait();// Mostra alert e attende risposta
+                Optional<ButtonType> confirm = conf.showAndWait();// Mostro alert e attende risposta
                 if(confirm.isPresent() && confirm.get() == ButtonType.OK){// Se confermato               
-                pre.sort(new Comparator<Prestito>() {// Ordina prestiti per data restituzione
+                pre.sort(new Comparator<Prestito>() {// Ordino prestiti per data restituzione
                     @Override
                     public int compare(Prestito o1, Prestito o2) {
                         LocalDate d1 = o1.getRestituzione();
@@ -375,7 +375,7 @@ public class AggiungiPrestitoController {
                 
                 IsbnAlert.showAndWait();
                 return;
-            }else if(!isbn.matches("\\d+")){// Controlla che contenga solo numeri
+            }else if(!isbn.matches("\\d+")){// Controllo che contenga solo numeri
                 
                 Alert IsbnAlert = new Alert(Alert.AlertType.ERROR);
                 IsbnAlert.setHeaderText("Codice ISBN non valido");
@@ -390,7 +390,7 @@ public class AggiungiPrestitoController {
                 IsbnAlert.showAndWait();
             return;
             }
-            if(DataBase.cercaLibro(isbn)==null){// Controlla se libro esiste nel database
+            if(DataBase.cercaLibro(isbn)==null){// Controllo se libro esiste nel database
                 
                 Alert IsbnAlert = new Alert(Alert.AlertType.ERROR);
                 IsbnAlert.setHeaderText("Codice ISBN non valido");
@@ -405,15 +405,15 @@ public class AggiungiPrestitoController {
                 IsbnAlert.showAndWait();
             return;
             }               
-            CompletedCheckIsbn=true;// Imposta flag ISBN come verificato
-            IsbnCheck.setText(isbn); // Mostra ISBN confermato nella label
+            CompletedCheckIsbn=true;// Imposto flag ISBN come verificato
+            IsbnCheck.setText(isbn); // Mostro ISBN confermato nella label
  
         });
         
         MatricolaCheckButton.setOnAction(eh->{ // Click pulsante verifica matricola        
             String matricola = txtMatricola.getText().trim();
             //CONTROLLO MATRICOLA
-            if(matricola.length()!=10){// Controlla lunghezza 10 cifre
+            if(matricola.length()!=10){// Controllo lunghezza 10 cifre
             
                 Alert IsbnAlert = new Alert(Alert.AlertType.ERROR);
                 IsbnAlert.setHeaderText("Matricola non valida");
@@ -427,7 +427,7 @@ public class AggiungiPrestitoController {
                 
                 IsbnAlert.showAndWait();
                 return;
-            }else if(!matricola.matches("\\d+")){// Controlla che contenga solo numeri
+            }else if(!matricola.matches("\\d+")){// Controllo che contenga solo numeri
                 
                 Alert IsbnAlert = new Alert(Alert.AlertType.ERROR);
                 IsbnAlert.setHeaderText("Matricola non valida");
@@ -443,7 +443,7 @@ public class AggiungiPrestitoController {
             return;
             }
             
-            if(DataBase.cercaUtente(matricola)==null){// Controlla se utente esiste
+            if(DataBase.cercaUtente(matricola)==null){// Controllo se utente esiste
             
                 Alert IsbnAlert = new Alert(Alert.AlertType.ERROR);
                 IsbnAlert.setHeaderText("Matricola non valida");
@@ -458,8 +458,8 @@ public class AggiungiPrestitoController {
                 IsbnAlert.showAndWait();
             return;         
             }
-            CompletedCheckMatricola=true;// Imposta flag matricola verificata
-            matricolaCheck.setText(matricola);// Mostra matricola confermata nella label
+            CompletedCheckMatricola=true;// Imposto flag matricola verificata
+            matricolaCheck.setText(matricola);// Mostro matricola confermata nella label
         });
     }  
 }
