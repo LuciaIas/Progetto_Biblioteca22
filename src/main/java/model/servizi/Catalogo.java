@@ -15,17 +15,14 @@ import model.dataclass.Autore;
 
 /**
  * @brief Classe che rappresenta il catalogo dei libri della biblioteca.
- * 
  * La classe gestisce una lista di oggetti  Libro e fornisce metodi
  * per aggiungere, rimuovere, cercare e ordinare i libri.
- * 
  * Permette ricerche per ISBN, titolo e autore, e supporta l'ordinamento
  * alfabetico dei titoli ignorando maiuscole e minuscole.
  * 
  * @author gruppo22
  */
 public class Catalogo {
-
     private List<Libro> libri;// Lista che contiene gli oggetti Libro presenti nel catalogo
 
      /**
@@ -43,7 +40,7 @@ public class Catalogo {
         this.libri.add(libro);
     }
 
-   /**
+    /**
      * @brief Rimuove un libro dal catalogo.
      * @param libro oggetto Libro da rimuovere
      */
@@ -51,7 +48,7 @@ public class Catalogo {
         this.libri.remove(libro);
     }
 
-     /**
+    /**
      * @brief Restituisce la lista dei libri presenti nel catalogo.
      * @return ArrayList di libri
      */
@@ -61,20 +58,19 @@ public class Catalogo {
 
     /**
      * @brief Ordina i libri del catalogo in ordine alfabetico per titolo.
-     * 
      * L'ordinamento ignora la differenza tra maiuscole e minuscole.
      */
     public void sort(){  
         libri.sort(new Comparator<Libro>() {
             @Override
             public int compare(Libro o1, Libro o2) {
-                return o1.getTitolo().toUpperCase().compareTo(o2.getTitolo().toUpperCase()); //La comparazione ignora maiuscole e minuscole.
+                return o1.getTitolo().toUpperCase().compareTo(o2.getTitolo().toUpperCase()); 
             }
         });
         
     }
     
-     /**
+    /**
      * @brief Cerca un libro nel catalogo in base all'ISBN.
      * @param isbn codice ISBN del libro da cercare
      * @return oggetto Libro corrispondente all'ISBN, oppure null se non trovato
@@ -90,7 +86,6 @@ public class Catalogo {
 
     /**
      * @brief Cerca libri che contengono una specifica stringa nel titolo.
-     * 
      * La ricerca non è case-sensitive.
      * 
      * @param titolo stringa da cercare nel titolo
@@ -98,28 +93,25 @@ public class Catalogo {
      */
     public List<Libro> cercaPerTitolo(String titolo) { 
         return libri.stream()
-                .filter(l -> l.getTitolo().toLowerCase().contains(titolo.toLowerCase())) //La ricerca non è case-sensitive.
+                .filter(l -> l.getTitolo().toLowerCase().contains(titolo.toLowerCase())) 
                 .collect(Collectors.toList());
     }
 
     /**
      * @brief Cerca libri scritti da un determinato autore.
-     * 
      * Confronta gli ID degli autori dei libri con l'autore fornito.
      * 
      * @param autore autore da cercare
      * @return lista di libri scritti dall'autore
      */
     public List<Libro> cercaPerAutore(Autore autore) {
-
         List<Libro> lib = new ArrayList<Libro>();
             for(Libro l : libri)
                 for(Autore a : l.getAutori())
                     if(a.getId()==autore.getId())
                         lib.add(l);
             
-           return lib;
-        
+           return lib;        
     }
     
 }

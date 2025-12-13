@@ -314,11 +314,21 @@ public class DataBase {
         return ret;     
     }
     
+     /**
+     * @brief Cerca un libro per ISBN.
+     * @param isbn Codice ISBN del libro.
+     * @return Libro corrispondente, null se non trovato.
+     */
     public static Libro cercaLibro(String isbn){   
         Catalogo c = getCatalogo();
         return c.cercaPerIsbn(isbn);
     }
     
+    /**
+     * @brief Aggiunge un nuovo autore.
+     * @param a Oggetto Autore da aggiungere.
+     * @return true se l'inserimento ha avuto successo, false altrimenti.
+     */
     public static boolean aggiungiAutore(Autore a){
         String query = "INSERT INTO autori(nome, cognome, num_opere, data_nascita) values(?,?,?,?)";
         try {
@@ -340,6 +350,10 @@ public class DataBase {
         
     }
     
+    /**
+     * @brief Restituisce il numero totale di autori.
+     * @return Numero di autori.
+     */
     public static int getNum_Autori(){  
         int n=-1;
         String query = "SELECT COUNT(*) FROM autori;";
@@ -354,6 +368,12 @@ public class DataBase {
         return n;
     }
     
+    /**
+     * @brief Cerca un autore per nome e cognome.
+     * @param nome Nome dell'autore.
+     * @param cognome Cognome dell'autore.
+     * @return Autore trovato, null se non presente.
+     */
     public static Autore cercaAutoreByNames(String nome,String cognome){   
         String query = "Select * from autori where nome=? and cognome=?";
         try {
@@ -376,7 +396,18 @@ public class DataBase {
         }
         
     }
-        
+     
+    /**
+     * @brief Modifica i dati di un libro e le relazioni con gli autori.
+     * @param isbn ISBN del libro da modificare.
+     * @param titolo Nuovo titolo.
+     * @param editore Nuovo editore.
+     * @param anno_pubblicazione Anno di pubblicazione.
+     * @param num_copie Numero di copie disponibili.
+     * @param url URL immagine copertina (può essere null).
+     * @param autori Lista degli autori associati.
+     * @return true se la modifica ha avuto successo, false altrimenti.
+     */
      public static boolean modificaLibro(String isbn,String titolo,String editore,int anno_pubblicazione,int num_copie, String url,ArrayList<Autore> autori){    
         String query = "UPDATE libri SET titolo = ?,editore = ?,anno_pubblicazione=?,num_copie=?,url_immagine=? WHERE isbn = ?";       
         try {
@@ -414,10 +445,50 @@ public class DataBase {
             return false;
         }     
     }
+     
+    /**
+     * @brief Restituisce i libri che contengono la stringa nel titolo.
+     * @param titolo Stringa da cercare nel titolo.
+     * @return Lista di libri corrispondenti.
+     */
+    public static ArrayList<Libro> getLibriByTitolo(String titolo){
     
+        Catalogo c = getCatalogo();
+        ArrayList<Libro> ar = new ArrayList<>();
+        for(Libro l : c.cercaPerTitolo(titolo))
+            ar.add(l);
+        
+        return ar;
+    }
+    
+    /**
+     * @brief Rimuove un libro dal database.
+     * @param isbn ISBN del libro da rimuovere.
+     * @return true se la rimozione ha avuto successo, false altrimenti.
+     */
+    public static boolean rimuoviLibro(String isbn){
+    
+        String query = "DELETE FROM libri WHERE isbn = ? ";
+        
+         try {
+            PreparedStatement stat = conn.prepareStatement(query);
+            stat.setString(1, isbn);
+          
+            stat.execute();
+            
+            return true;    
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+  
+    }
     
       //==================== UTENTI ====================
-    
+    /**
+     * @brief Restituisce tutti gli utenti ordinati alfabeticamente.
+     * @return Lista di utenti, null in caso di errore.
+     */
     public static ArrayList<Utente> getUtenti(){
     
         ArrayList<Utente> us = new ArrayList<>();
@@ -447,6 +518,12 @@ public class DataBase {
         }
         
     }
+    
+    /**
+     * @brief Aggiunge un nuovo utente.
+     * @param u Oggetto Utente da aggiungere.
+     * @return true se l'operazione ha avuto successo, false altrimenti.
+     */
     public static boolean aggiungiUtente(Utente u){   
         String query = "INSERT INTO utenti values(?,?,?,?,?)";       
         try {
@@ -466,6 +543,10 @@ public class DataBase {
         
     }
     
+    /**
+     * @brief Restituisce il numero totale di utenti.
+     * @return Numero di utenti.
+     */
     public static int getNumUser(){
         int n=0;
         String query = "Select COUNT(*) from utenti";
@@ -482,6 +563,11 @@ public class DataBase {
         return n;
     }
     
+     /**
+     * @brief Cerca un utente per matricola.
+     * @param matricola Matricola dell'utente.
+     * @return Utente trovato, null se non presente.
+     */
     public static Utente cercaUtente(String matricola){
         ArrayList<Utente> us = getUtenti();
         for(Utente u: us)
@@ -490,7 +576,11 @@ public class DataBase {
         return null;
     }
     
-    
+    /**
+     * @brief Imposta un utente come bloccato.
+     * @param matricola Matricola dell'utente.
+     * @return true se l'operazione ha avuto successo, false altrimenti.
+     */
     public static boolean setBlackListed(String matricola){   
         String query = "UPDATE utenti SET Bloccato = true WHERE matricola = ?";       
         try {
@@ -504,6 +594,11 @@ public class DataBase {
         }        
     }
     
+    /**
+     * @brief Rimuove il blocco da un utente.
+     * @param matricola Matricola dell'utente.
+     * @return true se l'operazione ha avuto successo, false altrimenti.
+     */
     public static boolean unsetBlackListed(String matricola){
         String query = "UPDATE utenti SET Bloccato = false WHERE matricola = ?";       
         try {
@@ -518,6 +613,14 @@ public class DataBase {
     
     }
 
+    /**
+     * @brief Modifica i dati di un utente.
+     * @param matricola Matricola dell'utente.
+     * @param nome Nuovo nome.
+     * @param cognome Nuovo cognome.
+     * @param mail Nuova email.
+     * @return true se la modifica ha avuto successo, false altrimenti.
+     */
     public static boolean modificaUtente(String matricola,String nome,String cognome,String mail){    
         String query = "UPDATE utenti SET nome = ?,cognome = ?,mail=? WHERE matricola = ?";       
         try {
@@ -534,6 +637,11 @@ public class DataBase {
         }   
     }
     
+    /**
+     * @brief Controlla se una matricola è presente.
+     * @param matricola Matricola da controllare.
+     * @return true se presente, false altrimenti.
+     */
     public static boolean isMatricolaPresent(String matricola){
     
         String query = "SELECT * FROM utenti where matricola=?";
@@ -550,7 +658,11 @@ public class DataBase {
         }
     }
     
-    
+    /**
+     * @brief Rimuove un utente dal database.
+     * @param matricola Matricola dell'utente da rimuovere.
+     * @return true se la rimozione ha avuto successo, false altrimenti.
+     */
     public static boolean rimuoviUtente(String matricola){   
         String query = "DELETE FROM utenti WHERE matricola = ? ";       
          try {
@@ -571,7 +683,10 @@ public class DataBase {
     
     //==================== PRESTITI ====================
     
-    //Restituisce tutti i prestiti registrati. Converte lo stato dal DB in enum Stato.
+    /**
+     * @brief Restituisce tutti i prestiti registrati.
+     * @return Lista di prestiti, null in caso di errore.
+     */
     public static ArrayList<Prestito> getPrestiti(){   
             String query = "Select * from prestito";
             ArrayList<Prestito> p = new ArrayList<>();
@@ -614,12 +729,14 @@ public class DataBase {
         } catch (SQLException ex) {
             ex.printStackTrace();
             return null;
-        }
-            
-            
+        }         
     }
     
-    
+    /**
+     * @brief Aggiunge un nuovo prestito.
+     * @param p Oggetto Prestito da aggiungere.
+     * @return true se l'operazione ha avuto successo, false altrimenti.
+     */
     public static boolean aggiungiPrestito(Prestito p){      
         String query = "Insert into prestito values(?,?,?,?,?,?)";
         try {
@@ -660,6 +777,10 @@ public class DataBase {
         }
     }
     
+    /**
+     * @brief Restituisce il numero totale di prestiti.
+     * @return Numero di prestiti.
+     */
     public static int getNumLoan(){
         int n=0;
         String query = "Select COUNT(*) from prestito";
@@ -676,6 +797,12 @@ public class DataBase {
         return n;
     }
     
+    /**
+     * @brief Segna un prestito come restituito.
+     * @param isbn ISBN del libro.
+     * @param matricola Matricola dell'utente.
+     * @return true se l'operazione ha avuto successo, false altrimenti.
+     */
     public static boolean restituisci(String isbn,String matricola){
         String query = "Update prestito set data_restituzione = CURRENT_DATE,stato_prestito = 'Restituito' where isbn=? and matricola=? and data_restituzione is null";
         try {
@@ -691,7 +818,12 @@ public class DataBase {
         }
     }
     
-    
+    /**
+     * @brief Controlla se esiste un prestito per libro e utente.
+     * @param isbn ISBN del libro.
+     * @param matricola Matricola dell'utente.
+     * @return true se esiste, false altrimenti.
+     */
     public static boolean controllaPrestito(String isbn,String matricola){  
         String query = "Select * from prestito where isbn=? and matricola=?";
         try {
@@ -709,6 +841,12 @@ public class DataBase {
     
     }
     
+    /**
+     * @brief Rimuove un prestito.
+     * @param isbn ISBN del libro.
+     * @param matricola Matricola dell'utente.
+     * @return true se l'operazione ha avuto successo, false altrimenti.
+     */
     public static boolean rimuoviPrestito(String isbn,String matricola){
         String query = "DELETE FROM prestito WHERE isbn = ? AND matricola = ?";
         try {
@@ -725,25 +863,12 @@ public class DataBase {
         }
     }
     
-    //==================== COPIE ====================
-   
-    public static int getNumCopieByIsbn(String isbn){
-        int n = -1;
-        String query = "select num_copie from libri where isbn=?";
-        try {
-            PreparedStatement stat = conn.prepareStatement(query);
-            stat.setString(1, isbn);
-            ResultSet rs = stat.executeQuery();
-            rs.next();
-            n = rs.getInt(1);
-    
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-         
-        }
-        return n;
-    }
-    
+        /**
+     * @brief Modifica il numero di copie di un libro.
+     * @param isbn ISBN del libro.
+     * @param add true per aggiungere una copia, false per sottrarre.
+     * @return true se l'operazione ha avuto successo, false altrimenti.
+     */
     public static boolean modificaNum_copie(String isbn,boolean add){ 
         String query = "UPDATE libri SET num_copie=? WHERE isbn = ?";
         int num_copie = getNumCopieByIsbn(isbn);
@@ -765,6 +890,13 @@ public class DataBase {
         }   
     }
     
+    /**
+     * @brief Imposta lo stato di un prestito.
+     * @param isbn ISBN del libro.
+     * @param matricola Matricola dell'utente.
+     * @param stato Nuovo stato.
+     * @return true se l'operazione ha avuto successo, false altrimenti.
+     */
     public static boolean setStatoPrestito(String isbn,String matricola, Stato stato){   
         String query = "UPDATE prestito SET stato_prestito = ? WHERE isbn = ?  AND matricola = ?";
         try {
@@ -796,10 +928,15 @@ public class DataBase {
             ex.printStackTrace();
             return false;
         }
-        
-        
+     
     }
     
+    /**
+     * @brief Proroga un prestito di 15 giorni.
+     * @param isbn ISBN del libro.
+     * @param matricola Matricola dell'utente.
+     * @return true se l'operazione ha avuto successo, false altrimenti.
+     */
     public static boolean prorogaPrestito(String isbn,String matricola){
         String query = "UPDATE prestito SET data_scadenza = DATE_ADD(current_date, INTERVAL 15 DAY) WHERE isbn = ?   AND matricola = ? AND data_restituzione IS NULL";   
          try {
@@ -816,35 +953,38 @@ public class DataBase {
         }  
     }
     
-    public static ArrayList<Libro> getLibriByTitolo(String titolo){
-    
-        Catalogo c = getCatalogo();
-        ArrayList<Libro> ar = new ArrayList<>();
-        for(Libro l : c.cercaPerTitolo(titolo))
-            ar.add(l);
-        
-        return ar;
-    }
-    
-    public static boolean rimuoviLibro(String isbn){
-    
-        String query = "DELETE FROM libri WHERE isbn = ? ";
-        
-         try {
+    //==================== COPIE ====================
+   
+    /**
+     * @brief Restituisce il numero di copie disponibili di un libro.
+     * @param isbn ISBN del libro.
+     * @return Numero di copie.
+     */
+    public static int getNumCopieByIsbn(String isbn){
+        int n = -1;
+        String query = "select num_copie from libri where isbn=?";
+        try {
             PreparedStatement stat = conn.prepareStatement(query);
             stat.setString(1, isbn);
-          
-            stat.execute();
-            
-            return true;    
+            ResultSet rs = stat.executeQuery();
+            rs.next();
+            n = rs.getInt(1);
+    
         } catch (SQLException ex) {
             ex.printStackTrace();
-            return false;
+         
         }
-  
+        return n;
     }
-
     
+
+
+   //==================== RELAZIONI ====================
+    
+    /**
+     * @brief Restituisce il numero totale di relazioni scritto_da.
+     * @return Numero di relazioni.
+     */
     public static int getNumRelationsScritto_Da(){
         int n=0;
         String query = "SELECT COUNT(*) FROM scritto_da";
@@ -863,7 +1003,11 @@ public class DataBase {
         return n;
     }
     
-    
+    /**
+     * @brief Controlla se un ISBN è presente nel database.
+     * @param isbn ISBN da controllare.
+     * @return true se presente, false altrimenti.
+     */
     public static boolean isIsbnPresent(String isbn){
     
         String query = "SELECT * FROM libri where isbn=?";

@@ -5,7 +5,6 @@
  */
 package model.dataclass;
 
-
 import java.util.Date;
 
 /**
@@ -62,7 +61,6 @@ public class EmailInfo {
     
     /**
      * @brief Restituisce una rappresentazione testuale dell'email.
-     * 
      * La stringa contiene data, destinatario e oggetto.
      * 
      * @return stringa descrittiva dell'email

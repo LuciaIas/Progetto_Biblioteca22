@@ -11,7 +11,6 @@ import java.util.ArrayList;
 
 /**
  * @brief Rappresenta un prestito di un libro a un utente.
- * 
  * Contiene informazioni sul libro prestato, l'utente, le date del prestito,
  * la data di restituzione e lo stato del prestito.
  * 
@@ -59,7 +58,7 @@ public class Prestito {
         return ret;
     }
     
-      /**
+    /**
      * @return Data di scadenza del prestito
      */
     public LocalDate getData_scadenza() {

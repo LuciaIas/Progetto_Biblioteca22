@@ -16,7 +16,6 @@ import model.Configurazione;
 
 /**
  * @brief Classe di utilità per inviare email tramite SMTP.
- * 
  * Fornisce metodi statici per inviare email singole e avvisi di mancata restituzione
  * dei libri della biblioteca. La classe utilizza le credenziali definite nella classe
  * Configurazione.
@@ -55,7 +54,6 @@ public class EmailInvia {
 
       /**
      * @brief Invia un'email singola al destinatario specificato.
-     * 
      * Il metodo costruisce la sessione SMTP, crea il messaggio e lo invia.
      * La configurazione cambia automaticamente se si utilizza un server locale.
      * 
@@ -65,18 +63,18 @@ public class EmailInvia {
      */
     public static void inviaEmail(String recipientEmail, String subject, String body) {    
         Properties props = new Properties();// Oggetto per configurazione SMTP
-        props.put("mail.smtp.auth", "true");// Abilita autenticazione
-        props.put("mail.smtp.starttls.enable", "true");// Abilita STARTTLS
+        props.put("mail.smtp.auth", "true");// Abilito autenticazione
+        props.put("mail.smtp.starttls.enable", "true");// Abilito STARTTLS
         
-        // QUI USIAMO LE VARIABILI INVECE DELLE STRINGHE FISSE
+        // Qui usiamo le variabili al posto di stringhe fisse
         props.put("mail.smtp.host", SMTP_HOST); 
         props.put("mail.smtp.port", SMTP_PORT);
         
         // Questo serve per evitare errori di certificati nei test
         if (SMTP_HOST.equals("localhost")) {// Se si usa un server locale
-            props.put("mail.smtp.ssl.trust", "*");// Accetta tutti i certificati
-            props.put("mail.smtp.starttls.required", "false");// Disabilita TLS obbligatorio
-            props.put("mail.smtp.checkserveridentity", "false");// Disabilita verifica identità server
+            props.put("mail.smtp.ssl.trust", "*");// Accetto tutti i certificati
+            props.put("mail.smtp.starttls.required", "false");// Disabilito TLS obbligatorio
+            props.put("mail.smtp.checkserveridentity", "false");// Disabilito verifica identità server
         } else {// Se si usa un server reale (Gmail)
             props.put("mail.smtp.ssl.protocols", "TLSv1.2"); // Protocollo TLS       
             props.put("mail.smtp.ssl.trust", "smtp.gmail.com");// Host attendibile
@@ -111,7 +109,6 @@ public class EmailInvia {
     
     /**
      * @brief Invia un avviso di mancata restituzione di un libro.
-     * 
      * L'invio avviene in modalità asincrona tramite thread. Se il titolo del libro
      * è noto, viene incluso nel messaggio; altrimenti il messaggio è generico.
      * 
@@ -137,8 +134,7 @@ public class EmailInvia {
             
             ret=true;// Segnalazione del successo dell'invio 
         } catch (Exception ev) {
-            ret=false;// In caso di errore nell'invio, il flag viene impostato a falso
-         
+            ret=false;// In caso di errore nell'invio, il flag viene impostato a falso        
         }
     }).start();        
         return ret;

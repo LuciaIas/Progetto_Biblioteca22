@@ -79,7 +79,7 @@ public class Utente {
     }
 
     
-        /**
+    /**
      * @brief Imposta la matricola dell'utente.
      * @param matricola nuova matricola
      */
@@ -95,7 +95,7 @@ public class Utente {
         return nome;
     }
     
-   /**
+    /**
      * @brief Imposta il nome dell'utente.
      * @param nome nuovo nome
      */
@@ -111,7 +111,7 @@ public class Utente {
         return cognome;
     }
 
-   /**
+    /**
      * @brief Imposta il cognome dell'utente.
      * @param cognome nuovo cognome
      */
