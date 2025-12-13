@@ -41,10 +41,15 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.Configurazione;
+ 
 
 /**
- *
- * @author gruppo22
+ * @brief Controller per la gestione del Catalogo Libri.
+ * * Questa classe gestisce la visualizzazione a griglia dei libri, la ricerca, l'aggiunta,
+ * la modifica e la cancellazione. Implementa un'interfaccia prevedendo animazioni
+ * per le copertine dei libri.
+ * * @author gruppo22
+ * @version 1.0
  */
 public class CatalogoController {
     @FXML
@@ -65,6 +70,11 @@ public class CatalogoController {
     public static final int MAX_BOOKS = Configurazione.getMaxBooks();  // Numero massimo di libri consentiti nel sistema
     
     @FXML
+     /**
+     * @brief Inizializza il controller.
+     * Carica il catalogo completo all'avvio e configura i listener per la barra di ricerca
+     * (ricerca al click, su ENTER e reset automatico se vuota) e per il bottone di aggiunta.
+     */
     public void initialize(){  
        updateCatalogo(DataBase.getCatalogo());// Visualizza tutti i libri presenti nel database all'avvio
        btnCerca.setOnAction(eh->{ // Bottone cerca: avvia la funzione di ricerca          
@@ -85,6 +95,11 @@ public class CatalogoController {
         
     }
     
+    /**
+     * @brief Esegue la logica di ricerca nel catalogo.
+     * Cerca prima per ISBN (corrispondenza esatta). Se non trovato, cerca per titolo (parziale).
+     * Aggiorna la vista con i risultati trovati.
+     */
     public void searchFunction(){   
         Catalogo libri = new Catalogo();
            String text = searchBar.getText().trim();
@@ -104,6 +119,14 @@ public class CatalogoController {
                return;       
     }
         
+    
+     /**
+     * @brief Aggiorna la griglia visuale con la lista dei libri fornita.
+     * Pulisce la griglia esistente e rigenera le card per ogni libro (pulizia da bug).
+     * Gestisce il layout a colonne (max 4 per riga) e aggiunge in fondo 
+     * una card speciale "Aggiungi Libro" (placeholder).
+     * * @param libri Oggetto `Catalogo` contenente la lista dei libri da mostrare.
+     */
     public void updateCatalogo(Catalogo libri){
       containerLibri.getChildren().clear();
             int colonna = 0;
@@ -125,6 +148,20 @@ public class CatalogoController {
     Crea una card animata per un libro. 
     Include immagine, controlli per copie, pulsanti Modifica/Elimina, animazioni su hover.
     Se isbn == null, diventa la card per aggiungere un nuovo libro.
+     */
+    
+        /**
+     * @brief Genera l'elemento grafico (Card) per un singolo libro.
+     * * Questo metodo è il cuore della UI del catalogo. Costruisce un `VBox` contenente:
+     * 1. **Immagine Copertina:** Caricata da path locale o risorse, con fallback.
+     * 2. **Controlli sui libri:** Appare al passaggio del mouse. Contiene:
+     * - Label Copie disponibili.
+     * - Bottoni +/- per modificare copie rapidamente.
+     * - Bottoni Modifica/Elimina.
+     * 3. **Titolo:** Sotto la copertina.
+     * 4. **Animazioni:** Gestisce effetti al passaggio del mouse.
+     * * @param libro Oggetto `Libro` da visualizzare.
+     * @return Un oggetto VBox contenente l'intera card interattiva pronta per essere aggiunta alla GridView.
      */
     private VBox creaLibroAnimato(Libro libro) {
     
@@ -318,6 +355,13 @@ public class CatalogoController {
     return mainContainer;
 }
 
+    
+     /**
+     * @brief Apre il form per l'aggiunta di un nuovo libro.
+     * Controlla prima se è stato raggiunto il limite massimo di libri (`MAX_BOOKS`).
+     * Se il limite non è superato, apre `aggiungiLibro.fxml`.
+     * Al termine, ricarica il catalogo.
+     */
     public void launchAggiungiLibroForm(){    
         if(DataBase.getCatalogo().getLibri().size()>=MAX_BOOKS){
             

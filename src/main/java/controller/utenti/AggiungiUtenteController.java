@@ -15,11 +15,18 @@ import javafx.scene.control.DialogPane;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-/**
- *
- * @author gruppo22
- */
 
+/**
+ * @brief Controller per la registrazione di un nuovo Utente.
+ * * Questa classe gestisce il form per l'inserimento di un nuovo studente nel sistema.
+ * Include validazioni per:
+ * - Matricola (formato e unicità).
+ * - Campi 0Nome, Cognome.
+ * - Formato Email.
+ * - Limite massimo di utenti registrabili.
+ * * @author GRUPPO22
+ * @version 1.0
+ */
 public class AggiungiUtenteController {//controller associato alla finestra "Aggiungi Utente"
     
     @FXML
@@ -41,11 +48,26 @@ public class AggiungiUtenteController {//controller associato alla finestra "Agg
     private Button SalvaButton; //pulsante "Salva"
     
     @FXML
+
+     /**
+     * @brief Inizializza il controller.
+     * Viene chiamato all'apertura della finestra. Configura i listener dei pulsanti.
+     */
     public void initialize(){
         buttonInitialize(); //richiamo la configurazione dei pulsanti 
     }
     
     //configurazione dei bottoni
+     /**
+     * @brief Configura la logica dei pulsanti "Salva" e "Annulla".
+     * * Dettaglio logica **SalvaButton**:
+     * 1. **Validazione Matricola:** Controlla lunghezza (10 cifre) e formato numerico.
+     * 2. **Validazione Nome/Cognome:** Verifica che non siano vuoti.
+     * 3. **Validazione Email:** Verifica il formato standard tramite `Model.CheckFormat`.
+     * 4. **Controllo Duplicati:** Verifica che la matricola non esista già nel DB.
+     * 5. **Inserimento:** Aggiunge l'utente al Database.
+     * 6. **Controllo Limiti:** Se il numero totale di utenti supera `MAX_USERS`, mostra un avviso e chiude la finestra.
+     */
     public void buttonInitialize(){
         AnnullaButton.setOnAction(eh->{Stage s = (Stage) AnnullaButton.getScene().getWindow();s.close();});
         SalvaButton.setOnAction(eh->{  //pulsante salva

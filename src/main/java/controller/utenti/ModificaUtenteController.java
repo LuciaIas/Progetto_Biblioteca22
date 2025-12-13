@@ -14,10 +14,13 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 /**
- *
- * @author gruppo22
+ * @brief Controller per la modifica dei dati di un utente esistente.
+ * * Questa classe gestisce il form per aggiornare le informazioni personali
+ * (Nome, Cognome, Email) di uno studente già registrato.
+ * La matricola non è modificabile e viene passata staticamente prima dell'apertura della finestra.
+ * * @author gruppo22
+ * @version 1.0
  */
-
 public class ModificaUtenteController {//controller che gestisce la finestra per modificare i dati di un utente
     
     @FXML
@@ -41,6 +44,17 @@ public class ModificaUtenteController {//controller che gestisce la finestra per
     public static String matricola; //serve per sapere quale utente aggiornare dopo aver premuto modifica nella tabella utenti 
  
     @FXML
+        /**
+     * @brief Inizializza il controller.
+     * * Questo metodo viene chiamato all'apertura della finestra.
+     * 1. Imposta il testo della label matricola usando la variabile statica.
+     * 2. Configura il tasto **Annulla** per chiudere lo stage.
+     * 3. Configura il tasto **Salva** con la logica di validazione:
+     * - Verifica che nome e cognome non siano vuoti.
+     * - Verifica il formato dell'email.
+     * - Se i dati sono validi, chiama `Model.DataBase.ModifyUser`.
+     * - Mostra un Alert di conferma e chiude la finestra.
+     */
     public void initialize(){
         lblMatricola.setText(matricola);
         btnAnnulla.setOnAction(eh->{Stage s =(Stage) btnAnnulla.getScene().getWindow();s.close();}); //bottone "Annulla" chiude la finestra
