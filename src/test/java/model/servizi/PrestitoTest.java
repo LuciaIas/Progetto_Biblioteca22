@@ -1,6 +1,6 @@
 package model.servizi;
 
-import model.dataclass.Stato; // Assicurati che l'import sia corretto in base al tuo progetto
+import model.dataclass.Stato; 
 import org.junit.jupiter.api.Test;
 import java.time.LocalDate;
 import java.util.ArrayList;
