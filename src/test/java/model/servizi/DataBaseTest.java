@@ -26,9 +26,7 @@ public class DataBaseTest {
 
         testConnection = DriverManager.getConnection("jdbc:h2:mem:testdb;MODE=MySQL;DB_CLOSE_DELAY=-1");
         
-
         DataBase.conn = testConnection;
-
 
         try (Statement stmt = testConnection.createStatement()) {
             // Tabella Bibliotecario

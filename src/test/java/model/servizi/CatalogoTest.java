@@ -24,15 +24,11 @@ public class CatalogoTest {
     public void setUp() {
         catalogo = new Catalogo();
 
-
         autore1 = new Autore("Dante","Alighieri",0,null); 
         autore1.setId(1); 
 
-
         autore2 = new Autore("William","Shakespeare",0,null);
         autore2.setId(2);
-
-
 
         libro1 = new Libro("1111111111111","Harry Potter","",null,Year.of(2005),0,"");
 
@@ -44,10 +40,8 @@ public class CatalogoTest {
 
         libro3 = new Libro("3333333333333","La divina commedia","",null,Year.of(1993),0,"");
         
-        libro3.setAutori(new ArrayList<>(Arrays.asList(autore1)));
-        
-        
-        
+        libro3.setAutori(new ArrayList<>(Arrays.asList(autore1)));       
+               
     }
 
     @Test

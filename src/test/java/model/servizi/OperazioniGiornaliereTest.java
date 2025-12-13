@@ -88,7 +88,7 @@ public class OperazioniGiornaliereTest {
         
         OperazioniGiornaliere.eseguiControlliAutomatici(true);
 
-        // 3. VERIFICA
+        // VERIFICA
         ArrayList<Prestito> prestiti = DataBase.getPrestiti();
         assertEquals(Stato.ATTIVO, prestiti.get(0).getStato(), "Il prestito non scaduto deve rimanere ATTIVO");
     }

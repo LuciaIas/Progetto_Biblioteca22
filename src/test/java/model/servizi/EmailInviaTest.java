@@ -25,7 +25,7 @@ public class EmailInviaTest {
     @BeforeEach
     public void setUp() throws Exception {
         // Configura EmailInvia per puntare al localhost che useremo come server per testare
-        // Nota: greenMail.getSmtp().getPort() recupera la porta dinamica assegnata dal test
+        // greenMail.getSmtp().getPort() recupera la porta dinamica assegnata dal test
         EmailInvia.setTestConfiguration("localhost", String.valueOf(greenMail.getSmtp().getPort()));
 
         // INIEZIONE DELLE CREDENZIALI FINTE
