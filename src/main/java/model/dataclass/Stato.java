@@ -6,11 +6,18 @@
 package model.dataclass;
 
 /**
- *
+ * @brief Tipo enumerativo che rappresenta lo stato di un prestito.
+ * 
+ * I possibili stati di un prestito sono:
+ * - ATTIVO: il prestito è in corso
+ * - RESTITUITO: il libro è stato restituito
+ * - PROROGATO: il prestito è stato prorogato
+ * - IN_RITARDO: il prestito non è stato restituito entro la scadenza
+ * 
+ * Questa enumerazione viene utilizzata per tracciare lo stato dei prestiti nel sistema.
+ * 
  * @author gruppo22
  */
-
-//Tipo enumerativo che rappresenta lo stato di un prestito
 public enum Stato {
     ATTIVO,RESTITUITO,PROROGATO,IN_RITARDO
 }

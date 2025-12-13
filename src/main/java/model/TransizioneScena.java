@@ -35,13 +35,13 @@ import javafx.util.Duration;
 public class TransizioneScena {
     
     /**
-     * @brief Cambia la scena corrente di un {@link Stage} con effetto di dissolvenza.
+     * @brief Cambia la scena corrente di un Stage con effetto di dissolvenza.
      * 
      * Il metodo carica il nuovo FXML, imposta inizialmente l'opacità a 0,
      * sostituisce la root della scena, centra la finestra e applica
      * un effetto di fade-in per rendere visibile la nuova scena.
      * 
-     * @param stage il {@link Stage} su cui applicare la transizione
+     * @param stage il Stage su cui applicare la transizione
      * @param fxmlPath il percorso del file FXML da caricare
      */    
     public static void switchSceneEffect(Stage stage, String fxmlPath) {
