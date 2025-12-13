@@ -1,0 +1,23 @@
+var searchData=
+[
+  ['accessocontroller_0',['AccessoController',['../classcontroller_1_1_accesso_controller.html',1,'controller']]],
+  ['accessocontroller_2ejava_1',['AccessoController.java',['../_accesso_controller_8java.html',1,'']]],
+  ['accessocontrollertest_2',['AccessoControllerTest',['../classcontroller_1_1_accesso_controller_test.html',1,'controller']]],
+  ['accessocontrollertest_2ejava_3',['AccessoControllerTest.java',['../_accesso_controller_test_8java.html',1,'']]],
+  ['aggiungiautore_4',['aggiungiAutore',['../classmodel_1_1servizi_1_1_data_base.html#a50be880ae0abd6290a4b91726b961251',1,'model::servizi::DataBase']]],
+  ['aggiungilibro_5',['aggiungiLibro',['../classmodel_1_1servizi_1_1_catalogo.html#a80c8ae7627e0f7aa800fef5bf6793a2e',1,'model.servizi.Catalogo.aggiungiLibro()'],['../classmodel_1_1servizi_1_1_data_base.html#ae7cade3e4c0c3adc2e87533ada523026',1,'model.servizi.DataBase.aggiungiLibro()']]],
+  ['aggiungilibrocontroller_6',['AggiungiLibroController',['../classcontroller_1_1catalogo_1_1_aggiungi_libro_controller.html',1,'controller::catalogo']]],
+  ['aggiungilibrocontroller_2ejava_7',['AggiungiLibroController.java',['../_aggiungi_libro_controller_8java.html',1,'']]],
+  ['aggiungiprestito_8',['aggiungiPrestito',['../classmodel_1_1servizi_1_1_data_base.html#a66edfcea859f7d15805c4db1f955fd80',1,'model::servizi::DataBase']]],
+  ['aggiungiprestitocontroller_9',['AggiungiPrestitoController',['../classcontroller_1_1prestitorestituzione_1_1_aggiungi_prestito_controller.html',1,'controller::prestitorestituzione']]],
+  ['aggiungiprestitocontroller_2ejava_10',['AggiungiPrestitoController.java',['../_aggiungi_prestito_controller_8java.html',1,'']]],
+  ['aggiungiutente_11',['aggiungiUtente',['../classmodel_1_1servizi_1_1_data_base.html#a9590c42bf4c6a519afbf65f408074cb2',1,'model::servizi::DataBase']]],
+  ['aggiungiutentecontroller_12',['AggiungiUtenteController',['../classcontroller_1_1utenti_1_1_aggiungi_utente_controller.html',1,'controller::utenti']]],
+  ['aggiungiutentecontroller_2ejava_13',['AggiungiUtenteController.java',['../_aggiungi_utente_controller_8java.html',1,'']]],
+  ['attivo_14',['ATTIVO',['../enummodel_1_1dataclass_1_1_stato.html#a95012a0a30ce68f9dc302f0e17146ab9',1,'model::dataclass::Stato']]],
+  ['autore_15',['Autore',['../classmodel_1_1dataclass_1_1_autore.html',1,'model.dataclass.Autore'],['../classmodel_1_1dataclass_1_1_autore.html#af34ce603d1ace7300cd1a13c02966a1d',1,'model.dataclass.Autore.Autore()']]],
+  ['autore_2ejava_16',['Autore.java',['../_autore_8java.html',1,'']]],
+  ['autoretest_17',['AutoreTest',['../classmodel_1_1dataclass_1_1_autore_test.html',1,'model::dataclass']]],
+  ['autoretest_2ejava_18',['AutoreTest.java',['../_autore_test_8java.html',1,'']]],
+  ['avviataskdimezzanotte_19',['avviaTaskDiMezzanotte',['../classmodel_1_1servizi_1_1_operazioni_giornaliere.html#ab49dcf496ecc6e40edd419f0d850b33b',1,'model::servizi::OperazioniGiornaliere']]]
+];
