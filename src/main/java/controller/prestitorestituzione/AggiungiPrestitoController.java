@@ -80,7 +80,7 @@ public class AggiungiPrestitoController {
      * configura i pulsanti e i listener sui campi di testo.
      */
     @FXML
-    public void initialize(){// Metodo chiamato all'apertura della finestra
+    public void initialize(){
     dateInizio.setValue(LocalDate.now());// Imposto data inizio come oggi
     buttonInitialize();
     buttonCheckingInitialize();

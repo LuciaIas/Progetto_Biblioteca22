@@ -56,7 +56,7 @@ import model.Configurazione;
  *
  * @author gruppo22
  */
-public class UtentiController {//controller principale che gestisce la schermata di amministrazione utenti
+public class UtentiController {
     @FXML
     private VBox usersContainer; //Contenitore verticale dove vengono aggiunte le card degli utenti
     
@@ -86,7 +86,7 @@ public class UtentiController {//controller principale che gestisce la schermata
      * 5. Configura la ricerca utente con invio da tastiera e listener per cancellazione testo.
      */
     @FXML
-    public void initialize(){ //eseguito quando la schermata viene caricata
+    public void initialize(){
         updateUtentiList(DataBase.getUtenti());
         buttonInitialize();
         labelInitialize();
@@ -110,7 +110,7 @@ public class UtentiController {//controller principale che gestisce la schermata
      * 2. Se non trovata, ricerca per corrispondenza parziale su nome, cognome o email.
      * I risultati vengono passati al metodo `updateUtentiList` per aggiornare l'interfaccia.
      */
-        public void searchFunction(){ //funzione di ricerca utenti
+        public void searchFunction(){
         ArrayList<Utente> utenti = new ArrayList<>(),app= new ArrayList<>();
            String text = searchUser.getText().trim();
            
@@ -130,7 +130,6 @@ public class UtentiController {//controller principale che gestisce la schermata
            updateUtentiList(app);    
     }
     
-    //inizializzazione MenuBotton filtri
     /**
      * @brief Configura il MenuButton dei filtri.
      *
@@ -172,7 +171,7 @@ public class UtentiController {//controller principale che gestisce la schermata
     /**
      * @brief Aggiorna la label che mostra il numero totale di utenti registrati.
      */
-    public void labelInitialize(){ //inizializzazione label totale utenti
+    public void labelInitialize(){ 
         lblTotalUsers.setText( DataBase.getNumUser() + " iscritti totali");
     }
     
@@ -182,7 +181,7 @@ public class UtentiController {//controller principale che gestisce la schermata
      * Verifica il limite massimo di utenti (`MAX_USERS`) prima di aprire la finestra
      * `AggiungiUtente.fxml`. Dopo la chiusura del form aggiorna la lista utenti e la label.
      */
-    public void buttonInitialize(){ //inizializzazione pulsante Aggiungi Utente
+    public void buttonInitialize(){ 
         btnAddUser.setOnAction(eh->{
             if(DataBase.getNumUser()>=MAX_USERS){
                  Alert IsbnAlert = new Alert(AlertType.ERROR);
@@ -221,7 +220,7 @@ public class UtentiController {//controller principale che gestisce la schermata
      *
      * @param utenti Lista di oggetti Utente da visualizzare.
      */
-    public void updateUtentiList(ArrayList<Utente> utenti){ //aggiornamento lista utenti nella UI
+    public void updateUtentiList(ArrayList<Utente> utenti){ 
         usersContainer.getChildren().clear();
         for(Utente u : utenti){
             aggiungiCardUtente(u.getNome(),u.getCognome(),u.getMatricola(),u.getMail(),u.isBloccato());

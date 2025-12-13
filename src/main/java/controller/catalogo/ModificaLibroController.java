@@ -86,7 +86,7 @@ public class ModificaLibroController {
      */
     @FXML
     public void initialize(){
-        lib = DataBase.cercaLibro(isbn); // Recuperoil libro dal database usando l'ISBN e imposta il form
+        lib = DataBase.cercaLibro(isbn); 
         settingForm();       
     }
     
@@ -268,7 +268,7 @@ public class ModificaLibroController {
      *
      * @param aut Lista degli autori già associati al libro (per selezionare le checkbox corrette)
      */
-    public void updateAutori(ArrayList<Autore> aut){  // Ricarico menu autori con quelli disponibili e seleziono quelli già assegnati
+    public void updateAutori(ArrayList<Autore> aut){  
         ArrayList<Autore> autori = model.servizi.DataBase.getAutori();
         menuAutori.getItems().clear();
         
@@ -301,11 +301,9 @@ public class ModificaLibroController {
      * - Numero di copie: 0-500
      */
     private void spinnerInitialize() {
-        // Spinner anno di pubblicazione: da 1500 a 2100
         SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1500, 2100, 2024, 1);
         spinAnno.setValueFactory(valueFactory);
         
-        // Spinner numero copie: da 0 a 500
         valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 500, 0, 1);
         spinCopie.setValueFactory(valueFactory);
     }

@@ -96,7 +96,7 @@ public class AggiungiLibroController {
      * Imposta immagine di default, menu autori, spinner e bottoni.
      */
     @FXML
-    public void initialize(){//Configura il form con immagine di default, autori, spinner e bottoni.
+    public void initialize(){
         settingForm();      
     }
     
@@ -314,7 +314,7 @@ public class AggiungiLibroController {
      *
      * Crea checkbox per gli autori esistenti e campi per nuovi autori.
      */
-    public void updateAutori(){ //AGGIORNAMENTO AUTORI
+    public void updateAutori(){ 
         ArrayList<Autore> autori = model.servizi.DataBase.getAutori();
         menuAutori.getItems().clear();
         

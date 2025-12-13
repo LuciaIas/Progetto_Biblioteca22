@@ -20,7 +20,7 @@ import javafx.scene.control.Label;
  * 
  * @author gruppo22
  */
-public class NotificaController {//controlla la schermata che mostra le notifiche dei ritardi
+public class NotificaController {
     @FXML
     private Label numRit; //label usato per mostrare il numero di prestiti in ritardo
     
@@ -33,7 +33,7 @@ public class NotificaController {//controlla la schermata che mostra le notifich
      * e aggiorna il testo della Label con il conteggio e un messaggio di suggerimento.
      */
     @FXML
-    public void initialize(){//metodo chiamato automaticamente quando la finestra viene caricata 
+    public void initialize(){
             int i=0;         
             for(Prestito p : DataBase.getPrestiti()) //scorro tutti i prestiti
                 if(p.getStato()==Stato.IN_RITARDO) //controllo lo stato del prestito

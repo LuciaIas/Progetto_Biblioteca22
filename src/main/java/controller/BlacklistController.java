@@ -38,7 +38,7 @@ import javafx.util.Duration;
  *
  * @author gruppo22
  */
-public class BlacklistController {//Controller per la gestione della blacklist degli utenti
+public class BlacklistController {
     
     @FXML
     private VBox blacklistContainer;//contenitore grafico della lista utenti bloccati
@@ -63,7 +63,7 @@ public class BlacklistController {//Controller per la gestione della blacklist d
  * - Configurare i listener per la barra di ricerca (pressione tasto INVIO e modifica testo)
  */
     @FXML
-    public void initialize(){//inizializzazione del controller
+    public void initialize(){
    
         ArrayList<Utente> us =Utente.getUtentiBlackListed(DataBase.getUtenti());//recupero utenti bloccati e aggiorno la lista
         updateUtentiList(us);
@@ -97,7 +97,7 @@ public class BlacklistController {//Controller per la gestione della blacklist d
  * lo mostra. Altrimenti filtra la lista locale degli utenti bloccati controllando
  * se il nome, il cognome o la mail contengono il testo cercato.
  */
-     public void searchFunction(){//funzione di ricerca utente
+     public void searchFunction(){
         ArrayList<Utente> utenti = new ArrayList<>(),app= new ArrayList<>();
            String text = searchUser.getText().trim();
        
@@ -132,7 +132,7 @@ public class BlacklistController {//Controller per la gestione della blacklist d
  *
  * @param utenti lista di oggetti Utente da visualizzare
  */
-    public void updateUtentiList(ArrayList<Utente> utenti){ //aggiorna la lista grafica degli utenti
+    public void updateUtentiList(ArrayList<Utente> utenti){
         blacklistContainer.getChildren().clear();
         
         //mostro numero totale bloccati
@@ -158,7 +158,7 @@ public class BlacklistController {//Controller per la gestione della blacklist d
  * @param email Indirizzo email istituzionale
  * @param isBlacklisted Stato dell'utente (true se bloccato, false se sbloccato)
  */
-    private void aggiungiCardUtente(String nome, String cognome, String matricola, String email, boolean isBlacklisted) {    //crea card grafica per singolo utente
+    private void aggiungiCardUtente(String nome, String cognome, String matricola, String email, boolean isBlacklisted) {   
         
         // 1. Creazione riga principale (HBox)
         HBox riga = new HBox();

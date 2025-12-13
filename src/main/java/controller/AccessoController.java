@@ -38,7 +38,7 @@ import main.Main;
  * @author gruppo22
  */
 
-public class AccessoController {//Controller per eseguire login e registrazione
+public class AccessoController {
     
     //Sliding fxml
     @FXML
@@ -103,7 +103,7 @@ public class AccessoController {//Controller per eseguire login e registrazione
  * e inizializza bottoni e checkbox.
  */
     @FXML
-    public void initialize(){ // Inizializzazione controller. Configura bottoni e checkbox
+    public void initialize(){ 
         buttonInitialize();
         checkboxInitialize();
     }
@@ -119,7 +119,7 @@ public class AccessoController {//Controller per eseguire login e registrazione
      * - le operazioni di login e registrazione
      * - il cambio scena verso la dashboard
      */
-    public void buttonInitialize(){ //Configura le azioni dei bottoni e lo sliding tra i form
+    public void buttonInitialize(){ 
  
         setSliding(); // Imposta sliding iniziale
         
@@ -257,7 +257,7 @@ public class AccessoController {//Controller per eseguire login e registrazione
  * Collega gli eventi delle checkbox ai metodi che alternano
  * la visibilità dei campi password nei form Login e Registrazione.
  */
-    public void checkboxInitialize(){// Configura le checkbox per mostrare/nascondere password
+    public void checkboxInitialize(){
         CheckShowPassLogin.setOnAction(eh->{if(CheckShowPassLogin.isSelected())  showPassword(true,true); else showPassword(false,true); });
         CheckShowPassRegister.setOnAction(eh->{if(CheckShowPassRegister.isSelected()) showPassword(true,false); else showPassword(false,false); });
     }
@@ -301,7 +301,7 @@ public class AccessoController {//Controller per eseguire login e registrazione
  * @param yes true per mostrare la password, false per nasconderla
  * @param login true se si applica al Login, false al Register Form
  */
-    public void showPassword(boolean yes,boolean login){//Mostra o nasconde la password nei form login o registrazione
+    public void showPassword(boolean yes,boolean login){
         if(login){
             if(yes){
                 PassLoginVisible.setText(PassLogin.getText());
@@ -344,7 +344,7 @@ public class AccessoController {//Controller per eseguire login e registrazione
  *
  * @param login indica quale form pulire (true = Register, false = Login)
  */
-    public void cleanForm(boolean login){//Pulisce i form di login o registrazione     
+    public void cleanForm(boolean login){    
         if(login){
             PassRegister.clear();
             PassRegisterVisible.clear();
@@ -367,7 +367,7 @@ public class AccessoController {//Controller per eseguire login e registrazione
  * @param label la Label su cui applicare l'effetto
  * @param text il testo da visualizzare
  */
-    private void typewriterEffectLabel(Label label, String text) {//Effetto "macchina da scrivere" per label
+    private void typewriterEffectLabel(Label label, String text) {
     label.setText("");
     Timeline timeline = new Timeline();   
     for (int i = 0; i < text.length(); i++) {    
@@ -391,7 +391,7 @@ public class AccessoController {//Controller per eseguire login e registrazione
  * @param b il Button su cui applicare l'effetto
  * @param text il testo da visualizzare
  */
-    private void typewriterEffectButton(Button b, String text) {//Effetto "macchina da scrivere" per button
+    private void typewriterEffectButton(Button b, String text) {
     b.setText("");
     Timeline timeline = new Timeline();    
     for (int i = 0; i < text.length(); i++) {

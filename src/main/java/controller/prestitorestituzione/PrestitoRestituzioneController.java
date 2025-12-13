@@ -156,7 +156,7 @@ public class PrestitoRestituzioneController {
      *
      * Filtra prestiti per ISBN, titolo libro, matricola, nome o cognome utente.
      */
-    public void searchFunction(){// Funzione ricerca prestiti
+    public void searchFunction(){
     
         ArrayList<Prestito> prestiti = DataBase.getPrestiti(),app = new ArrayList<>();
         String text = searchLoan.getText();
@@ -181,7 +181,7 @@ public class PrestitoRestituzioneController {
      * Gestisce il limite massimo di record in memoria (MAX_LOAN).
      * Apre il form per aggiungere un nuovo prestito se possibile.
      */
-    public void buttonInitialize(){ // Gestione pulsante nuovo prestito  
+    public void buttonInitialize(){  
         NewLoanButton.setOnAction(eh->{        
             int totale_prestiti = DataBase.getPrestiti().size();
             
@@ -257,7 +257,7 @@ public class PrestitoRestituzioneController {
      *
      * @param p1 Lista dei prestiti da visualizzare.
      */
-    public void updatePrestiti(ArrayList<Prestito> p1){// Aggiorno lista prestiti sullo schermo
+    public void updatePrestiti(ArrayList<Prestito> p1){
     loansContainer.getChildren().clear(); // Pulizia container
         for(Prestito p : p1){       
             Libro l = DataBase.cercaLibro(p.getIsbn());

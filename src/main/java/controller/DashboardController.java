@@ -46,7 +46,7 @@ import main.Main;
  *
  * @author gruppo22
  */
-public class DashboardController {//Controller che gestisce la dashboard (navigazione, pulsanti menu, backup e logout)
+public class DashboardController {
      
     @FXML
     private Button CatalogoLibriButton; //bottone catalogo libri
@@ -84,7 +84,7 @@ public class DashboardController {//Controller che gestisce la dashboard (naviga
     private ScrollPane DashboardScrollPane; //contenitore che permette lo scroll orizzontale e verticale
     
     @FXML
-    private BorderPane HomeBorderPane; //usato per acmbiare dinamicamente la vista centrale quando si clcca un bottone del menu
+    private BorderPane HomeBorderPane; //usato per cambiare dinamicamente la vista centrale quando si clcca un bottone del menu
     
     private List<Button> menuButtons; //lista che contiene tutti i bottoni principali del menu
     
@@ -104,14 +104,13 @@ public class DashboardController {//Controller che gestisce la dashboard (naviga
  * e carica i dati nelle label (labelInitialize).
  */
     @FXML
-    public void initialize(){ //inizializza la dashboard impostando lista bottoni e aggiornando label
+    public void initialize(){ 
         menuButtons = Arrays.asList(CatalogoLibriButton,DashboardButton,BLButton,mailButton,utentiButton,PrestitiRestituzioniButton); 
         buttonInitialize();
         labelInitialize(); 
     }
     
-   
-    //aggiorna i valori delle etichette (libri, prestiti,utenti,scaduti) leggendo i dati dal database
+
 /**
  * @brief Carica e visualizza le statistiche principali della Dashboard.
  *
@@ -139,9 +138,6 @@ public class DashboardController {//Controller che gestisce la dashboard (naviga
     public static Stage PassRec;// finestra usata per modifica password
         
     
-
-    //inizializza e configura tutti i bottoni della dashboard (backup, cambio password, logout e navigazione)
-    //associa a ciascun pulsante il caricamento della pagina corrispondente
 /**
  * @brief Configura le azioni dei pulsanti principali della Dashboard.
  *
@@ -277,8 +273,7 @@ public class DashboardController {//Controller che gestisce la dashboard (naviga
         });
     }
     
-    
-//evidenzio il bottone attivo nel menu laterale rimuovendo gli stili dagli altri pulsanti
+
 /**
  * @brief Evidenzia il pulsante attivo della sidebar.
  *
@@ -288,8 +283,7 @@ public class DashboardController {//Controller che gestisce la dashboard (naviga
  *
  * @param bottoneAttivo il pulsante appena cliccato da evidenziare
  */
-    private void evidenziaBottone(Button bottoneAttivo) {
-        
+    private void evidenziaBottone(Button bottoneAttivo) {        
        //rimuovo evidenziazione da tutti i bottoni
         for (Button b : menuButtons) {
             b.getStyleClass().remove("sidebar-btn-active"); 
@@ -298,8 +292,7 @@ public class DashboardController {//Controller che gestisce la dashboard (naviga
             if (!b.getStyleClass().contains("sidebar-btn")) {
                 b.getStyleClass().add("sidebar-btn");
             }
-        }
-        
+        }        
         //applico stile evidenziato al bottone cliccato
         bottoneAttivo.getStyleClass().remove("sidebar-btn"); 
         bottoneAttivo.getStyleClass().add("sidebar-btn-active"); 

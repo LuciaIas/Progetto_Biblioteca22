@@ -64,8 +64,8 @@ public class CambioPasswordController {
      */
     @FXML
     public void initialize(){       
-        setCheckBox();// Inizializza checkbox mostra/nascondi password
-        setButtonFunction();// Inizializza pulsanti Salva e Annulla       
+        setCheckBox();
+        setButtonFunction();      
     }
     
     /**

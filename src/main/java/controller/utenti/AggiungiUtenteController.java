@@ -28,7 +28,7 @@ import javafx.stage.Stage;
  * 
  * @author GRUPPO22
  */
-public class AggiungiUtenteController {//controller associato alla finestra "Aggiungi Utente"
+public class AggiungiUtenteController {
     
     @FXML
     private TextField txtMatricola; //campo di testo per la matricola
@@ -57,7 +57,7 @@ public class AggiungiUtenteController {//controller associato alla finestra "Agg
      */
     @FXML
     public void initialize(){
-        buttonInitialize(); //richiamo la configurazione dei pulsanti 
+        buttonInitialize(); 
     }
     
     //configurazione dei bottoni

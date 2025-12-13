@@ -31,12 +31,11 @@ import javafx.scene.layout.VBox;
  *
  * @author gruppo22
  */
-public class MailController {//controller gestisce la grafica delle email inviate
+public class MailController {
     @FXML
     private VBox emailContainer; //contenitore verticale dove verranno inserite le card delle email
     
     @FXML private Label lblTotalUsers; //mostra il numero totale di email inviate
-
     
 /**
  * @brief Metodo di inizializzazione del controller.
@@ -45,12 +44,10 @@ public class MailController {//controller gestisce la grafica delle email inviat
  * Avvia immediatamente la procedura di caricamento delle email inviate.
  */
     @FXML
-    public void initialize() {   //appena la schermata si apre, parte il caricamento delle email inviate
+    public void initialize() { 
         caricaEmailInviate();
     }
     
-    
-//inizia il metodo che recupera e mostra la lista email
 /**
  * @brief Recupera le email inviate e aggiorna l'interfaccia grafica.
  *
@@ -95,8 +92,6 @@ public class MailController {//controller gestisce la grafica delle email inviat
         }).start();
     }
 
-    
-//metodo che crea una riga grafica (una mail)
 /**
  * @brief Crea e aggiunge la card di una singola email alla lista.
  *

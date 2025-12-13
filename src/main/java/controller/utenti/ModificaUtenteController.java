@@ -30,7 +30,7 @@ import javafx.stage.Stage;
  * 
  * @author gruppo22
  */
-public class ModificaUtenteController {//controller che gestisce la finestra per modificare i dati di un utente
+public class ModificaUtenteController {
     
     @FXML
     private Label lblMatricola; //label che mostra la matricola dell'utente selezionato
