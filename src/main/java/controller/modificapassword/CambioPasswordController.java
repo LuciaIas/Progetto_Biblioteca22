@@ -21,8 +21,12 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 /**
- *
- * @author gruppo22
+ * @brief Controller per l'impostazione della nuova password.
+ * * Questa classe gestisce la schermata finale del processo di cambio password,
+ * dove l'utente inserisce e conferma la nuova password di accesso.
+ * Si occupa della validazione (formato, corrispondenza campi) e del salvataggio nel database.
+ * * @author gruppo22
+ * @version 1.0
  */
 public class CambioPasswordController {
     
@@ -48,11 +52,25 @@ public class CambioPasswordController {
     private Label BtnAnnulla;
     
     @FXML
+     /**
+     * @brief Inizializza il controller.
+     * Configura lo stato iniziale della checkbox e assegna le funzioni ai pulsanti.
+     */
     public void initialize(){       
         setCheckBox();// Inizializza checkbox mostra/nascondi password
         setButtonFunction();// Inizializza pulsanti Salva e Annulla       
     }
     
+     /**
+     * @brief Configura la logica dei pulsanti "Salva" e "Annulla".
+     * * - **BtnSalva:**
+     * 1. Recupera il testo dai campi (gestendo la visibilità).
+     * 2. Verifica che i campi non siano vuoti.
+     * 3. Verifica che le password coincidano.
+     * 4. Verifica il formato di sicurezza (tramite `CheckFormat`).
+     * 5. Se tutto è valido, aggiorna il database (`RemoveBibliotecario` + `InsertBibliotecario`), mostra conferma e chiude.
+     * - **BtnAnnulla:** Chiude la finestra senza salvare.
+     */
     public void setButtonFunction(){   
         BtnSalva.setOnAction(eh->{
             String pass,pass1;
@@ -118,6 +136,10 @@ public class CambioPasswordController {
         });        
     }
        
+     /**
+     * @brief Configura il listener per la CheckBox "Mostra Password".
+     * Imposta lo stato iniziale a "nascosto" e definisce l'azione al click.
+     */
     public void setCheckBox(){
     showPassword(false);// Imposto password inizialmente nascosta
         CheckShowPass.setOnAction(eh->{       
@@ -128,6 +150,11 @@ public class CambioPasswordController {
         });        
     }
         
+     /**
+     * @brief Gestisce la sincronizzazione e visibilità di entrambi i campi password (Nuova e Conferma).
+     * Copia il testo dai campi nascosti a quelli visibili (e viceversa) e ne alterna la visualizzazione.
+     * * @param yes Se true, mostra le password in chiaro. Se false, le nasconde.
+     */
     public void showPassword(boolean yes){       
             if(yes){// Mostra password
                 NewPassVisible.setText(NewPass.getText());// Sincronizzo testo

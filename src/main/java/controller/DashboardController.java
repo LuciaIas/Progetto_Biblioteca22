@@ -33,12 +33,19 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import main.Main;
 
+
+
 /**
- *
- * @author gruppo22
+ * @brief Controller principale della Dashboard.
+ * * Questa classe gestisce la schermata principale dell'applicazione (Dashboard).
+ * Si occupa di:
+ * - Navigazione tra le varie sezioni (Catalogo, Utenti, Prestiti, Blacklist, Mail).
+ * - Visualizzazione delle statistiche in tempo reale (numero libri, prestiti attivi, utenti, ritardi).
+ * - Gestione delle funzionalità di sistema (Logout, Backup, Modifica Password), resi presenti in tutte le sezioni.
+ * - Gestione del lancio delle varie sezione sulla destra della sidebar.
+ * * @author gruppo22
+ * @version 1.0
  */
-
-
 public class DashboardController {//Controller che gestisce la dashboard (navigazione, pulsanti menu, backup e logout)
      
     @FXML
@@ -89,6 +96,12 @@ public class DashboardController {//Controller che gestisce la dashboard (naviga
     private Button BackupButton; //bottone per eseguire il backup dei dati della biblioteca
       
     @FXML
+     /**
+     * @brief Inizializza il controller.
+     * Viene chiamato automaticamente al caricamento della view.
+     * Inizializza la lista dei bottoni, configura le azioni (ButtonInitialize)
+     * e carica i dati nelle label (LabelInitialize).
+     */
     public void initialize(){ //inizializza la dashboard impostando lista bottoni e aggiornando label
         menuButtons = Arrays.asList(CatalogoLibriButton,DashboardButton,BLButton,mailButton,utentiButton,PrestitiRestituzioniButton); 
         buttonInitialize();
@@ -96,6 +109,14 @@ public class DashboardController {//Controller che gestisce la dashboard (naviga
     }
     
     //aggiorna i valori delle etichette (libri, prestiti,utenti,scaduti) leggendo i dati dal database
+        /**
+     * @brief Carica e visualizza le statistiche del sistema.
+     * Interroga il `DataBase` per ottenere:
+     * - Numero totale libri.
+     * - Prestiti attivi (Stato ATTIVO, PROROGATO, IN_RITARDO).
+     * - Numero utenti totali.
+     * - Prestiti specificamente in ritardo.
+     */
     public void labelInitialize(){
         numLibri.setText(""+DataBase.getCatalogo().getLibri().size());
         int i=0;
@@ -115,6 +136,15 @@ public class DashboardController {//Controller che gestisce la dashboard (naviga
         
     //inizializza e configura tutti i bottoni della dashboard (backup, cambio password, logout e navigazione)
     //associa a ciascun pulsante il caricamento della pagina corrispondente
+        /**
+     * @brief Configura le azioni (EventHandler) per tutti i pulsanti.
+     * Gestisce:
+     * - **Backup:** Apre un DirectoryChooser e chiama `BackupService`.
+     * - **Modifica Password:** Apre un nuovo Stage per inserire la vecchia password.
+     * - **Logout:** Torna alla schermata di Login (`Access.fxml`).
+     * - **Navigazione:** Carica i file FXML relativi (Catalogo, Utenti, ecc.) 
+     * all'interno del HomeBorderPane e aggiorna lo stile del menu.
+     */
     public void buttonInitialize(){
         
         //backup dati
@@ -242,6 +272,12 @@ public class DashboardController {//Controller che gestisce la dashboard (naviga
     }
     
     //evidenzio il bottone attivo nel menu laterale rimuovendo gli stili dagli altri pulsanti
+     /**
+     * @brief Gestisce lo stile visivo dei pulsanti della sidebar.
+     * Rimuove la classe CSS "active" da tutti i pulsanti e la assegna solo a quello cliccato.
+     * Questo fornisce un feedback visivo all'utente su quale sezione è attualmente visualizzata.
+     * * @param bottoneAttivo Il pulsante che è stato appena cliccato.
+     */
     private void evidenziaBottone(Button bottoneAttivo) {
         
        //rimuovo evidenziazione da tutti i bottoni

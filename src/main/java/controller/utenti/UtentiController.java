@@ -37,11 +37,19 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.Configurazione;
 
-/**
- *
- * @author gruppo22
- */
 
+/**
+ * @brief Controller per la gestione della lista Utenti.
+ * * Questa classe gestisce la visualizzazione e la gestione degli utenti iscritti al sistema.
+ * Permette di:
+ * - Visualizzare l'elenco completo degli utenti.
+ * - Filtrare per stato (Attivi, Bloccati/Blacklist).
+ * - Cercare utenti per nome, cognome, email o matricola.
+ * - Aggiungere nuovi utenti.
+ * - Modificare, Eliminare o Bloccare/Sbloccare utenti esistenti direttamente dalla lista.
+ * * @author gruppo22
+ * @version 1.0
+ */
 public class UtentiController {//controller principale che gestisce la schermata di amministrazione utenti
     @FXML
     private VBox usersContainer; //Contenitore verticale dove vengono aggiunte le card degli utenti
@@ -61,6 +69,10 @@ public class UtentiController {//controller principale che gestisce la schermata
     public static final int MAX_USERS=Configurazione.getMaxUsers(); //costante limite max utenti consentito
     
     @FXML
+     /**
+     * @brief Inizializza il controller.
+     * Carica la lista completa degli utenti, inizializza i filtri, i bottoni e la barra di ricerca.
+     */
     public void initialize(){ //eseguito quando la schermata viene caricata
         updateUtentiList(DataBase.getUtenti());
         buttonInitialize();
@@ -77,6 +89,11 @@ public class UtentiController {//controller principale che gestisce la schermata
         });
     }
     
+      /**
+     * @brief Esegue la logica di ricerca utenti.
+     * Cerca prima per corrispondenza esatta della matricola. Se non trova nulla,
+     * cerca per corrispondenza parziale su nome, cognome o email.
+     */
         public void searchFunction(){ //funzione di ricerca utenti
         ArrayList<Utente> utenti = new ArrayList<>(),app= new ArrayList<>();
            String text = searchUser.getText().trim();
@@ -98,6 +115,13 @@ public class UtentiController {//controller principale che gestisce la schermata
     }
     
     //inizializzazione MenuBotton filtri
+      /**
+     * @brief Configura il MenuButton per i filtri.
+     * * Opzioni disponibili:
+     * - "Tutti gli utenti": Mostra l'elenco completo.
+     * - "Solo attivi": Mostra solo gli utenti non in blacklist.
+     * - "Solo bloccati": Mostra solo gli utenti in blacklist.
+     */
     public void menuButtonInitialize(){
         FilterButton.getItems().clear(); 
         MenuItem m1 = new MenuItem("Tutti gli utenti");
@@ -128,10 +152,17 @@ public class UtentiController {//controller principale che gestisce la schermata
         });    
     }
     
+     /**
+     * @brief Aggiorna la label con il numero totale di iscritti.
+     */
     public void labelInitialize(){ //inizializzazione label totale utenti
         lblTotalUsers.setText( DataBase.getNumUser() + " iscritti totali");
     }
     
+     /**
+     * @brief Configura il bottone "Aggiungi Utente".
+     * Verifica il limite massimo di utenti (`MAX_USERS`) prima di aprire il form `addUtente.fxml`.
+     */
     public void buttonInitialize(){ //inizializzazione pulsante Aggiungi Utente
         btnAddUser.setOnAction(eh->{
             if(DataBase.getNumUser()>=MAX_USERS){
@@ -164,6 +195,11 @@ public class UtentiController {//controller principale che gestisce la schermata
             });
         }
     
+      /**
+     * @brief Aggiorna la lista degli utenti.
+     * Svuota il contenitore e rigenera le card per ogni utente nella lista fornita.
+     * * @param utenti Lista degli oggetti User da visualizzare.
+     */
     public void updateUtentiList(ArrayList<Utente> utenti){ //aggiornamento lista utenti nella UI
         usersContainer.getChildren().clear();
         for(Utente u : utenti){
@@ -171,6 +207,20 @@ public class UtentiController {//controller principale che gestisce la schermata
         }
     }
     
+     /**
+     * @brief Crea e aggiunge la card di un singolo utente.
+     * * Costruisce un HBox contenente:
+     * - Icona colorata (Blu = Attivo, Rossa = Bloccato).
+     * - Dati anagrafici (Nome, Cognome, Email).
+     * - Matricola.
+     * - Label di stato.
+     * - Pulsanti di azione: Modifica, Elimina, Blocca/Sblocca.
+     * * @param nome Nome dell'utente.
+     * @param cognome Cognome dell'utente.
+     * @param matricola Matricola.
+     * @param email Indirizzo email.
+     * @param isBlacklisted Stato dell'utente (true se bloccato).
+     */
     private void aggiungiCardUtente(String nome, String cognome, String matricola, String email, boolean isBlacklisted) {
         //creazione card utente
         

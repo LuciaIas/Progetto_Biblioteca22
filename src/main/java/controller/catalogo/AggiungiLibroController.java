@@ -33,10 +33,13 @@ import javafx.stage.Stage;
 import model.Configurazione;
 
 /**
- *
- * @author gruppo22
+ * @brief Controller per l'aggiunta di un nuovo libro al catalogo.
+ * * Questa classe gestisce il form di inserimento dati per nuovi libri.
+ * Include validazioni specifiche per l'ISBN, gestione dinamica degli autori
+ * e caricamento immagine di copertina.
+ * * @author gruppo22
+ * @version 1.0
  */
-
 public class AggiungiLibroController {
     
     // CAMPI TESTO
@@ -84,10 +87,18 @@ public class AggiungiLibroController {
     private String urlIM=null; // path della copertina (di default null)
    
     @FXML
+     /**
+     * @brief Inizializza il form.
+     * Viene chiamato all'apertura della finestra.
+     */
     public void initialize(){//Configura il form con immagine di default, autori, spinner e bottoni.
         settingForm();      
     }
     
+     /**
+     * @brief Imposta lo stato iniziale del form.
+     * Carica l'immagine di default, popola il menu autori e inizializza gli spinner.
+     */
     public void settingForm(){
         Image img = new Image(getClass().getResourceAsStream("/Images/default.jpg"));
         imgAnteprima.setImage(img);
@@ -97,6 +108,11 @@ public class AggiungiLibroController {
         buttonInitialize();   
     }
     
+     /**
+     * @brief Configura la logica di tutti i pulsanti.
+     * Gestisce il caricamento file, il reset dell'immagine, l'annullamento e il salvataggio
+     * con tutte le relative validazioni (ISBN, Autori, Limiti DB).
+     */
     public void buttonInitialize(){
         ScegliFileButton.setOnAction(eh->{  // SELEZIONE FILE COPERTINA    
             FileChooser fc = new FileChooser();
@@ -282,7 +298,11 @@ public class AggiungiLibroController {
         });
                 
     }
-      
+    
+     /**
+     * @brief Aggiorna la lista degli autori nel MenuButton.
+     * Crea checkbox per gli autori esistenti e campi di testo per i nuovi.
+     */
     public void updateAutori(){ //AGGIORNAMENTO AUTORI
         ArrayList<Autore> autori = model.servizi.DataBase.getAutori();
         menuAutori.getItems().clear();
@@ -302,6 +322,10 @@ public class AggiungiLibroController {
         menuAutori.getItems().addAll(altro);     
     }
 
+    
+     /**
+     * @brief Inizializza i valori e i range degli Spinner (Anno tra 1500-2100 e Copie tra 0-500).
+     */
     private void spinnerInitialize() { 
         SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1500, 2100, 2024, 1);//spinAnno: da 1500 a 2100, default 2024
 

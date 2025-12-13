@@ -25,9 +25,14 @@ import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+
+
 /**
- *
- * @author gruppo22
+ * @brief Controller per la verifica della password attuale.
+ * * Questa classe gestisce la finestra che richiede al bibliotecario di inserire
+ * la propria password corrente prima di poter accedere alla schermata di modifica password.
+ * * @author gruppo22
+ * @version 1.0
  */
 public class InserisciPasswordModificaController {
     
@@ -47,11 +52,21 @@ public class InserisciPasswordModificaController {
     private Label BtnAnnulla;
     
     @FXML
+     /**
+     * @brief Inizializza il controller.
+     * Imposta i listener per la checkbox e per i bottoni.
+     */
     public void initialize(){       
         setCheckBox();
         setButtonFunction();       
     }
     
+    
+     /**
+     * @brief Configura le funzioni dei pulsanti Salva e Annulla.
+     * Controlla se la password è vuota o errata tramite Database.
+     * Se corretta, apre la finestra di cambio password.
+     */
     public void setButtonFunction(){   
         BtnSalva.setOnAction(eh->{
             String pass;
@@ -96,6 +111,9 @@ public class InserisciPasswordModificaController {
     }
     
     
+     /**
+     * @brief Configura la CheckBox per mostrare/nascondere la password.
+     */
     public void setCheckBox(){
     showPassword(false);
         CheckShowPass.setOnAction(eh->{       
@@ -106,6 +124,11 @@ public class InserisciPasswordModificaController {
         });        
     }
        
+     /**
+     * @brief Gestisce la visibilità dei campi password.
+     * Alterna tra PasswordField e TextField copiando il contenuto.
+     * @param yes True per mostrare la password, False per nasconderla.
+     */
     public void showPassword(boolean yes){        
             if(yes){
                 NewPassVisible.setText(NewPass.getText());

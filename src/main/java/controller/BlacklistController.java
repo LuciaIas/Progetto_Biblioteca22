@@ -27,12 +27,16 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 
+
+
 /**
- *
- * @author gruppo22
+ * @brief Controller per la gestione della visualizzazione "Blacklist".
+ * * Questa classe gestisce l'interfaccia utente relativa agli utenti bloccati (blacklist).
+ * Permette di visualizzare la lista degli utenti, ricercarli, sbloccarli singolarmente o in massa,
+ * e inviare email di avviso.
+ * * @author gruppo22
+ * @version 1.0
  */
-
-
 public class BlacklistController {//Controller per la gestione della blacklist degli utenti
     
     @FXML
@@ -46,8 +50,18 @@ public class BlacklistController {//Controller per la gestione della blacklist d
        
     @FXML
     private TextField searchUser;//campo di ricerca utenti
-      
+    
+    
+  
     @FXML
+        /**
+     * @brief Metodo di inizializzazione del controller.
+     * * Viene chiamato automaticamente dopo il caricamento del file FXML.
+     * Si occupa di:
+     * - Caricare la lista iniziale degli utenti bloccati.
+     * - Configurare l'azione del bottone "Sblocca Tutto".
+     * - Configurare i listener per la barra di ricerca (pressione tasto INVIO e modifica testo).
+     */
     public void initialize(){//inizializzazione del controller
    
         ArrayList<Utente> us =Utente.getUtentiBlackListed(DataBase.getUtenti());//recupero utenti bloccati e aggiorno la lista
@@ -75,8 +89,13 @@ public class BlacklistController {//Controller per la gestione della blacklist d
         });        
     }
     
-    //funzione di ricerca utente
-     public void searchFunction(){
+        /**
+     * @brief Esegue la logica di ricerca degli utenti.
+     * * Cerca prima una corrispondenza esatta nel database. Se l'utente trovato è bloccato,
+     * lo mostra. Altrimenti, filtra la lista locale degli utenti bloccati controllando
+     * se il nome, il cognome o la mail contengono il testo cercato.
+     */
+     public void searchFunction(){//funzione di ricerca utente
         ArrayList<Utente> utenti = new ArrayList<>(),app= new ArrayList<>();
            String text = searchUser.getText().trim();
        
@@ -102,8 +121,14 @@ public class BlacklistController {//Controller per la gestione della blacklist d
            
     }
         
-    //aggiorna la lista grafica degli utenti
-    public void updateUtentiList(ArrayList<Utente> utenti){
+   
+         /**
+     * @brief Aggiorna l'interfaccia grafica con una nuova lista di utenti.
+     * * Pulisce il contenitore `blacklistContainer`, aggiorna il contatore totale
+     * e genera dinamicamente le righe (card) per ogni utente nella lista fornita.
+     * * @param utenti ArrayList contenente gli oggetti User (le card) da visualizzare.
+     */
+    public void updateUtentiList(ArrayList<Utente> utenti){ //aggiorna la lista grafica degli utenti
         blacklistContainer.getChildren().clear();
         
         //mostro numero totale bloccati
@@ -116,8 +141,18 @@ public class BlacklistController {//Controller per la gestione della blacklist d
         }
     }
     
-    //crea card grafica per singolo utente
-    private void aggiungiCardUtente(String nome, String cognome, String matricola, String email, boolean isBlacklisted) {
+    /**
+     * @brief Crea e aggiunge una riga (card) utente all'interfaccia.
+     * * Costruisce un HBox contenente l'icona, i dati dell'utente,
+     * lo stato e i pulsanti di azione (invio email e sblocco). Gestisce anche lo stile CSS
+     * e gli eventi dei pulsanti generati.
+     * * @param nome Nome dell'utente.
+     * @param cognome Cognome dell'utente.
+     * @param matricola Matricola dell'utente.
+     * @param email Indirizzo email istituzionale.
+     * @param isBlacklisted Stato dell'utente (true se bloccato, false se sbloccato).
+     */
+    private void aggiungiCardUtente(String nome, String cognome, String matricola, String email, boolean isBlacklisted) {    //crea card grafica per singolo utente
         
         // 1. Creazione riga principale (HBox)
         HBox riga = new HBox();
