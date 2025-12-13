@@ -27,14 +27,16 @@ import javafx.stage.Stage;
 
 /**
  * @brief Controller per la creazione di un nuovo Prestito.
- * * Questa classe gestisce il form per assegnare una copia di un libro a un utente.
- * Include controlli rigorosi su:
+ *
+ * Gestisce il form per assegnare una copia di un libro a un utente.
+ * Controlla:
  * - Esistenza di ISBN e Matricola (tramite pulsanti di verifica dedicati).
- * - Disponibilità fisica del libro (copie > 0).
+ * - Disponibilità del libro (copie > 0).
  * - Stato dell'utente (non bloccato, max 3 prestiti attivi).
- * - Validità temporale (data inizio deve venire cronologicamente prima di data fine).
- * * @author gruppo22
- *  @version 1.0
+ * - Validità temporale delle date (inizio < scadenza).
+ * - Evita duplicati di prestito attivo.
+ *
+ * @author gruppo22
  */
 public class AggiungiPrestitoController {
     @FXML
@@ -70,11 +72,14 @@ public class AggiungiPrestitoController {
     private boolean CompletedCheckIsbn=false,// Indica se ISBN è stato validato
             CompletedCheckMatricola=false;// Indica se matricola è stata validata
     
-    @FXML
+    
      /**
      * @brief Inizializza il controller.
-     * Imposta la data di inizio a quella odierna e configura i listener.
+     *
+     * Imposta la data di inizio come quella odierna,
+     * configura i pulsanti e i listener sui campi di testo.
      */
+    @FXML
     public void initialize(){// Metodo chiamato all'apertura della finestra
     dateInizio.setValue(LocalDate.now());// Imposto data inizio come oggi
     buttonInitialize();
@@ -84,10 +89,10 @@ public class AggiungiPrestitoController {
       
     
     /**
-     * @brief Configura i listener sulle proprietà dei campi di testo.
-     * * Se l'utente modifica il testo di ISBN o Matricola *dopo* aver fatto la verifica,
-     * questo metodo resetta i flag **CompletedCheck** a false e pulisce le label di conferma.
-     * Questo obbliga l'utente a rieseguire la verifica per il nuovo testo inserito.
+     * @brief Listener per i campi di testo ISBN e Matricola.
+     *
+     * Se l'utente modifica il testo dopo la verifica,
+     * resetta il flag e cancella la label di conferma.
      */
     public void initializeProperty(){    
         txtIsbn.textProperty().addListener( (a,b,c) ->{// Se cambia il testo dell’ISBN       
@@ -103,16 +108,11 @@ public class AggiungiPrestitoController {
     
     
     /**
-     * @brief Configura le azioni dei pulsanti principali (Salva e Annulla).
-     * * Dettaglio Logica **SalvaButton**:
-     * 1. **Verifiche Preliminari:** Controlla che i pulsanti di check (ISBN/Matricola) siano stati premuti.
-     * 2. **Controllo Date:** Verifica che la data di scadenza sia inserita e sia successiva all'inizio.
-     * 3. **Controllo Duplicati:** Verifica che l'utente non abbia già questo libro in prestito attivo.
-     * 4. **Controllo Disponibilità:** Verifica che le copie del libro siano > 0.
-     * 5. **Controllo Utente:** Verifica che l'utente non sia bloccato (Blacklist).
-     * 6. **Controllo Limite Prestiti:** Verifica che l'utente non abbia già 3 libri in prestito.
-     * - Se il limite è raggiunto a causa di vecchi prestiti restituiti ma ancora in storico, chiede conferma per pulire lo storico.
-     * 7. **Inserimento:** Aggiunge il prestito al DB e decrementa le copie disponibili del libro.
+     * @brief Configura le azioni dei pulsanti principali.
+     *
+     * Pulsanti gestiti:
+     * - AnnullaButton: chiude la finestra senza salvare.
+     * - SalvaButton: valida campi e condizioni, aggiunge il prestito al database e aggiorna le copie.
      */
     public void buttonInitialize(){
         AnnullaButton.setOnAction(eh->{        
@@ -388,10 +388,11 @@ public class AggiungiPrestitoController {
         
     
     /**
-     * @brief Configura i pulsanti per la verifica puntuale di ISBN e Matricola.
-     * * - **IsbnCheckButton:** Verifica lunghezza (13), formato numerico ed esistenza nel catalogo.
-     * * - **MatricolaCheckButton:** Verifica lunghezza (10), formato numerico ed esistenza utente nel DB.
-     * In caso di successo, imposta i relativi flag (`CompletedCheck...`) a true.
+     * @brief Configura i pulsanti di verifica di ISBN e Matricola.
+     *
+     * Controlli effettuati:
+     * - ISBN: lunghezza 13, solo numeri, esistenza nel catalogo.
+     * - Matricola: lunghezza 10, solo numeri, esistenza utente nel DB.
      */
     public void buttonCheckingInitialize(){
     

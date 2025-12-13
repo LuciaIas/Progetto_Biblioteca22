@@ -29,10 +29,17 @@ import javafx.stage.Stage;
 
 /**
  * @brief Controller per la verifica della password attuale.
- * * Questa classe gestisce la finestra che richiede al bibliotecario di inserire
- * la propria password corrente prima di poter accedere alla schermata di modifica password.
- * * @author gruppo22
- * @version 1.0
+ *
+ * Gestisce la finestra che richiede al bibliotecario di inserire la propria password corrente
+ * prima di poter accedere alla schermata di cambio password.
+ * Valida la password inserita confrontandola con il database.
+ * 
+ * Funzionalità principali:
+ * - Mostra/nasconde password tramite checkbox.
+ * - Verifica che la password inserita sia corretta.
+ * - Apre la finestra per il cambio password se la verifica ha successo.
+ * 
+ * @author gruppo22
  */
 public class InserisciPasswordModificaController {
     
@@ -51,21 +58,25 @@ public class InserisciPasswordModificaController {
     @FXML 
     private Label BtnAnnulla;
     
-    @FXML
      /**
      * @brief Inizializza il controller.
-     * Imposta i listener per la checkbox e per i bottoni.
+     *
+     * Configura lo stato iniziale della checkbox e assegna le funzioni ai pulsanti Salva e Annulla.
      */
+    @FXML
     public void initialize(){       
         setCheckBox();
         setButtonFunction();       
     }
     
     
-     /**
-     * @brief Configura le funzioni dei pulsanti Salva e Annulla.
-     * Controlla se la password è vuota o errata tramite Database.
-     * Se corretta, apre la finestra di cambio password.
+    /**
+     * @brief Configura le azioni dei pulsanti Salva e Annulla.
+     *
+     * - BtnSalva: verifica che il campo password non sia vuoto, controlla la corrispondenza con
+     *   la password del bibliotecario presente nel database. Se corretta, apre la finestra di
+     *   cambio password.
+     * - BtnAnnulla: chiude la finestra senza modificare nulla.
      */
     public void setButtonFunction(){   
         BtnSalva.setOnAction(eh->{
@@ -111,8 +122,10 @@ public class InserisciPasswordModificaController {
     }
     
     
-     /**
-     * @brief Configura la CheckBox per mostrare/nascondere la password.
+    /**
+     * @brief Configura il listener per la checkbox "Mostra Password".
+     *
+     * Alterna la visualizzazione tra PasswordField e TextField.
      */
     public void setCheckBox(){
     showPassword(false);
@@ -124,9 +137,11 @@ public class InserisciPasswordModificaController {
         });        
     }
        
-     /**
+    /**
      * @brief Gestisce la visibilità dei campi password.
-     * Alterna tra PasswordField e TextField copiando il contenuto.
+     *
+     * Sincronizza il contenuto tra PasswordField e TextField e alterna la visibilità.
+     *
      * @param yes True per mostrare la password, False per nasconderla.
      */
     public void showPassword(boolean yes){        

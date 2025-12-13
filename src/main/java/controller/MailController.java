@@ -24,11 +24,12 @@ import javafx.scene.layout.VBox;
 
 /**
  * @brief Controller per la visualizzazione della posta inviata.
- * * Questa classe gestisce l'interfaccia che mostra lo storico delle email inviate dal sistema.
+ *
+ * Questa classe gestisce l'interfaccia che mostra lo storico delle email inviate dal sistema.
  * Utilizza un caricamento asincrono (Multithreading) per evitare di bloccare l'interfaccia
  * durante la lettura dei file di log o del database.
- * * @author gruppo22
- * @version 1.0
+ *
+ * @author gruppo22
  */
 public class MailController {//controller gestisce la grafica delle email inviate
     @FXML
@@ -36,25 +37,29 @@ public class MailController {//controller gestisce la grafica delle email inviat
     
     @FXML private Label lblTotalUsers; //mostra il numero totale di email inviate
 
+    
+/**
+ * @brief Metodo di inizializzazione del controller.
+ *
+ * Viene chiamato automaticamente al caricamento della view.
+ * Avvia immediatamente la procedura di caricamento delle email inviate.
+ */
     @FXML
-     /**
-     * @brief Inizializza il controller.
-     * Viene chiamato automaticamente al caricamento della view.
-     * Avvia immediatamente la procedura di caricamento delle email.
-     */
     public void initialize() {   //appena la schermata si apre, parte il caricamento delle email inviate
         caricaEmailInviate();
     }
     
-    //inizia il metodo che recupera e mostra la lista email
-        /**
-     * @brief Recupera le email inviate e aggiorna l'interfaccia.
-     * * Esegue le seguenti operazioni:
-     * 1. Mostra un `ProgressIndicator` nel contenitore.
-     * 2. Avvia un **Thread separato** per leggere i dati (operazione I/O pesante).
-     * 3. Una volta ottenuti i dati, utilizza `Platform.runLater` per aggiornare la UI
-     * sul thread grafico principale, popolando la lista o mostrando un messaggio di vuoto.
-     */
+    
+//inizia il metodo che recupera e mostra la lista email
+/**
+ * @brief Recupera le email inviate e aggiorna l'interfaccia grafica.
+ *
+ * Esegue le seguenti operazioni:
+ * 1. Mostra un `ProgressIndicator` nel contenitore.
+ * 2. Avvia un thread separato per leggere i dati (operazione I/O pesante).
+ * 3. Una volta ottenuti i dati, utilizza `Platform.runLater` per aggiornare la UI
+ *    sul thread grafico principale, popolando la lista o mostrando un messaggio se vuota.
+ */
     private void caricaEmailInviate() {
         // 1. Mostra un caricamento mentre scarica le mail
         emailContainer.getChildren().clear(); //pulisco il contenitore
@@ -90,15 +95,18 @@ public class MailController {//controller gestisce la grafica delle email inviat
         }).start();
     }
 
-    //metodo che crea una riga grafica (una mail)
-        /**
-     * @brief Crea e aggiunge la card di una singola email alla lista.
-     * * Costruisce programmaticamente un HBox contenente:
-     * - Icona (StackPane con cerchio e emoji).
-     * - Oggetto e Destinatario.
-     * - Data di invio formattata.
-     * * @param mail Oggetto `EmailInfo` contenente i dati dell'email da visualizzare.
-     */
+    
+//metodo che crea una riga grafica (una mail)
+/**
+ * @brief Crea e aggiunge la card di una singola email alla lista.
+ *
+ * Costruisce programmaticamente un HBox contenente:
+ * - Icona (StackPane con cerchio e emoji 📤)
+ * - Oggetto e Destinatario dell'email
+ * - Data di invio formattata
+ *
+ * @param mail Oggetto `EmailInfo` contenente i dati dell'email da visualizzare.
+ */
     private void aggiungiCardEmail(EmailInfo mail) {
         // Riga card
         HBox riga = new HBox(); //elementi disposti in orizzontale

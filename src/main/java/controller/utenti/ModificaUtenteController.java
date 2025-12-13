@@ -14,12 +14,21 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 /**
- * @brief Controller per la modifica dei dati di un utente esistente.
- * * Questa classe gestisce il form per aggiornare le informazioni personali
- * (Nome, Cognome, Email) di uno studente già registrato.
- * La matricola non è modificabile e viene passata staticamente prima dell'apertura della finestra.
- * * @author gruppo22
- * @version 1.0
+ * @brief Controller per la gestione della finestra di modifica dei dati di un utente esistente.
+ *
+ * Questa classe gestisce l'interfaccia grafica per aggiornare le informazioni personali
+ * di un utente già registrato (Nome, Cognome e Email). La matricola non è modificabile
+ * e viene passata come variabile statica prima dell'apertura della finestra.
+ *
+ * La logica include:
+ * - Validazione dei campi Nome e Cognome (non vuoti)
+ * - Controllo del formato della mail tramite la classe ControlloFormato
+ * - Aggiornamento dei dati dell'utente nel database
+ * - Notifica all'utente tramite alert grafici in caso di errore o conferma
+ *
+ * Tutti gli alert sono stilizzati con un CSS personalizzato.
+ * 
+ * @author gruppo22
  */
 public class ModificaUtenteController {//controller che gestisce la finestra per modificare i dati di un utente
     
@@ -43,18 +52,20 @@ public class ModificaUtenteController {//controller che gestisce la finestra per
     
     public static String matricola; //serve per sapere quale utente aggiornare dopo aver premuto modifica nella tabella utenti 
  
-    @FXML
-        /**
-     * @brief Inizializza il controller.
-     * * Questo metodo viene chiamato all'apertura della finestra.
+    
+     /**
+     * @brief Metodo chiamato all'apertura della finestra per inizializzare il controller.
+     *
+     * Questo metodo esegue le seguenti operazioni:
      * 1. Imposta il testo della label matricola usando la variabile statica.
-     * 2. Configura il tasto **Annulla** per chiudere lo stage.
-     * 3. Configura il tasto **Salva** con la logica di validazione:
-     * - Verifica che nome e cognome non siano vuoti.
-     * - Verifica il formato dell'email.
-     * - Se i dati sono validi, chiama `Model.DataBase.ModifyUser`.
-     * - Mostra un Alert di conferma e chiude la finestra.
+     * 2. Configura il pulsante "Annulla" per chiudere lo stage senza salvare modifiche.
+     * 3. Configura il pulsante "Salva" con la logica di validazione e aggiornamento:
+     *    - Verifica che nome e cognome non siano vuoti.
+     *    - Controlla che l'email abbia un formato valido.
+     *    - Aggiorna i dati nel database se tutte le verifiche sono superate.
+     *    - Mostra un alert di conferma e chiude la finestra.
      */
+    @FXML
     public void initialize(){
         lblMatricola.setText(matricola);
         btnAnnulla.setOnAction(eh->{Stage s =(Stage) btnAnnulla.getScene().getWindow();s.close();}); //bottone "Annulla" chiude la finestra

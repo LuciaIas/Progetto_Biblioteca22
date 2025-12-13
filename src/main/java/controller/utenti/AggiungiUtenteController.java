@@ -18,14 +18,15 @@ import javafx.stage.Stage;
 
 /**
  * @brief Controller per la registrazione di un nuovo Utente.
- * * Questa classe gestisce il form per l'inserimento di un nuovo studente nel sistema.
- * Include validazioni per:
- * - Matricola (formato e unicità).
- * - Campi 0Nome, Cognome.
- * - Formato Email.
- * - Limite massimo di utenti registrabili.
- * * @author GRUPPO22
- * @version 1.0
+ *
+ * Gestisce il form per l'inserimento di un nuovo utente nel sistema.
+ * Validazioni effettuate:
+ * - Matricola (10 cifre, numerica, unica)
+ * - Nome e Cognome non vuoti
+ * - Email formato valido
+ * - Limite massimo utenti registrabili
+ * 
+ * @author GRUPPO22
  */
 public class AggiungiUtenteController {//controller associato alla finestra "Aggiungi Utente"
     
@@ -47,26 +48,33 @@ public class AggiungiUtenteController {//controller associato alla finestra "Agg
     @FXML
     private Button SalvaButton; //pulsante "Salva"
     
-    @FXML
-
-     /**
-     * @brief Inizializza il controller.
-     * Viene chiamato all'apertura della finestra. Configura i listener dei pulsanti.
+    
+    /**
+     * @brief Metodo chiamato automaticamente all'inizializzazione del controller.
+     *
+     * Qui vengono configurati i listener dei pulsanti "Salva" e "Annulla",
+     * associando a ciascuno la logica appropriata.
      */
+    @FXML
     public void initialize(){
         buttonInitialize(); //richiamo la configurazione dei pulsanti 
     }
     
     //configurazione dei bottoni
-     /**
-     * @brief Configura la logica dei pulsanti "Salva" e "Annulla".
-     * * Dettaglio logica **SalvaButton**:
-     * 1. **Validazione Matricola:** Controlla lunghezza (10 cifre) e formato numerico.
-     * 2. **Validazione Nome/Cognome:** Verifica che non siano vuoti.
-     * 3. **Validazione Email:** Verifica il formato standard tramite `Model.CheckFormat`.
-     * 4. **Controllo Duplicati:** Verifica che la matricola non esista già nel DB.
-     * 5. **Inserimento:** Aggiunge l'utente al Database.
-     * 6. **Controllo Limiti:** Se il numero totale di utenti supera `MAX_USERS`, mostra un avviso e chiude la finestra.
+    /**
+     * @brief Configura i pulsanti della finestra "Aggiungi Utente".
+     *
+     * - AnnullaButton: chiude la finestra senza salvare nulla.
+     * - SalvaButton: avvia una serie di controlli sui campi inseriti e, se tutti
+     *   passano, crea un nuovo utente e lo aggiunge al database.
+     *
+     * La logica del pulsante Salva include:
+     * 1. Validazione della matricola (lunghezza e formato numerico)
+     * 2. Controllo che nome e cognome non siano vuoti
+     * 3. Verifica del formato della mail
+     * 4. Controllo che la matricola non sia già presente nel database
+     * 5. Inserimento del nuovo utente nel database
+     * 6. Controllo se il numero massimo di utenti è stato raggiunto e gestione dell'alert finale
      */
     public void buttonInitialize(){
         AnnullaButton.setOnAction(eh->{Stage s = (Stage) AnnullaButton.getScene().getWindow();s.close();});

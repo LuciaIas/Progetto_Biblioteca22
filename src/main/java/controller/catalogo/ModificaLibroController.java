@@ -32,12 +32,15 @@ import javafx.stage.Stage;
 
 /**
  * @brief Controller per la modifica di un libro esistente.
- * * Questa classe gestisce il form per aggiornare i dati di un libro già presente nel database.
- * Si occupa del pre-caricamento dei dati esistenti (inclusa la gestione complessa delle immagini
- * da risorse o file system), della modifica degli autori (selezione multipla o aggiunta nuovi)
- * e del salvataggio delle modifiche nel Database.
- * * @author gruppo22
- * @version 1.0
+ *
+ * Gestisce il form per aggiornare i dati di un libro già presente nel database.
+ * Include:
+ * - Pre-caricamento dei dati esistenti (titolo, editore, anno, copie, autori, copertina).
+ * - Gestione complessa delle immagini da risorse o file system.
+ * - Modifica autori esistenti o aggiunta di nuovi autori.
+ * - Salvataggio delle modifiche nel database con conferma tramite Alert.
+ * 
+ * @author gruppo22
  */
 public class ModificaLibroController {
     @FXML
@@ -75,26 +78,26 @@ public class ModificaLibroController {
     private Libro lib;// Oggetto libro corrente
     private String urlIM=null;// Percorso immagine copertina
    
-    @FXML
      /**
      * @brief Inizializza il controller.
-     * Recupera il libro dal database usando l'ISBN statico, e popola il form
-     * con i dati attuali tramite `SettingForm`.
+     *
+     * Recupera il libro dal database usando l'ISBN statico e popola il form con i dati correnti
+     * tramite il metodo `settingForm`.
      */
+    @FXML
     public void initialize(){
         lib = DataBase.cercaLibro(isbn); // Recuperoil libro dal database usando l'ISBN e imposta il form
         settingForm();       
     }
     
-        /**
+    /**
      * @brief Popola il form con i dati del libro caricato.
-     * * Esegue le seguenti operazioni:
-     * 1. **Caricamento Immagine Robusto:** Tenta di caricare l'immagine da risorse interne (JAR).
-     * Se fallisce, prova dal file system locale aggiungendo il prefisso "file:".
-     * Se fallisce ancora, carica un'immagine di default.
-     * 2. **Impostazione Testi:** Riempie titolo ed editore.
-     * 3. **Gestione Autori:** Chiama UpdateAutori per pre-selezionare gli autori attuali.
-     * 4. **Inizializzazione Spinner:** Configura i range di valori.
+     *
+     * Esegue le seguenti operazioni:
+     * 1. Caricamento immagine robusto da risorse interne o file system; fallback default.
+     * 2. Impostazione testi (titolo, editore).
+     * 3. Gestione autori con `updateAutori`.
+     * 4. Inizializzazione degli Spinner (anno e copie).
      */
     public void settingForm(){
         Image img = null;// Imposto immagine copertina
@@ -140,16 +143,13 @@ public class ModificaLibroController {
         buttonInitialize();       
     }
     
-    
-     /**
-     * @brief Configura le azioni dei pulsanti (Scegli File, Rimuovi Copertina, Salva, Annulla).
-     * * Dettaglio logica **SalvaButton**:
-     * 1. Scorre tutti gli elementi del `menuAutori`.
-     * 2. Se l'elemento è una CheckBox selezionata, aggiunge l'autore esistente alla lista.
-     * 3. Se l'elemento è un TextField compilato, crea un nuovo oggetto `Autore` e lo aggiunge al DB.
-     * 4. Crea un oggetto `Libro` temporaneo con i nuovi dati.
-     * 5. Chiama `DataBase.ModifyBook` per aggiornare il record.
-     * 6. Mostra un Alert di successo o fallimento.
+    /**
+     * @brief Configura le azioni dei pulsanti del form.
+     *
+     * - `ScegliFileButton`: seleziona una nuova copertina dal file system.
+     * - `RimuoviCopButton`: ripristina immagine default.
+     * - `AnnullaButton`: chiude il form senza salvare.
+     * - `SalvaButton`: salva le modifiche nel database, creando eventualmente nuovi autori.
      */
     public void buttonInitialize(){ 
         
@@ -258,12 +258,15 @@ public class ModificaLibroController {
     }
     
     //AGGIORNAMENTO AUTORI
-     /**
+
+    /**
      * @brief Aggiorna il menu degli autori.
+     *
      * Popola il MenuButton con:
-     * 1. Una lista di CheckBox per tutti gli autori presenti nel database (pre-selezionando quelli del libro corrente).
-     * 2. Una serie di TextField vuoti per permettere l'inserimento di nuovi autori non in lista.
-     * * @param aut Lista degli autori attualmente associati al libro (per spuntare le checkbox corrette).
+     * 1. CheckBox per tutti gli autori presenti nel database (pre-selezionando quelli del libro corrente).
+     * 2. TextField vuoti per inserire nuovi autori.
+     *
+     * @param aut Lista degli autori già associati al libro (per selezionare le checkbox corrette)
      */
     public void updateAutori(ArrayList<Autore> aut){  // Ricarico menu autori con quelli disponibili e seleziono quelli già assegnati
         ArrayList<Autore> autori = model.servizi.DataBase.getAutori();
@@ -290,9 +293,12 @@ public class ModificaLibroController {
         menuAutori.getItems().addAll(altro);
     }
 
-     /**
-     * @brief Inizializza i valori degli Spinner.
-     * Imposta i range per l'anno di pubblicazione (1500-2100) e il numero di copie (0-500).
+
+    /**
+     * @brief Inizializza gli Spinner del form.
+     *
+     * - Anno di pubblicazione: 1500-2100
+     * - Numero di copie: 0-500
      */
     private void spinnerInitialize() {
         // Spinner anno di pubblicazione: da 1500 a 2100

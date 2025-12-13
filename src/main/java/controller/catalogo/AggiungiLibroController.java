@@ -34,11 +34,13 @@ import model.Configurazione;
 
 /**
  * @brief Controller per l'aggiunta di un nuovo libro al catalogo.
- * * Questa classe gestisce il form di inserimento dati per nuovi libri.
- * Include validazioni specifiche per l'ISBN, gestione dinamica degli autori
- * e caricamento immagine di copertina.
- * * @author gruppo22
- * @version 1.0
+ *
+ * Gestisce il form di inserimento dati per nuovi libri, con:
+ * - Validazioni specifiche per l'ISBN.
+ * - Gestione dinamica degli autori.
+ * - Caricamento immagine di copertina.
+ * 
+ * @author gruppo22
  */
 public class AggiungiLibroController {
     
@@ -86,17 +88,21 @@ public class AggiungiLibroController {
     // VARIABILI
     private String urlIM=null; // path della copertina (di default null)
    
-    @FXML
-     /**
-     * @brief Inizializza il form.
-     * Viene chiamato all'apertura della finestra.
+    
+    /**
+     * @brief Inizializza il controller.
+     *
+     * Viene chiamato automaticamente all'apertura della finestra.
+     * Imposta immagine di default, menu autori, spinner e bottoni.
      */
+    @FXML
     public void initialize(){//Configura il form con immagine di default, autori, spinner e bottoni.
         settingForm();      
     }
     
-     /**
+    /**
      * @brief Imposta lo stato iniziale del form.
+     *
      * Carica l'immagine di default, popola il menu autori e inizializza gli spinner.
      */
     public void settingForm(){
@@ -108,10 +114,14 @@ public class AggiungiLibroController {
         buttonInitialize();   
     }
     
-     /**
-     * @brief Configura la logica di tutti i pulsanti.
-     * Gestisce il caricamento file, il reset dell'immagine, l'annullamento e il salvataggio
-     * con tutte le relative validazioni (ISBN, Autori, Limiti DB).
+    /**
+     * @brief Configura le azioni dei pulsanti.
+     *
+     * Gestisce:
+     * - Selezione e caricamento copertina.
+     * - Reset copertina.
+     * - Chiusura form.
+     * - Salvataggio libro con validazioni.
      */
     public void buttonInitialize(){
         ScegliFileButton.setOnAction(eh->{  // SELEZIONE FILE COPERTINA    
@@ -299,9 +309,10 @@ public class AggiungiLibroController {
                 
     }
     
-     /**
+    /**
      * @brief Aggiorna la lista degli autori nel MenuButton.
-     * Crea checkbox per gli autori esistenti e campi di testo per i nuovi.
+     *
+     * Crea checkbox per gli autori esistenti e campi per nuovi autori.
      */
     public void updateAutori(){ //AGGIORNAMENTO AUTORI
         ArrayList<Autore> autori = model.servizi.DataBase.getAutori();
@@ -323,8 +334,11 @@ public class AggiungiLibroController {
     }
 
     
-     /**
-     * @brief Inizializza i valori e i range degli Spinner (Anno tra 1500-2100 e Copie tra 0-500).
+    /**
+     * @brief Inizializza i valori e i range degli Spinner.
+     *
+     * - `spinAnno`: da 1500 a 2100, default 2024
+     * - `spinCopie`: da 0 a 500, default 0
      */
     private void spinnerInitialize() { 
         SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1500, 2100, 2024, 1);//spinAnno: da 1500 a 2100, default 2024

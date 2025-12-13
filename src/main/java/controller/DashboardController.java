@@ -34,17 +34,17 @@ import javafx.stage.Stage;
 import main.Main;
 
 
-
 /**
  * @brief Controller principale della Dashboard.
- * * Questa classe gestisce la schermata principale dell'applicazione (Dashboard).
+ *
+ * Questa classe gestisce la schermata principale dell'applicazione (Dashboard).
  * Si occupa di:
- * - Navigazione tra le varie sezioni (Catalogo, Utenti, Prestiti, Blacklist, Mail).
- * - Visualizzazione delle statistiche in tempo reale (numero libri, prestiti attivi, utenti, ritardi).
- * - Gestione delle funzionalità di sistema (Logout, Backup, Modifica Password), resi presenti in tutte le sezioni.
- * - Gestione del lancio delle varie sezione sulla destra della sidebar.
- * * @author gruppo22
- * @version 1.0
+ * - Navigazione tra le varie sezioni (Catalogo, Utenti, Prestiti, Blacklist, Mail)
+ * - Visualizzazione delle statistiche in tempo reale (numero libri, prestiti attivi, utenti, ritardi)
+ * - Gestione delle funzionalità di sistema (Logout, Backup, Modifica Password)
+ * - Gestione del caricamento delle varie sezioni nel BorderPane centrale
+ *
+ * @author gruppo22
  */
 public class DashboardController {//Controller che gestisce la dashboard (navigazione, pulsanti menu, backup e logout)
      
@@ -94,29 +94,33 @@ public class DashboardController {//Controller che gestisce la dashboard (naviga
     private Button modPassButton; //bottone per modificare la password dell'utente/bibliotecario
     @FXML
     private Button BackupButton; //bottone per eseguire il backup dei dati della biblioteca
-      
+     
+    
+/**
+ * @brief Metodo di inizializzazione del controller.
+ *
+ * Viene chiamato automaticamente al caricamento della view.
+ * Inizializza la lista dei bottoni, configura le azioni dei pulsanti (buttonInitialize)
+ * e carica i dati nelle label (labelInitialize).
+ */
     @FXML
-     /**
-     * @brief Inizializza il controller.
-     * Viene chiamato automaticamente al caricamento della view.
-     * Inizializza la lista dei bottoni, configura le azioni (ButtonInitialize)
-     * e carica i dati nelle label (LabelInitialize).
-     */
     public void initialize(){ //inizializza la dashboard impostando lista bottoni e aggiornando label
         menuButtons = Arrays.asList(CatalogoLibriButton,DashboardButton,BLButton,mailButton,utentiButton,PrestitiRestituzioniButton); 
         buttonInitialize();
         labelInitialize(); 
     }
     
+   
     //aggiorna i valori delle etichette (libri, prestiti,utenti,scaduti) leggendo i dati dal database
-        /**
-     * @brief Carica e visualizza le statistiche del sistema.
-     * Interroga il `DataBase` per ottenere:
-     * - Numero totale libri.
-     * - Prestiti attivi (Stato ATTIVO, PROROGATO, IN_RITARDO).
-     * - Numero utenti totali.
-     * - Prestiti specificamente in ritardo.
-     */
+/**
+ * @brief Carica e visualizza le statistiche principali della Dashboard.
+ *
+ * Interroga il `DataBase` per ottenere:
+ * - Numero totale libri
+ * - Prestiti attivi (Stato ATTIVO, PROROGATO, IN_RITARDO)
+ * - Numero utenti totali
+ * - Prestiti in ritardo
+ */
     public void labelInitialize(){
         numLibri.setText(""+DataBase.getCatalogo().getLibri().size());
         int i=0;
@@ -134,17 +138,19 @@ public class DashboardController {//Controller che gestisce la dashboard (naviga
     
     public static Stage PassRec;// finestra usata per modifica password
         
+    
+
     //inizializza e configura tutti i bottoni della dashboard (backup, cambio password, logout e navigazione)
     //associa a ciascun pulsante il caricamento della pagina corrispondente
-        /**
-     * @brief Configura le azioni (EventHandler) per tutti i pulsanti.
-     * Gestisce:
-     * - **Backup:** Apre un DirectoryChooser e chiama `BackupService`.
-     * - **Modifica Password:** Apre un nuovo Stage per inserire la vecchia password.
-     * - **Logout:** Torna alla schermata di Login (`Access.fxml`).
-     * - **Navigazione:** Carica i file FXML relativi (Catalogo, Utenti, ecc.) 
-     * all'interno del HomeBorderPane e aggiorna lo stile del menu.
-     */
+/**
+ * @brief Configura le azioni dei pulsanti principali della Dashboard.
+ *
+ * Gestisce:
+ * - Backup: apre DirectoryChooser e chiama `Backup.eseguiBackup`
+ * - Modifica Password: apre un nuovo Stage per inserire la nuova password
+ * - Logout: torna alla schermata di login
+ * - Navigazione: carica le varie sezioni nel BorderPane centrale e evidenzia il pulsante attivo
+ */
     public void buttonInitialize(){
         
         //backup dati
@@ -271,13 +277,17 @@ public class DashboardController {//Controller che gestisce la dashboard (naviga
         });
     }
     
-    //evidenzio il bottone attivo nel menu laterale rimuovendo gli stili dagli altri pulsanti
-     /**
-     * @brief Gestisce lo stile visivo dei pulsanti della sidebar.
-     * Rimuove la classe CSS "active" da tutti i pulsanti e la assegna solo a quello cliccato.
-     * Questo fornisce un feedback visivo all'utente su quale sezione è attualmente visualizzata.
-     * * @param bottoneAttivo Il pulsante che è stato appena cliccato.
-     */
+    
+//evidenzio il bottone attivo nel menu laterale rimuovendo gli stili dagli altri pulsanti
+/**
+ * @brief Evidenzia il pulsante attivo della sidebar.
+ *
+ * Rimuove la classe CSS "active" da tutti i pulsanti e la assegna solo
+ * al pulsante cliccato. Fornisce un feedback visivo all'utente su quale
+ * sezione è attualmente visualizzata.
+ *
+ * @param bottoneAttivo il pulsante appena cliccato da evidenziare
+ */
     private void evidenziaBottone(Button bottoneAttivo) {
         
        //rimuovo evidenziazione da tutti i bottoni

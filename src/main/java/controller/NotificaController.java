@@ -13,22 +13,26 @@ import javafx.scene.control.Label;
 
 /**
  * @brief Controller per la visualizzazione delle notifiche di ritardo.
- * * Questa classe gestisce una semplice notifica(é una view) che calcola e mostra all'utente
+ *
+ * Questa classe gestisce una semplice notifica (view) che calcola e mostra all'utente
  * il numero totale di prestiti che si trovano attualmente nello stato "IN_RITARDO".
- * * @author gruppo22
- * @version 1.0
+ * Aggiorna dinamicamente una Label con il conteggio e un messaggio di suggerimento.
+ * 
+ * @author gruppo22
  */
 public class NotificaController {//controlla la schermata che mostra le notifiche dei ritardi
     @FXML
     private Label numRit; //label usato per mostrare il numero di prestiti in ritardo
     
-    @FXML
+    
      /**
-     * @brief Inizializza il controller.
+     * @brief Metodo di inizializzazione del controller.
+     *
      * Viene chiamato automaticamente al caricamento della view.
-     * Scorre la lista dei prestiti dal Database, conta quanti sono in stato `IN_RITARDO`
+     * Scorre la lista dei prestiti dal `DataBase`, conta quanti sono in stato `IN_RITARDO`
      * e aggiorna il testo della Label con il conteggio e un messaggio di suggerimento.
      */
+    @FXML
     public void initialize(){//metodo chiamato automaticamente quando la finestra viene caricata 
             int i=0;         
             for(Prestito p : DataBase.getPrestiti()) //scorro tutti i prestiti

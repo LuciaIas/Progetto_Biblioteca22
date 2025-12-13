@@ -51,14 +51,15 @@ import model.Configurazione;
 
 /**
  * @brief Controller per la gestione dei Prestiti e delle Restituzioni.
- * * Questa classe gestisce la visualizzazione principale dello storico prestiti.
- * Permette di:
- * - Filtrare i prestiti per stato (In corso, In ritardo, Storico/Restituiti).
- * - Cercare prestiti per Utente o Libro.
- * - Creare nuovi prestiti (con gestione del limite massimo di record).
- * - Eseguire azioni sui prestiti esistenti (Proroga, Restituzione, Invio Email di sollecito).
- * * @author gruppo22
- * @version 1.0
+ *
+ * Gestisce la visualizzazione dello storico prestiti e le azioni su ciascun prestito.
+ * Funzionalità principali:
+ * - Filtraggio prestiti per stato (In corso, In ritardo, Storico/Restituiti)
+ * - Ricerca prestiti per ISBN, titolo libro, matricola, nome o cognome utente
+ * - Creazione di nuovi prestiti con gestione del limite massimo
+ * - Azioni sui prestiti esistenti: Proroga, Restituzione, Invio Email di sollecito
+ * 
+ * @author gruppo22
  */
 public class PrestitoRestituzioneController {   
     @FXML
@@ -78,11 +79,12 @@ public class PrestitoRestituzioneController {
     
     public static final int MAX_LOAN = Configurazione.getMaxLoans();
     
-    @FXML
-     /**
+    /**
      * @brief Inizializza il controller.
-     * Calcola il numero di prestiti attivi, carica la lista iniziale e configura i listener.
+     *
+     * Calcola il numero di prestiti attivi, carica la lista iniziale e configura pulsanti e filtri.
      */
+    @FXML
     public void initialize(){
       int n=  Prestito.getPrestitiByStato(DataBase.getPrestiti(), ATTIVO).size()+Prestito.getPrestitiByStato(DataBase.getPrestiti(), Stato.IN_RITARDO).size()
               +Prestito.getPrestitiByStato(DataBase.getPrestiti(), Stato.PROROGATO).size();
@@ -94,13 +96,14 @@ public class PrestitoRestituzioneController {
     }
     
     
-     /**
-     * @brief Configura il MenuButton per i filtri e la Barra di Ricerca.
-     * * Definisce le azioni per i menu item:
-     * - "Tutti i prestiti": Mostra tutto.
-     * - "Solo in corso": Mostra Attivi, In Ritardo e Prorogati.
-     * - "Solo in ritardo": Mostra solo i ritardi.
-     * - "Restituiti(Storico)": Mostra solo quelli conclusi.
+    /**
+     * @brief Configura il MenuButton e la barra di ricerca.
+     *
+     * Filtri disponibili:
+     * - Tutti i prestiti
+     * - Solo in corso
+     * - Solo in ritardo
+     * - Restituiti (storico)
      */
     public void menuButtonInitialize(){   
         FilterButton.getItems().clear();// Pulizia menu
@@ -150,8 +153,8 @@ public class PrestitoRestituzioneController {
     
     /**
      * @brief Esegue la logica di ricerca sui prestiti.
-     * Filtra la lista controllando se il testo cercato corrisponde a:
-     * ISBN, Titolo Libro, Matricola, Nome Utente o Cognome Utente.
+     *
+     * Filtra prestiti per ISBN, titolo libro, matricola, nome o cognome utente.
      */
     public void searchFunction(){// Funzione ricerca prestiti
     
@@ -172,14 +175,11 @@ public class PrestitoRestituzioneController {
     }
     
     
-     /**
-     * @brief Configura il bottone "Nuovo Prestito".
-     * * Contiene una logica importante per la gestione della memoria (`MAX_LOAN`):
-     * 1. Controlla se il numero totale di prestiti supera il limite massimo.
-     * 2. Se superato, verifica se ci sono prestiti "Restituiti" che possono essere archiviati/cancellati.
-     * 3. Se possibile, chiede conferma all'utente e cancella i vecchi prestiti restituiti (FIFO).
-     * 4. Se non è possibile fare spazio (troppi prestiti attivi), blocca l'operazione.
-     * 5. Se c'è spazio, apre la finestra `addPrestito.fxml` per assegnare il prestito desiderato.
+    /**
+     * @brief Configura il pulsante "Nuovo Prestito".
+     *
+     * Gestisce il limite massimo di record in memoria (MAX_LOAN).
+     * Apre il form per aggiungere un nuovo prestito se possibile.
      */
     public void buttonInitialize(){ // Gestione pulsante nuovo prestito  
         NewLoanButton.setOnAction(eh->{        
@@ -252,10 +252,10 @@ public class PrestitoRestituzioneController {
     
     }
     
-     /**
+    /**
      * @brief Aggiorna la lista visuale dei prestiti.
-     * Svuota il container e ricrea le card per ogni prestito della lista fornita.
-     * * @param p1 Lista dei prestiti da visualizzare.
+     *
+     * @param p1 Lista dei prestiti da visualizzare.
      */
     public void updatePrestiti(ArrayList<Prestito> p1){// Aggiorno lista prestiti sullo schermo
     loansContainer.getChildren().clear(); // Pulizia container
@@ -268,21 +268,15 @@ public class PrestitoRestituzioneController {
     
     
     
-     /**
-     * @brief Crea una card per un singolo prestito.
-     * * Genera un HBox contenente:
-     * - Icona di stato.
-     * - Dati Libro (Titolo, ISBN).
-     * - Dati Utente (Nome, Matricola).
-     * - Data Scadenza (colorata in rosso se in ritardo).
-     * - Badge di Stato (colorato dinamicamente).
-     * - Pulsanti Azione (Proroga, Restituisci, Email) che appaiono in base allo stato del prestito.
-     * * @param titoloLibro Titolo del libro.
+    /**
+     * @brief Crea una card per un singolo prestito con tutte le azioni disponibili.
+     *
+     * @param titoloLibro Titolo del libro.
      * @param isbn ISBN del libro.
-     * @param nomeUtente Nome dell'utente.
-     * @param matricola Matricola dell'utente.
-     * @param dataScadenza Data di scadenza in formato stringa.
-     * @param statoEnum Stato corrente del prestito (ATTIVO, IN_RITARDO, ecc.).
+     * @param nomeUtente Nome utente.
+     * @param matricola Matricola utente.
+     * @param dataScadenza Data scadenza.
+     * @param statoEnum Stato del prestito.
      */
 private void aggiungiRigaPrestito(String titoloLibro, String isbn, String nomeUtente, String matricola, String dataScadenza, Stato statoEnum) {    
     Utente u = DataBase.cercaUtente(matricola);

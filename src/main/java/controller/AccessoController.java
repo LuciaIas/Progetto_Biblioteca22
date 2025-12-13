@@ -22,19 +22,22 @@ import javafx.util.Duration;
 import main.Main;
 
 
-
 /**
  * @brief Controller per la gestione dell'autenticazione.
- * * Questa classe gestisce l'interfaccia di Login e Registrazione.
- * Implementa un meccanismo di "Sliding" (scorrimento) per passare da un form all'altro
- * all'interno della stessa finestra. Gestisce inoltre:
- * - Validazione delle password (complessità e corrispondenza).
- * - Visibilità della password (show/hide).
- * - Connessione al Database per login e registrazione.
- * - Transizione verso la Dashboard principale.
- * * @author gruppo22
- * @version 1.0
+ *
+ * Questa classe gestisce l'interfaccia di Login e Registrazione.
+ * Implementa un meccanismo di scorrimento (sliding) per passare
+ * da un form all'altro nella stessa finestra.
+ *
+ * Gestisce inoltre:
+ * - validazione delle password
+ * - gestione della visibilità della password
+ * - connessione al database per login e registrazione
+ * - transizione verso la dashboard principale
+ *
+ * @author gruppo22
  */
+
 public class AccessoController {//Controller per eseguire login e registrazione
     
     //Sliding fxml
@@ -92,31 +95,29 @@ public class AccessoController {//Controller per eseguire login e registrazione
     @FXML 
     private CheckBox CheckShowPassLogin;// checkbox per mostrare/nascondere password
 
-   
+    
+ /**
+ * @brief Inizializza il controller.
+ *
+ * Viene chiamato automaticamente da JavaFX dopo il caricamento dell'FXML
+ * e inizializza bottoni e checkbox.
+ */
     @FXML
-     /** * @brief Metodo di inizializzazione del controller.
-     * Viene chiamato automaticamente da JavaFX dopo il caricamento dell'FXML.
-     * Inizializza la logica dei bottoni e delle checkbox.
-     */
     public void initialize(){ // Inizializzazione controller. Configura bottoni e checkbox
         buttonInitialize();
         checkboxInitialize();
     }
 
-     // --- INITIALIZATION BUTTON AND CHECKBOX ACTION ---
     
-    /** * @brief Configura le azioni dei pulsanti principali.
-     * * Questo metodo contiene la logica più della classe:
-     * 1. **SlidingButton:** Gestisce l'animazione, la pulizia dei form e l'effetto macchina da scrivere della label.
-     * 2. **RegisterButton:** * - Gestisce i campi testo/password.
-     * - Sincronizza i campi per mostrare/nascondere la password
-     * - Valida il formato della password (CheckPasswordFormat).
-     * - Controlla che le password coincidano.
-     * - Tenta l'inserimento nel DB e gestisce gli Alert di successo/errore.
-     * 3. **LoginButton:**
-     * - Sincronizza i campi per mostrare/nascondere la password.
-     * - Verifica le credenziali nel DB.
-     * - Se corretto, effettua il cambio scena verso la Dashboard.
+    /**
+     * @brief Configura le azioni dei pulsanti principali.
+     *
+     * Gestisce:
+     * - l'animazione di scorrimento tra Login e Registrazione
+     * - la pulizia dei form
+     * - la validazione delle password
+     * - le operazioni di login e registrazione
+     * - il cambio scena verso la dashboard
      */
     public void buttonInitialize(){ //Configura le azioni dei bottoni e lo sliding tra i form
  
@@ -250,20 +251,24 @@ public class AccessoController {//Controller per eseguire login e registrazione
         }); 
     }
     
-     /** * @brief Inizializza i listener per le CheckBox "Mostra Password".
-     * Collega l'evento di selezione al metodo `ShowPassword` per alternare
-     * la visibilità tra TextField e PasswordField.
-     */
+    /**
+ * @brief Inizializza i listener delle checkbox "Mostra Password".
+ *
+ * Collega gli eventi delle checkbox ai metodi che alternano
+ * la visibilità dei campi password nei form Login e Registrazione.
+ */
     public void checkboxInitialize(){// Configura le checkbox per mostrare/nascondere password
         CheckShowPassLogin.setOnAction(eh->{if(CheckShowPassLogin.isSelected())  showPassword(true,true); else showPassword(false,true); });
         CheckShowPassRegister.setOnAction(eh->{if(CheckShowPassRegister.isSelected()) showPassword(true,false); else showPassword(false,false); });
     }
     
-        /** * @brief Configura le transizioni per l'effetto Sliding.
-     * Prepara gli oggetti `TranslateTransition`(effetto sliding) per spostare i pannelli `Sliding`
-     * e `RegisterForm`. Viene richiamato ricorsivamente al termine di ogni animazione per reimpostare
-     * la direzione.
-     */
+/**
+ * @brief Configura le animazioni di scorrimento (Sliding) dei pannelli.
+ *
+ * Prepara gli oggetti TranslateTransition per spostare i pannelli
+ * Sliding e RegisterForm. L'animazione viene aggiornata ricorsivamente
+ * per ripristinare la direzione alla fine di ogni movimento.
+ */
     public void setSliding(){//Imposta le animazioni di sliding dei Pane
         double moving = 325;
       
@@ -287,11 +292,15 @@ public class AccessoController {//Controller per eseguire login e registrazione
         
     }
     
-        /** * @brief Alterna la visibilità della password.
-     * Nasconde il `PasswordField` e mostra il `TextField` (o viceversa) copiando il testo contenuto.
-     * * @param yes Se true, mostra la password in chiaro. Se false, la nasconde.
-     * @param login Se true, agisce sui campi del Login. Se false, su quelli della Registrazione.
-     */
+/**
+ * @brief Alterna la visibilità della password tra PasswordField e TextField.
+ *
+ * Se yes è true, mostra la password in chiaro; se false, la nasconde.
+ * L'azione è applicata ai campi del Login se login è true, al Register Form se false.
+ *
+ * @param yes true per mostrare la password, false per nasconderla
+ * @param login true se si applica al Login, false al Register Form
+ */
     public void showPassword(boolean yes,boolean login){//Mostra o nasconde la password nei form login o registrazione
         if(login){
             if(yes){
@@ -326,12 +335,15 @@ public class AccessoController {//Controller per eseguire login e registrazione
             }     
     }
     
-        /** * @brief Pulisce i campi del form.
-     * Viene chiamato quando si passa dalla schermata Login a Register (e viceversa)
-     * per evitare che rimangano dati inseriti precedentemente.
-     * * @param login Se true, pulisce il form di Registrazione (perché stiamo andando al Register form).
-     * Se false, pulisce il form di Login (perché stiamo andando al Login form).
-     */
+    
+/**
+ * @brief Pulisce i campi del form Login o Registrazione.
+ *
+ * Se login è true, pulisce il form di Registrazione.
+ * Se login è false, pulisce il form di Login.
+ *
+ * @param login indica quale form pulire (true = Register, false = Login)
+ */
     public void cleanForm(boolean login){//Pulisce i form di login o registrazione     
         if(login){
             PassRegister.clear();
@@ -347,11 +359,14 @@ public class AccessoController {//Controller per eseguire login e registrazione
     }
       
     
-     /** * @brief Applica un effetto "macchina da scrivere" a una Label.
-     * Scrive il testo carattere per carattere utilizzando una Timeline.
-     * * @param label La label a cui applicare l'effetto.
-     * @param text Il testo da visualizzare.
-     */
+/**
+ * @brief Applica un effetto "macchina da scrivere" su una Label.
+ *
+ * Scrive il testo carattere per carattere utilizzando una Timeline.
+ *
+ * @param label la Label su cui applicare l'effetto
+ * @param text il testo da visualizzare
+ */
     private void typewriterEffectLabel(Label label, String text) {//Effetto "macchina da scrivere" per label
     label.setText("");
     Timeline timeline = new Timeline();   
@@ -368,11 +383,14 @@ public class AccessoController {//Controller per eseguire login e registrazione
     timeline.play();
 }
  
-    /** * @brief Applica un effetto "macchina da scrivere" a una Label.
-     * Scrive il testo carattere per carattere utilizzando una Timeline.
-     * * @param label La label a cui applicare l'effetto.
-     * @param text Il testo da visualizzare.
-     */
+/**
+ * @brief Applica un effetto "macchina da scrivere" su un Button.
+ *
+ * Scrive il testo carattere per carattere utilizzando una Timeline.
+ *
+ * @param b il Button su cui applicare l'effetto
+ * @param text il testo da visualizzare
+ */
     private void typewriterEffectButton(Button b, String text) {//Effetto "macchina da scrivere" per button
     b.setText("");
     Timeline timeline = new Timeline();    
