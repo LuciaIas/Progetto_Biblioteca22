@@ -1,0 +1,58 @@
+var hierarchy =
+[
+    [ "controller.AccessoController", "classcontroller_1_1_accesso_controller.html", null ],
+    [ "controller.catalogo.AggiungiLibroController", "classcontroller_1_1catalogo_1_1_aggiungi_libro_controller.html", null ],
+    [ "controller.prestitorestituzione.AggiungiPrestitoController", "classcontroller_1_1prestitorestituzione_1_1_aggiungi_prestito_controller.html", null ],
+    [ "controller.utenti.AggiungiUtenteController", "classcontroller_1_1utenti_1_1_aggiungi_utente_controller.html", null ],
+    [ "Application", null, [
+      [ "main.Main", "classmain_1_1_main.html", null ]
+    ] ],
+    [ "ApplicationTest", null, [
+      [ "controller.AccessoControllerTest", "classcontroller_1_1_accesso_controller_test.html", null ],
+      [ "controller.BlacklistControllerTest", "classcontroller_1_1_blacklist_controller_test.html", null ],
+      [ "controller.DashboardControllerTest", "classcontroller_1_1_dashboard_controller_test.html", null ],
+      [ "controller.NotificaControllerTest", "classcontroller_1_1_notifica_controller_test.html", null ]
+    ] ],
+    [ "model.dataclass.Autore", "classmodel_1_1dataclass_1_1_autore.html", null ],
+    [ "model.dataclass.AutoreTest", "classmodel_1_1dataclass_1_1_autore_test.html", null ],
+    [ "model.servizi.Backup", "classmodel_1_1servizi_1_1_backup.html", null ],
+    [ "model.servizi.BackupTest", "classmodel_1_1servizi_1_1_backup_test.html", null ],
+    [ "controller.BlacklistController", "classcontroller_1_1_blacklist_controller.html", null ],
+    [ "controller.modificapassword.CambioPasswordController", "classcontroller_1_1modificapassword_1_1_cambio_password_controller.html", null ],
+    [ "model.servizi.Catalogo", "classmodel_1_1servizi_1_1_catalogo.html", null ],
+    [ "controller.catalogo.CatalogoController", "classcontroller_1_1catalogo_1_1_catalogo_controller.html", null ],
+    [ "model.servizi.CatalogoTest", "classmodel_1_1servizi_1_1_catalogo_test.html", null ],
+    [ "Comparable", null, [
+      [ "model.dataclass.Libro", "classmodel_1_1dataclass_1_1_libro.html", null ]
+    ] ],
+    [ "model.Configurazione", "classmodel_1_1_configurazione.html", null ],
+    [ "model.ConfigurazioneTest", "classmodel_1_1_configurazione_test.html", null ],
+    [ "model.servizi.ControlloFormato", "classmodel_1_1servizi_1_1_controllo_formato.html", null ],
+    [ "model.servizi.ControlloFormatoTest", "classmodel_1_1servizi_1_1_controllo_formato_test.html", null ],
+    [ "controller.DashboardController", "classcontroller_1_1_dashboard_controller.html", null ],
+    [ "model.servizi.DataBase", "classmodel_1_1servizi_1_1_data_base.html", null ],
+    [ "model.servizi.DataBaseTest", "classmodel_1_1servizi_1_1_data_base_test.html", null ],
+    [ "model.dataclass.EmailInfo", "classmodel_1_1dataclass_1_1_email_info.html", null ],
+    [ "model.dataclass.EmailInfoTest", "classmodel_1_1dataclass_1_1_email_info_test.html", null ],
+    [ "model.servizi.EmailInvia", "classmodel_1_1servizi_1_1_email_invia.html", null ],
+    [ "model.servizi.EmailInviaTest", "classmodel_1_1servizi_1_1_email_invia_test.html", null ],
+    [ "model.servizi.EmailLegge", "classmodel_1_1servizi_1_1_email_legge.html", null ],
+    [ "model.servizi.EmailLeggeTest", "classmodel_1_1servizi_1_1_email_legge_test.html", null ],
+    [ "controller.modificapassword.InserisciPasswordModificaController", "classcontroller_1_1modificapassword_1_1_inserisci_password_modifica_controller.html", null ],
+    [ "model.dataclass.LibroTest", "classmodel_1_1dataclass_1_1_libro_test.html", null ],
+    [ "controller.MailController", "classcontroller_1_1_mail_controller.html", null ],
+    [ "controller.catalogo.ModificaLibroController", "classcontroller_1_1catalogo_1_1_modifica_libro_controller.html", null ],
+    [ "controller.utenti.ModificaUtenteController", "classcontroller_1_1utenti_1_1_modifica_utente_controller.html", null ],
+    [ "controller.NotificaController", "classcontroller_1_1_notifica_controller.html", null ],
+    [ "model.servizi.OperazioniGiornaliere", "classmodel_1_1servizi_1_1_operazioni_giornaliere.html", null ],
+    [ "model.servizi.OperazioniGiornaliereTest", "classmodel_1_1servizi_1_1_operazioni_giornaliere_test.html", null ],
+    [ "model.servizi.Prestito", "classmodel_1_1servizi_1_1_prestito.html", null ],
+    [ "controller.prestitorestituzione.PrestitoRestituzioneController", "classcontroller_1_1prestitorestituzione_1_1_prestito_restituzione_controller.html", null ],
+    [ "model.servizi.PrestitoTest", "classmodel_1_1servizi_1_1_prestito_test.html", null ],
+    [ "model.dataclass.Stato", "enummodel_1_1dataclass_1_1_stato.html", null ],
+    [ "model.TransizioneScena", "classmodel_1_1_transizione_scena.html", null ],
+    [ "model.TransizioneScenaTest", "classmodel_1_1_transizione_scena_test.html", null ],
+    [ "model.dataclass.Utente", "classmodel_1_1dataclass_1_1_utente.html", null ],
+    [ "model.dataclass.UtenteTest", "classmodel_1_1dataclass_1_1_utente_test.html", null ],
+    [ "controller.utenti.UtentiController", "classcontroller_1_1utenti_1_1_utenti_controller.html", null ]
+];

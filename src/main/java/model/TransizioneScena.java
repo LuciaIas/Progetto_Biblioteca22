@@ -5,10 +5,6 @@
  */
 package model;
 
-/**
- *
- * @author gruppo22
- */
 
 import java.io.IOException;
 import javafx.animation.FadeTransition;
@@ -26,8 +22,29 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+/**
+ * @brief Classe di utilità per gestire le transizioni tra scene in JavaFX.
+ * 
+ * Questa classe fornisce metodi statici per cambiare scena in un {@link Stage}
+ * applicando effetti visivi come la dissolvenza.
+ * 
+ * Viene utilizzata per gestire transizioni fluide tra diverse interfacce dell'applicazione.
+ * 
+ * @author gruppo22
+ */
 public class TransizioneScena {
-public static void switchSceneEffect(Stage stage, String fxmlPath) {
+    
+    /**
+     * @brief Cambia la scena corrente di un {@link Stage} con effetto di dissolvenza.
+     * 
+     * Il metodo carica il nuovo FXML, imposta inizialmente l'opacità a 0,
+     * sostituisce la root della scena, centra la finestra e applica
+     * un effetto di fade-in per rendere visibile la nuova scena.
+     * 
+     * @param stage il {@link Stage} su cui applicare la transizione
+     * @param fxmlPath il percorso del file FXML da caricare
+     */    
+    public static void switchSceneEffect(Stage stage, String fxmlPath) {
     try {
         // 1. Carico il nuovo FXML
         FXMLLoader loader = new FXMLLoader(TransizioneScena.class.getResource(fxmlPath));
