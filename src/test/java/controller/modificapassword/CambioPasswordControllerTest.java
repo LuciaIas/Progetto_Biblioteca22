@@ -25,28 +25,21 @@ import static org.testfx.matcher.base.NodeMatchers.isVisible;
 import static org.testfx.matcher.control.TextInputControlMatchers.hasText;
 import static org.testfx.util.WaitForAsyncUtils.waitForFxEvents;
 
-public class CambioPasswordControllerTest extends ApplicationTest {
-
-   
+public class CambioPasswordControllerTest extends ApplicationTest {  
     private static final String H2_URL = "jdbc:h2:mem:testdbPassFinal;DB_CLOSE_DELAY=-1;MODE=MySQL";
     private static final String H2_USER = "sa";
     private static final String H2_PASSWORD = "";
     
     private static Connection h2Connection;
-
  
     @BeforeAll
     public static void initDbInfrastructure() {
         try {
             h2Connection = DriverManager.getConnection(H2_URL, H2_USER, H2_PASSWORD);
             DataBase.conn = h2Connection; 
-
-            Statement stmt = h2Connection.createStatement();
-            
-            
+            Statement stmt = h2Connection.createStatement();                      
             stmt.execute("DROP TABLE IF EXISTS bibliotecario");
             stmt.execute("CREATE TABLE bibliotecario (password_ VARCHAR(100))");
-
         } catch (SQLException e) {
             throw new RuntimeException("Errore critico initDB: " + e.getMessage());
         }
@@ -56,10 +49,8 @@ public class CambioPasswordControllerTest extends ApplicationTest {
     @BeforeEach
     public void resetData() throws SQLException {
         DataBase.conn = h2Connection; 
-        Statement stmt = h2Connection.createStatement();
-        
-        stmt.execute("DELETE FROM bibliotecario");
-     
+        Statement stmt = h2Connection.createStatement();        
+        stmt.execute("DELETE FROM bibliotecario");     
         stmt.execute("INSERT INTO bibliotecario VALUES ('VecchiaPass123')");
     }
 
@@ -70,12 +61,10 @@ public class CambioPasswordControllerTest extends ApplicationTest {
 
     @Override
     public void start(Stage stage) throws IOException, SQLException {
-
         if (h2Connection == null || h2Connection.isClosed()) {
             h2Connection = DriverManager.getConnection(H2_URL, H2_USER, H2_PASSWORD);
         }
         DataBase.conn = h2Connection;
-
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/CambioPassword.fxml"));
         Scene scene = new Scene(loader.load());
         stage.setScene(scene);
@@ -83,91 +72,58 @@ public class CambioPasswordControllerTest extends ApplicationTest {
     }
 
 
-
     @Test
-    public void testMostraNascondiPassword() {
-       
+    public void testMostraNascondiPassword() {       
         clickOn("#NewPass").write("Prova123");
-        clickOn("#ConfirmPass").write("Prova123");
-
-     
+        clickOn("#ConfirmPass").write("Prova123");    
         clickOn("#CheckShowPass");
-        waitForFxEvents();
-
-       
+        waitForFxEvents();      
         verifyThat("#NewPass", isInvisible());
         verifyThat("#NewPassVisible", isVisible());
-        verifyThat("#NewPassVisible", hasText("Prova123")); 
-
-       
-        clickOn("#NewPassVisible").write("!");
-        
-     
+        verifyThat("#NewPassVisible", hasText("Prova123"));       
+        clickOn("#NewPassVisible").write("!");           
         clickOn("#CheckShowPass");
-        
-
         verifyThat("#NewPass", isVisible());
         verifyThat("#NewPass", hasText("Prova123!"));
     }
 
     @Test
-    public void testCampiVuoti() {
-   
+    public void testCampiVuoti() {   
         clickOn("#BtnSalva");
-
-
-        verifyThat("Completa entrambi i campi delle password", isVisible());
-        
+        verifyThat("Completa entrambi i campi delle password", isVisible());        
         clickOn("OK");
     }
 
     @Test
     public void testPasswordNonCorrispondono() {
         clickOn("#NewPass").write("PasswordA");
-        clickOn("#ConfirmPass").write("PasswordB");
-        
+        clickOn("#ConfirmPass").write("PasswordB");       
         clickOn("#BtnSalva");
-
-        verifyThat("Le password non corrispodono", isVisible());
-        
+        verifyThat("Le password non corrispodono", isVisible());       
         clickOn("OK");
     }
 
     @Test
-    public void testFormatoNonValido() {
-    
+    public void testFormatoNonValido() {   
         clickOn("#NewPass").write("ciao");
-        clickOn("#ConfirmPass").write("ciao");
-        
+        clickOn("#ConfirmPass").write("ciao");        
         clickOn("#BtnSalva");
-
-
-        verifyThat("Password non sicura 🔒", isVisible());
-        
+        verifyThat("Password non sicura 🔒", isVisible());        
         clickOn("OK");
     }
 
     @Test
     public void testCambioPasswordConSuccesso() throws SQLException {
-
-        String validPass = "PasswordSuper1!";
-        
+        String validPass = "PasswordSuper1!";        
         clickOn("#NewPass").write(validPass);
-        clickOn("#ConfirmPass").write(validPass);
-        
+        clickOn("#ConfirmPass").write(validPass);       
         clickOn("#BtnSalva");
-        
-
         verifyThat("Password aggiornata", isVisible());
-        verifyThat("Modifica effettuata con successo", isVisible());
-        
+        verifyThat("Modifica effettuata con successo", isVisible());       
         clickOn("OK");
         waitForFxEvents();
-
-
         Statement stmt = h2Connection.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT * FROM bibliotecario");
-        
+        ResultSet rs = stmt.executeQuery("SELECT * FROM bibliotecario");        
         assertTrue(rs.next(), "Deve esserci una riga nel DB");
         assertTrue(DataBase.controllaPasswordBibliotecario(validPass),"La password nel DB deve essere aggiornata");
     }

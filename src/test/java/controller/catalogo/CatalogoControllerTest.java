@@ -27,30 +27,21 @@ import static org.testfx.matcher.control.LabeledMatchers.hasText;
 import static org.testfx.util.WaitForAsyncUtils.waitForFxEvents;
 
 public class CatalogoControllerTest extends ApplicationTest {
-
     private CatalogoController controller;
-    
-
     private static final String H2_URL = "jdbc:h2:mem:testdbCatalogo;DB_CLOSE_DELAY=-1;MODE=MySQL"; 
     private static final String H2_USER = "sa";
-    private static final String H2_PASSWORD = "";
-    
+    private static final String H2_PASSWORD = "";    
     private static Connection h2Connection;
-
 
     @BeforeAll
     public static void initDbInfrastructure() {
         try {
             h2Connection = DriverManager.getConnection(H2_URL, H2_USER, H2_PASSWORD);
             DataBase.conn = h2Connection; 
-
-            Statement stmt = h2Connection.createStatement();
-
-         
+            Statement stmt = h2Connection.createStatement();        
             stmt.execute("DROP TABLE IF EXISTS scritto_da");
             stmt.execute("DROP TABLE IF EXISTS libri");
             stmt.execute("DROP TABLE IF EXISTS autori");
-
            
             stmt.execute("CREATE TABLE autori (" +
                     "id INT AUTO_INCREMENT PRIMARY KEY, " +
@@ -72,7 +63,6 @@ public class CatalogoControllerTest extends ApplicationTest {
                     "id_autore INT, " +
                     "FOREIGN KEY (isbn) REFERENCES libri(isbn) ON DELETE CASCADE, " + 
                     "FOREIGN KEY (id_autore) REFERENCES autori(id))");
-
         } catch (SQLException e) {
             throw new RuntimeException("Errore critico setup H2: " + e.getMessage());
         }
@@ -87,15 +77,12 @@ public class CatalogoControllerTest extends ApplicationTest {
 
  
     @Override
-    public void start(Stage stage) throws IOException, SQLException {
-    
+    public void start(Stage stage) throws IOException, SQLException {   
         if (h2Connection == null || h2Connection.isClosed()) {
              h2Connection = DriverManager.getConnection(H2_URL, H2_USER, H2_PASSWORD);
         }
         DataBase.conn = h2Connection;
-
         resetAndInsertData(h2Connection);
-
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/Catalogo.fxml"));
         Scene scene = new Scene(loader.load());
         controller = loader.getController();
@@ -105,13 +92,11 @@ public class CatalogoControllerTest extends ApplicationTest {
     
 
     private void resetAndInsertData(Connection conn) throws SQLException {
-        Statement stmt = conn.createStatement();
-        
+        Statement stmt = conn.createStatement();       
  
         stmt.execute("DELETE FROM scritto_da");
         stmt.execute("DELETE FROM libri");
-        stmt.execute("DELETE FROM autori");
-        
+        stmt.execute("DELETE FROM autori");       
      
         stmt.execute("INSERT INTO autori (id, nome, cognome, num_opere, data_nascita) VALUES " +
                 "(1, 'J.R.R.', 'Tolkien', 50, '1892-01-03')");
@@ -128,8 +113,7 @@ public class CatalogoControllerTest extends ApplicationTest {
 
     @Test
     public void testVisualizzazioneIniziale() {
-        GridPane grid = lookup("#containerLibri").queryAs(GridPane.class);
-        
+        GridPane grid = lookup("#containerLibri").queryAs(GridPane.class);       
         assertEquals(4, grid.getChildren().size(), "La griglia deve contenere 3 libri + il tasto aggiungi");
     }
 
@@ -138,7 +122,6 @@ public class CatalogoControllerTest extends ApplicationTest {
         clickOn("#searchBar").write("111");
         clickOn("#btnCerca");
         waitForFxEvents(); 
-
         GridPane grid = lookup("#containerLibri").queryAs(GridPane.class);
         assertEquals(2, grid.getChildren().size());
     }
@@ -148,7 +131,6 @@ public class CatalogoControllerTest extends ApplicationTest {
         clickOn("#searchBar").write("Hobbit");
         type(KeyCode.ENTER);
         waitForFxEvents();
-
         GridPane grid = lookup("#containerLibri").queryAs(GridPane.class);
         assertEquals(2, grid.getChildren().size());
     }
@@ -157,19 +139,15 @@ public class CatalogoControllerTest extends ApplicationTest {
     public void testRicercaVuotaReset() {
         clickOn("#searchBar").write("111");
         clickOn("#btnCerca");
-        assertEquals(2, lookup("#containerLibri").queryAs(GridPane.class).getChildren().size());
-        
+        assertEquals(2, lookup("#containerLibri").queryAs(GridPane.class).getChildren().size());        
         clickOn("#searchBar").eraseText(3);
-        waitForFxEvents();
-        
+        waitForFxEvents();        
         assertEquals(4, lookup("#containerLibri").queryAs(GridPane.class).getChildren().size());
     }
     
     @Test
     public void testAggiungiCopia() {
-        GridPane grid = lookup("#containerLibri").queryAs(GridPane.class);
-        
-    
+        GridPane grid = lookup("#containerLibri").queryAs(GridPane.class);          
         Node cardTarget = null;
         for(Node n : grid.getChildren()){
             if(from(n).lookup("Il Signore degli Anelli").tryQuery().isPresent()){
@@ -178,24 +156,17 @@ public class CatalogoControllerTest extends ApplicationTest {
             }
         }
         if(cardTarget==null) throw new AssertionError("Libro non trovato");
-
-        moveTo(cardTarget);
-        
+        moveTo(cardTarget);        
         Node btnPiu = from(cardTarget).lookup(".button").match(hasText("+")).query();
-        clickOn(btnPiu);
-        
-        waitForFxEvents(); 
-        
-        int copieNelDb = DataBase.getNumCopieByIsbn("111");
-        
+        clickOn(btnPiu);        
+        waitForFxEvents();         
+        int copieNelDb = DataBase.getNumCopieByIsbn("111");       
         assertEquals(11, copieNelDb, "Le copie dovrebbero essere passate da 10 a 11");
     }
 
     @Test
     public void testRimuoviCopia() {
-        GridPane grid = lookup("#containerLibri").queryAs(GridPane.class);
-        
-        
+        GridPane grid = lookup("#containerLibri").queryAs(GridPane.class);              
         Node cardTarget = null;
         for(Node n : grid.getChildren()){
             if(from(n).lookup("Lo Hobbit").tryQuery().isPresent()){
@@ -204,16 +175,11 @@ public class CatalogoControllerTest extends ApplicationTest {
             }
         }
         if(cardTarget==null) throw new AssertionError("Libro non trovato");
-
-        moveTo(cardTarget);
-      
+        moveTo(cardTarget);     
         Node btnMeno = from(cardTarget).lookup(".button").match(hasText("-")).query();
-        clickOn(btnMeno);
-        
+        clickOn(btnMeno);       
         waitForFxEvents();
-
-        int copieNelDb = DataBase.getNumCopieByIsbn("222");
-      
+        int copieNelDb = DataBase.getNumCopieByIsbn("222");      
         assertEquals(4, copieNelDb, "Le copie dovrebbero essere passate da 5 a 4");
     }
 
@@ -222,8 +188,6 @@ public class CatalogoControllerTest extends ApplicationTest {
         GridPane grid = lookup("#containerLibri").queryAs(GridPane.class);
         int sizeIniziale = grid.getChildren().size();
         assertEquals(4, sizeIniziale);
-
- 
         Node cardTarget = null;
         for(Node n : grid.getChildren()){
             if(from(n).lookup("Silmarillion").tryQuery().isPresent()){
@@ -232,45 +196,32 @@ public class CatalogoControllerTest extends ApplicationTest {
             }
         }
         if(cardTarget==null) throw new AssertionError("Libro non trovato");
-
         moveTo(cardTarget);
-
         Node btnElimina = from(cardTarget).lookup(".button").match(hasText("Elimina")).query();
-        clickOn(btnElimina);
-
-  
+        clickOn(btnElimina); 
         sleep(1000); 
-        clickOn("OK"); 
-        
-        waitForFxEvents();
-        
-        int sizeFinale = grid.getChildren().size();
-         
+        clickOn("OK");         
+        waitForFxEvents();       
+        int sizeFinale = grid.getChildren().size();         
         assertEquals(false, DataBase.isIsbnPresent("333"), "Il libro 333 deve essere rimosso dal DB");
         assertEquals(sizeIniziale - 1, sizeFinale, "Dovrebbe esserci un libro in meno nella griglia");
     }
     
     @Test
     public void testAperturaFinestraModifica() {
-        GridPane grid = lookup("#containerLibri").queryAs(GridPane.class);
-        
-      
+        GridPane grid = lookup("#containerLibri").queryAs(GridPane.class);            
         Node cardTarget = null;
         for(Node n : grid.getChildren()){
              if(from(n).lookup(".button").match(hasText("Modifica")).tryQuery().isPresent()){
                  cardTarget = n;
                  break;
              }
-        }
-        
+        }        
         moveTo(cardTarget);
-
         Node btnModifica = from(cardTarget).lookup(".button").match(hasText("Modifica")).query();
         clickOn(btnModifica);
-
         Window finestraModifica = window("Modifica Libro");
         verifyThat(finestraModifica, isShowing());
-
         interact(() -> ((Stage) finestraModifica).close());
     }
 }
