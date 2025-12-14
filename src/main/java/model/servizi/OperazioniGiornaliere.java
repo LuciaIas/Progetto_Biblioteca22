@@ -61,7 +61,6 @@ public class OperazioniGiornaliere {
         long ritardoIniziale = calcolaRitardoVersoMezzanotte();    
         long periodo = 24 * 60 * 60; // Periodo di esecuzione: 24 ore (in secondi)  
         
-        // Task giornaliero eseguito a mezzanotte: esegue controlli automatici sui prestiti
         scheduler.scheduleAtFixedRate(() -> {
             try {           
                 eseguiControlliAutomatici(false);               
@@ -71,12 +70,11 @@ public class OperazioniGiornaliere {
         }, ritardoIniziale, periodo, TimeUnit.SECONDS);
         
         long durataSessioneMillis = durataSessione*60*60*1000; // Durata massima della sessione in millisecondi (1 ora) 
-        
-        // Task di monitoraggio sessione utente eseguito ogni 2 secondi 
+
         scheduler.scheduleAtFixedRate(() -> {
             Platform.runLater(() -> {
                 try {
-                    Main.checkClosed(); // Controllo la chiusura della finestra principale
+                    Main.checkClosed(); 
                     if (Main.stage == null || Main.stage.getScene() == null) {// Se lo stage principale non esiste o non ha scene, resetto il timer
                         ultimoResetSessione = System.currentTimeMillis(); 
                         return;
@@ -132,7 +130,7 @@ public class OperazioniGiornaliere {
                     e.printStackTrace();
                 }
             });            
-        }, 0, 2, TimeUnit.SECONDS); // Controllo ogni 2 secondi 
+        }, 0, 2, TimeUnit.SECONDS); 
                  
     }
     

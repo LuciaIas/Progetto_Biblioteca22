@@ -19,7 +19,12 @@ import javafx.stage.Stage;
 import model.Configurazione;
 
 /**
+ * @brief Classe principale dell'applicazione JavaFX.
  *
+ * Avvia la GUI, esegue le operazioni preliminari e gestisce l'apertura e chiusura del servizio.
+ * Inizializza il database e i task automatici di controllo.
+ * Controlla se l'orario corrente rientra nell'orario di servizio.
+ * 
  * @author gruppo22
  */
 public class Main extends Application{
@@ -27,14 +32,26 @@ public class Main extends Application{
     public static Scene s;
     public static Stage stage;  
     
-    //APERTURA E CHIUSURA
+    /** Orario di apertura del servizio */
     public static int[] open_time = Configurazione.getTimeOpen();
+    /** Orario di chiusura del servizio */
     public static int[] close_time = Configurazione.getTimeClose();
     
-    public static void main(String[] args){// Metodo chiamato all'avvio dell'app JavaFX
+    
+     /**
+     * @brief Punto di ingresso dell'applicazione.
+     * 
+     * @param args argomenti da linea di comando (non utilizzati)
+     */
+    public static void main(String[] args){
         launch(args);
     }
-
+    
+    /**
+     * @brief Avvia la GUI principale.
+     * 
+     * Imposta la scena iniziale e mostra il login.
+     */
     @Override
     public void start(Stage stage) throws Exception {
              
@@ -50,21 +67,34 @@ public class Main extends Application{
         PreliminaryFunctions();
     }
     
-    public static void PreliminaryFunctions(){// Metodo di inizializzazione iniziale
+      /**
+     * @brief Esegue operazioni preliminari all'avvio.
+     * 
+     * Include: controllo orario servizio, inizializzazione database, avvio task automatici.
+     */
+    public static void PreliminaryFunctions(){
         checkClosed();
         model.servizi.DataBase.initializeDB();
         model.servizi.OperazioniGiornaliere.avviaTaskDiMezzanotte();
         model.servizi.OperazioniGiornaliere.eseguiControlliAutomatici(false);
     }
     
+     /**
+     * @brief Metodo chiamato alla chiusura dell'applicazione.
+     */
     @Override
-    public void stop() throws Exception {// Metodo chiamato alla chiusura dell'applicazione
+    public void stop() throws Exception {
         OperazioniGiornaliere.stop(); 
         super.stop();
         System.exit(0); // Termina forzatamente il programma
 }
     
-    public static void checkClosed(){   // Metodo per verificare se il servizio è aperto
+    /**
+     * @brief Verifica se il servizio è aperto.
+     * 
+     * Mostra un alert se l'orario corrente è fuori orario e termina l'applicazione.
+     */
+    public static void checkClosed(){  
         LocalTime ora_attuale = LocalTime.now();
         LocalTime orario_apertura=LocalTime.of(open_time[0], open_time[1]);
         LocalTime orario_chiusura=LocalTime.of(close_time[0], close_time[1]);

@@ -119,12 +119,9 @@ public class EmailInvia {
      * @param inizioPrestito data di inizio prestito
      * @return true se l'invio è stato avviato correttamente, false altrimenti
      */
-    public static boolean inviaAvviso(String recipientEmail,String titolo,String nome,String cognome,LocalDate inizioPrestito){
-        
-        // Avvio dell'invio email su un nuovo thread per evitare blocchi dell'interfaccia o della logica principale
+    public static boolean inviaAvviso(String recipientEmail,String titolo,String nome,String cognome,LocalDate inizioPrestito){        
         new Thread(() -> {
         try {       
-            // Email costruita diversamente se è noto il titolo del libro o se si tratta di più libri non restituiti
             if(titolo!=null)
             EmailInvia.inviaEmail(recipientEmail, "Mancata Restituzione del libro", "Carissimo "+nome+" "+cognome+
                     " le chiedo gentilmente di restituire la copia di "+titolo+" presa in prestito il "+inizioPrestito);

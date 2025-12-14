@@ -23,7 +23,7 @@ import model.dataclass.Autore;
  * @author gruppo22
  */
 public class Catalogo {
-    private List<Libro> libri;// Lista che contiene gli oggetti Libro presenti nel catalogo
+    private List<Libro> libri;
 
      /**
      * @brief Costruisce un nuovo catalogo vuoto.
