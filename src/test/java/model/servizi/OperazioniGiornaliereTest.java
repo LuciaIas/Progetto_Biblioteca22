@@ -106,7 +106,6 @@ public class OperazioniGiornaliereTest {
         assertTrue(secondi >= 0, "I secondi non possono essere negativi");
         assertTrue(secondi <= 86400, "I secondi non possono superare le 24 ore");
         
-
     }
     
     @Test
