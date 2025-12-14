@@ -17,8 +17,8 @@ import java.util.ArrayList;
  * @author gruppo22
  */
 public class Prestito {
-    private String isbn;
     private String matricola;
+    private String isbn;
     private LocalDate inizio_prestito;
     private LocalDate restituzione;
     private LocalDate data_scadenza;
