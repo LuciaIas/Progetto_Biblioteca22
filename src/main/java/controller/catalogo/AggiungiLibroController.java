@@ -142,164 +142,122 @@ public class AggiungiLibroController {
             Image img = new Image(getClass().getResourceAsStream("/Images/default.jpg"));
             imgAnteprima.setImage(img);
             urlIM = "/Images/default.jpg";
-        });
-         
-        AnnullaButton.setOnAction(eh->{Stage s =(Stage)AnnullaButton.getScene().getWindow();s.close();}); // ANNULLA FORM    
-        
+        });         
+        AnnullaButton.setOnAction(eh->{Stage s =(Stage)AnnullaButton.getScene().getWindow();s.close();}); // ANNULLA FORM            
         SalvaButton.setOnAction(eh->{// SALVA LIBRO       
             //CONTROLLI SUI CAMPI
-            if(txtISBN.getText().trim().length()!=13){
-            
+            if(txtISBN.getText().trim().length()!=13){          
                 Alert IsbnAlert = new Alert(AlertType.ERROR);
                 IsbnAlert.setHeaderText("Codice ISBN non valido");
-                IsbnAlert.setContentText("Il codice isbn deve essere a 13 cifre");
-                
+                IsbnAlert.setContentText("Il codice isbn deve essere a 13 cifre");                
                 DialogPane dialogPane = IsbnAlert.getDialogPane();
-
                 dialogPane.getStylesheets().add(
                     getClass().getResource("/CSS/StyleAccess.css").toExternalForm()
-                );
-   
-                dialogPane.getStyleClass().add("my-alert");
-        
+                );  
+                dialogPane.getStyleClass().add("my-alert");       
                 IsbnAlert.showAndWait();
                 return;
             }else if(!txtISBN.getText().trim().matches("\\d+")){          
                 Alert IsbnAlert = new Alert(AlertType.ERROR);
                 IsbnAlert.setHeaderText("Codice ISBN non valido");
-                IsbnAlert.setContentText("Il codice isbn deve contenere solo numeri");
-                
+                IsbnAlert.setContentText("Il codice isbn deve contenere solo numeri");               
                 DialogPane dialogPane = IsbnAlert.getDialogPane();
-
                 dialogPane.getStylesheets().add(
                     getClass().getResource("/CSS/StyleAccess.css").toExternalForm()
-                );
-    
-                dialogPane.getStyleClass().add("my-alert");
-                
+                );    
+                dialogPane.getStyleClass().add("my-alert");                
                 IsbnAlert.showAndWait();
             return;
-            }
-            
+            }           
             // CREAZIONE OGGETTO LIBRO
             Libro l;            
-            ArrayList<Autore> autori = new ArrayList<>();
-            
+            ArrayList<Autore> autori = new ArrayList<>();            
             // SCORRO MENU AUTORI
             Iterator<MenuItem> it = menuAutori.getItems().iterator();
             while(it.hasNext()){
-                CustomMenuItem i = (CustomMenuItem) it.next();
-                
-                
+                CustomMenuItem i = (CustomMenuItem) it.next();                              
                 if(i.getContent() instanceof CheckBox){ // Se l'autore è selezionato
                 CheckBox ck = (CheckBox) i.getContent();
                 if(!ck.isSelected()) continue;
                 String[] parti = ck.getText().split(" ");
                 String nome = parti[0];
-                String cognome = parti[1];
-                
-                Autore a = model.servizi.DataBase.cercaAutoreByNames(nome, cognome);
-                
+                String cognome = parti[1];               
+                Autore a = model.servizi.DataBase.cercaAutoreByNames(nome, cognome);               
                 autori.add(a);                
                 }
                 else if(i.getContent() instanceof TextField){// Nuovo autore da inserire
                 TextField txt = (TextField) i.getContent();
-                if(DataBase.getNum_Autori()>=MAX_AUTORS && !txt.getText().trim().equals("")){
-                
+                if(DataBase.getNum_Autori()>=MAX_AUTORS && !txt.getText().trim().equals("")){                
                 Alert IsbnAlert = new Alert(AlertType.ERROR);
                 IsbnAlert.setHeaderText("Errore creazione libro");
-                IsbnAlert.setContentText("Ci sono troppi autori inseriti nel sistema");
-                
-                DialogPane dialogPane = IsbnAlert.getDialogPane();
-
-              
+                IsbnAlert.setContentText("Ci sono troppi autori inseriti nel sistema");               
+                DialogPane dialogPane = IsbnAlert.getDialogPane();             
                 dialogPane.getStylesheets().add(
                     getClass().getResource("/CSS/StyleAccess.css").toExternalForm()
-                );
-              
+                );             
                 dialogPane.getStyleClass().add("my-alert");               
                 IsbnAlert.showAndWait();                
                 return;
-                }else{
-                                   
+                }else{                                  
                 if(txt.getText().trim().equals(""))continue;
                 String[] parti = txt.getText().trim().split(" ");
                 String nome = parti[0];
                 String cognome = parti[1];
-                if(nome.equals("") & cognome.equals("")) continue;
-                
+                if(nome.equals("") & cognome.equals("")) continue;                
                 Autore a = new Autore(nome,cognome,0,null);
                 a.setId(model.servizi.DataBase.getNum_Autori()+1);
                 model.servizi.DataBase.aggiungiAutore(a);
                 autori.add(a);        
                 }
                 }                
-            }
-            
+            }            
              // Creazione oggetto libro con tutti i dati
-             l = new Libro(txtISBN.getText().trim(),txtTitolo.getText().trim(),txtEditore.getText().trim(),autori,Year.of(spinAnno.getValue()),spinCopie.getValue(),urlIM);
-             
+             l = new Libro(txtISBN.getText().trim(),txtTitolo.getText().trim(),txtEditore.getText().trim(),autori,Year.of(spinAnno.getValue()),spinCopie.getValue(),urlIM);             
              if((DataBase.getNumRelationsScritto_Da() + autori.size())>MAX_WRITED){ // Controllo numero massimo relazioni libro-autore            
                   Alert IsbnAlert = new Alert(AlertType.ERROR);
                 IsbnAlert.setHeaderText("Errore creazione libro");
                 IsbnAlert.setContentText("Ci sono troppe relazioni tra libri e autori nel sistema");
-                
-                DialogPane dialogPane = IsbnAlert.getDialogPane();
-              
+                DialogPane dialogPane = IsbnAlert.getDialogPane();              
                 dialogPane.getStylesheets().add(
                     getClass().getResource("/CSS/StyleAccess.css").toExternalForm()
                 );                
                 dialogPane.getStyleClass().add("my-alert");               
                 IsbnAlert.showAndWait();                
                 return;            
-             }
-             
+             }             
              if(DataBase.isIsbnPresent(txtISBN.getText().trim())){ // Controllo ISBN già presente
                 Alert IsbnAlert = new Alert(Alert.AlertType.WARNING);
                 IsbnAlert.setHeaderText("Operazione fallita");
-                IsbnAlert.setContentText("Libro con ISBN: "+txtISBN.getText().trim()+" risulta gia registrato nel database");
-                
-                DialogPane dialogPane = IsbnAlert.getDialogPane();
-              
+                IsbnAlert.setContentText("Libro con ISBN: "+txtISBN.getText().trim()+" risulta gia registrato nel database");                
+                DialogPane dialogPane = IsbnAlert.getDialogPane();             
                 dialogPane.getStylesheets().add(
                     getClass().getResource("/CSS/StyleAccess.css").toExternalForm()
-                );
-                
+                );                
                 dialogPane.getStyleClass().add("my-alert");               
                 IsbnAlert.showAndWait();
             return;                                  
-              }               
-               
+              }                              
               if(model.servizi.DataBase.aggiungiLibro(l)){// Aggiunta libro al database
                 Alert AL = new Alert(AlertType.ERROR);
                 AL.setHeaderText("Aggiornamento Catalogo");
-                AL.setContentText("Libro aggiunto al catalogo");
-                
-                DialogPane dialogPane = AL.getDialogPane();
-              
+                AL.setContentText("Libro aggiunto al catalogo");                
+                DialogPane dialogPane = AL.getDialogPane();             
                 dialogPane.getStylesheets().add(
                     getClass().getResource("/CSS/StyleAccess.css").toExternalForm()
-                );
-             
-                dialogPane.getStyleClass().add("my-alert");
-                
+                );             
+                dialogPane.getStyleClass().add("my-alert");                
                 AL.showAndWait();
               }                            
               updateAutori();
-              if(DataBase.getCatalogo().getLibri().size()>=CatalogoController.MAX_BOOKS){
-            
+              if(DataBase.getCatalogo().getLibri().size()>=CatalogoController.MAX_BOOKS){           
                  Alert IsbnAlert = new Alert(AlertType.ERROR);
                 IsbnAlert.setHeaderText("Chiusura Pannello");
-                IsbnAlert.setContentText("Ci sono troppi Libri nel sistema");
-                
-                DialogPane dialogPane = IsbnAlert.getDialogPane();
-              
+                IsbnAlert.setContentText("Ci sono troppi Libri nel sistema");               
+                DialogPane dialogPane = IsbnAlert.getDialogPane();              
                 dialogPane.getStylesheets().add(
                     getClass().getResource("/CSS/StyleAccess.css").toExternalForm()
-                );
-                
-                dialogPane.getStyleClass().add("my-alert");
-                
+                );                
+                dialogPane.getStyleClass().add("my-alert");               
                 IsbnAlert.showAndWait();
                 Stage tu = (Stage)SalvaButton.getScene().getWindow();
                 tu.close();
@@ -316,8 +274,7 @@ public class AggiungiLibroController {
      */
     public void updateAutori(){ 
         ArrayList<Autore> autori = model.servizi.DataBase.getAutori();
-        menuAutori.getItems().clear();
-        
+        menuAutori.getItems().clear();       
         for(Autore a : autori){ // Autori esistenti
             CustomMenuItem it = new CustomMenuItem(new CheckBox(a.getNome()+" "+a.getCognome()));
             it.setHideOnClick(false);
@@ -342,9 +299,7 @@ public class AggiungiLibroController {
      */
     private void spinnerInitialize() { 
         SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1500, 2100, 2024, 1);
-
-        spinAnno.setValueFactory(valueFactory);
-        
+        spinAnno.setValueFactory(valueFactory);        
         valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 500, 0, 1);
         spinCopie.setValueFactory(valueFactory);
     }

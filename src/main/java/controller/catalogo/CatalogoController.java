@@ -112,8 +112,7 @@ public class CatalogoController {
      */
     public void searchFunction(){   
         Catalogo libri = new Catalogo();
-           String text = searchBar.getText().trim();
-           
+           String text = searchBar.getText().trim();           
            // Cerco prima per ISBN
            Libro l = DataBase.cercaLibro(text);
            if(l!=null){
@@ -123,8 +122,7 @@ public class CatalogoController {
            }
             // Cerco per titolo
             for(Libro l1 : DataBase.getLibriByTitolo(text))
-                libri.aggiungiLibro(l1);
-            
+                libri.aggiungiLibro(l1);            
                updateCatalogo(libri);
                return;       
     }
@@ -143,11 +141,9 @@ public class CatalogoController {
     public void updateCatalogo(Catalogo libri){
       containerLibri.getChildren().clear();
             int colonna = 0;
-            int riga = 0;
-      
+            int riga = 0;      
         for(Libro l : libri.getLibri()){
-            containerLibri.add(creaLibroAnimato(l), colonna, riga); // Card speciale per aggiungere un nuovo libro
-            
+            containerLibri.add(creaLibroAnimato(l), colonna, riga); // Card speciale per aggiungere un nuovo libro            
             colonna++; 
             if (colonna == 4) {
                 colonna = 0; 
@@ -192,35 +188,31 @@ public class CatalogoController {
             img = new Image(getClass().getResourceAsStream("/img/placeholder_book.png"));
         }
         imageView.setImage(img);
-    } catch (Exception e) { e.printStackTrace(); }
-    
+    } catch (Exception e) { e.printStackTrace(); }   
     imageView.setFitWidth(200); 
     imageView.setFitHeight(300); 
     imageView.setPreserveRatio(true);
     imageView.getStyleClass().add("book-cover-static");
-
     // 2. CONTROLLI OVERLAY (Label Copie + Bottoni)    
     // Label Copie
     Label lblCopie = new Label();
     if (libro.getIsbn() != null) {
         lblCopie.setText("Copie: " + DataBase.getNumCopieByIsbn(libro.getIsbn())); 
     }
-    lblCopie.setStyle("-fx-background-color: rgba(0,0,0,0.7); -fx-background-radius: 15; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 5 12; -fx-font-size: 12px;");
-    
+    lblCopie.setStyle("-fx-background-color: rgba(0,0,0,0.7); -fx-background-radius: 15; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 5 12; -fx-font-size: 12px;");    
     // Bottoni
     Button btnMinus = new Button("-");
     Button btnPlus = new Button("+");
     String btnStyle = "-fx-background-color: rgba(255,255,255,0.95); -fx-text-fill: #1A2980; -fx-font-weight: 900; -fx-background-radius: 50; -fx-min-width: 35px; -fx-min-height: 35px; -fx-cursor: hand; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 5, 0, 0, 2);";
     btnMinus.setStyle(btnStyle);
     btnPlus.setStyle(btnStyle);
-
     // Logica Bottoni
     if (libro.getIsbn() != null) {
         btnPlus.setOnAction(e -> {
             // Consumo l'evento per non attivare il click sulla card
             e.consume(); 
             DataBase.modificaNum_copie(libro.getIsbn(), true);
-            updateCatalogo(DataBase.getCatalogo()); // Ricarico la vista
+            updateCatalogo(DataBase.getCatalogo()); 
         });
         btnMinus.setOnAction(e -> {
             e.consume();
@@ -231,14 +223,11 @@ public class CatalogoController {
         });
     }
     HBox buttonsBox = new HBox(15, btnMinus, btnPlus);
-    buttonsBox.setAlignment(Pos.CENTER);
-    
+    buttonsBox.setAlignment(Pos.CENTER);    
     Button Modifica = new Button("Modifica");
     Modifica.setStyle(btnStyle);
-    Modifica.setOnAction(eh->{
-    
-        ModificaLibroController.isbn = libro.getIsbn();
-        
+    Modifica.setOnAction(eh->{    
+        ModificaLibroController.isbn = libro.getIsbn();       
             Stage s = new Stage();
                 s.setTitle("Modifica Libro");
                 s.setResizable(false);
@@ -254,104 +243,79 @@ public class CatalogoController {
     });   
     Button Elimina = new Button("Elimina");
     Elimina.setStyle(btnStyle);
-    Elimina.setOnAction(eh->{
-    
+    Elimina.setOnAction(eh->{    
         DataBase.rimuoviLibro(libro.getIsbn());
         Alert IsbnAlert = new Alert(AlertType.INFORMATION);
                 IsbnAlert.setHeaderText("Operazione eseguita");
-                IsbnAlert.setContentText("Libro rimosso");
-                
-                DialogPane dialogPane = IsbnAlert.getDialogPane();
-              
+                IsbnAlert.setContentText("Libro rimosso");               
+                DialogPane dialogPane = IsbnAlert.getDialogPane();              
                 dialogPane.getStylesheets().add(
                     getClass().getResource("/CSS/StyleAccess.css").toExternalForm()
                 );              
-                dialogPane.getStyleClass().add("my-alert");
-                
+                dialogPane.getStyleClass().add("my-alert");               
                 IsbnAlert.showAndWait();
                 updateCatalogo(DataBase.getCatalogo());        
     });   
     HBox opME = new HBox(5,Modifica,Elimina);
-    opME.setAlignment(Pos.CENTER);
-    
+    opME.setAlignment(Pos.CENTER);   
     // Contenitore controlli (centrato sopra l'immagine)
     VBox overlayControls = new VBox(15); 
     overlayControls.setAlignment(Pos.CENTER); 
-    overlayControls.getChildren().addAll(lblCopie, buttonsBox,opME);
-    
+    overlayControls.getChildren().addAll(lblCopie, buttonsBox,opME);    
     // Nascondo controlli di default
     overlayControls.setVisible(false); 
     if (libro.getIsbn() == null) overlayControls.setVisible(false);
-
     // 3. STACKPANE (Immagine + Controlli)
     StackPane bookStack = new StackPane();
-    bookStack.getChildren().addAll(imageView, overlayControls);
-    
+    bookStack.getChildren().addAll(imageView, overlayControls);    
     // Effetto Ombra sull'immagine
     DropShadow shadow = new DropShadow(10, Color.rgb(0, 0, 0, 0.3));
-    imageView.setEffect(shadow);
-    
+    imageView.setEffect(shadow);    
     bookStack.setDepthTest(javafx.scene.DepthTest.DISABLE); 
-
     // 4. TITOLO E CONTENITORE FINALE (VBox)
     Label lblTitolo = new Label(libro.getTitolo() != null ? libro.getTitolo() : "Nuovo Libro");
     lblTitolo.setWrapText(true);
     lblTitolo.setMaxWidth(200);
     lblTitolo.setAlignment(Pos.CENTER);
     lblTitolo.setStyle("-fx-font-family: 'Segoe UI', sans-serif; -fx-font-weight: 800; -fx-text-fill: #1A2980; -fx-font-size: 14px; -fx-text-alignment: center;");
-
     VBox mainContainer = new VBox(10);
     mainContainer.setAlignment(Pos.TOP_CENTER);
-    mainContainer.getChildren().addAll(bookStack, lblTitolo);
-    
+    mainContainer.getChildren().addAll(bookStack, lblTitolo);    
     // 5. ANIMAZIONI (Applicate al mainContainer per evitare sovrapposizioni)
     Duration speed = Duration.millis(300);
-
     // Zoom su TUTTA la card (così il titolo non viene coperto)
     ScaleTransition scaleUp = new ScaleTransition(speed, mainContainer);
     scaleUp.setToX(1.08); 
     scaleUp.setToY(1.08);
-
     // Rotazione solo sul libro (effetto 3D copertina)
     RotateTransition rotateOpen = new RotateTransition(speed, bookStack);
     rotateOpen.setAxis(Rotate.Y_AXIS); 
     rotateOpen.setToAngle(-10);
-
     ParallelTransition openAnim = new ParallelTransition(scaleUp, rotateOpen);
-
     // Chiusura
     ScaleTransition scaleDown = new ScaleTransition(speed, mainContainer);
     scaleDown.setToX(1.0); 
-    scaleDown.setToY(1.0);
-    
+    scaleDown.setToY(1.0);   
     RotateTransition rotateClose = new RotateTransition(speed, bookStack);
     rotateClose.setAxis(Rotate.Y_AXIS); 
     rotateClose.setToAngle(0);
-
     ParallelTransition closeAnim = new ParallelTransition(scaleDown, rotateClose);
-
     // EVENTI MOUSE
     mainContainer.setOnMouseEntered(e -> {
         closeAnim.stop();
-        openAnim.play();
-        
+        openAnim.play();       
         // Effetti Ombra
-        shadow.setRadius(25); shadow.setOffsetY(10);
-        
+        shadow.setRadius(25); shadow.setOffsetY(10);       
         // Mostra controlli
-        if (libro.getIsbn() != null) overlayControls.setVisible(true);
-        
+        if (libro.getIsbn() != null) overlayControls.setVisible(true);        
         mainContainer.toFront(); 
     });
-
     mainContainer.setOnMouseExited(e -> {
         openAnim.stop();
-        closeAnim.play();
-        
+        closeAnim.play();        
         shadow.setRadius(10); shadow.setOffsetY(0);
         if (libro.getIsbn() != null) overlayControls.setVisible(false);
-    });
-    
+    });    
     // 6. GESTIONE CLICK (Aggiungi Libro)
     if (libro.getIsbn() == null) {
         mainContainer.setCursor(Cursor.HAND);
@@ -371,18 +335,14 @@ public class CatalogoController {
      * Al termine dell'inserimento, aggiorna il catalogo.
      */
     public void launchAggiungiLibroForm(){    
-        if(DataBase.getCatalogo().getLibri().size()>=MAX_BOOKS){
-            
+        if(DataBase.getCatalogo().getLibri().size()>=MAX_BOOKS){            
                  Alert IsbnAlert = new Alert(AlertType.ERROR);
                 IsbnAlert.setHeaderText("Impossibile aggiungere libro");
-                IsbnAlert.setContentText("Ci sono troppi Libri nel sistema");
-                
-                DialogPane dialogPane = IsbnAlert.getDialogPane();
-              
+                IsbnAlert.setContentText("Ci sono troppi Libri nel sistema");               
+                DialogPane dialogPane = IsbnAlert.getDialogPane();              
                 dialogPane.getStylesheets().add(
                     getClass().getResource("/CSS/StyleAccess.css").toExternalForm()
-                );
-               
+                );               
                 dialogPane.getStyleClass().add("my-alert");                
                 IsbnAlert.showAndWait();
                 return;            

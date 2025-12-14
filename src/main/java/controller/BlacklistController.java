@@ -38,8 +38,7 @@ import javafx.util.Duration;
  *
  * @author gruppo22
  */
-public class BlacklistController {
-    
+public class BlacklistController {    
     @FXML
     private VBox blacklistContainer;
     
@@ -63,28 +62,21 @@ public class BlacklistController {
  * - Configurare i listener per la barra di ricerca (pressione tasto INVIO e modifica testo)
  */
     @FXML
-    public void initialize(){
-   
+    public void initialize(){   
         ArrayList<Utente> us =Utente.getUtentiBlackListed(DataBase.getUtenti());//recupero utenti bloccati e aggiorno la lista
-        updateUtentiList(us);
-        
-        UnLockAllButton.setOnAction(eh->{//azione pulsante "sblocca tutti gli utenti"
-        
+        updateUtentiList(us);       
+        UnLockAllButton.setOnAction(eh->{//azione pulsante "sblocca tutti gli utenti"       
             for(Utente u: us)
                 if(u.isBloccato())
                     DataBase.unsetBlackListed(u.getMatricola());
             updateUtentiList(new ArrayList<Utente>());
-        });
-               
-        searchUser.setOnKeyPressed(eh->{//esegui ricerca premendo INVIO
-        
+        });              
+        searchUser.setOnKeyPressed(eh->{//esegui ricerca premendo INVIO        
             if(eh.getCode()==KeyCode.ENTER)
                 searchFunction();
-        });
-        
+        });       
         //reset lista se campo ricerca vuoto
-        searchUser.textProperty().addListener((a,b,c)->{
-        
+        searchUser.textProperty().addListener((a,b,c)->{       
             if(searchUser.getText().trim().equals(""))
                 updateUtentiList(Utente.getUtentiBlackListed(DataBase.getUtenti()));           
         });        
@@ -99,8 +91,7 @@ public class BlacklistController {
  */
      public void searchFunction(){
         ArrayList<Utente> utenti = new ArrayList<>(),app= new ArrayList<>();
-           String text = searchUser.getText().trim();
-       
+           String text = searchUser.getText().trim();      
            //cerco per matricola (o identificatore)
            Utente u = DataBase.cercaUtente(text);
            if(u!=null){
@@ -111,14 +102,11 @@ public class BlacklistController {
                }
            }
            //filtro utenti bloccati
-           utenti = Utente.getUtentiBlackListed(DataBase.getUtenti());
-        
+           utenti = Utente.getUtentiBlackListed(DataBase.getUtenti());       
            //filtro per nome, cognome o email
            for(Utente u1 : utenti)
                if(u1.getNome().equals(text) || u1.getCognome().equals(text) || u1.getMail().equals(text))
-                   app.add(u1);
-           
-           //aggiorno lista risultati ricerca
+                   app.add(u1);           
            updateUtentiList(app);
            
     }
@@ -133,12 +121,10 @@ public class BlacklistController {
  * @param utenti lista di oggetti Utente da visualizzare
  */
     public void updateUtentiList(ArrayList<Utente> utenti){
-        blacklistContainer.getChildren().clear();
-        
+        blacklistContainer.getChildren().clear();        
         //mostro numero totale bloccati
         ArrayList<Utente> us =Utente.getUtentiBlackListed(DataBase.getUtenti());
-        lblTotalBlocked.setText(us.size()+" Utenti Bloccati");
-        
+        lblTotalBlocked.setText(us.size()+" Utenti Bloccati");        
         //creo card per ogni utente
         for(Utente u : utenti){
             aggiungiCardUtente(u.getNome(),u.getCognome(),u.getMatricola(),u.getMail(),u.isBloccato());
@@ -158,42 +144,33 @@ public class BlacklistController {
  * @param email Indirizzo email istituzionale
  * @param isBlacklisted Stato dell'utente (true se bloccato, false se sbloccato)
  */
-    private void aggiungiCardUtente(String nome, String cognome, String matricola, String email, boolean isBlacklisted) {   
-        
+    private void aggiungiCardUtente(String nome, String cognome, String matricola, String email, boolean isBlacklisted) {          
         // 1. Creazione riga principale (HBox)
         HBox riga = new HBox();
         riga.setAlignment(Pos.CENTER_LEFT);
         riga.setSpacing(20);
         riga.setPrefHeight(80);
-        riga.setPadding(new Insets(0, 20, 0, 20));
-        
+        riga.setPadding(new Insets(0, 20, 0, 20));        
         // Stile condizionale: Se è bloccato usa lo stile rosso, altrimenti bianco
         if (isBlacklisted) {
             riga.getStyleClass().add("user-row-blocked");
         } else {
             riga.getStyleClass().add("user-row");
         }
-
         // 2. Icona utente bloccato
         StackPane iconContainer = new StackPane();
-
         // Definisce la grandezza del cerchio
         double size = 45;
-
         // BLOCCO LE DIMENSIONI: Larghezza e Altezza DEVONO essere uguali
         iconContainer.setMinWidth(size);
         iconContainer.setMinHeight(size);
         iconContainer.setPrefSize(size, size);
         iconContainer.setMaxSize(size, size); // Impedisco che si allarghi e diventi ovale
-
         // Stile 
         iconContainer.getStyleClass().add("icon-container-red");
-
         Label iconLabel = new Label("🚫");
         iconLabel.setStyle("-fx-font-size: 20px;"); // Aumentato un po' per centrare visivamente meglio
-
         iconContainer.getChildren().add(iconLabel);
-
         // 3. dati utente (Nome e Email)
         VBox boxNomi = new VBox();
         boxNomi.setAlignment(Pos.CENTER_LEFT);
@@ -219,26 +196,19 @@ public class BlacklistController {
         lblMatValue.setStyle("-fx-text-fill: #2d3436; -fx-font-weight: bold;");
         
         boxMatricola.getChildren().addAll(lblMatTitle, lblMatValue);
-
         // 5. Spaziatore per allineamento (Pane vuoto che spinge tutto a destra)
         Pane spacer = new Pane();
         HBox.setHgrow(spacer, Priority.ALWAYS);
-
         // 6. Stato (Attivo / Blacklist)
         Label lblStato = new Label(isBlacklisted ? "Blacklist" : "Attivo");
         lblStato.getStyleClass().add(isBlacklisted ? "tag-danger" : "tag-success");
-
         //Bottone invio email
         Button btnEmail = new Button("✉️");
-        btnEmail.getStyleClass().add("icon-button"); // Usa lo stile trasparente/grigio
-        
+        btnEmail.getStyleClass().add("icon-button"); // Usa lo stile trasparente/grigio        
         // Aggiungiamo un tooltip per far capire cosa fa
         Tooltip tooltip = new Tooltip("Invia email a " + email);
-        btnEmail.setTooltip(tooltip);
-
-        
-        btnEmail.setOnAction(e -> {
-            
+        btnEmail.setTooltip(tooltip);       
+        btnEmail.setOnAction(e -> {            
             if(EmailInvia.inviaAvviso(email, null, nome, cognome, null)){
             //Alert invio riuscito
             Alert IsbnAlert = new Alert(Alert.AlertType.INFORMATION);
@@ -265,17 +235,14 @@ public class BlacklistController {
                 IsbnAlert.showAndWait();
                 return;
             }
-        });
-        
+        });        
         // Bottone sblocca utente
         Button btnAction = new Button("SBLOCCA");
         btnAction.getStyleClass().add("button-outline-success");
-        btnAction.setOnAction(e -> {
-           
+        btnAction.setOnAction(e -> {           
             model.servizi.DataBase.unsetBlackListed(matricola);
             updateUtentiList(Utente.getUtentiBlackListed(DataBase.getUtenti()));            
         });
-
         // 8. Aggiunta elementi alla riga
         riga.getChildren().addAll(
             iconContainer, 
@@ -286,7 +253,6 @@ public class BlacklistController {
             btnEmail,
             btnAction
         );
-
         blacklistContainer.getChildren().add(riga);
     }
     

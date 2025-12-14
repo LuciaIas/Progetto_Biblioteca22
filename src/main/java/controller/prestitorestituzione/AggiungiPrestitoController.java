@@ -98,8 +98,7 @@ public class AggiungiPrestitoController {
         txtIsbn.textProperty().addListener( (a,b,c) ->{ 
             CompletedCheckIsbn=false;
             IsbnCheck.setText("");
-        } );
-                
+        } );                
         txtMatricola.textProperty().addListener( (a,b,c) ->{    
             CompletedCheckMatricola=false;
             matricolaCheck.setText("");
@@ -118,111 +117,85 @@ public class AggiungiPrestitoController {
         AnnullaButton.setOnAction(eh->{        
             Stage s = (Stage) AnnullaButton.getScene().getWindow();
             s.close();
-        });
-        
+        });        
         SalvaButton.setOnAction(eh->{       
             String isbn = txtIsbn.getText().trim();// Leggo testo ISBN e rimuove spazi
-            String matricola = txtMatricola.getText().trim();// Leggo testo matricola e rimuove spazi
-           
+            String matricola = txtMatricola.getText().trim();// Leggo testo matricola e rimuove spazi          
             //CONTROLLI PER MATRICOLA E ISBN
-            if(!CompletedCheckIsbn && !CompletedCheckMatricola){
-                
+            if(!CompletedCheckIsbn && !CompletedCheckMatricola){                
                 Alert IsbnAlert = new Alert(Alert.AlertType.ERROR);
                 IsbnAlert.setHeaderText("Controlli non completati");
-                IsbnAlert.setContentText("Devi verificare che la matricola e l'isbn esistano nel sistema cliccando i rispettivi pulsanti di fianco ai loro form");
-                
+                IsbnAlert.setContentText("Devi verificare che la matricola e l'isbn esistano nel sistema cliccando i rispettivi pulsanti di fianco ai loro form");              
                 DialogPane dialogPane = IsbnAlert.getDialogPane();// Personalizzazione dialog             
                 dialogPane.getStylesheets().add(
                     getClass().getResource("/CSS/StyleAccess.css").toExternalForm()// Applico CSS personalizzato
                 );               
-                dialogPane.getStyleClass().add("my-alert");
-                
+                dialogPane.getStyleClass().add("my-alert");                
                 IsbnAlert.showAndWait();
-                return; 
-                
-            }else if(!CompletedCheckIsbn){ // Se non controllato solo ISBN
-            
+                return;                 
+            }else if(!CompletedCheckIsbn){ // Se non controllato solo ISBN           
                 Alert IsbnAlert = new Alert(Alert.AlertType.ERROR);
                 IsbnAlert.setHeaderText("Controlli non completati");
-                IsbnAlert.setContentText("Devi verificare che l'isbn esista nel sistema cliccando il rispettivo pulsante di fianco al suo form");
-                
+                IsbnAlert.setContentText("Devi verificare che l'isbn esista nel sistema cliccando il rispettivo pulsante di fianco al suo form");                
                 DialogPane dialogPane = IsbnAlert.getDialogPane();
                 dialogPane.getStylesheets().add(
                     getClass().getResource("/CSS/StyleAccess.css").toExternalForm()
                 );     
-                dialogPane.getStyleClass().add("my-alert");
-                
+                dialogPane.getStyleClass().add("my-alert");               
                 IsbnAlert.showAndWait();
-                return;
-         
-            }else if(!CompletedCheckMatricola){// Se non controllata solo matricola
-            
+                return;         
+            }else if(!CompletedCheckMatricola){// Se non controllata solo matricola           
                 Alert IsbnAlert = new Alert(Alert.AlertType.ERROR);
                 IsbnAlert.setHeaderText("Controlli non completati");
-                IsbnAlert.setContentText("Devi verificare che la matricola esista nel sistema cliccando il rispettivo pulsante di fianco al suo form");
-                
+                IsbnAlert.setContentText("Devi verificare che la matricola esista nel sistema cliccando il rispettivo pulsante di fianco al suo form");               
                 DialogPane dialogPane = IsbnAlert.getDialogPane();
                 dialogPane.getStylesheets().add(
                     getClass().getResource("/CSS/StyleAccess.css").toExternalForm()
                 );     
-                dialogPane.getStyleClass().add("my-alert");
-                
+                dialogPane.getStyleClass().add("my-alert");               
                 IsbnAlert.showAndWait();
                 return;
-            }
-            
-            LocalDate inizio = dateInizio.getValue(); 
-            
+            }            
+            LocalDate inizio = dateInizio.getValue();            
             if(inizio==null) 
-                inizio = LocalDate.now();
-            
+                inizio = LocalDate.now();            
             LocalDate scadenza = dateScadenza.getValue();
-            if(scadenza==null){
-            
+            if(scadenza==null){            
                 Alert IsbnAlert = new Alert(Alert.AlertType.ERROR); // Alert errore
                 IsbnAlert.setHeaderText("Campo vuoto");
-                IsbnAlert.setContentText("Inserisci la data di scadenza del prestito");
-                
+                IsbnAlert.setContentText("Inserisci la data di scadenza del prestito");               
                 DialogPane dialogPane = IsbnAlert.getDialogPane();
                 dialogPane.getStylesheets().add(
                     getClass().getResource("/CSS/StyleAccess.css").toExternalForm()
                 );
-                dialogPane.getStyleClass().add("my-alert");
-                
+                dialogPane.getStyleClass().add("my-alert");                
                 IsbnAlert.showAndWait();
                 return;     
-            }
-            
+            }            
             if(scadenza.isBefore(inizio)){            
                 Alert IsbnAlert = new Alert(Alert.AlertType.ERROR);
                 IsbnAlert.setHeaderText("Operazione impossibile");
-                IsbnAlert.setContentText("Hai impostato una data di scadenza che viene prima in ordine cronologico della data di inizio prestito");
-                
+                IsbnAlert.setContentText("Hai impostato una data di scadenza che viene prima in ordine cronologico della data di inizio prestito");                
                 DialogPane dialogPane = IsbnAlert.getDialogPane();
                 dialogPane.getStylesheets().add(
                     getClass().getResource("/CSS/StyleAccess.css").toExternalForm()
                 );
-                dialogPane.getStyleClass().add("my-alert");
-                
+                dialogPane.getStyleClass().add("my-alert");                
                 IsbnAlert.showAndWait();
                 return;     
-            }
-            
+            }            
             if(inizio.isBefore(LocalDate.now())){
                 Alert IsbnAlert = new Alert(Alert.AlertType.ERROR);
                 IsbnAlert.setHeaderText("Operazione impossibile");
-                IsbnAlert.setContentText("Hai impostato una data di inizio prestito antecedente a quella odierna");
-                
+                IsbnAlert.setContentText("Hai impostato una data di inizio prestito antecedente a quella odierna");               
                 DialogPane dialogPane = IsbnAlert.getDialogPane();
                 dialogPane.getStylesheets().add(
                     getClass().getResource("/CSS/StyleAccess.css").toExternalForm()
                 );
-                dialogPane.getStyleClass().add("my-alert");
-                
+                dialogPane.getStyleClass().add("my-alert");                
                 IsbnAlert.showAndWait();
                 return; 
-            }
-            
+            }           
             if(DataBase.controllaPrestito(isbn, matricola)){// Controllo se l'utente ha già preso in prestito lo stesso libro
                 boolean passed=false; // Flag per prestito restituito
                 for(Prestito p : DataBase.getPrestiti())// Ciclo tutti i prestiti
@@ -234,49 +207,40 @@ public class AggiungiPrestitoController {
                 if(!passed){// Se non c'è prestito restituito
                 Alert IsbnAlert = new Alert(Alert.AlertType.ERROR);
                 IsbnAlert.setHeaderText("Operazione non eseguita");
-                IsbnAlert.setContentText("L'utente ha gia preso in prestito il libro richiesto");
-                
+                IsbnAlert.setContentText("L'utente ha gia preso in prestito il libro richiesto");                
                 DialogPane dialogPane = IsbnAlert.getDialogPane();
                 dialogPane.getStylesheets().add(
                     getClass().getResource("/CSS/StyleAccess.css").toExternalForm()
                 );
-                dialogPane.getStyleClass().add("my-alert");
-                
+                dialogPane.getStyleClass().add("my-alert");               
                 IsbnAlert.showAndWait();
                 return;
                 }
-            }
-            
+            }           
             if(DataBase.getNumCopieByIsbn(isbn)<=0){// Controllo se ci sono copie disponibili            
                 Alert IsbnAlert = new Alert(Alert.AlertType.ERROR);
                 IsbnAlert.setHeaderText("Operazione fallita");
-                IsbnAlert.setContentText("Copie terminate di "+DataBase.cercaLibro(isbn).getTitolo());
-                
+                IsbnAlert.setContentText("Copie terminate di "+DataBase.cercaLibro(isbn).getTitolo());               
                 DialogPane dialogPane = IsbnAlert.getDialogPane();
                 dialogPane.getStylesheets().add(
                     getClass().getResource("/CSS/StyleAccess.css").toExternalForm()
                 );
-                dialogPane.getStyleClass().add("my-alert");
-                
+                dialogPane.getStyleClass().add("my-alert");               
                 IsbnAlert.showAndWait();
                 return;
             }
-
             if(DataBase.cercaUtente(matricola).isBloccato()){// Controllo se l'utente è bloccato           
                 Alert IsbnAlert = new Alert(Alert.AlertType.ERROR);
                 IsbnAlert.setHeaderText("Operazione fallita");
-                IsbnAlert.setContentText("L'utente risulta bloccato");
-                
+                IsbnAlert.setContentText("L'utente risulta bloccato");                
                 DialogPane dialogPane = IsbnAlert.getDialogPane();
                 dialogPane.getStylesheets().add(
                     getClass().getResource("/CSS/StyleAccess.css").toExternalForm()
                 );   
-                dialogPane.getStyleClass().add("my-alert");
-                
+                dialogPane.getStyleClass().add("my-alert");               
                 IsbnAlert.showAndWait();
                 return;
-            }
-            
+            }            
             // Controllo se l'utente ha già 3 libri in prestito attivi
             ArrayList<Prestito> prestiti = DataBase.getPrestiti();
             String mat1 = matricola;
@@ -287,43 +251,35 @@ public class AggiungiPrestitoController {
             if(count>=3){       
                 Alert IsbnAlert = new Alert(Alert.AlertType.ERROR);
                 IsbnAlert.setHeaderText("Operazione fallita");
-                IsbnAlert.setContentText("L'utente risulta avere ancora 3 libri da restituire");
-                
+                IsbnAlert.setContentText("L'utente risulta avere ancora 3 libri da restituire");                
                 DialogPane dialogPane = IsbnAlert.getDialogPane();
                 dialogPane.getStylesheets().add(
                     getClass().getResource("/CSS/StyleAccess.css").toExternalForm()
                 );
-                dialogPane.getStyleClass().add("my-alert");
-                
+                dialogPane.getStyleClass().add("my-alert");                
                 IsbnAlert.showAndWait();
                 return; 
             }
             // Aggiungo il prestito al database
             if(DataBase.aggiungiPrestito(new Prestito(isbn,matricola,inizio,null,Stato.ATTIVO,scadenza))){
-                DataBase.modificaNum_copie(isbn, false);// Riduco il numero di copie disponibili
-                
+                DataBase.modificaNum_copie(isbn, false);// Riduco il numero di copie disponibili                
                 Alert IsbnAlert = new Alert(Alert.AlertType.ERROR);
                 IsbnAlert.setHeaderText("Operazione eseguita");
                 Utente s = DataBase.cercaUtente(matricola);
-                IsbnAlert.setContentText("Prestito di"+DataBase.cercaLibro(isbn).getTitolo()+ " confermato all'utente "+s.getNome()+" "+s.getCognome());
-                
+                IsbnAlert.setContentText("Prestito di"+DataBase.cercaLibro(isbn).getTitolo()+ " confermato all'utente "+s.getNome()+" "+s.getCognome());                
                 DialogPane dialogPane = IsbnAlert.getDialogPane();
                 dialogPane.getStylesheets().add(
                     getClass().getResource("/CSS/StyleAccess.css").toExternalForm()
                 );
-                dialogPane.getStyleClass().add("my-alert");
-                
-                IsbnAlert.showAndWait();
-                     
-                int totale_prestiti = DataBase.getPrestiti().size();
-                
+                dialogPane.getStyleClass().add("my-alert");                
+                IsbnAlert.showAndWait();                     
+                int totale_prestiti = DataBase.getPrestiti().size();               
             if(totale_prestiti>=PrestitoRestituzioneController.MAX_LOAN){// Controllo limite massimo prestiti           
             int i = 0;
             ArrayList<Prestito> pre = DataBase.getPrestiti();
             for(Prestito p : pre)
                 if(p.getStato()==Stato.RESTITUITO)
-                    i+=1;// Conto prestiti già restituiti
-                
+                    i+=1;// Conto prestiti già restituiti                
             if(totale_prestiti-i<PrestitoRestituzioneController.MAX_LOAN){// Se bisogna rimuovere prestiti            
                 Alert conf = new Alert(AlertType.CONFIRMATION);
                 conf.setHeaderText("Azione necessaria");
@@ -346,21 +302,17 @@ public class AggiungiPrestitoController {
                         Prestito p = pre.get(f);
                         DataBase.rimuoviPrestito(p.getIsbn(), p.getMatricola());
                 }
-                }
-                
+                }               
             }else{// Se non è possibile aggiungere prestiti            
              Alert rt = new Alert(Alert.AlertType.ERROR);
                 rt.setHeaderText("Chiusura pannello");
-                rt.setContentText("Ci sono troppe copie dei nostri libri prestate");
-                
+                rt.setContentText("Ci sono troppe copie dei nostri libri prestate");                
                 DialogPane dialogPane1 = rt.getDialogPane();        
                 dialogPane1.getStylesheets().add(
                     getClass().getResource("/CSS/StyleAccess.css").toExternalForm()
                 );        
-                dialogPane1.getStyleClass().add("my-alert");
-                
-                rt.showAndWait();
-                
+                dialogPane1.getStyleClass().add("my-alert");                
+                rt.showAndWait();                
                 Stage il = (Stage) SalvaButton.getScene().getWindow();
                 il.close();
                 return;        
@@ -371,14 +323,12 @@ public class AggiungiPrestitoController {
             
                 Alert IsbnAlert = new Alert(Alert.AlertType.ERROR);
                 IsbnAlert.setHeaderText("Operazione non eseguita");
-                IsbnAlert.setContentText("Prestito fallito");
-                
+                IsbnAlert.setContentText("Prestito fallito");                
                 DialogPane dialogPane = IsbnAlert.getDialogPane();
                 dialogPane.getStylesheets().add(
                     getClass().getResource("/CSS/StyleAccess.css").toExternalForm()
                 );     
-                dialogPane.getStyleClass().add("my-alert");
-                
+                dialogPane.getStyleClass().add("my-alert");                
                 IsbnAlert.showAndWait();
                 return;            
             }        
@@ -393,104 +343,81 @@ public class AggiungiPrestitoController {
      * - ISBN: lunghezza 13, solo numeri, esistenza nel catalogo.
      * - Matricola: lunghezza 10, solo numeri, esistenza utente nel DB.
      */
-    public void buttonCheckingInitialize(){
-    
+    public void buttonCheckingInitialize(){    
         IsbnCheckButton.setOnAction(eh->{// Click pulsante verifica ISBN
-
             String isbn = txtIsbn.getText().trim();
-            if(isbn.length()!=13){
-            
+            if(isbn.length()!=13){            
                 Alert IsbnAlert = new Alert(Alert.AlertType.ERROR);
                 IsbnAlert.setHeaderText("Codice ISBN non valido");
-                IsbnAlert.setContentText("Il codice isbn deve essere a 13 cifre");
-                
+                IsbnAlert.setContentText("Il codice isbn deve essere a 13 cifre");                
                 DialogPane dialogPane = IsbnAlert.getDialogPane();
                 dialogPane.getStylesheets().add(
                     getClass().getResource("/CSS/StyleAccess.css").toExternalForm()
                 );  
-                dialogPane.getStyleClass().add("my-alert");
-                
+                dialogPane.getStyleClass().add("my-alert");               
                 IsbnAlert.showAndWait();
                 return;
-            }else if(!isbn.matches("\\d+")){// Controllo che contenga solo numeri
-                
+            }else if(!isbn.matches("\\d+")){// Controllo che contenga solo numeri                
                 Alert IsbnAlert = new Alert(Alert.AlertType.ERROR);
                 IsbnAlert.setHeaderText("Codice ISBN non valido");
-                IsbnAlert.setContentText("Il codice isbn deve contenere solo numeri");
-                
+                IsbnAlert.setContentText("Il codice isbn deve contenere solo numeri");                
                 DialogPane dialogPane = IsbnAlert.getDialogPane();            
                 dialogPane.getStylesheets().add(
                     getClass().getResource("/CSS/StyleAccess.css").toExternalForm()
                 );         
-                dialogPane.getStyleClass().add("my-alert");
-                
+                dialogPane.getStyleClass().add("my-alert");                
                 IsbnAlert.showAndWait();
             return;
             }
-            if(DataBase.cercaLibro(isbn)==null){// Controllo se libro esiste nel database
-                
+            if(DataBase.cercaLibro(isbn)==null){// Controllo se libro esiste nel database                
                 Alert IsbnAlert = new Alert(Alert.AlertType.ERROR);
                 IsbnAlert.setHeaderText("Codice ISBN non valido");
-                IsbnAlert.setContentText("Non e stato trovato alcun libro con questo codice nel nostro sistema");
-                
+                IsbnAlert.setContentText("Non e stato trovato alcun libro con questo codice nel nostro sistema");                
                 DialogPane dialogPane = IsbnAlert.getDialogPane();
                 dialogPane.getStylesheets().add(
                     getClass().getResource("/CSS/StyleAccess.css").toExternalForm()
                 );  
-                dialogPane.getStyleClass().add("my-alert");
-                
+                dialogPane.getStyleClass().add("my-alert");               
                 IsbnAlert.showAndWait();
             return;
             }               
             CompletedCheckIsbn=true;// Imposto flag ISBN come verificato
-            IsbnCheck.setText(isbn); // Mostro ISBN confermato nella label
- 
-        });
-        
+            IsbnCheck.setText(isbn); // Mostro ISBN confermato nella label 
+        });       
         MatricolaCheckButton.setOnAction(eh->{ // Click pulsante verifica matricola        
             String matricola = txtMatricola.getText().trim();
-            if(matricola.length()!=10){// Controllo lunghezza 10 cifre
-            
+            if(matricola.length()!=10){// Controllo lunghezza 10 cifre            
                 Alert IsbnAlert = new Alert(Alert.AlertType.ERROR);
                 IsbnAlert.setHeaderText("Matricola non valida");
-                IsbnAlert.setContentText("La matricola deve essere a 10 cifre");
-                
+                IsbnAlert.setContentText("La matricola deve essere a 10 cifre");                
                 DialogPane dialogPane = IsbnAlert.getDialogPane();
                 dialogPane.getStylesheets().add(
                     getClass().getResource("/CSS/StyleAccess.css").toExternalForm()
                 );       
-                dialogPane.getStyleClass().add("my-alert");
-                
+                dialogPane.getStyleClass().add("my-alert");                
                 IsbnAlert.showAndWait();
                 return;
-            }else if(!matricola.matches("\\d+")){// Controllo che contenga solo numeri
-                
+            }else if(!matricola.matches("\\d+")){// Controllo che contenga solo numeri                
                 Alert IsbnAlert = new Alert(Alert.AlertType.ERROR);
                 IsbnAlert.setHeaderText("Matricola non valida");
-                IsbnAlert.setContentText("La matricola deve contenere solo numeri");
-                
+                IsbnAlert.setContentText("La matricola deve contenere solo numeri");                
                 DialogPane dialogPane = IsbnAlert.getDialogPane();
                 dialogPane.getStylesheets().add(
                     getClass().getResource("/CSS/StyleAccess.css").toExternalForm()
                 );  
-                dialogPane.getStyleClass().add("my-alert");
-                
+                dialogPane.getStyleClass().add("my-alert");                
                 IsbnAlert.showAndWait();
             return;
-            }
-            
-            if(DataBase.cercaUtente(matricola)==null){// Controllo se utente esiste
-            
+            }            
+            if(DataBase.cercaUtente(matricola)==null){// Controllo se utente esiste           
                 Alert IsbnAlert = new Alert(Alert.AlertType.ERROR);
                 IsbnAlert.setHeaderText("Matricola non valida");
-                IsbnAlert.setContentText("La matricola inserita non e associata ad alcun studente nel database");
-                
+                IsbnAlert.setContentText("La matricola inserita non e associata ad alcun studente nel database");               
                 DialogPane dialogPane = IsbnAlert.getDialogPane();
                 dialogPane.getStylesheets().add(
                     getClass().getResource("/CSS/StyleAccess.css").toExternalForm()
                 );  
-                dialogPane.getStyleClass().add("my-alert");
-                
+                dialogPane.getStyleClass().add("my-alert");                
                 IsbnAlert.showAndWait();
             return;         
             }

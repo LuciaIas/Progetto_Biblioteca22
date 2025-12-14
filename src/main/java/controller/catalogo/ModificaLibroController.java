@@ -75,7 +75,7 @@ public class ModificaLibroController {
     
    // VARIABILI DI CONTROLLO
     public static String isbn;// ISBN del libro da modificare (settato da altro controller)
-    private Libro lib;// Oggetto libro corrente
+    private Libro lib;
     private String urlIM=null;// Percorso immagine copertina
    
      /**
@@ -102,12 +102,10 @@ public class ModificaLibroController {
     public void settingForm(){
         Image img = null;// Imposto immagine copertina
         String path = lib.getUrl();
-
         try {
             // TENTATIVO 1: Caricamento da Risorse (dentro il JAR/Progetto)
             // Funziona se il path è tipo "/Images/copertina.png"
             InputStream is = getClass().getResourceAsStream(path);
-
             if (is != null) {
                 img = new Image(is);
             } else {
@@ -115,7 +113,6 @@ public class ModificaLibroController {
                 // Se is è null, vuol dire che non è nelle risorse. Proviamo a cercarlo sul disco.
                 // JavaFX vuole "file:" davanti ai percorsi disco per funzionare nel costruttore stringa
                 String externalPath = path;
-
                 // Se non inizia già con un protocollo, aggiungiamo "file:"
                 if (!path.startsWith("file:") && !path.startsWith("http")) {
                     externalPath = "file:" + path;
@@ -131,7 +128,6 @@ public class ModificaLibroController {
                 img = null; // Arresi, nessuna immagine
             }
         }
-
         // Imposto l'immagine (gestendo anche il caso null finale)
         imgAnteprima.setImage(img);
         urlIM = lib.getUrl();
@@ -151,52 +147,43 @@ public class ModificaLibroController {
      * - `AnnullaButton`: chiude il form senza salvare.
      * - `SalvaButton`: salva le modifiche nel database, creando eventualmente nuovi autori.
      */
-    public void buttonInitialize(){ 
-        
+    public void buttonInitialize(){        
         ScegliFileButton.setOnAction(eh->{  // Bottone per scegliere copertina        
             FileChooser fc = new FileChooser();
             // Filtra per immagini (JPG, PNG)
             fc.getExtensionFilters().addAll(
             new FileChooser.ExtensionFilter("Immagini", "*.png", "*.jpg", "*.jpeg"),
             new FileChooser.ExtensionFilter("Tutti i file", "*.*")
-            );
-           
+            );          
             fc.setTitle("Scegli la copertina");           
             File f = fc.showOpenDialog((Stage) (ScegliFileButton.getScene().getWindow()));           
             if(f!=null){
                 imgAnteprima.setImage(new Image(f.toURI().toString()));
                 urlIM = f.toURI().toString();               
             }           
-        });
-        
+        });       
         RimuoviCopButton.setOnAction(eh->{// Bottone per rimuovere copertina (imposta immagine default)
             Image img = new Image(getClass().getResourceAsStream("/Images/default.jpg"));
             imgAnteprima.setImage(img);
             urlIM = "/Images/default.jpg";
-        });
-               
+        });               
         // Bottone Annulla chiude la finestra senza salvare
-        AnnullaButton.setOnAction(eh->{Stage s =(Stage)AnnullaButton.getScene().getWindow();s.close();});
-        
+        AnnullaButton.setOnAction(eh->{Stage s =(Stage)AnnullaButton.getScene().getWindow();s.close();});        
         SalvaButton.setOnAction(eh->{// Bottone Salva salva le modifiche nel database           
             //Controlli sui campi
             Libro l;           
             ArrayList<Autore> autori = new ArrayList<>();
-            Iterator<MenuItem> it = menuAutori.getItems().iterator();
-            
+            Iterator<MenuItem> it = menuAutori.getItems().iterator();            
             // Controllo quali autori sono selezionati
             while(it.hasNext()){
-                CustomMenuItem i = (CustomMenuItem) it.next();
-                               
+                CustomMenuItem i = (CustomMenuItem) it.next();                               
                 if(i.getContent() instanceof CheckBox){
                 CheckBox ck = (CheckBox) i.getContent();
                 if(!ck.isSelected()) continue;
                 String[] parti = ck.getText().split(" ");
                 String nome = parti[0];
-                String cognome = parti[1];
-                
-                Autore a = model.servizi.DataBase.cercaAutoreByNames(nome, cognome);
-                
+                String cognome = parti[1];                
+                Autore a = model.servizi.DataBase.cercaAutoreByNames(nome, cognome);                
                 autori.add(a);                
                 }
                 else if(i.getContent() instanceof TextField){                
@@ -205,48 +192,38 @@ public class ModificaLibroController {
                 String[] parti = txt.getText().trim().split(" ");
                 String nome = parti[0];
                 String cognome = parti[1];
-                if(nome.equals("") & cognome.equals("")) continue;
-                
+                if(nome.equals("") & cognome.equals("")) continue;               
                 Autore a = new Autore(nome,cognome,0,null);
                 ArrayList<Autore> autoriii  = DataBase.getAutori();
                 a.setId(autoriii.get(autoriii.size()-1).getId());
                 model.servizi.DataBase.aggiungiAutore(a);
                 autori.add(a);
                 }               
-            }
-             
+            }            
             // Creo nuovo oggetto libro aggiornato
              l = new Libro(isbn,txtTitolo.getText().trim(),txtEditore.getText().trim(),autori,Year.of(spinAnno.getValue()),spinCopie.getValue(),urlIM);   
             // Salvo modifiche nel database
              boolean modified = model.servizi.DataBase.modificaLibro(l.getIsbn(), l.getTitolo(), l.getEditore(), 
-                     (l.getAnno_pubblicazione()).getValue(), l.getNumero_copieDisponibili(), urlIM, autori);
-            
+                     (l.getAnno_pubblicazione()).getValue(), l.getNumero_copieDisponibili(), urlIM, autori);            
               if(modified){// Messaggi di conferma o errore
                 Alert AL = new Alert(Alert.AlertType.INFORMATION);
                 AL.setHeaderText("Aggiornamento Catalogo");
-                AL.setContentText("Libro modificato");
-                
-                DialogPane dialogPane = AL.getDialogPane();
-              
+                AL.setContentText("Libro modificato");                
+                DialogPane dialogPane = AL.getDialogPane();             
                 dialogPane.getStylesheets().add(
                     getClass().getResource("/CSS/StyleAccess.css").toExternalForm()
-                );
-               
-                dialogPane.getStyleClass().add("my-alert");
-                
+                );              
+                dialogPane.getStyleClass().add("my-alert");               
                 AL.showAndWait();
               }else{
                 Alert IsbnAlert = new Alert(Alert.AlertType.WARNING);
                 IsbnAlert.setHeaderText("Operazione fallita");
-                IsbnAlert.setContentText("Modifiche non completate");
-                
-                DialogPane dialogPane = IsbnAlert.getDialogPane();
-             
+                IsbnAlert.setContentText("Modifiche non completate");                
+                DialogPane dialogPane = IsbnAlert.getDialogPane();            
                 dialogPane.getStylesheets().add(
                     getClass().getResource("/CSS/StyleAccess.css").toExternalForm()
                 );               
-                dialogPane.getStyleClass().add("my-alert");
-                
+                dialogPane.getStyleClass().add("my-alert");                
                 IsbnAlert.showAndWait();
             return;                                   
               }             
@@ -268,8 +245,7 @@ public class ModificaLibroController {
      */
     public void updateAutori(ArrayList<Autore> aut){  
         ArrayList<Autore> autori = model.servizi.DataBase.getAutori();
-        menuAutori.getItems().clear();
-        
+        menuAutori.getItems().clear();       
         for(Autore a : autori){
             CheckBox checkBox = new CheckBox(a.getNome()+" "+a.getCognome());
             for(Autore a1 : aut)

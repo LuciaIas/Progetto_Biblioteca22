@@ -119,28 +119,23 @@ public class AccessoController {
      * - le operazioni di login e registrazione
      * - il cambio scena verso la dashboard
      */
-    public void buttonInitialize(){ 
- 
-        setSliding(); 
-        
+    public void buttonInitialize(){  
+        setSliding();        
         SlidingButton.setOnAction(eh->{  // Azione bottone sliding
             cleanForm(!direction);
             ts.play();
             tr.play();
-            String text,text1;
-            
+            String text,text1;            
             if(direction){ // Aggiorna testo label e bottone in base alla direzione dello sliding
                 text="Non sei registrato?";
                 text1="Registrati";
             }else{
                 text="Sei gia registrato?";
                 text1="Accedi";
-            }
-                           
+            }                           
             typewriterEffectLabel(SwitchLabel,text);
             typewriterEffectButton(SlidingButton,text1);
-        });
-               
+        });              
         RegisterButton.setOnAction(eh->{ // Azione bottone registrazione
             if(CheckShowPassRegister.isSelected()){
                 PassRegister.setText(PassRegisterVisible.getText());
@@ -148,16 +143,13 @@ public class AccessoController {
             }else{
                 PassRegisterVisible.setText(PassRegister.getText());
                 PassConRegisterVisible.setText(PassConRegister.getText());
-            }
-                     
+            }                    
             String password = PassRegister.getText();
-
             if(!model.servizi.ControlloFormato.controlloFormatoPassword(password)){
                 Alert al = new Alert(Alert.AlertType.ERROR);
                 al.setTitle("Errore Validazione"); // Titolo della finestra
                 al.setHeaderText("Password non sicura"); // Titolo interno 
                 al.setContentText("La password deve avere:\n- Minimo 8 caratteri\n- Una maiuscola\n- Un numero\n- Un simbolo (@#$%^&+=!)");
-
                 DialogPane dialogPane = al.getDialogPane();
                 dialogPane.getStylesheets().add(
                     getClass().getResource("/CSS/StyleAccess.css").toExternalForm()
@@ -165,8 +157,7 @@ public class AccessoController {
                 dialogPane.getStyleClass().add("my-alert");
                 al.showAndWait();
                 return;
-            }
-            
+            }            
             String password1 = PassConRegister.getText();           
             if(!password.equals(password1)){ // Controllo che password e conferma coincidano          
                 Alert al = new Alert(Alert.AlertType.ERROR);
@@ -176,75 +167,57 @@ public class AccessoController {
                 dialogPane.getStylesheets().add(
                     getClass().getResource("/CSS/StyleAccess.css").toExternalForm()
                 );
-
                 dialogPane.getStyleClass().add("my-alert");
                 al.showAndWait();
                 return;    
-            }        
-            
+            }                  
             if(model.servizi.DataBase.inserisciBibliotecario(password)){
                 Alert al = new Alert(Alert.AlertType.INFORMATION);
                 al.setTitle("Operazione Completata");
                 al.setHeaderText("Registrazione effettuata 🚀"); // Ho aggiunto un'emoji per coerenza
-                al.setContentText("Sei stato registrato correttamente nel sistema.");
-           
-                DialogPane dialogPane = al.getDialogPane();
-            
+                al.setContentText("Sei stato registrato correttamente nel sistema.");          
+                DialogPane dialogPane = al.getDialogPane();            
                 dialogPane.getStylesheets().add(
                     getClass().getResource("/CSS/StyleAccess.css").toExternalForm()
                 );
                 dialogPane.getStyleClass().add("my-alert");
-
                 al.showAndWait();
-
                 model.TransizioneScena.switchSceneEffect(Main.stage, "/View/Dashboard.fxml");// Passa alla dashboard
-
                 Main.stage.getProperties().remove("login");
                 Main.stage.centerOnScreen();
                 return;
             }else{               
                 Alert al = new Alert(Alert.AlertType.ERROR);
                 al.setContentText("Esiste gia un bibliotecario");
-                al.setHeaderText("Registrazione fallita");
-           
+                al.setHeaderText("Registrazione fallita");           
                 DialogPane dialogPane = al.getDialogPane();
-
                 dialogPane.getStylesheets().add(
                     getClass().getResource("/CSS/StyleAccess.css").toExternalForm()
                 );
-
                 dialogPane.getStyleClass().add("my-alert");
-
                 al.showAndWait();
                 return;     
             }                     
-        });
-        
+        });        
         LoginButton.setOnAction(e->{   // Azione bottone login
             if(CheckShowPassLogin.isSelected()){
                 PassLogin.setText(PassLoginVisible.getText());               
             }else{
                 PassLoginVisible.setText(PassLogin.getText());                
             }         
-            String password = PassLogin.getText();
-      
+            String password = PassLogin.getText();      
             if(!model.servizi.DataBase.controllaPasswordBibliotecario(password)){
                 Alert al = new Alert(Alert.AlertType.ERROR);
                 al.setContentText("Password sbagliata");
-                al.setHeaderText("La password e sbagliata");
-                             
-                DialogPane dialogPane = al.getDialogPane();
-             
+                al.setHeaderText("La password e sbagliata");                            
+                DialogPane dialogPane = al.getDialogPane();            
                 dialogPane.getStylesheets().add(
                     getClass().getResource("/CSS/StyleAccess.css").toExternalForm()
-                );
-               
-                dialogPane.getStyleClass().add("my-alert");
-              
+                );              
+                dialogPane.getStyleClass().add("my-alert");              
                 al.showAndWait();
                 return;
             }
-
                 model.TransizioneScena.switchSceneEffect(Main.stage, "/View/Dashboard.fxml");// Passa alla dashboard
                 Main.stage.getProperties().remove("login");
                 Main.stage.centerOnScreen();
@@ -270,23 +243,17 @@ public class AccessoController {
  * per ripristinare la direzione alla fine di ogni movimento.
  */
     public void setSliding(){
-        double moving = 325;
-      
+        double moving = 325;     
          if(direction)
-            moving*=-1;     
-        
+            moving*=-1;            
         ts = new TranslateTransition();
-        tr = new TranslateTransition();
-    
+        tr = new TranslateTransition();   
         ts.setByX(moving);
-        tr.setByX(moving);
-        
+        tr.setByX(moving);        
         ts.setNode(Sliding);
-        tr.setNode(RegisterForm);
-        
+        tr.setNode(RegisterForm);        
         ts.setDuration(Duration.millis(slidingTiming));
-        tr.setDuration(Duration.millis(slidingTiming));
-        
+        tr.setDuration(Duration.millis(slidingTiming));       
         direction=!direction; // cambia direzione per prossimo sliding
         ts.setOnFinished(e->setSliding());// loop animazione
         
@@ -316,21 +283,17 @@ public class AccessoController {
             if(yes){
                 PassRegisterVisible.setText(PassRegister.getText());
                 PassRegisterVisible.setVisible(true);
-                PassRegister.setVisible(false);
-                
+                PassRegister.setVisible(false);                
                 PassConRegisterVisible.setText(PassConRegister.getText());
                 PassConRegisterVisible.setVisible(true);
-                PassConRegister.setVisible(false);
-        
+                PassConRegister.setVisible(false);        
             }else{
                 PassRegister.setText(PassRegisterVisible.getText());
                 PassRegisterVisible.setVisible(false);
-                PassRegister.setVisible(true);
-                
+                PassRegister.setVisible(true);                
                 PassConRegister.setText(PassConRegisterVisible.getText());
                 PassConRegisterVisible.setVisible(false);
                 PassConRegister.setVisible(true);
-
             }                       
             }     
     }
@@ -372,8 +335,7 @@ public class AccessoController {
     Timeline timeline = new Timeline();   
     for (int i = 0; i < text.length(); i++) {    
         final int index = i;
-        final String partialText = text.substring(0, index + 1);
-    
+        final String partialText = text.substring(0, index + 1);   
         KeyFrame kf = new KeyFrame(
             Duration.millis(50 * (i + 1)), 
             e -> label.setText(partialText)

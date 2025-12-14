@@ -58,36 +58,29 @@ public class MailController {
  *    sul thread grafico principale, popolando la lista o mostrando un messaggio se vuota.
  */
     private void caricaEmailInviate() {
-        // 1. Mostro un caricamento mentre scarica le mail
+        // Mostro un caricamento mentre scarica le mail
         emailContainer.getChildren().clear(); //pulisco il contenitore
         ProgressIndicator loading = new ProgressIndicator();
         emailContainer.getChildren().add(loading); //mostro la rotellina di caricamento
         lblTotalUsers.setText("Sincronizzazione in corso..."); 
-
-        // 2. Avvio un thread separato (Per non bloccare l'app)
         new Thread(() -> {            
             // Scarica le mail 
             List<EmailInfo> listaEmail = EmailLegge.leggiPostaInviata();
-
-            // 3. Torno al thread grafico per mostrare i risultati
+            // Torno al thread grafico per mostrare i risultati
             Platform.runLater(() -> {
-                emailContainer.getChildren().clear(); // Rimuovo caricamento loading
-                
+                emailContainer.getChildren().clear(); // Rimuovo caricamento loading                
                 //se non ci sono email
                 if (listaEmail == null || listaEmail.isEmpty()) {
                     lblTotalUsers.setText("Nessuna email inviata trovata.");
                     return;
-                }
-                
+                }                
                 //mostro il numero totale
                 lblTotalUsers.setText(listaEmail.size() + " Email Inviate");
-
                 // Aggiungo una card per ogni email
                 for (EmailInfo mail : listaEmail) {
                     aggiungiCardEmail(mail);
                 }
-            });
-            
+            });            
         }).start();
     }
 
@@ -109,68 +102,51 @@ public class MailController {
         riga.setPrefHeight(80); 
         riga.setPadding(new Insets(0, 20, 0, 20)); 
         riga.getStyleClass().add("email-row"); 
-
         //Icona (busta)
         StackPane iconContainer = new StackPane(); // Uso StackPane per centrare automaticamente l'icona
-
         // Blocco le dimensioni per avere un cerchio perfetto (non ovale)
         double size = 45;
         iconContainer.setMinWidth(size);
         iconContainer.setMinHeight(size);
         iconContainer.setPrefSize(size, size);
         iconContainer.setMaxSize(size, size);
-
         // Stile 
         iconContainer.getStyleClass().add("icon-container-purple");
-
         //Icona della mail inviata
         Label iconLabel = new Label("📤");
         iconLabel.setStyle("-fx-font-size: 20px;"); // Aumentato leggermente per riempire meglio
-
         //aggiunta dell'icona al cerchio
         iconContainer.getChildren().add(iconLabel);
-
         //Box informazioni email
         VBox boxInfo = new VBox();
         boxInfo.setAlignment(Pos.CENTER_LEFT);
-        boxInfo.setPrefWidth(400); 
-        
+        boxInfo.setPrefWidth(400);        
         //Oggetto (Titolo) dell'email
         String oggetto = (mail.getOggetto() != null) ? mail.getOggetto() : "(Nessun Oggetto)";
         Label lblOggetto = new Label(oggetto);
-        lblOggetto.getStyleClass().add("row-title");
-        
+        lblOggetto.getStyleClass().add("row-title");        
         // Destinatario
         Label lblDestinatario = new Label("A: " + mail.getDestinatario());
-        lblDestinatario.getStyleClass().add("row-subtitle");
-        
+        lblDestinatario.getStyleClass().add("row-subtitle");        
         boxInfo.getChildren().addAll(lblOggetto, lblDestinatario);
-
         //Box della data
         VBox boxData = new VBox();
         boxData.setAlignment(Pos.CENTER_LEFT);
-        boxData.setPrefWidth(150);
-        
+        boxData.setPrefWidth(150);       
         //formattazione data
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-        String dataStr = (mail.getDataInvio() != null) ? sdf.format(mail.getDataInvio()) : "--/--/----";
-        
+        String dataStr = (mail.getDataInvio() != null) ? sdf.format(mail.getDataInvio()) : "--/--/----";       
         //label "inviata il"
         Label lblDataTitle = new Label("INVIATA IL");
-        lblDataTitle.setStyle("-fx-text-fill: #7f8fa6; -fx-font-size: 9px; -fx-font-weight: bold;");
-        
+        lblDataTitle.setStyle("-fx-text-fill: #7f8fa6; -fx-font-size: 9px; -fx-font-weight: bold;");       
         //valore della data
         Label lblDataValue = new Label(dataStr);
-        lblDataValue.setStyle("-fx-text-fill: #2d3436; -fx-font-weight: bold; -fx-font-size: 12px;");
-        
+        lblDataValue.setStyle("-fx-text-fill: #2d3436; -fx-font-weight: bold; -fx-font-size: 12px;");        
         boxData.getChildren().addAll(lblDataTitle, lblDataValue);
-
         //Spaziatore
         Pane spacer = new Pane();
         HBox.setHgrow(spacer, Priority.ALWAYS);
-
-        riga.getChildren().addAll(iconContainer, boxInfo, boxData, spacer);
-        
+        riga.getChildren().addAll(iconContainer, boxInfo, boxData, spacer);       
         emailContainer.getChildren().add(riga);
     }
 }

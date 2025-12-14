@@ -111,39 +111,31 @@ public class PrestitoRestituzioneController {
         MenuItem m2 = new MenuItem("Solo in corso");
         MenuItem m3 = new MenuItem("Solo in ritardo");
         MenuItem m4 = new MenuItem("Restituiti(Storico)");
-        FilterButton.getItems().addAll(m1,m2,m3,m4);// Aggiungo filtri al menu
-        
+        FilterButton.getItems().addAll(m1,m2,m3,m4);// Aggiungo filtri al menu        
         m1.setOnAction(eh->{// Mostra tutti i prestiti
             FilterButton.setText("Tutti i prestiti");
             updatePrestiti(DataBase.getPrestiti());           
-        });
-        
+        });        
         m2.setOnAction(eh->{// Mostra prestiti in corso
             FilterButton.setText("Solo in corso");
-            ArrayList<Prestito> p = new ArrayList<>();
-            
+            ArrayList<Prestito> p = new ArrayList<>();            
             p.addAll(Prestito.getPrestitiByStato(DataBase.getPrestiti(), Stato.ATTIVO));
             p.addAll(Prestito.getPrestitiByStato(DataBase.getPrestiti(), Stato.IN_RITARDO));
-            p.addAll(Prestito.getPrestitiByStato(DataBase.getPrestiti(), Stato.PROROGATO));
-            
+            p.addAll(Prestito.getPrestitiByStato(DataBase.getPrestiti(), Stato.PROROGATO));            
             updatePrestiti(p);            
-        });
-        
+        });       
         m3.setOnAction(eh->{ // Mostra prestiti in ritardo
   FilterButton.setText("Solo in ritardo");
             updatePrestiti(Prestito.getPrestitiByStato(DataBase.getPrestiti(), Stato.IN_RITARDO));            
-        });
-        
+        });        
         m4.setOnAction(eh->{// Mostra prestiti restituiti (storico)
         FilterButton.setText("Restituiti(Storico)");
             updatePrestiti(Prestito.getPrestitiByStato(DataBase.getPrestiti(), Stato.RESTITUITO));
-        });
-        
+        });        
         searchLoan.textProperty().addListener((a,b,c)->{// Se campo ricerca vuoto, mostra tutti         
              if(searchLoan.getText().trim().equals(""))
                 updatePrestiti(DataBase.getPrestiti());
-         });
-        
+         });        
         searchLoan.setOnKeyPressed(eh->{ // Premendo Enter, esegue ricerca        
             if(eh.getCode()==KeyCode.ENTER) 
                 searchFunction();
@@ -156,16 +148,13 @@ public class PrestitoRestituzioneController {
      *
      * Filtra prestiti per ISBN, titolo libro, matricola, nome o cognome utente.
      */
-    public void searchFunction(){
-    
+    public void searchFunction(){    
         ArrayList<Prestito> prestiti = DataBase.getPrestiti(),app = new ArrayList<>();
-        String text = searchLoan.getText();
-        
+        String text = searchLoan.getText();       
         for(Prestito p : prestiti){
             String isbn = p.getIsbn(),matricola = p.getMatricola();
             Libro l = DataBase.cercaLibro(isbn);
-            Utente u = DataBase.cercaUtente(matricola);
-        
+            Utente u = DataBase.cercaUtente(matricola);       
             // Confronto input con ISBN, titolo, matricola, nome o cognome
             if(isbn.equals(text.trim()) || text.trim().equals(l.getTitolo()) || text.trim().equals(matricola) || text.trim().equals(u.getNome()) 
                     || text.trim().equals(u.getCognome()) )
@@ -183,15 +172,13 @@ public class PrestitoRestituzioneController {
      */
     public void buttonInitialize(){  
         NewLoanButton.setOnAction(eh->{        
-            int totale_prestiti = DataBase.getPrestiti().size();
-            
+            int totale_prestiti = DataBase.getPrestiti().size();           
             if(totale_prestiti>=MAX_LOAN){// Controllo limite massimo prestiti            
             int i = 0;
             ArrayList<Prestito> pre = DataBase.getPrestiti();
             for(Prestito p : pre)
                 if(p.getStato()==Stato.RESTITUITO)
-                    i+=1;// Conto prestiti già restituiti
-                
+                    i+=1;// Conto prestiti già restituiti               
             if(totale_prestiti-i<MAX_LOAN){// Se necessario, rimuovo prestiti vecchi                
                 Alert conf = new Alert(AlertType.CONFIRMATION);
                 conf.setHeaderText("Azione necessaria");
@@ -224,10 +211,8 @@ public class PrestitoRestituzioneController {
                 dialogPane.getStylesheets().add(
                     getClass().getResource("/CSS/StyleAccess.css").toExternalForm()
                 );
-                dialogPane.getStyleClass().add("my-alert");
-                
-                IsbnAlert.showAndWait();
-                
+                dialogPane.getStyleClass().add("my-alert");                
+                IsbnAlert.showAndWait();                
                 return;    
             }     
             }
@@ -288,15 +273,13 @@ private void aggiungiRigaPrestito(String titoloLibro, String isbn, String nomeUt
     riga.setAlignment(Pos.CENTER_LEFT);
     riga.setSpacing(20);
     riga.setPrefHeight(90);
-    riga.setPadding(new Insets(0, 20, 0, 20));
-    
+    riga.setPadding(new Insets(0, 20, 0, 20));   
     // Stili e icone in base allo stato del prestito 
     String rowStyle = "";
     String iconStyle = "";
     String tagStyle = "";
     String iconText = "";
-    String statoText = "";
-      
+    String statoText = "";     
     switch (statoEnum) {
         case IN_RITARDO:
             rowStyle = "loan-row-late";
@@ -331,8 +314,7 @@ private void aggiungiRigaPrestito(String titoloLibro, String isbn, String nomeUt
             statoText = "In Corso";
             break;
     }   
-    riga.getStyleClass().add(rowStyle);
-    
+    riga.getStyleClass().add(rowStyle);    
     // Icona stato prestito
     StackPane iconContainer = new StackPane();
     double size = 45;
@@ -343,9 +325,7 @@ private void aggiungiRigaPrestito(String titoloLibro, String isbn, String nomeUt
     iconContainer.getStyleClass().add(iconStyle);
     Label iconLabel = new Label(iconText);
     iconLabel.setStyle("-fx-font-size: 20px;");
-    iconContainer.getChildren().add(iconLabel);
-
-      
+    iconContainer.getChildren().add(iconLabel);      
     // Box libro
     VBox boxLibro = new VBox();
     boxLibro.setAlignment(Pos.CENTER_LEFT);
@@ -355,7 +335,6 @@ private void aggiungiRigaPrestito(String titoloLibro, String isbn, String nomeUt
     Label lblIsbn = new Label("ISBN: " + isbn);
     lblIsbn.getStyleClass().add("row-subtitle");
     boxLibro.getChildren().addAll(lblTitolo, lblIsbn);
-
     // Box utente
     VBox boxUtente = new VBox();
     boxUtente.setAlignment(Pos.CENTER_LEFT);
@@ -365,67 +344,52 @@ private void aggiungiRigaPrestito(String titoloLibro, String isbn, String nomeUt
     Label lblNomeUtente = new Label(nomeUtente + " (" + matricola + ")");
     lblNomeUtente.setStyle("-fx-text-fill: #2d3436; -fx-font-weight: bold;");
     boxUtente.getChildren().addAll(lblPrestator, lblNomeUtente);
-
     // Box data scadenza
     VBox boxData = new VBox();
     boxData.setAlignment(Pos.CENTER_LEFT);
     boxData.setPrefWidth(150);
     Label lblScadenzaTitle = new Label(statoEnum == Stato.RESTITUITO ? "SCADE IL" : "SCADENZA");
     lblScadenzaTitle.setStyle("-fx-text-fill: #7f8fa6; -fx-font-size: 10px; -fx-font-weight: bold;");
-    Label lblData = new Label(dataScadenza);
-    
+    Label lblData = new Label(dataScadenza);    
     lblData.setStyle(statoEnum == Stato.IN_RITARDO ? "-fx-text-fill: #c0392b; -fx-font-weight: 900;" : "-fx-text-fill: #2d3436; -fx-font-weight: bold;");
-    boxData.getChildren().addAll(lblScadenzaTitle, lblData);
-  
+    boxData.getChildren().addAll(lblScadenzaTitle, lblData); 
     Pane spacer = new Pane();
-    HBox.setHgrow(spacer, Priority.ALWAYS);
-   
+    HBox.setHgrow(spacer, Priority.ALWAYS);  
     Label lblStato = new Label(statoText);
     lblStato.getStyleClass().add(tagStyle);
- 
     HBox actionsBox = new HBox(6);
     actionsBox.setAlignment(Pos.CENTER_RIGHT);
-
     // Pulsante proroga se necessario
      if (statoEnum != Stato.RESTITUITO && LocalDate.now().isAfter(prest.getData_scadenza().minusDays(8))) {       
         Button btnProroga = new Button("⏳"); 
-        btnProroga.getStyleClass().add("icon-button"); 
-        
+        btnProroga.getStyleClass().add("icon-button");     
         // Tooltip per spiegare
         Tooltip ttProroga = new Tooltip("Proroga Scadenza di 15 giorni a partire da adesso");
-
         btnProroga.setTooltip(ttProroga);
-
         btnProroga.setOnAction(e -> {       
             DataBase.prorogaPrestito(isbn, matricola);        
             DataBase.setStatoPrestito(isbn, matricola, Stato.PROROGATO);     
             updatePrestiti(DataBase.getPrestiti());       
         });
         actionsBox.getChildren().add(btnProroga);
-    }
-    
+    }    
     // Pulsante restituzione
     if (statoEnum != Stato.RESTITUITO) {       
         Button btnRestituisci = new Button("RESTITUITO");
-        btnRestituisci.getStyleClass().add("button-outline-success");
-        
+        btnRestituisci.getStyleClass().add("button-outline-success");       
         btnRestituisci.setOnAction(e -> {
             DataBase.restituisci(isbn, matricola);
             DataBase.modificaNum_copie(isbn, true);
             updatePrestiti(DataBase.getPrestiti());
         });
         actionsBox.getChildren().add(btnRestituisci);
-    }
-    
+    }   
     // Pulsante email se ritardo
     if (statoEnum == Stato.IN_RITARDO) {      
         Button btnMail = new Button("📧");
-        btnMail.getStyleClass().add("icon-button-red"); 
-        
+        btnMail.getStyleClass().add("icon-button-red");         
         Tooltip tooltip = new Tooltip("Ricorda a " + DataBase.cercaUtente(matricola).getNome() + " di riconsegnare il libro");
-        btnMail.setTooltip(tooltip);
-
-        
+        btnMail.setTooltip(tooltip);       
         btnMail.setOnAction(eh->{
             ArrayList<Prestito> prestiti = DataBase.getPrestiti();           
             Prestito p = null;
@@ -435,27 +399,23 @@ private void aggiungiRigaPrestito(String titoloLibro, String isbn, String nomeUt
             if(EmailInvia.inviaAvviso(u.getMail(), titoloLibro, u.getNome(), u.getCognome(),p.getInizio_prestito())){            
                 Alert IsbnAlert = new Alert(Alert.AlertType.INFORMATION);
                 IsbnAlert.setHeaderText("Avviso inviato");
-                IsbnAlert.setContentText("Il sistema ha inviato un email all'utente");
-                
+                IsbnAlert.setContentText("Il sistema ha inviato un email all'utente");               
                 DialogPane dialogPane = IsbnAlert.getDialogPane();
                 dialogPane.getStylesheets().add(
                     getClass().getResource("/CSS/StyleAccess.css").toExternalForm()
                 );     
-                dialogPane.getStyleClass().add("my-alert");
-                
+                dialogPane.getStyleClass().add("my-alert");                
                 IsbnAlert.showAndWait();
                 return;
             }else{            
                 Alert IsbnAlert = new Alert(Alert.AlertType.INFORMATION);
                 IsbnAlert.setHeaderText("Errore nell'invio dell'avviso");
-                IsbnAlert.setContentText("L'utente potrebbe aver inserito una mail inesistente");
-                
+                IsbnAlert.setContentText("L'utente potrebbe aver inserito una mail inesistente");               
                 DialogPane dialogPane = IsbnAlert.getDialogPane();
                 dialogPane.getStylesheets().add(
                     getClass().getResource("/CSS/StyleAccess.css").toExternalForm()
                 );       
-                dialogPane.getStyleClass().add("my-alert");
-                
+                dialogPane.getStyleClass().add("my-alert");                
                 IsbnAlert.showAndWait();
                 return; 
             }        
