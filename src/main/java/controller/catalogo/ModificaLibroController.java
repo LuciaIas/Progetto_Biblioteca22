@@ -208,7 +208,8 @@ public class ModificaLibroController {
                 if(nome.equals("") & cognome.equals("")) continue;
                 
                 Autore a = new Autore(nome,cognome,0,null);
-                a.setId(model.servizi.DataBase.getNum_Autori()+1);
+                ArrayList<Autore> autoriii  = DataBase.getAutori();
+                a.setId(autoriii.get(autoriii.size()-1).getId());
                 model.servizi.DataBase.aggiungiAutore(a);
                 autori.add(a);
                 }               
@@ -303,9 +304,10 @@ public class ModificaLibroController {
     private void spinnerInitialize() {
         SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1500, 2100, 2024, 1);
         spinAnno.setValueFactory(valueFactory);
-        
+        spinAnno.getValueFactory().setValue(lib.getAnno_pubblicazione().getValue());
         valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 500, 0, 1);
         spinCopie.setValueFactory(valueFactory);
+        spinCopie.getValueFactory().setValue(lib.getNumero_copieDisponibili());
     }
     
 }
