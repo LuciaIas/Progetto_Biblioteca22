@@ -24,14 +24,12 @@ import static org.testfx.matcher.control.LabeledMatchers.hasText;
 import static org.testfx.matcher.base.NodeMatchers.isVisible;
 
 public class AccessoControllerTest extends ApplicationTest {
-
     private Connection testConnection;
 
     @BeforeEach
     public void setUpDB() throws SQLException {
         testConnection = DriverManager.getConnection("jdbc:h2:mem:testaccessodb;MODE=MySQL;DB_CLOSE_DELAY=-1");
         DataBase.conn = testConnection; 
-
         try (Statement stmt = testConnection.createStatement()) {
             stmt.execute("CREATE TABLE IF NOT EXISTS bibliotecario (password_ VARCHAR(255))");
         }
@@ -52,10 +50,7 @@ public class AccessoControllerTest extends ApplicationTest {
 
     @Override
     public void start(Stage stage) throws Exception {
-
-        Main.stage = stage; 
-       
-
+        Main.stage = stage;
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/Accesso.fxml"));
         Parent root = loader.load();
         stage.setScene(new Scene(root));
@@ -71,48 +66,29 @@ public class AccessoControllerTest extends ApplicationTest {
         verifyThat(".dialog-pane .content", hasText("Password sbagliata"));
         clickOn("OK"); 
     }
-    
  
     @Test
     public void testLoginRiuscito() {
-
         String passwordCorretta = "PasswordSegreta1!";
         DataBase.inserisciBibliotecario(passwordCorretta);
-
-        
         clickOn("#PassLogin").write(passwordCorretta);
         clickOn("#LoginButton");
 
-        
         // Se il login fallisse, apparirebbe un Alert con classe ".dialog-pane".
         // Noi verifichiamo che la lista di dialog-pane trovati sia VUOTA.
-        
-       
-        
         boolean nessunErrore = lookup(".dialog-pane").queryAll().isEmpty();
         assertTrue(nessunErrore, "Il login dovrebbe riuscire senza mostrare finestre di errore");
-        
-
     }
     
 
     @Test
     public void testRegistrazioneRiuscita() {
-       
         clickOn("#SlidingButton");
         sleep(2000); 
-
-       
         String passwordForte = "PasswordSicura1!";
-        
-     
         clickOn("#PassRegister").write(passwordForte);
         clickOn("#PassConRegister").write(passwordForte);
-
-        
         clickOn("#RegisterButton");
-
-
         verifyThat("Registrazione effettuata 🚀", isVisible());
 
 
