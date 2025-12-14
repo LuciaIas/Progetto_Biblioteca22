@@ -2,6 +2,7 @@ La cartella "design" contiene il Documento di Progettazione per il sistema di ge
 
 Contenuto cartella:
 
-DOCUMENTO DI PROGETTAZIONE : Documento di Progettazione in formato pdf.
-DOXYGENPROGETTO : File zip contenente il documento generato da Doxygen.
-Questo file README.md : Descrizione dello scopo della cartella.
+- **DOCUMENTO DI PROGETTAZIONE**: Documento di Progettazione in formato PDF.
+- **DOXYGENPROGETTO**: File zip contenente il documento generato da Doxygen.
+- **README.md**: Descrizione dello scopo della cartella.
+
