@@ -71,8 +71,7 @@ public class LibroTest {
         
         Autore a1 = new Autore("Noci", "diCocco", 1, null);
         Autore a2 = new Autore("Pasquale", "Froc", 2, null);
-
-       
+      
         libro.getAutori().add(a1);
         libro.getAutori().add(a2);
 

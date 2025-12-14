@@ -52,10 +52,8 @@ public class AccessoControllerTest extends ApplicationTest {
 
     @Override
     public void start(Stage stage) throws Exception {
-
         Main.stage = stage; 
        
-
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/Accesso.fxml"));
         Parent root = loader.load();
         stage.setScene(new Scene(root));
@@ -75,55 +73,39 @@ public class AccessoControllerTest extends ApplicationTest {
  
     @Test
     public void testLoginRiuscito() {
-
         String passwordCorretta = "PasswordSegreta1!";
         DataBase.inserisciBibliotecario(passwordCorretta);
-
         
         clickOn("#PassLogin").write(passwordCorretta);
         clickOn("#LoginButton");
-
         
         // Se il login fallisse, apparirebbe un Alert con classe ".dialog-pane".
-        // Noi verifichiamo che la lista di dialog-pane trovati sia VUOTA.
-        
-       
+        // Noi verifichiamo che la lista di dialog-pane trovati sia VUOTA.            
         
         boolean nessunErrore = lookup(".dialog-pane").queryAll().isEmpty();
-        assertTrue(nessunErrore, "Il login dovrebbe riuscire senza mostrare finestre di errore");
-        
-
+        assertTrue(nessunErrore, "Il login dovrebbe riuscire senza mostrare finestre di errore");        
     }
     
 
     @Test
-    public void testRegistrazioneRiuscita() {
-       
+    public void testRegistrazioneRiuscita() {      
         clickOn("#SlidingButton");
         sleep(2000); 
-
        
         String passwordForte = "PasswordSicura1!";
-        
-     
+            
         clickOn("#PassRegister").write(passwordForte);
         clickOn("#PassConRegister").write(passwordForte);
-
         
         clickOn("#RegisterButton");
 
-
         verifyThat("Registrazione effettuata 🚀", isVisible());
-
 
         clickOn("OK");
 
         //VERIFICA DATABASE
- 
         assertTrue(DataBase.controllaEsistenzaBibliotecario(), 
-            "Dopo la registrazione, il bibliotecario deve esistere nel database");
-            
-
+            "Dopo la registrazione, il bibliotecario deve esistere nel database");           
     }
     
 
@@ -138,10 +120,8 @@ public class AccessoControllerTest extends ApplicationTest {
 
         clickOn("#RegisterButton");
 
-
         verifyThat("Registrazione effettuata 🚀", isVisible());
-        
-        
+                
         clickOn("OK");
 
         assertTrue(DataBase.controllaEsistenzaBibliotecario(), "Il bibliotecario dovrebbe essere nel DB finto");

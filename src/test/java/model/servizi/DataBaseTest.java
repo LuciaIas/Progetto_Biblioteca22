@@ -130,8 +130,7 @@ public class DataBaseTest {
     // TEST LIBRI E AUTORI
 
     @Test
-    public void testFlussoInserimentoLibro() {
-    
+    public void testFlussoInserimentoLibro() {    
         Autore autore = new Autore("J.K.", "Rowling", 10, LocalDate.of(1965, 7, 31));
         DataBase.aggiungiAutore(autore);
         
@@ -141,14 +140,11 @@ public class DataBaseTest {
         
         ArrayList<Autore> listaAutori = new ArrayList<>();
         listaAutori.add(autoreDb);
-
         
         Libro libro = new Libro("123", "Harry Potter", "", listaAutori, Year.of(1997), 5, "");
-        
- 
+         
         boolean esito = DataBase.aggiungiLibro(libro);
         assertTrue(esito, "Il libro deve essere salvato correttamente");
-
        
         assertTrue(DataBase.isIsbnPresent("123"));
         assertEquals(5, DataBase.getNumCopieByIsbn("123"));

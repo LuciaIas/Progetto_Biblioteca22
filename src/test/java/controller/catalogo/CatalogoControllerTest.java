@@ -35,31 +35,24 @@ public class CatalogoControllerTest {
 
     private CatalogoController controller;
     
-
     private static final String H2_URL = "jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;MODE=MySQL"; 
     private static final String H2_USER = "sa";
     private static final String H2_PASSWORD = "";
     
     private static Connection h2Connection;
 
-
     @BeforeAll
     public static void setupDatabase() {
         try {
-
             h2Connection = DriverManager.getConnection(H2_URL, H2_USER, H2_PASSWORD);
-
 
             DataBase.conn = h2Connection; 
 
-
             Statement stmt = h2Connection.createStatement();
-
 
             stmt.execute("DROP TABLE IF EXISTS scritto_da");
             stmt.execute("DROP TABLE IF EXISTS libri");
             stmt.execute("DROP TABLE IF EXISTS autori");
-
 
             stmt.execute("CREATE TABLE autori (" +
                     "id INT AUTO_INCREMENT PRIMARY KEY, " +
@@ -86,19 +79,14 @@ public class CatalogoControllerTest {
                     "FOREIGN KEY (isbn) REFERENCES libri(isbn) ON DELETE CASCADE, " + 
                     "FOREIGN KEY (id_autore) REFERENCES autori(id)" +
                     ")");
-
-        
-            
- 
+                 
             stmt.execute("INSERT INTO autori (id, nome, cognome, num_opere, data_nascita) VALUES " +
                     "(1, 'J.R.R.', 'Tolkien', 50, '1892-01-03')");
-
 
             stmt.execute("INSERT INTO libri VALUES " +
                     "('111', 'Il Signore degli Anelli', 'Bompiani', 10, 1954, ''), " +
                     "('222', 'Lo Hobbit', 'Adelphi', 5, 1937, ''), " +
                     "('333', 'Silmarillion', 'Bompiani', 2, 1977, '')");
-
 
             stmt.execute("INSERT INTO scritto_da VALUES ('111', 1), ('222', 1), ('333', 1)");
 
@@ -110,7 +98,6 @@ public class CatalogoControllerTest {
     
     @AfterAll
     public static void tearDownDb() throws SQLException {
-
         if (h2Connection != null && !h2Connection.isClosed()) {
             h2Connection.close();
         }
@@ -118,7 +105,6 @@ public class CatalogoControllerTest {
 
     @Start
     private void start(Stage stage) throws IOException {
-
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/Catalogo.fxml"));
         Scene scene = new Scene(loader.load());
         controller = loader.getController();
@@ -127,60 +113,47 @@ public class CatalogoControllerTest {
     }
     
 
-
     @Test
-    public void testVisualizzazioneIniziale(FxRobot robot) {
-
-        
-        GridPane grid = robot.lookup("#containerLibri").queryAs(GridPane.class);
-        
+    public void testVisualizzazioneIniziale(FxRobot robot) {    
+        GridPane grid = robot.lookup("#containerLibri").queryAs(GridPane.class);        
         assertEquals(4, grid.getChildren().size(), "La griglia deve contenere 3 libri + il tasto aggiungi");
     }
 
     @Test
     public void testRicercaPerIsbn(FxRobot robot) {
-
         TextField searchBar = robot.lookup("#searchBar").queryAs(TextField.class);
         robot.clickOn(searchBar).write("111");
         
-
         robot.clickOn("#btnCerca");
         waitForFxEvents(); 
 
-        GridPane grid = robot.lookup("#containerLibri").queryAs(GridPane.class);
-        
+        GridPane grid = robot.lookup("#containerLibri").queryAs(GridPane.class);        
 
         assertEquals(2, grid.getChildren().size());
     }
 
     @Test
     public void testRicercaPerTitolo(FxRobot robot) {
-
         TextField searchBar = robot.lookup("#searchBar").queryAs(TextField.class);
         robot.clickOn(searchBar).write("Hobbit");
         
-
         robot.type(KeyCode.ENTER);
         waitForFxEvents();
 
         GridPane grid = robot.lookup("#containerLibri").queryAs(GridPane.class);
         
-
         assertEquals(2, grid.getChildren().size());
     }
     
     @Test
     public void testRicercaVuotaReset(FxRobot robot) {
-
         robot.clickOn("#searchBar").write("111");
         robot.clickOn("#btnCerca");
         assertEquals(2, robot.lookup("#containerLibri").queryAs(GridPane.class).getChildren().size());
         
-
         robot.clickOn("#searchBar").eraseText(3);
         waitForFxEvents();
         
-
         assertEquals(4, robot.lookup("#containerLibri").queryAs(GridPane.class).getChildren().size());
     }
     
@@ -188,24 +161,18 @@ public class CatalogoControllerTest {
 
     
     @Test
-    public void testAggiungiCopia(FxRobot robot) {
-       
-
-        
-        GridPane grid = robot.lookup("#containerLibri").queryAs(GridPane.class);
-        
+    public void testAggiungiCopia(FxRobot robot) {       
+        GridPane grid = robot.lookup("#containerLibri").queryAs(GridPane.class);        
 
         Node cardLibro = grid.getChildren().get(0);
 
-        robot.moveTo(cardLibro);
-        
+        robot.moveTo(cardLibro);       
 
         Node n = robot.from(cardLibro).lookup(".button").match(hasText("+")).query();
         robot.clickOn(n);
         
         waitForFxEvents(); 
         
-
         int copieNelDb = DataBase.getNumCopieByIsbn("111");
         assertEquals(11, copieNelDb, "Le copie dovrebbero essere passate da 10 a 11");
     }
@@ -213,21 +180,16 @@ public class CatalogoControllerTest {
 
     @Test
     public void testRimuoviCopia(FxRobot robot) {
-
         GridPane grid = robot.lookup("#containerLibri").queryAs(GridPane.class);
         
-
         Node cardLibro = grid.getChildren().get(1);
-
-        
+       
         robot.moveTo(cardLibro);
-
       
         Node n = robot.from(cardLibro).lookup(".button").match(hasText("-")).query();
         robot.clickOn(n);
         waitForFxEvents();
-
-       
+      
         int copieNelDb = DataBase.getNumCopieByIsbn("222");
         assertEquals(4, copieNelDb, "Le copie dovrebbero essere passate da 5 a 4");
     }
@@ -235,29 +197,22 @@ public class CatalogoControllerTest {
 
     @Test
     public void testEliminaLibro(FxRobot robot) {
-
         GridPane grid = robot.lookup("#containerLibri").queryAs(GridPane.class);
-
 
         int sizeIniziale = grid.getChildren().size();
         assertEquals(4, sizeIniziale);
 
-
         Node cardLibro = grid.getChildren().get(2);
-
        
         robot.moveTo(cardLibro);
-
         
         Node n = robot.from(cardLibro).lookup(".button").match(hasText("Elimina")).query();
         robot.clickOn(n);
 
-
         robot.clickOn("OK"); 
         
         waitForFxEvents();
-        
-      
+             
         int sizeFinale = grid.getChildren().size();
          
         assertEquals(false, DataBase.isIsbnPresent("333"), "Il libro 333 deve essere rimosso dal DB");
@@ -268,19 +223,14 @@ public class CatalogoControllerTest {
     
     @Test
     public void testAperturaFinestraModifica(FxRobot robot) {
-
         GridPane grid = robot.lookup("#containerLibri").queryAs(GridPane.class);
         Node cardLibro = grid.getChildren().get(0); 
-
        
         robot.moveTo(cardLibro);
 
-
         Node btnModifica = robot.from(cardLibro).lookup(".button").match(hasText("Modifica")).query();
         
-
         robot.clickOn(btnModifica);
-
 
         Window finestraModifica = robot.window("Modifica Libro");
 

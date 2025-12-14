@@ -51,7 +51,6 @@ public class EmailInviaTest {
         modifiersField.setAccessible(true);
         modifiersField.setInt(field, field.getModifiers() & ~Modifier.FINAL);
 
-
         field.set(null, value);
     }
 

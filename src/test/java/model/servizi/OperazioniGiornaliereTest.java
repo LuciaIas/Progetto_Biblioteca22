@@ -47,7 +47,6 @@ public class OperazioniGiornaliereTest {
     //abbiamo saltato il test notifica (considerandolo banale e effort inutile)
     @Test
     public void testControlliAutomatici_RilevaRitardo() throws SQLException {
-
         String isbn = "1111111111111";
         String matricola = "1111111111";
         LocalDate ieri = LocalDate.now().minusDays(1); // Scaduto ieri
@@ -59,11 +58,10 @@ public class OperazioniGiornaliereTest {
         PreparedStatement pstmt = testConnection.prepareStatement(sql);
         pstmt.setDate(1, Date.valueOf(ieri));
         pstmt.execute();
-
         
         OperazioniGiornaliere.eseguiControlliAutomatici(true);
 
-        // 3. VERIFICA
+        //Verifica
         ArrayList<Prestito> prestiti = DataBase.getPrestiti();
         assertNotNull(prestiti);
         assertEquals(1, prestiti.size());
@@ -79,34 +77,29 @@ public class OperazioniGiornaliereTest {
         
         String sql = "INSERT INTO prestito (isbn, matricola, data_inizio, stato_prestito, data_scadenza) VALUES " +
                      "('1111111111111', '1111111111', CURRENT_DATE, 'ATTIVO', ?)";
-        
-        
+                
         PreparedStatement pstmt = testConnection.prepareStatement(sql);
         pstmt.setDate(1, Date.valueOf(domani));
         pstmt.execute();
-
-        
+     
         OperazioniGiornaliere.eseguiControlliAutomatici(true);
 
-        // VERIFICA
+        // Verifica
         ArrayList<Prestito> prestiti = DataBase.getPrestiti();
         assertEquals(Stato.ATTIVO, prestiti.get(0).getStato(), "Il prestito non scaduto deve rimanere ATTIVO");
     }
 
 
     @Test
-    public void testCalcolaRitardoVersoMezzanotte() throws Exception {
-  
+    public void testCalcolaRitardoVersoMezzanotte() throws Exception {  
         Method method = OperazioniGiornaliere.class.getDeclaredMethod("calcolaRitardoVersoMezzanotte");
         method.setAccessible(true);
 
         long secondi = (long) method.invoke(null); // Metodo statico, quindi null come oggetto
 
-
         assertTrue(secondi >= 0, "I secondi non possono essere negativi");
         assertTrue(secondi <= 86400, "I secondi non possono superare le 24 ore");
         
-
     }
     
     @Test
