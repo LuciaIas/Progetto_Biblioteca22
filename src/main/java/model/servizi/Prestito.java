@@ -24,7 +24,6 @@ public class Prestito {
     private LocalDate data_scadenza;
     private Stato stato;
 
-    
     /**
      * @brief Costruttore della classe Prestito.
      * @param isbn ISBN del libro
@@ -43,7 +42,6 @@ public class Prestito {
         this.data_scadenza = data_scadenza;
     }
 
- 
     /**
      * @brief Restituisce una lista di prestiti filtrata per stato.
      * @param p Lista di prestiti da filtrare
@@ -130,5 +128,4 @@ public class Prestito {
     public String toString() {
         return "Prestito{" + "isbn=" + isbn + ", matricola=" + matricola + ", inizio_prestito=" + inizio_prestito + ", restituzione=" + restituzione + ", data_scadenza=" + data_scadenza + ", stato=" + stato + '}';
     }
-  
 }
