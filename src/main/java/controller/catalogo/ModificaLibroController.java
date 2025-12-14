@@ -138,8 +138,8 @@ public class ModificaLibroController {
         txtTitolo.setText(lib.getTitolo());
         txtEditore.setText(lib.getEditore());
         ArrayList<Autore> aut = new ArrayList(); aut.addAll(lib.getAutori());
-        updateAutori(aut); //SETTING AUTORI
-        spinnerInitialize(); //SETTING SPINNER
+        updateAutori(aut); 
+        spinnerInitialize(); 
         buttonInitialize();       
     }
     
@@ -249,8 +249,7 @@ public class ModificaLibroController {
                 
                 IsbnAlert.showAndWait();
             return;                                   
-              }
-             
+              }             
             // Chiudo la finestra dopo il salvataggio   
              Stage s = (Stage) SalvaButton.getScene().getWindow();
              s.close();       
@@ -258,8 +257,6 @@ public class ModificaLibroController {
      
     }
     
-    //AGGIORNAMENTO AUTORI
-
     /**
      * @brief Aggiorna il menu degli autori.
      *
@@ -278,14 +275,13 @@ public class ModificaLibroController {
             for(Autore a1 : aut)
                 if(a1.getId()==a.getId()){
                     checkBox.setSelected(true);break;
-                }
-            // Aggiungo 4 TextField vuoti per nuovi autori
+                }          
             CustomMenuItem it = new CustomMenuItem(checkBox);
             it.setHideOnClick(false);
             menuAutori.getItems().add(it);        
         }
         CustomMenuItem[] altro = new CustomMenuItem[4];
-        for(int i=0;i<4;i++){
+        for(int i=0;i<4;i++){// Aggiungo 4 TextField vuoti per nuovi autori
         TextField altroAut = new TextField();
         altroAut.setPromptText("Nome Cognome");
         altro[i] = new CustomMenuItem(altroAut);

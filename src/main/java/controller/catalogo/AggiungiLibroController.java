@@ -109,8 +109,8 @@ public class AggiungiLibroController {
         Image img = new Image(getClass().getResourceAsStream("/Images/default.jpg"));
         imgAnteprima.setImage(img);
         urlIM = "/Images/default.jpg";
-        updateAutori(); //SETTING AUTORI
-        spinnerInitialize(); //SETTING SPINNER
+        updateAutori(); 
+        spinnerInitialize(); 
         buttonInitialize();   
     }
     
@@ -206,7 +206,7 @@ public class AggiungiLibroController {
                 TextField txt = (TextField) i.getContent();
                 if(DataBase.getNum_Autori()>=MAX_AUTORS && !txt.getText().trim().equals("")){
                 
-                     Alert IsbnAlert = new Alert(AlertType.ERROR);
+                Alert IsbnAlert = new Alert(AlertType.ERROR);
                 IsbnAlert.setHeaderText("Errore creazione libro");
                 IsbnAlert.setContentText("Ci sono troppi autori inseriti nel sistema");
                 
@@ -285,7 +285,7 @@ public class AggiungiLibroController {
                 
                 AL.showAndWait();
               }                            
-              updateAutori();// aggiorno menu autori
+              updateAutori();
               if(DataBase.getCatalogo().getLibri().size()>=CatalogoController.MAX_BOOKS){
             
                  Alert IsbnAlert = new Alert(AlertType.ERROR);
@@ -324,7 +324,7 @@ public class AggiungiLibroController {
             menuAutori.getItems().add(it);       
         }
         CustomMenuItem[] altro = new CustomMenuItem[4];
-        for(int i=0;i<4;i++){// Campi per inserire nuovi autori (max 4)
+        for(int i=0;i<4;i++){
         TextField altroAut = new TextField();
         altroAut.setPromptText("Nome Cognome");
         altro[i] = new CustomMenuItem(altroAut);
@@ -341,11 +341,11 @@ public class AggiungiLibroController {
      * - `spinCopie`: da 0 a 500, default 0
      */
     private void spinnerInitialize() { 
-        SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1500, 2100, 2024, 1);//spinAnno: da 1500 a 2100, default 2024
+        SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1500, 2100, 2024, 1);
 
         spinAnno.setValueFactory(valueFactory);
         
-        valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 500, 0, 1);//spinCopie: da 0 a 500, default 0
+        valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 500, 0, 1);
         spinCopie.setValueFactory(valueFactory);
     }
     

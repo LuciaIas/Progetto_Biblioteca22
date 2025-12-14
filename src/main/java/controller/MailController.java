@@ -58,19 +58,18 @@ public class MailController {
  *    sul thread grafico principale, popolando la lista o mostrando un messaggio se vuota.
  */
     private void caricaEmailInviate() {
-        // 1. Mostra un caricamento mentre scarica le mail
+        // 1. Mostro un caricamento mentre scarica le mail
         emailContainer.getChildren().clear(); //pulisco il contenitore
         ProgressIndicator loading = new ProgressIndicator();
         emailContainer.getChildren().add(loading); //mostro la rotellina di caricamento
-        lblTotalUsers.setText("Sincronizzazione in corso..."); //aggiorno la label per dire che sta scaricando le email
+        lblTotalUsers.setText("Sincronizzazione in corso..."); 
 
-        // 2. Avvia un thread separato (Per non bloccare l'app)
-        new Thread(() -> {
-            
-            // Scarica le mail (operazione lenta)
+        // 2. Avvio un thread separato (Per non bloccare l'app)
+        new Thread(() -> {            
+            // Scarica le mail 
             List<EmailInfo> listaEmail = EmailLegge.leggiPostaInviata();
 
-            // 3. Torna al thread grafico per mostrare i risultati
+            // 3. Torno al thread grafico per mostrare i risultati
             Platform.runLater(() -> {
                 emailContainer.getChildren().clear(); // Rimuovo caricamento loading
                 
@@ -96,7 +95,7 @@ public class MailController {
  * @brief Crea e aggiunge la card di una singola email alla lista.
  *
  * Costruisce programmaticamente un HBox contenente:
- * - Icona (StackPane con cerchio e emoji 📤)
+ * - Icona (StackPane con cerchio e emoji)
  * - Oggetto e Destinatario dell'email
  * - Data di invio formattata
  *
@@ -104,11 +103,11 @@ public class MailController {
  */
     private void aggiungiCardEmail(EmailInfo mail) {
         // Riga card
-        HBox riga = new HBox(); //elementi disposti in orizzontale
-        riga.setAlignment(Pos.CENTER_LEFT); //allineati a sinistra
-        riga.setSpacing(20); //spaziatura orizzontale tra gli elementi
-        riga.setPrefHeight(80); //altezza della card
-        riga.setPadding(new Insets(0, 20, 0, 20)); //margini interni
+        HBox riga = new HBox(); 
+        riga.setAlignment(Pos.CENTER_LEFT); 
+        riga.setSpacing(20); 
+        riga.setPrefHeight(80); 
+        riga.setPadding(new Insets(0, 20, 0, 20)); 
         riga.getStyleClass().add("email-row"); 
 
         //Icona (busta)
@@ -128,15 +127,13 @@ public class MailController {
         Label iconLabel = new Label("📤");
         iconLabel.setStyle("-fx-font-size: 20px;"); // Aumentato leggermente per riempire meglio
 
-        // StackPane centra automaticamente il figlio.
-
         //aggiunta dell'icona al cerchio
         iconContainer.getChildren().add(iconLabel);
 
         //Box informazioni email
         VBox boxInfo = new VBox();
         boxInfo.setAlignment(Pos.CENTER_LEFT);
-        boxInfo.setPrefWidth(400); // Spazio abbondante
+        boxInfo.setPrefWidth(400); 
         
         //Oggetto (Titolo) dell'email
         String oggetto = (mail.getOggetto() != null) ? mail.getOggetto() : "(Nessun Oggetto)";
@@ -172,10 +169,8 @@ public class MailController {
         Pane spacer = new Pane();
         HBox.setHgrow(spacer, Priority.ALWAYS);
 
-        //Aggiunta degli elementi all'HBox finale
         riga.getChildren().addAll(iconContainer, boxInfo, boxData, spacer);
         
-        //aggiunta al cointainer principale
         emailContainer.getChildren().add(riga);
     }
 }

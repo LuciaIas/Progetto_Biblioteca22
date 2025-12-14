@@ -31,22 +31,22 @@ import javafx.stage.Stage;
 public class AggiungiUtenteController {
     
     @FXML
-    private TextField txtMatricola; //campo di testo per la matricola
+    private TextField txtMatricola; 
     
     @FXML
-    private TextField txtNome; //campo di input per nome
+    private TextField txtNome; 
     
     @FXML
-    private TextField txtCognome; //campo di input per cognome
+    private TextField txtCognome; 
     
     @FXML
-    private TextField txtEmail; //campo di input per email
+    private TextField txtEmail; 
     
     @FXML
-    private Button AnnullaButton; //pulsante "Annulla"
+    private Button AnnullaButton; 
     
     @FXML
-    private Button SalvaButton; //pulsante "Salva"
+    private Button SalvaButton; 
     
     
     /**
@@ -79,7 +79,7 @@ public class AggiungiUtenteController {
     public void buttonInitialize(){
         AnnullaButton.setOnAction(eh->{Stage s = (Stage) AnnullaButton.getScene().getWindow();s.close();});
         SalvaButton.setOnAction(eh->{  //pulsante salva
-            String matricola = txtMatricola.getText().trim(); //controllo matricola
+            String matricola = txtMatricola.getText().trim(); 
             
             //CONTROLLI SUI CAMPI
             if(matricola.trim().length()!=10){
@@ -155,7 +155,7 @@ public class AggiungiUtenteController {
             
             //controllo email
             String mail = txtEmail.getText().trim();
-            if(!model.servizi.ControlloFormato.controlloFormatoEmail(mail)){ //verifico formato
+            if(!model.servizi.ControlloFormato.controlloFormatoEmail(mail)){ 
             Alert IsbnAlert = new Alert(Alert.AlertType.WARNING);
                 IsbnAlert.setHeaderText("Email non valida");
                 IsbnAlert.setContentText("L'e-mail deve essere del formato \"xxx@xx.xxx\" ");                
@@ -206,8 +206,8 @@ public class AggiungiUtenteController {
                 );
                 dialogPane1.getStyleClass().add("my-alert");       
                 rt.showAndWait();
-                Stage opp = (Stage)SalvaButton.getScene().getWindow(); //chiudo la finestra di aggiunta utente
-                opp.close();
+                Stage opp = (Stage)SalvaButton.getScene().getWindow(); 
+                opp.close();//chiudo la finestra di aggiunta utente
                 }
             return;       
             }

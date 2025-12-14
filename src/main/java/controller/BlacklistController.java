@@ -41,16 +41,16 @@ import javafx.util.Duration;
 public class BlacklistController {
     
     @FXML
-    private VBox blacklistContainer;//contenitore grafico della lista utenti bloccati
+    private VBox blacklistContainer;
     
     @FXML
-    private Label lblTotalBlocked;//etichetta che mostra il numero totale di utenti bloccati
+    private Label lblTotalBlocked;
        
     @FXML
-    private Button UnLockAllButton;//bottone per sbloccare tutti gli utenti
+    private Button UnLockAllButton;
        
     @FXML
-    private TextField searchUser;//campo di ricerca utenti
+    private TextField searchUser;
     
     
   /**
@@ -184,7 +184,7 @@ public class BlacklistController {
         iconContainer.setMinWidth(size);
         iconContainer.setMinHeight(size);
         iconContainer.setPrefSize(size, size);
-        iconContainer.setMaxSize(size, size); // Impedisce che si allarghi e diventi ovale
+        iconContainer.setMaxSize(size, size); // Impedisco che si allarghi e diventi ovale
 
         // Stile 
         iconContainer.getStyleClass().add("icon-container-red");
@@ -287,7 +287,6 @@ public class BlacklistController {
             btnAction
         );
 
-        // Aggiunge la riga al contenitore verticale dell'interfaccia
         blacklistContainer.getChildren().add(riga);
     }
     

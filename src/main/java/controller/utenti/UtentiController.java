@@ -41,9 +41,6 @@ import model.Configurazione;
 /**
  * @brief Controller principale per la gestione degli utenti.
  *
- * Questa classe gestisce la schermata di amministrazione utenti, fornendo funzionalità
- * complete di visualizzazione, ricerca, filtraggio e gestione operativa.
- *
  * Funzionalità principali:
  * - Visualizzare tutti gli utenti iscritti con informazioni anagrafiche e stato.
  * - Filtrare gli utenti per stato: attivi, bloccati o tutti.
@@ -52,7 +49,6 @@ import model.Configurazione;
  * - Modificare, eliminare o bloccare/sbloccare utenti direttamente dalla lista.
  *
  * Ogni utente è rappresentato da una "card" visiva all'interno del `VBox` principale.
- * Gli alert e le notifiche sono personalizzati tramite CSS.
  *
  * @author gruppo22
  */
@@ -61,10 +57,10 @@ public class UtentiController {
     private VBox usersContainer; //Contenitore verticale dove vengono aggiunte le card degli utenti
     
     @FXML
-    private Button btnAddUser; //pulsante per aprire la finestra di aggiunta di un nuovo utente
+    private Button btnAddUser;
     
     @FXML
-    private Label lblTotalUsers; //label che mostra il numero totale di utenti registrati
+    private Label lblTotalUsers; 
     
     @FXML
     private MenuButton FilterButton; //menu a tendina per filtrare gli utenti (tutti/attivi/bloccati)
@@ -195,7 +191,7 @@ public class UtentiController {
                 IsbnAlert.showAndWait();
                 return;
             }else{
-                //apro finestra aggiunta utente
+            //apro finestra aggiunta utente
             Stage stage = new Stage();
             stage.setTitle("Aggiungi Utente");
             stage.setResizable(false);
@@ -243,9 +239,7 @@ public class UtentiController {
      * @param email Email
      * @param isBlacklisted Stato (true se bloccato)
      */
-    private void aggiungiCardUtente(String nome, String cognome, String matricola, String email, boolean isBlacklisted) {
-        //creazione card utente
-        
+    private void aggiungiCardUtente(String nome, String cognome, String matricola, String email, boolean isBlacklisted) {       
         // 1. CREAZIONE RIGA PRINCIPALE (HBox)
         HBox riga = new HBox();
         riga.setAlignment(Pos.CENTER_LEFT);
@@ -263,16 +257,16 @@ public class UtentiController {
         // 2. ICONA
         StackPane iconContainer = new StackPane();
 
-        // Definisci la grandezza del cerchio (es. 45px)
+        // Definisco la grandezza del cerchio 
         double size = 45;
 
         // BLOCCO LE DIMENSIONI: Larghezza e Altezza DEVONO essere uguali
         iconContainer.setMinWidth(size);
         iconContainer.setMinHeight(size);
         iconContainer.setPrefSize(size, size);
-        iconContainer.setMaxSize(size, size); // Impedisce che si allarghi e diventi ovale
+        iconContainer.setMaxSize(size, size); // Impedisco che si allarghi e diventi ovale
 
-        // Stile (assicurati che nel CSS ci sia -fx-background-radius: 50%;)
+        // Stile 
         iconContainer.getStyleClass().add(isBlacklisted ? "icon-container-red" : "icon-container-blue");
 
         Label iconLabel = new Label(isBlacklisted ? "🚫" : "👤");
@@ -386,6 +380,6 @@ public class UtentiController {
             btnDelete,
             btnAction
         );
-        usersContainer.getChildren().add(riga);// Aggiungo la riga al contenitore verticale dell'interfaccia
+        usersContainer.getChildren().add(riga);
     }
 }

@@ -93,11 +93,11 @@ public class InserisciPasswordModificaController {
                 err.showAndWait();
                 return;// Termino funzione se campo vuoto
             }    
-                if(DataBase.controllaPasswordBibliotecario(pass)){// Controllo se la password inserita corrisponde a quella del bibliotecario           
+                if(DataBase.controllaPasswordBibliotecario(pass)){         
             Stage PassRec = new Stage();// Creo nuova finestra per cambio password
                 PassRec.setTitle("Modifica Password");
                 PassRec.setResizable(false);// Non ridimensionabile
-                PassRec.initModality(Modality.APPLICATION_MODAL);// Finestra modale
+                PassRec.initModality(Modality.APPLICATION_MODAL);
             try {
                  // Imposto la scena della nuova finestra
                 PassRec.setScene(new Scene(FXMLLoader.load(getClass().getResource("/View/CambioPassword.fxml"))));// Carico l'interfaccia grafica del cambio password
