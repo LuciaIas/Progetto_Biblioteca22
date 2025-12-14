@@ -28,17 +28,20 @@ public class BlacklistControllerTest extends ApplicationTest {
     private Connection testConnection;
 
 
-    public void setUpDB() throws SQLException {       
+    public void setUpDB() throws SQLException {
+        
         testConnection = DriverManager.getConnection("jdbc:h2:mem:testblacklistdb;MODE=MySQL;DB_CLOSE_DELAY=-1");
         DataBase.conn = testConnection;
 
-        try (Statement stmt = testConnection.createStatement()) {            
+        try (Statement stmt = testConnection.createStatement()) {
+            
             stmt.execute("CREATE TABLE IF NOT EXISTS utenti (" +
                     "matricola VARCHAR(20) PRIMARY KEY, " +
                     "nome VARCHAR(50), " +
                     "cognome VARCHAR(50), " +
                     "mail VARCHAR(50), " +
                     "Bloccato BOOLEAN)");
+
 
             stmt.execute("INSERT INTO utenti VALUES ('1', 'Pasquale', 'Giovane', 'mail1@test.com', true)");
             
@@ -49,7 +52,8 @@ public class BlacklistControllerTest extends ApplicationTest {
     }
 
     @AfterEach
-    public void tearDown() throws Exception {      
+    public void tearDown() throws Exception {
+       
         if (testConnection != null && !testConnection.isClosed()) {
             try (Statement stmt = testConnection.createStatement()) {
                 stmt.execute("DROP ALL OBJECTS");
@@ -63,6 +67,7 @@ public class BlacklistControllerTest extends ApplicationTest {
 
     @Override
     public void start(Stage stage) throws Exception {
+
         setUpDB();
         testConnection = DriverManager.getConnection("jdbc:h2:mem:testblacklistdb;MODE=MySQL;DB_CLOSE_DELAY=-1");
         DataBase.conn = testConnection;
@@ -85,7 +90,9 @@ public class BlacklistControllerTest extends ApplicationTest {
 
     //CARICAMENTO INIZIALE
     @Test
-    public void testInizializzazioneLista() {       
+    public void testInizializzazioneLista() {
+
+        
         // Cerchiamo il contenitore VBox (fx:id="blacklistContainer")
         VBox container = lookup("#blacklistContainer").query();
         
@@ -99,31 +106,39 @@ public class BlacklistControllerTest extends ApplicationTest {
 
     //RICERCA 
     @Test
-    public void testRicercaUtente() {        
+    public void testRicercaUtente() {
+        
         clickOn("#searchUser").write("Sistemone");
-               
+        
+        
         press(KeyCode.ENTER).release(KeyCode.ENTER);
 
         // Ora la lista deve contenere solo 1 elemento 
         VBox container = lookup("#blacklistContainer").query();
         assertEquals(1, container.getChildren().size(), "La ricerca deve filtrare e mostrare solo 1 utente");
         
+
         verifyThat("Sistemone Pazzo", isVisible());
     }
 
     //SBLOCCO SINGOLO UTENTE
-    @Test
-    public void testSbloccaSingolo() {       
+@Test
+    public void testSbloccaSingolo() {
+        
         clickOn("#searchUser").write("Pasquale");
         press(KeyCode.ENTER).release(KeyCode.ENTER);
 
+
         clickOn("SBLOCCA");
+
 
         model.dataclass.Utente utenteDb = DataBase.cercaUtente("1");
         assertFalse(utenteDb.isBloccato(), "L'utente Pasquale deve essere stato sbloccato nel DB");
 
+
         VBox container = lookup("#blacklistContainer").query();
         assertEquals(1, container.getChildren().size(), "La lista deve aggiornarsi mostrando gli altri utenti bloccati");
+
     }
 
     //SBLOCCA TUTTI
@@ -135,6 +150,7 @@ public class BlacklistControllerTest extends ApplicationTest {
         // VERIFICA DATABASE
         assertFalse(DataBase.cercaUtente("1").isBloccato());
         assertFalse(DataBase.cercaUtente("2").isBloccato());
+
 
         // Il contenitore deve essere vuoto
         VBox container = lookup("#blacklistContainer").query();

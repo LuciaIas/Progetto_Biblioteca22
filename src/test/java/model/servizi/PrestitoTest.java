@@ -31,6 +31,7 @@ public class PrestitoTest {
     public void testFiltroPrestitiByStato() {
         ArrayList<Prestito> listaMista = new ArrayList<>();
         LocalDate data = LocalDate.now();
+
         
         Prestito p1 = new Prestito("ISBN1", "M1", data, null, Stato.ATTIVO, data);
         Prestito p2 = new Prestito("ISBN2", "M2", data, data, Stato.RESTITUITO, data);

@@ -39,7 +39,9 @@ public class NotificaControllerTest extends ApplicationTest {
 
     @Override
     public void start(Stage stage) throws Exception {
+
         initDB();
+
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/Notifica.fxml"));
         Parent root = loader.load();
@@ -52,16 +54,21 @@ public class NotificaControllerTest extends ApplicationTest {
     private void initDB() throws SQLException {
         testConnection = DriverManager.getConnection("jdbc:h2:mem:testnotificadb;MODE=MySQL;DB_CLOSE_DELAY=-1");
         DataBase.conn = testConnection;
+
         try (Statement stmt = testConnection.createStatement()) {
+
             stmt.execute("CREATE TABLE IF NOT EXISTS prestito (" +
                     "isbn VARCHAR(20), matricola VARCHAR(20), " +
                     "data_inizio DATE, data_restituzione DATE, " +
                     "stato_prestito VARCHAR(20), data_scadenza DATE)");
 
+
             stmt.execute("INSERT INTO prestito VALUES ('111', 'U1', CURRENT_DATE, NULL, 'IN_RITARDO', CURRENT_DATE)");
             
+
             stmt.execute("INSERT INTO prestito VALUES ('222', 'U2', CURRENT_DATE, NULL, 'IN_RITARDO', CURRENT_DATE)");
             
+
             stmt.execute("INSERT INTO prestito VALUES ('333', 'U3', CURRENT_DATE, NULL, 'ATTIVO', CURRENT_DATE)");
         }
     }
@@ -69,10 +76,12 @@ public class NotificaControllerTest extends ApplicationTest {
 
     @Test
     public void testMessaggioNotifica() {
+
         verifyThat("#numRit", (Label label) -> {
             String testo = label.getText();
             System.out.println("Testo trovato nella notifica: " + testo);
             
+
             return testo.contains("Ci sono 2 prestiti scaduti");
         });
     }

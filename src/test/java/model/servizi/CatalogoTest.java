@@ -73,8 +73,10 @@ public class CatalogoTest {
         catalogo.aggiungiLibro(lZ);
         catalogo.aggiungiLibro(lA);
         catalogo.aggiungiLibro(lM);
+
        
         catalogo.sort();
+
        
         List<Libro> libri = catalogo.getLibri();
         assertEquals("Abc", libri.get(0).getTitolo());

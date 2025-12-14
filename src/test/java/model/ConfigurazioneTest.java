@@ -33,6 +33,7 @@ public class ConfigurazioneTest {
 
     @Test
     public void testDefaultValoriNumerici() {
+
         assertEquals(5000, Configurazione.getMaxUsers(), "Default max users dovrebbe essere 5000");
         assertEquals(2000, Configurazione.getMaxBooks(), "Default max books dovrebbe essere 2000");
         assertEquals(10000, Configurazione.getMaxLoans(), "Default max loans dovrebbe essere 10000");
@@ -43,6 +44,7 @@ public class ConfigurazioneTest {
 
     @Test
     public void testDefaultOrari() {
+
         int[] open = Configurazione.getTimeOpen();
         assertEquals(7, open[0]);
         assertEquals(0, open[1]);
@@ -55,6 +57,7 @@ public class ConfigurazioneTest {
 
     @Test
     public void testDefaultEmailNull() {
+
         assertNull(Configurazione.getEmailUsername());
         assertNull(Configurazione.getPasswordSender());
         assertNull(Configurazione.getPasswordReceiver());
@@ -64,11 +67,14 @@ public class ConfigurazioneTest {
 
     @Test
     public void testValoriCaricatiCorrettamente() throws Exception {
+
         impostaValoreFinto("app.max_users", "100");
         impostaValoreFinto("app.max_books", "50");
 
+
         assertEquals(100, Configurazione.getMaxUsers());
         assertEquals(50, Configurazione.getMaxBooks());
+
         assertEquals(10000, Configurazione.getMaxLoans()); 
     }
 
@@ -82,7 +88,8 @@ public class ConfigurazioneTest {
     }
 
     @Test
-    public void testOrariPersonalizzati() throws Exception { 
+    public void testOrariPersonalizzati() throws Exception {
+ 
         impostaValoreFinto("time.open.hour", "9");
         impostaValoreFinto("time.open.minute", "30");
 
@@ -95,7 +102,9 @@ public class ConfigurazioneTest {
 
     @Test
     public void testErroreFormatoNumero() throws Exception {
+
         impostaValoreFinto("app.max_users", "ciao");
+
 
         assertThrows(NumberFormatException.class, () -> {
             Configurazione.getMaxUsers();

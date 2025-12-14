@@ -30,7 +30,7 @@ public class AggiungiLibroControllerTest extends ApplicationTest {
 
     private Connection testConnection;
 
-    @AfterEach
+@AfterEach
     public void tearDown() throws Exception {
         if (testConnection != null && !testConnection.isClosed()) {
             try (Statement stmt = testConnection.createStatement()) {
@@ -42,6 +42,7 @@ public class AggiungiLibroControllerTest extends ApplicationTest {
             testConnection.close();
         }
         
+
         FxToolkit.hideStage();
         FxToolkit.cleanupStages(); 
         release(new KeyCode[]{});
@@ -50,6 +51,7 @@ public class AggiungiLibroControllerTest extends ApplicationTest {
 
     @Override
     public void start(Stage stage) throws Exception {
+
         initDB();
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/AggiungiLibro.fxml"));
@@ -60,11 +62,13 @@ public class AggiungiLibroControllerTest extends ApplicationTest {
         stage.toFront();
     }
 
-    private void initDB() throws SQLException {   
+private void initDB() throws SQLException {
+   
         testConnection = DriverManager.getConnection("jdbc:h2:mem:testaggiungilibro;MODE=MySQL;DB_CLOSE_DELAY=-1");
         DataBase.conn = testConnection;
 
         try (Statement stmt = testConnection.createStatement()) {
+
             stmt.execute("CREATE TABLE IF NOT EXISTS autori (" +
                     "id INT PRIMARY KEY AUTO_INCREMENT, " + 
                     "nome VARCHAR(50), cognome VARCHAR(50), " +
@@ -82,7 +86,9 @@ public class AggiungiLibroControllerTest extends ApplicationTest {
                     "FOREIGN KEY (isbn) REFERENCES libri(isbn) ON DELETE CASCADE, " +
                     "FOREIGN KEY (id_autore) REFERENCES autori(id) ON DELETE CASCADE)");
 
-            stmt.execute("INSERT INTO autori (nome, cognome) VALUES ('Mario', 'Rossi')");            
+
+            stmt.execute("INSERT INTO autori (nome, cognome) VALUES ('Mario', 'Rossi')");
+            
    
             stmt.execute("INSERT INTO libri VALUES ('1111111111111', 'Libro Vecchio', 'Ed', 2000, 1, '')");
         }
@@ -91,12 +97,15 @@ public class AggiungiLibroControllerTest extends ApplicationTest {
 
     @Test
     public void testInserimentoLibroCorretto() {
+
         clickOn("#txtTitolo").write("Il Nuovo Libro");
         clickOn("#txtEditore").write("Mondadori");
         clickOn("#txtISBN").write("9788812345678"); 
+
    
         clickOn("#spinAnno").write("2023");
         clickOn("#spinCopie").write("5");
+
 
         interact(() -> {
             MenuButton menu = lookup("#menuAutori").query();
@@ -106,7 +115,9 @@ public class AggiungiLibroControllerTest extends ApplicationTest {
             cb.setSelected(true); 
         });
 
+
         clickOn("#SalvaButton");
+
 
         verifyThat(".dialog-pane", (DialogPane d) -> 
             d.getHeaderText().equals("Aggiornamento Catalogo") && 
@@ -114,6 +125,7 @@ public class AggiungiLibroControllerTest extends ApplicationTest {
         );
         
         clickOn("OK"); 
+
  
         Libro libroSalvato = DataBase.cercaLibro("9788812345678");
         assertNotNull(libroSalvato, "Il libro deve essere stato salvato nel DB");
@@ -130,10 +142,12 @@ public class AggiungiLibroControllerTest extends ApplicationTest {
 
         clickOn("#SalvaButton");
 
+
         verifyThat(".dialog-pane", (DialogPane d) -> 
             d.getHeaderText().equals("Codice ISBN non valido") && 
             d.getContentText().contains("13 cifre")
-        );        
+        );
+        
         clickOn("OK");
         assertNull(DataBase.cercaLibro("123"));
     }
@@ -146,10 +160,12 @@ public class AggiungiLibroControllerTest extends ApplicationTest {
 
         clickOn("#SalvaButton");
 
+
         verifyThat(".dialog-pane", (DialogPane d) -> 
             d.getHeaderText().equals("Codice ISBN non valido") &&
             d.getContentText().contains("solo numeri")
-        );        
+        );
+        
         clickOn("OK");
     }
 
@@ -157,13 +173,17 @@ public class AggiungiLibroControllerTest extends ApplicationTest {
     @Test
     public void testIsbnDuplicato() {
         clickOn("#txtTitolo").write("Libro Clone");
+
         clickOn("#txtISBN").write("1111111111111"); 
+
         clickOn("#SalvaButton");
+
 
         verifyThat(".dialog-pane", (DialogPane d) -> 
             d.getHeaderText().equals("Operazione fallita") &&
             d.getContentText().contains("risulta gia registrato")
-        );       
+        );
+        
         clickOn("OK");
     }
 
