@@ -140,7 +140,6 @@ public class UtentiControllerTest extends ApplicationTest {
     }
 
 
-
     @Test
     public void testFiltroSoloAttivi() {
         clickOn("#FilterButton");
