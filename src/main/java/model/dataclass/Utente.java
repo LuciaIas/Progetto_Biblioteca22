@@ -17,9 +17,9 @@ import java.util.ArrayList;
  */
 public class Utente {
     
-    private String matricola;
     private String nome;
-    private String cognome;
+    private String cognome;    
+    private String matricola;
     private String mail;
     private boolean bloccato;
    
