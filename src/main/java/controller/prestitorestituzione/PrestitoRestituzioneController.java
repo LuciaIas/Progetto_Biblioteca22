@@ -169,9 +169,9 @@ public class PrestitoRestituzioneController {
             // Confronto input con ISBN, titolo, matricola, nome o cognome
             if(isbn.equals(text.trim()) || text.trim().equals(l.getTitolo()) || text.trim().equals(matricola) || text.trim().equals(u.getNome()) 
                     || text.trim().equals(u.getCognome()) )
-                app.add(p);// Aggiungo prestito alla lista filtrata            
+                app.add(p);         
         }           
-        updatePrestiti(app);// Aggiorno visualizzazione          
+        updatePrestiti(app);          
     }
     
     
