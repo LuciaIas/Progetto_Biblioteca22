@@ -73,7 +73,6 @@ public class AccessoControllerTest extends ApplicationTest {
         DataBase.inserisciBibliotecario(passwordCorretta);
         clickOn("#PassLogin").write(passwordCorretta);
         clickOn("#LoginButton");
-
         // Se il login fallisse, apparirebbe un Alert con classe ".dialog-pane".
         // Noi verifichiamo che la lista di dialog-pane trovati sia VUOTA.
         boolean nessunErrore = lookup(".dialog-pane").queryAll().isEmpty();
@@ -90,31 +89,19 @@ public class AccessoControllerTest extends ApplicationTest {
         clickOn("#PassConRegister").write(passwordForte);
         clickOn("#RegisterButton");
         verifyThat("Registrazione effettuata 🚀", isVisible());
-
-
         clickOn("OK");
-
-        //VERIFICA DATABASE
- 
+        //VERIFICA DATABASE 
         assertTrue(DataBase.controllaEsistenzaBibliotecario(),"Dopo la registrazione, il bibliotecario deve esistere nel database");
-            
-
     }
     
-
-
     @Test
     public void testRegistrazionePasswordDebole() {
         clickOn("#SlidingButton");
         sleep(2000);
-
         clickOn("#PassRegister").write("ciao"); 
         clickOn("#RegisterButton");
-
         verifyThat(".dialog-pane", isVisible());
-
-        verifyThat("Password non sicura", isVisible());
-        
+        verifyThat("Password non sicura", isVisible());        
         clickOn("OK");
     }
 }
