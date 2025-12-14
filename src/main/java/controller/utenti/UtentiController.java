@@ -117,7 +117,6 @@ public class UtentiController {
                updateUtentiList(utenti);
                return;
            }
-           
            //cerco per nome,cognome o email
            utenti = DataBase.getUtenti();
            for(Utente u1 : utenti)
@@ -140,27 +139,21 @@ public class UtentiController {
         MenuItem m2 = new MenuItem("Solo attivi");
         MenuItem m3 = new MenuItem("Solo bloccati");
         FilterButton.getItems().addAll(m1,m2,m3);
-        
         m1.setOnAction(eh->{ //azione del filtro "Tutti"
             updateUtentiList(DataBase.getUtenti());
             FilterButton.setText(m1.getText());
         });
-        
-        
         m2.setOnAction(eh->{ //azione del filtro "Solo attivi"
             ArrayList<Utente> us = DataBase.getUtenti();
             us.removeIf(u -> u.isBloccato());
             FilterButton.setText(m2.getText());
             updateUtentiList(us);
-        
         });
-        
         m3.setOnAction(eh->{//azione del filtro "Solo bloccati"
             ArrayList<Utente> us = DataBase.getUtenti();
             us.removeIf(u -> !u.isBloccato());
             FilterButton.setText(m3.getText());
             updateUtentiList(us);
-        
         });    
     }
     
@@ -201,7 +194,6 @@ public class UtentiController {
             } catch (IOException ex) {
                 Logger.getLogger(CatalogoController.class.getName()).log(Level.SEVERE, null, ex);
             }
-
             stage.showAndWait();
             updateUtentiList(DataBase.getUtenti());
             labelInitialize();
@@ -240,7 +232,7 @@ public class UtentiController {
      * @param isBlacklisted Stato (true se bloccato)
      */
     private void aggiungiCardUtente(String nome, String cognome, String matricola, String email, boolean isBlacklisted) {       
-        // 1. CREAZIONE RIGA PRINCIPALE (HBox)
+        //CREAZIONE RIGA PRINCIPALE (HBox)
         HBox riga = new HBox();
         riga.setAlignment(Pos.CENTER_LEFT);
         riga.setSpacing(20);
@@ -254,13 +246,13 @@ public class UtentiController {
             riga.getStyleClass().add("user-row");
         }
 
-        // 2. ICONA
+        //ICONA
         StackPane iconContainer = new StackPane();
 
         // Definisco la grandezza del cerchio 
         double size = 45;
 
-        // BLOCCO LE DIMENSIONI: Larghezza e Altezza DEVONO essere uguali
+        //BLOCCO LE DIMENSIONI: Larghezza e Altezza DEVONO essere uguali
         iconContainer.setMinWidth(size);
         iconContainer.setMinHeight(size);
         iconContainer.setPrefSize(size, size);
@@ -274,7 +266,7 @@ public class UtentiController {
 
         iconContainer.getChildren().add(iconLabel);
 
-        // 3. DATI PRINCIPALI (Nome e Email)
+        //DATI PRINCIPALI (Nome e Email)
         VBox boxNomi = new VBox();
         boxNomi.setAlignment(Pos.CENTER_LEFT);
         boxNomi.setPrefWidth(250);
@@ -287,7 +279,7 @@ public class UtentiController {
         
         boxNomi.getChildren().addAll(lblNome, lblEmail);
 
-        // 4. MATRICOLA
+        //MATRICOLA
         VBox boxMatricola = new VBox();
         boxMatricola.setAlignment(Pos.CENTER_LEFT);
         boxMatricola.setPrefWidth(150);
@@ -300,20 +292,19 @@ public class UtentiController {
         
         boxMatricola.getChildren().addAll(lblMatTitle, lblMatValue);
 
-        // 5. SPAZIATORE (Pane vuoto che spinge tutto a destra)
+        //SPAZIATORE (Pane vuoto che spinge tutto a destra)
         Pane spacer = new Pane();
         HBox.setHgrow(spacer, Priority.ALWAYS);
 
-        // 6. ETICHETTA STATO (Attivo / Blacklist)
+        //ETICHETTA STATO (Attivo / Blacklist)
         Label lblStato = new Label(isBlacklisted ? "Blacklist" : "Attivo");
         lblStato.getStyleClass().add(isBlacklisted ? "tag-danger" : "tag-success");
 
-        // 7. BOTTONI AZIONE
-        // Bottone Modifica (Matita)
+        //BOTTONI AZIONE
+        //Bottone Modifica (Matita)
         Button btnEdit = new Button("✏️");
         btnEdit.getStyleClass().add("icon-button");
         Tooltip tt1= new Tooltip("Modifica");
-
         btnEdit.setTooltip(tt1);
         btnEdit.setOnAction(e -> {
             Stage stage = new Stage();
@@ -321,41 +312,32 @@ public class UtentiController {
             stage.setResizable(false);
             stage.initModality(Modality.APPLICATION_MODAL);
             ModificaUtenteController.matricola = matricola;
-
             try {
                 stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/View/ModificaUtente.fxml"))));
-
             } catch (IOException ex) {
                 Logger.getLogger(CatalogoController.class.getName()).log(Level.SEVERE, null, ex);
             }
-
             stage.showAndWait();
             updateUtentiList(DataBase.getUtenti());            
         });
-        
         Button btnDelete = new Button("🗑");
         btnDelete.getStyleClass().add("tag-danger");
         Tooltip tt= new Tooltip("Elimina");
-
         btnDelete.setTooltip(new Tooltip("Elimina"));
         btnDelete.setTooltip(tt);
         btnDelete.setOnAction(e -> { 
             DataBase.rimuoviUtente(matricola);
-            
             Alert IsbnAlert = new Alert(Alert.AlertType.INFORMATION);
                 IsbnAlert.setHeaderText("Operazione eseguita");
                 IsbnAlert.setContentText("Utente rimosso");
-                
                 DialogPane dialogPane = IsbnAlert.getDialogPane();
                 dialogPane.getStylesheets().add(
                     getClass().getResource("/CSS/StyleAccess.css").toExternalForm()
                 );
-
                 dialogPane.getStyleClass().add("my-alert");       
                 IsbnAlert.showAndWait(); 
             updateUtentiList(DataBase.getUtenti());           
         });
-
 
         // Bottone Blocca/Sblocca
         Button btnAction = new Button(isBlacklisted ? "SBLOCCA" : "BLOCCA");
@@ -365,11 +347,10 @@ public class UtentiController {
             model.servizi.DataBase.setBlackListed(matricola);
             else
                 model.servizi.DataBase.unsetBlackListed(matricola);
-            updateUtentiList(DataBase.getUtenti());
-            
+            updateUtentiList(DataBase.getUtenti()); 
         });
 
-        // 8. ASSEMBLAGGIO FINALE
+        //ASSEMBLAGGIO FINALE
         riga.getChildren().addAll(
             iconContainer, 
             boxNomi, 
