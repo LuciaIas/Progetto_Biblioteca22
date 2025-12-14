@@ -33,7 +33,6 @@ import static org.testfx.matcher.control.LabeledMatchers.hasText;
 import static org.testfx.util.WaitForAsyncUtils.waitForFxEvents;
 
 public class AggiungiPrestitoControllerTest extends ApplicationTest {
-
     private static final String H2_URL = "jdbc:h2:mem:testdbNewLoan;DB_CLOSE_DELAY=-1;MODE=MySQL";
     private static final String H2_USER = "sa";
     private static final String H2_PASSWORD = "";
@@ -50,10 +49,8 @@ public class AggiungiPrestitoControllerTest extends ApplicationTest {
         try {
             h2Connection = DriverManager.getConnection(H2_URL, H2_USER, H2_PASSWORD);
             DataBase.conn = h2Connection;
-
             Statement stmt = h2Connection.createStatement();
-            stmt.execute("SET REFERENTIAL_INTEGRITY FALSE");
-            
+            stmt.execute("SET REFERENTIAL_INTEGRITY FALSE");            
             stmt.execute("DROP TABLE IF EXISTS prestito");
             stmt.execute("DROP TABLE IF EXISTS prestiti"); // Per sicurezza
             stmt.execute("DROP TABLE IF EXISTS scritto_da");
@@ -62,16 +59,11 @@ public class AggiungiPrestitoControllerTest extends ApplicationTest {
             stmt.execute("DROP TABLE IF EXISTS autori");
             
             stmt.execute("SET REFERENTIAL_INTEGRITY TRUE");
-
             // Creazione Tabelle
-            stmt.execute("CREATE TABLE autori (id INT AUTO_INCREMENT PRIMARY KEY, nome VARCHAR(100), cognome VARCHAR(100), num_opere INT, data_nascita DATE)");
-            
-            stmt.execute("CREATE TABLE libri (isbn VARCHAR(20) PRIMARY KEY, titolo VARCHAR(100), editore VARCHAR(100), anno_pubblicazione INT, num_copie INT, url_immagine VARCHAR(255))");
-            
-            stmt.execute("CREATE TABLE utenti (matricola VARCHAR(20) PRIMARY KEY, nome VARCHAR(100), cognome VARCHAR(100), email VARCHAR(100), bloccato BOOLEAN DEFAULT FALSE)");
-            
+            stmt.execute("CREATE TABLE autori (id INT AUTO_INCREMENT PRIMARY KEY, nome VARCHAR(100), cognome VARCHAR(100), num_opere INT, data_nascita DATE)");            
+            stmt.execute("CREATE TABLE libri (isbn VARCHAR(20) PRIMARY KEY, titolo VARCHAR(100), editore VARCHAR(100), anno_pubblicazione INT, num_copie INT, url_immagine VARCHAR(255))");           
+            stmt.execute("CREATE TABLE utenti (matricola VARCHAR(20) PRIMARY KEY, nome VARCHAR(100), cognome VARCHAR(100), email VARCHAR(100), bloccato BOOLEAN DEFAULT FALSE)");            
             stmt.execute("CREATE TABLE scritto_da (isbn VARCHAR(20), id_autore INT, FOREIGN KEY (isbn) REFERENCES libri(isbn), FOREIGN KEY (id_autore) REFERENCES autori(id), PRIMARY KEY (isbn, id_autore))");
-
             stmt.execute("CREATE TABLE prestito (" +
                     "isbn VARCHAR(20), " +
                     "matricola VARCHAR(20), " +
@@ -82,7 +74,6 @@ public class AggiungiPrestitoControllerTest extends ApplicationTest {
                     "FOREIGN KEY (isbn) REFERENCES libri(isbn), " +
                     "FOREIGN KEY (matricola) REFERENCES utenti(matricola), " +
                     "PRIMARY KEY (isbn, matricola, inizio_prestito))");
-
         } catch (SQLException e) {
             throw new RuntimeException("Errore initDB: " + e.getMessage());
         }
@@ -205,27 +196,22 @@ public class AggiungiPrestitoControllerTest extends ApplicationTest {
     public void testDateErrate() {
         // Setup validazione preliminare
         validaCampi();
-
         // 1. Data Scadenza precedente a Data Inizio
         // Usiamo interact per settare le date senza problemi di locale
         DatePicker dScadenza = lookup("#dateScadenza").query();
-        DatePicker dInizio = lookup("#dateInizio").query();
-        
+        DatePicker dInizio = lookup("#dateInizio").query();       
         interact(() -> {
             dInizio.setValue(LocalDate.now());
             dScadenza.setValue(LocalDate.now().minusDays(5));
-        });
-        
+        });       
         clickOn("#SalvaButton");
         verifyThat("Hai impostato una data di scadenza che viene prima in ordine cronologico della data di inizio prestito", isVisible());
         clickOn("OK");
-
         // 2. Data Inizio nel passato
         interact(() -> {
             dInizio.setValue(LocalDate.now().minusDays(10));
             dScadenza.setValue(LocalDate.now().plusDays(10));
-        });
-        
+        });       
         clickOn("#SalvaButton");
         verifyThat("Hai impostato una data di inizio prestito antecedente a quella odierna", isVisible());
         clickOn("OK");
@@ -244,61 +230,45 @@ public class AggiungiPrestitoControllerTest extends ApplicationTest {
     @Test
     public void testLibroEsaurito() {
         clickOn("#txtIsbn").write(ISBN_NO_COPIE);
-        clickOn("#IsbnCheckButton");
-        
+        clickOn("#IsbnCheckButton");        
         clickOn("#txtMatricola").write(MATRICOLA_VALIDA);
-        clickOn("#MatricolaCheckButton");
-        
+        clickOn("#MatricolaCheckButton");       
         impostaDateValide();
-
-        clickOn("#SalvaButton");
-        
+        clickOn("#SalvaButton");        
         // Deve dire che le copie sono terminate
         verifyThat("Operazione fallita", isVisible());
-        // verifyThat(hasText(containsString("Copie terminate")), isVisible()); // Opzionale
         clickOn("OK");
     }
 
     @Test
     public void testUtenteBloccato() {
         clickOn("#txtIsbn").write(ISBN_VALIDO);
-        clickOn("#IsbnCheckButton");
-        
+        clickOn("#IsbnCheckButton");       
         clickOn("#txtMatricola").write(MATRICOLA_BLOCCATA);
-        clickOn("#MatricolaCheckButton");
-        
+        clickOn("#MatricolaCheckButton");       
         impostaDateValide();
-
         clickOn("#SalvaButton");
         verifyThat("L'utente risulta bloccato", isVisible());
         clickOn("OK");
     }
 
     @Test
-    public void testSalvataggioConSuccesso() throws SQLException {
-        
+    public void testSalvataggioConSuccesso() throws SQLException {        
         // 1. Validazione Campi
-        validaCampi();
-        
+        validaCampi();        
         // 2. Impostazione Date
         impostaDateValide();
-
         // 3. Click Salva
         clickOn("#SalvaButton");
-
         // 4. Verifica Messaggio Successo
-
         verifyThat("Operazione eseguita", isVisible());
         clickOn("OK");
-
         // 5. Verifica Database (Il prestito deve esistere e le copie devono essere 4)
-        Statement stmt = h2Connection.createStatement();
-        
+        Statement stmt = h2Connection.createStatement();       
         // Check Prestito
         ResultSet rs = stmt.executeQuery("SELECT * FROM prestito WHERE isbn='" + ISBN_VALIDO + "' AND matricola='" + MATRICOLA_VALIDA + "'");
         assertTrue(rs.next(), "Il prestito deve essere stato salvato nel DB");
         assertEquals("ATTIVO", rs.getString("stato"));
-
         // Check Copie Decrementate (erano 5, ora devono essere 4)
         ResultSet rsLibro = stmt.executeQuery("SELECT num_copie FROM libri WHERE isbn='" + ISBN_VALIDO + "'");
         rsLibro.next();
@@ -316,8 +286,7 @@ public class AggiungiPrestitoControllerTest extends ApplicationTest {
 
     private void impostaDateValide() {
         DatePicker dInizio = lookup("#dateInizio").query();
-        DatePicker dScadenza = lookup("#dateScadenza").query();
-        
+        DatePicker dScadenza = lookup("#dateScadenza").query();        
         interact(() -> {
             dInizio.setValue(LocalDate.now());
             dScadenza.setValue(LocalDate.now().plusDays(30));

@@ -25,13 +25,10 @@ import static org.testfx.api.FxAssert.verifyThat;
 import static org.testfx.matcher.base.NodeMatchers.isVisible;
 
 public class AggiungiUtenteControllerTest extends ApplicationTest {
-
     private static final String H2_URL = "jdbc:h2:mem:testdbAddUser;DB_CLOSE_DELAY=-1;MODE=MySQL";
     private static final String H2_USER = "sa";
     private static final String H2_PASSWORD = "";
     private static Connection h2Connection;
-
- 
     private static final String MATR_VALIDA = "1234567890";
     private static final String NOME = "Mario";
     private static final String COGNOME = "Rossi";
@@ -42,26 +39,21 @@ public class AggiungiUtenteControllerTest extends ApplicationTest {
         try {
             h2Connection = DriverManager.getConnection(H2_URL, H2_USER, H2_PASSWORD);
             DataBase.conn = h2Connection;
-
             Statement stmt = h2Connection.createStatement();
-            stmt.execute("SET REFERENTIAL_INTEGRITY FALSE");
-          
+            stmt.execute("SET REFERENTIAL_INTEGRITY FALSE");          
             stmt.execute("DROP TABLE IF EXISTS prestito");
             stmt.execute("DROP TABLE IF EXISTS prestiti");
             stmt.execute("DROP TABLE IF EXISTS scritto_da");
             stmt.execute("DROP TABLE IF EXISTS libri");
             stmt.execute("DROP TABLE IF EXISTS utenti");
-            stmt.execute("DROP TABLE IF EXISTS autori");
-            
+            stmt.execute("DROP TABLE IF EXISTS autori");            
             stmt.execute("SET REFERENTIAL_INTEGRITY TRUE");
-
             stmt.execute("CREATE TABLE utenti (" +
                     "matricola VARCHAR(20) PRIMARY KEY, " +
                     "nome VARCHAR(100), " +
                     "cognome VARCHAR(100), " +
                     "email VARCHAR(100), " +
                     "bloccato BOOLEAN DEFAULT FALSE)");
-
         } catch (SQLException e) {
             throw new RuntimeException("Errore initDB: " + e.getMessage());
         }
@@ -85,7 +77,6 @@ public class AggiungiUtenteControllerTest extends ApplicationTest {
              h2Connection = DriverManager.getConnection(H2_URL, H2_USER, H2_PASSWORD);
         }
         DataBase.conn = h2Connection;
-
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/AggiungiUtente.fxml"));
         Scene scene = new Scene(loader.load());
         stage.setScene(scene);
@@ -95,23 +86,18 @@ public class AggiungiUtenteControllerTest extends ApplicationTest {
 
 
     @Test
-    public void testMatricolaLunghezzaErrata() {
-      
+    public void testMatricolaLunghezzaErrata() {     
         clickOn("#txtMatricola").write("123");
-        clickOn("#SalvaButton");
-
-  
+        clickOn("#SalvaButton");  
         verifyThat("Matricola non valida", isVisible());
         verifyThat("La matricola deve essere a 10 cifre", isVisible());
         clickOn("OK");
     }
 
     @Test
-    public void testMatricolaNonNumerica() {
-   
+    public void testMatricolaNonNumerica() {   
         clickOn("#txtMatricola").write("abcdefghil");
         clickOn("#SalvaButton");
-
         verifyThat("Matricola non valida", isVisible());
         verifyThat("La matricola deve contenere solo numeri", isVisible());
         clickOn("OK");
@@ -119,13 +105,10 @@ public class AggiungiUtenteControllerTest extends ApplicationTest {
 
     @Test
     public void testCampiVuoti() {
-
-        clickOn("#txtMatricola").write(MATR_VALIDA);
-        
+        clickOn("#txtMatricola").write(MATR_VALIDA);        
         clickOn("#SalvaButton");
         verifyThat("Campi vuoti", isVisible());
         clickOn("OK");
-
         clickOn("#txtNome").write(NOME);
         clickOn("#SalvaButton");
         verifyThat("Per favore inserisci un cognome", isVisible());
@@ -135,7 +118,6 @@ public class AggiungiUtenteControllerTest extends ApplicationTest {
     @Test
     public void testEmailNonValida() {
         compilaForm(MATR_VALIDA, NOME, COGNOME, "email_sbagliata"); // Senza @ e .
-
         clickOn("#SalvaButton");
         verifyThat("Email non valida", isVisible());
         clickOn("OK");
@@ -144,35 +126,23 @@ public class AggiungiUtenteControllerTest extends ApplicationTest {
 
 
     @Test
-    public void testMatricolaDuplicata() throws SQLException {
-     
+    public void testMatricolaDuplicata() throws SQLException {    
         Statement stmt = h2Connection.createStatement();
         stmt.execute("INSERT INTO utenti VALUES ('" + MATR_VALIDA + "', 'Gia', 'Esiste', 'test@test.com', FALSE)");
-
- 
         compilaForm(MATR_VALIDA, NOME, COGNOME, EMAIL_VALIDA);
-        clickOn("#SalvaButton");
-
-  
+        clickOn("#SalvaButton"); 
         verifyThat("Operazione fallita", isVisible());
-
         clickOn("OK");
     }
 
     @Test
-    public void testInserimentoCorretto() throws SQLException {
-   
-        compilaForm(MATR_VALIDA, NOME, COGNOME, EMAIL_VALIDA);
-
-       
+    public void testInserimentoCorretto() throws SQLException {   
+        compilaForm(MATR_VALIDA, NOME, COGNOME, EMAIL_VALIDA);       
         clickOn("#SalvaButton");
-
         verifyThat("Utente aggiunto", isVisible());
         clickOn("OK");
-
         Statement stmt = h2Connection.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT * FROM utenti WHERE matricola='" + MATR_VALIDA + "'");
-        
+        ResultSet rs = stmt.executeQuery("SELECT * FROM utenti WHERE matricola='" + MATR_VALIDA + "'");        
         assertTrue(rs.next(), "L'utente deve essere presente nel DB");
         assertEquals(NOME, rs.getString("nome"));
         assertEquals(COGNOME, rs.getString("cognome"));
