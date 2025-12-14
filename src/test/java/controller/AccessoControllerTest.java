@@ -120,32 +120,12 @@ public class AccessoControllerTest extends ApplicationTest {
 
         //VERIFICA DATABASE
  
-        assertTrue(DataBase.controllaEsistenzaBibliotecario(), 
-            "Dopo la registrazione, il bibliotecario deve esistere nel database");
+        assertTrue(DataBase.controllaEsistenzaBibliotecario(),"Dopo la registrazione, il bibliotecario deve esistere nel database");
             
 
     }
     
 
-    @Test
-    public void testRegistrazioneSuccesso() {
-        clickOn("#SlidingButton");
-        sleep(2000); 
-
-        String passValida = "Password123!";
-        clickOn("#PassRegister").write(passValida);
-        clickOn("#PassConRegister").write(passValida);
-
-        clickOn("#RegisterButton");
-
-
-        verifyThat("Registrazione effettuata 🚀", isVisible());
-        
-        
-        clickOn("OK");
-
-        assertTrue(DataBase.controllaEsistenzaBibliotecario(), "Il bibliotecario dovrebbe essere nel DB finto");
-    }
 
     @Test
     public void testRegistrazionePasswordDebole() {
