@@ -55,7 +55,6 @@ public class Libro implements Comparable<Libro>{
         this.url = url;
     }
 
-    
     /**
      * @brief Restituisce l'ISBN del libro.
      * @return codice ISBN
@@ -177,8 +176,7 @@ public class Libro implements Comparable<Libro>{
     public String toString() {
         return "Libro{" + "isbn=" + isbn + ", titolo=" + titolo + ", editore=" + editore + ", autori=" + autori + ", anno_pubblicazione=" + anno_pubblicazione + ", numero_copieDisponibili=" + numero_copieDisponibili + ", url=" + url + '}';
     }
-
-    
+ 
     /**
      * @brief Confronta due libri in base al titolo.
      * 

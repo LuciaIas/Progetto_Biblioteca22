@@ -27,7 +27,7 @@ import java.util.List;
 */
 public class Backup {
     
-    // --- CONFIGURAZIONE ---
+    //Configurazione
     private static final String DB_NAME = "biblioteca";
     private static final String DB_USER = "root";
     private static final String DB_PASS = ""; 

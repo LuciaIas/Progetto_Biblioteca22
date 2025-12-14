@@ -21,7 +21,6 @@ public class EmailInfo {
     private String destinatario;
     private Date dataInvio;
 
-    
    /**
      * @brief Costruisce un nuovo oggetto EmailInfo.
      * 

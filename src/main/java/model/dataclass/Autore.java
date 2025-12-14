@@ -16,7 +16,6 @@ import java.time.LocalDate;
  * @author gruppo22
  */
 public class Autore {
-    
     private int id;
     private String nome;
     private String cognome;
@@ -38,7 +37,6 @@ public class Autore {
         this.data_nascita = data_nascita;
     }
 
-    
     /**
      * @brief Restituisce l'identificativo dell'autore.
      * @return id dell'autore
@@ -126,9 +124,5 @@ public class Autore {
     @Override
     public String toString() {
         return "Autore{" + "nome=" + nome + ", cognome=" + cognome + ", opere_scritte=" + opere_scritte + ", data_nascita=" + data_nascita + '}';
-    }
-    
-    
-    
-    
+    }   
 }

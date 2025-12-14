@@ -40,7 +40,6 @@ public class EmailLegge {
      * @return ArrayList di EmailInfo contenente le email lette
      */
     public static ArrayList<EmailInfo> leggiPostaInviata() {
-    
     ArrayList<EmailInfo> listaEmail = new ArrayList<>(); 
     try {     
         // Configurazione del protocollo IMAPS (necessario per Gmail)
@@ -109,5 +108,4 @@ public class EmailLegge {
     }  
     return listaEmail;
 }
-
 }

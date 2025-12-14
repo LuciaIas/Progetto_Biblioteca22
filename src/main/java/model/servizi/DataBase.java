@@ -51,7 +51,7 @@ public class DataBase {
     
     }
     
-    //==================== BIBLIOTECARIO ====================    
+    //BIBLIOTECARIO  
     
     /**
      * @brief Inserisce un nuovo bibliotecario con password hashata.
@@ -173,7 +173,7 @@ public class DataBase {
   
     }
     
-       //==================== LIBRI ====================
+       //LIBRI
     
     /**
      * @brief Restituisce l'intero catalogo dei libri con autori associati.
@@ -231,7 +231,6 @@ public class DataBase {
                          aut.add(a);
                  
                  l.setAutori(aut);
-                 
             }
             libri.sort();// Ordina libri per titolo
             return libri;         
@@ -468,7 +467,7 @@ public class DataBase {
         } 
     }
     
-      //==================== UTENTI ====================
+    //UTENTI
     /**
      * @brief Restituisce tutti gli utenti ordinati alfabeticamente.
      * @return Lista di utenti, null in caso di errore.
@@ -658,7 +657,7 @@ public class DataBase {
     }
     
     
-    //==================== PRESTITI ====================
+    //PRESTITI
     
     /**
      * @brief Restituisce tutti i prestiti registrati.
@@ -921,7 +920,7 @@ public class DataBase {
         }  
     }
     
-    //==================== COPIE ====================
+    //COPIE
    
     /**
      * @brief Restituisce il numero di copie disponibili di un libro.
@@ -946,7 +945,7 @@ public class DataBase {
     
 
 
-   //==================== RELAZIONI ====================
+   //RELAZIONI
     
     /**
      * @brief Restituisce il numero totale di relazioni scritto_da.

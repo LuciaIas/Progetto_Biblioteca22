@@ -38,7 +38,6 @@ public class AutoreTest {
         assertEquals(nuovaData, a.getData_nascita());
     }
 
-
     @Test
     public void testValoriNull() {
         // Creiamo un autore con data di nascita null
@@ -49,7 +48,6 @@ public class AutoreTest {
         // Verifa toString (anche se mai usato nel codice ma per prassi testiamo)
         assertDoesNotThrow(() -> a.toString(), "Il metodo toString non deve crashare anche se ci sono null");
     }
-
 
     @Test
     public void testToString() {

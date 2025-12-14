@@ -27,8 +27,6 @@ public class ConfigurazioneTest {
         props.setProperty(chiave, valore);
     }
 
-
-
     @Test
     public void testDefaultValoriNumerici() {
         assertEquals(5000, Configurazione.getMaxUsers(), "Default max users dovrebbe essere 5000");
@@ -56,8 +54,6 @@ public class ConfigurazioneTest {
         assertNull(Configurazione.getPasswordSender());
         assertNull(Configurazione.getPasswordReceiver());
     }
-
-
 
     @Test
     public void testValoriCaricatiCorrettamente() throws Exception {
@@ -87,8 +83,6 @@ public class ConfigurazioneTest {
         assertEquals(9, orario[0]);
         assertEquals(30, orario[1]);
     }
-
-
 
     @Test
     public void testErroreFormatoNumero() throws Exception {

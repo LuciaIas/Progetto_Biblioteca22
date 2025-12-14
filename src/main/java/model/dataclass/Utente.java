@@ -16,7 +16,6 @@ import java.util.ArrayList;
  * @author gruppo22
  */
 public class Utente {
-    
     private String nome;
     private String cognome;    
     private String matricola;
@@ -142,6 +141,5 @@ public class Utente {
     @Override
     public String toString() {
         return "Utente{" + "matricola=" + matricola + ", nome=" + nome + ", cognome=" + cognome + ", mail=" + mail + '}';
-    }
-    
+    }    
 }

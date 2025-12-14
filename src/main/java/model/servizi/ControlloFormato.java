@@ -48,6 +48,5 @@ public class ControlloFormato {
             return true;
         
         else return false;                
-    }
-        
+    }    
 }

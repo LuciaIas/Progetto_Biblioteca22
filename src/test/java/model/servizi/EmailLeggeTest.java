@@ -35,8 +35,7 @@ static GreenMailExtension greenMail = new GreenMailExtension(ServerSetupTest.SMT
         injectPrivateStaticField("username", "test@mail.com");
         injectPrivateStaticField("password", "password");
 
-
-
+        
         // GreenMail è vuoto, quindi gliela creiamo noi artificialmente la cartella di gmail
         GreenMailUser user = greenMail.getManagers().getUserManager().getUser("test@mail.com");
         try {
@@ -68,7 +67,6 @@ static GreenMailExtension greenMail = new GreenMailExtension(ServerSetupTest.SMT
         // Usiamo GreenMailUtil per inviare un messaggio
         GreenMailUtil.sendTextEmailTest("napoli@campione.it", "test@mail.com", 
                                         "Vincim tutt cos", "Pur a champions leugue");
-
 
         ArrayList<EmailInfo> risultato = EmailLegge.leggiPostaInviata();
 

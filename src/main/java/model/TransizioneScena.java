@@ -5,7 +5,6 @@
  */
 package model;
 
-
 import java.io.IOException;
 import javafx.animation.FadeTransition;
 import javafx.animation.Interpolator;
@@ -46,22 +45,22 @@ public class TransizioneScena {
      */    
     public static void switchSceneEffect(Stage stage, String fxmlPath) {
     try {
-        // 1. Carico il nuovo FXML
+        //Carico il nuovo FXML
         FXMLLoader loader = new FXMLLoader(TransizioneScena.class.getResource(fxmlPath));
         Parent newRoot = loader.load();
 
-        // 2. Lo rendo inizialmente invisibile (per fare l'effetto sorpresa)
+        //Lo rendo inizialmente invisibile (per fare l'effetto sorpresa)
         newRoot.setOpacity(0.0);
 
-        // 3. Cambio secco (Sostituisce subito la root, risolve tutti i bug di gerarchia)
+        //Cambio secco (Sostituisce subito la root, risolve tutti i bug di gerarchia)
         stage.getScene().setRoot(newRoot);
 
-        // 4. Imposto dimensioni e centro (1280x800)
+        //Imposto dimensioni e centro (1280x800)
         stage.setWidth(1280);
         stage.setHeight(835);
         stage.centerOnScreen(); 
 
-        // 5. Effetto Dissolvenza 
+        //Effetto Dissolvenza 
         FadeTransition fadeIn = new FadeTransition(Duration.seconds(0.5), newRoot);
         fadeIn.setFromValue(0.0);
         fadeIn.setToValue(1.0);

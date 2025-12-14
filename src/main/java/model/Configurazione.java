@@ -33,8 +33,6 @@ public class Configurazione {
             ex.printStackTrace();
         }
     }
-
-    // --- EMAIL (Stringhe) ---
     
     /**
      * @brief Restituisce lo username dell'account email per l'invio.
@@ -60,8 +58,7 @@ public class Configurazione {
         return properties.getProperty("mail.password.receiver");
     }
 
-    // --- LIMITI (Interi) ---
-      /**
+     /**
      * @brief Restituisce il numero massimo di utenti consentiti.
      * @return numero massimo di utenti
      */
@@ -76,6 +73,7 @@ public class Configurazione {
     public static int getMaxBooks() {
         return parseInteger("app.max_books", 2000);
     }
+    
      /**
      * @brief Restituisce il numero massimo di prestiti consentiti.
      * @return numero massimo di prestiti
@@ -83,6 +81,7 @@ public class Configurazione {
     public static int getMaxLoans() {
         return parseInteger("app.max_loans", 10000);
     }
+    
       /**
      * @brief Restituisce il numero massimo di autori consentiti.
      * @return numero massimo di autori
@@ -90,6 +89,7 @@ public class Configurazione {
     public static int getMaxAuthors() {
         return parseInteger("app.max_authors", 1000);
     }
+    
      /**
      * @brief Restituisce il numero massimo di scrittori consentiti.
      * @return numero massimo di scrittori
@@ -97,6 +97,7 @@ public class Configurazione {
     public static int getMaxWrited() {
         return parseInteger("app.max_writers", 5000);
     }
+    
       /**
      * @brief Restituisce l'orario di apertura della biblioteca.
      * @return array di 2 interi: [ora, minuto]
@@ -107,6 +108,7 @@ public class Configurazione {
         time[1] = parseInteger("time.open.minute",0);
         return time;
     }
+    
     /**
      * @brief Restituisce l'orario di chiusura della biblioteca.
      * @return array di 2 interi: [ora, minuto]
@@ -117,6 +119,7 @@ public class Configurazione {
         time[1] = parseInteger("time.close.minute",0);
         return time;
     }
+    
      /**
      * @brief Restituisce la durata della sessione utente in ore.
      * @return durata della sessione
