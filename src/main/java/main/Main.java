@@ -53,10 +53,8 @@ public class Main extends Application{
      * Imposta la scena iniziale e mostra il login.
      */
     @Override
-    public void start(Stage stage) throws Exception {
-             
+    public void start(Stage stage) throws Exception {             
         this.stage=stage;
-
         Parent root = FXMLLoader.load(getClass().getResource("/View/Accesso.fxml"));
         s = new Scene(root,425,500);
         root.getProperties().put("login", "login");
@@ -99,8 +97,7 @@ public class Main extends Application{
         LocalTime orario_apertura=LocalTime.of(open_time[0], open_time[1]);
         LocalTime orario_chiusura=LocalTime.of(close_time[0], close_time[1]);
         boolean ServiceIsOpen = ora_attuale.isAfter(orario_apertura) && ora_attuale.isBefore(orario_chiusura);
-        if(!ServiceIsOpen){
-            
+        if(!ServiceIsOpen){           
             Alert al = new Alert(AlertType.WARNING);
             al.setHeaderText("Servizio chiuso");
             al.setHeaderText("Il servizio resta aperto dalle "+orario_apertura + " fino alle " + orario_chiusura);
