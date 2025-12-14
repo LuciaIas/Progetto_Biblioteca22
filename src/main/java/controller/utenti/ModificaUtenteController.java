@@ -85,7 +85,6 @@ public class ModificaUtenteController {
                 dialogPane.getStyleClass().add("my-alert");
                 IsbnAlert.showAndWait();
             return;
-                
             }else if(nome.equals("")){ //nome vuoto
                 Alert IsbnAlert = new Alert(Alert.AlertType.WARNING);
                 IsbnAlert.setHeaderText("Campi vuoti");
@@ -97,7 +96,6 @@ public class ModificaUtenteController {
                 dialogPane.getStyleClass().add("my-alert");
                 IsbnAlert.showAndWait();
             return;
-                
             }else if(cognome.equals("")){ //cognome vuoto
                 Alert IsbnAlert = new Alert(Alert.AlertType.WARNING);
                 IsbnAlert.setHeaderText("Campi vuoti");

@@ -90,9 +90,7 @@ public class AggiungiUtenteController {
                 dialogPane.getStylesheets().add(
                     getClass().getResource("/CSS/StyleAccess.css").toExternalForm()
                 );
-                
                 dialogPane.getStyleClass().add("my-alert");
-                
                 IsbnAlert.showAndWait();
                 return;
             }else if(!matricola.trim().matches("\\d+")){
@@ -103,7 +101,6 @@ public class AggiungiUtenteController {
                 dialogPane.getStylesheets().add(
                     getClass().getResource("/CSS/StyleAccess.css").toExternalForm()
                 );
-
                 dialogPane.getStyleClass().add("my-alert");
                 IsbnAlert.showAndWait();
             return;

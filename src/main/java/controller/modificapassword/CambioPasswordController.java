@@ -5,10 +5,8 @@
  */
 package controller.modificapassword;
 
-
 import model.servizi.ControlloFormato;
 import model.servizi.DataBase;
-
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -91,28 +89,22 @@ public class CambioPasswordController {
                 Alert err = new Alert(Alert.AlertType.WARNING);
                 err.setContentText("Completa entrambi i campi delle password");
                 err.showAndWait();
-                return;// Termino la funzione se campi vuoti
-                
+                return;// Termino la funzione se campi vuoti  
             }else if(!pass.equalsIgnoreCase(pass1)){ // Controllo corrispondenza password
                 Alert err = new Alert(Alert.AlertType.ERROR);
                 err.setContentText("Le password non corrispodono");
                 err.showAndWait();
                 return;
-                
             }else if(!ControlloFormato.controlloFormatoPassword(pass)){           
                 Alert al = new Alert(AlertType.ERROR);
                 al.setTitle("Errore Validazione"); // Titolo della finestra
                 al.setHeaderText("Password non sicura 🔒"); // Titolo interno 
                 al.setContentText("La password deve avere:\n- Minimo 8 caratteri\n- Una maiuscola\n- Un numero\n- Un simbolo (@#$%^&+=!)");
-
                 DialogPane dialogPane = al.getDialogPane();
-
                 dialogPane.getStylesheets().add(
                     getClass().getResource("/CSS/StyleAccess.css").toExternalForm()
                 );
-
                 dialogPane.getStyleClass().add("my-alert");
-
                 al.showAndWait();
                 return;                
             }
@@ -122,15 +114,12 @@ public class CambioPasswordController {
                  Alert IsbnAlert = new Alert(AlertType.INFORMATION); // Alert informativo
                 IsbnAlert.setHeaderText("Password aggiornata");// Alert interno
                 IsbnAlert.setContentText("Modifica effettuata con successo");// Contenuto alert
-                
                 DialogPane dialogPane = IsbnAlert.getDialogPane();
-              
                 dialogPane.getStylesheets().add(
                     getClass().getResource("/CSS/StyleAccess.css").toExternalForm()
                 );                
                 dialogPane.getStyleClass().add("my-alert");                
                 IsbnAlert.showAndWait();// Mostro alert conferma
-                
                 Stage f =  (Stage) BtnSalva.getScene().getWindow();// Ottengo finestra corrente
                 f.close();                    
         });
@@ -168,16 +157,13 @@ public class CambioPasswordController {
                 NewPassVisible.setText(NewPass.getText());// Sincronizzo testo
                 NewPassVisible.setVisible(true);// Mostra campo visibile
                 NewPass.setVisible(false);// Nasconde campo password
-                
                 ConfirmPassVisible.setText(ConfirmPass.getText());
                 ConfirmPassVisible.setVisible(true);
                 ConfirmPass.setVisible(false);
-        
             }else{// Nasconde password
                 NewPass.setText(NewPassVisible.getText());
                 NewPassVisible.setVisible(false);// Nasconde campo visibile
                 NewPass.setVisible(true); // Mostra campo password
-                
                 ConfirmPass.setText(ConfirmPassVisible.getText());
                 ConfirmPassVisible.setVisible(false);
                 ConfirmPass.setVisible(true);               

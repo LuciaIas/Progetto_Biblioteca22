@@ -5,7 +5,6 @@
  */
 package controller.modificapassword;
 
-
 import controller.DashboardController;
 import model.servizi.ControlloFormato;
 import model.servizi.DataBase;
@@ -24,7 +23,6 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-
 
 
 /**
@@ -69,7 +67,6 @@ public class InserisciPasswordModificaController {
         setButtonFunction();       
     }
     
-    
     /**
      * @brief Configura le azioni dei pulsanti Salva e Annulla.
      *
@@ -84,8 +81,7 @@ public class InserisciPasswordModificaController {
             if(!CheckShowPass.isSelected()) // Se password nascosta
              pass = NewPass.getText();// Prendo testo dal PasswordField         
             else
-            pass = NewPassVisible.getText();// Altrimenti prendo testo dal TextField
-                       
+            pass = NewPassVisible.getText();// Altrimenti prendo testo dal TextField         
             //Controllo password e conferma password
             if(pass.equals("")){// Controllo se campo vuoto
                 Alert err = new Alert(Alert.AlertType.WARNING);// Alert warning
@@ -107,8 +103,7 @@ public class InserisciPasswordModificaController {
                 PassRec.showAndWait();// Mostro finestra e aspetto chiusura
                 Stage u = (Stage) BtnSalva.getScene().getWindow();// Ottengo finestra corrente
                 u.close();// Chiudo finestra corrente dopo aver aperto la finestra CambioPassword
-                }else{
-                    
+                }else{     
                 Alert err = new Alert(Alert.AlertType.WARNING);
                 err.setContentText("Password errata!");
                 err.showAndWait();
