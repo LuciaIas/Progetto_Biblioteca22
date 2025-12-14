@@ -167,8 +167,6 @@ public class CatalogoController {
      * - Titolo del libro.
      * - Animazioni al passaggio del mouse.
      *
-     * Se il parametro `libro.isbn == null`, genera la card per aggiungere un nuovo libro.
-     *
      * @param libro Libro da visualizzare nella card.
      * @return VBox contenente la card interattiva pronta per essere aggiunta alla griglia.
      */

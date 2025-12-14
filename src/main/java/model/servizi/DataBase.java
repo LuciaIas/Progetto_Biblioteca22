@@ -245,11 +245,9 @@ public class DataBase {
      * @brief Restituisce tutti gli autori presenti nel database.
      * @return Lista di autori, null in caso di errore.
      */
-    public static ArrayList<Autore> getAutori(){
-        
+    public static ArrayList<Autore> getAutori(){       
         ArrayList<Autore> autori = new ArrayList<>();
-        String queryAutori = "Select * from autori";
-        
+        String queryAutori = "Select * from autori";        
         PreparedStatement stat;
         try {
             stat = conn.prepareStatement(queryAutori);
@@ -264,11 +262,9 @@ public class DataBase {
                 a.setId(rs.getInt(1));
                 autori.add(a);
             }
-            return autori;
-            
+            return autori;           
         } catch (SQLException ex) {
-        }
-        
+        }       
         return null;
     }
        
@@ -277,8 +273,7 @@ public class DataBase {
      * @param l Oggetto Libro da aggiungere.
      * @return true se l'operazione ha avuto successo, false altrimenti.
      */
-    public static boolean aggiungiLibro(Libro l){
-        
+    public static boolean aggiungiLibro(Libro l){       
        String query = "INSERT INTO libri values(?,?,?,?,?,?)";
        boolean ret = false;
         try {
@@ -292,8 +287,7 @@ public class DataBase {
             if(l.getUrl()!=null)
                 stat.setString(6, l.getUrl());
             else
-                stat.setNull(6, Types.VARCHAR);
-            
+                stat.setNull(6, Types.VARCHAR);            
             stat.execute();
             ret=true;
             // Creo le relazioni con gli autori
@@ -335,19 +329,16 @@ public class DataBase {
             PreparedStatement stat = conn.prepareStatement(query);
             stat.setString(1, a.getNome());
             stat.setString(2, a.getCognome());
-            stat.setInt(3, a.getOpere_scritte());
-            
+            stat.setInt(3, a.getOpere_scritte());            
             if(a.getData_nascita()!=null)
                 stat.setDate(4, Date.valueOf(a.getData_nascita()));
             else
-                stat.setNull(4, Types.DATE);
-            
+                stat.setNull(4, Types.DATE);           
             stat.execute();
             return true;
         } catch (SQLException ex) {
             return false;
-        }
-        
+        }        
     }
     
     /**
@@ -451,13 +442,11 @@ public class DataBase {
      * @param titolo Stringa da cercare nel titolo.
      * @return Lista di libri corrispondenti.
      */
-    public static ArrayList<Libro> getLibriByTitolo(String titolo){
-    
+    public static ArrayList<Libro> getLibriByTitolo(String titolo){    
         Catalogo c = getCatalogo();
         ArrayList<Libro> ar = new ArrayList<>();
         for(Libro l : c.cercaPerTitolo(titolo))
-            ar.add(l);
-        
+            ar.add(l);        
         return ar;
     }
     
@@ -466,22 +455,17 @@ public class DataBase {
      * @param isbn ISBN del libro da rimuovere.
      * @return true se la rimozione ha avuto successo, false altrimenti.
      */
-    public static boolean rimuoviLibro(String isbn){
-    
-        String query = "DELETE FROM libri WHERE isbn = ? ";
-        
+    public static boolean rimuoviLibro(String isbn){    
+        String query = "DELETE FROM libri WHERE isbn = ? ";       
          try {
             PreparedStatement stat = conn.prepareStatement(query);
-            stat.setString(1, isbn);
-          
-            stat.execute();
-            
+            stat.setString(1, isbn);         
+            stat.execute();            
             return true;    
         } catch (SQLException ex) {
             ex.printStackTrace();
             return false;
-        }
-  
+        } 
     }
     
       //==================== UTENTI ====================
@@ -489,8 +473,7 @@ public class DataBase {
      * @brief Restituisce tutti gli utenti ordinati alfabeticamente.
      * @return Lista di utenti, null in caso di errore.
      */
-    public static ArrayList<Utente> getUtenti(){
-    
+    public static ArrayList<Utente> getUtenti(){    
         ArrayList<Utente> us = new ArrayList<>();
         String query = "Select * from utenti";
         try {
@@ -498,8 +481,7 @@ public class DataBase {
             ResultSet rs = stat.executeQuery();
             while(rs.next()){
                 // Creo oggetto Utente mappando i campi dal DB
-                us.add(new Utente(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getBoolean(5)));
-            
+                us.add(new Utente(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getBoolean(5)));            
             }
             us.sort(new Comparator<Utente>() {
             // Ordino alfabeticamente
@@ -511,12 +493,10 @@ public class DataBase {
                     else return a;
                 }
             });
-                return us;
-                  
+                return us;                  
         } catch (SQLException ex) {
             return null;
-        }
-        
+        }       
     }
     
     /**
@@ -539,8 +519,7 @@ public class DataBase {
         } catch (SQLException ex) {
             ex.printStackTrace();
             return false;
-        }
-        
+        }       
     }
     
     /**
@@ -554,11 +533,9 @@ public class DataBase {
             PreparedStatement stat = conn.prepareStatement(query);
             ResultSet rs = stat.executeQuery();
             rs.next();
-            n=rs.getInt(1);
-            
+            n=rs.getInt(1);           
         } catch (SQLException ex) {
-            ex.printStackTrace();
-          
+            ex.printStackTrace();         
         }
         return n;
     }
@@ -697,8 +674,7 @@ public class DataBase {
             while(rs.next()){
                 Stato stato;
             String app = rs.getString(5);
-            switch(app){
-            
+            switch(app){            
                 case "ATTIVO":
                     stato=Stato.ATTIVO;
                     break;
@@ -713,8 +689,7 @@ public class DataBase {
                     break;
                 default:
                     stato = null;
-                    break;
-            
+                    break;            
             }
             LocalDate scadenza=null,restituzione=null;
             if(rs.getDate(6)!=null)
@@ -723,8 +698,7 @@ public class DataBase {
                 restituzione=rs.getDate(4).toLocalDate();
                 // Creo oggetto Prestito e lo aggiungo alla lista
                 p.add(new Prestito(rs.getString(1),rs.getString(2),rs.getDate(3).toLocalDate(),restituzione,stato,scadenza));
-            }
-            
+            }           
             return p;
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -788,8 +762,7 @@ public class DataBase {
             PreparedStatement stat = conn.prepareStatement(query);
             ResultSet rs = stat.executeQuery();
             rs.next();
-            n=rs.getInt(1);
-            
+            n=rs.getInt(1);            
         } catch (SQLException ex) {
             ex.printStackTrace();
           
@@ -880,10 +853,8 @@ public class DataBase {
             PreparedStatement stat = conn.prepareStatement(query);
             stat.setString(2, isbn);
             stat.setInt(1, num_copie);
-            stat.execute();
-            
-            return true;
-            
+            stat.execute();           
+            return true;            
         } catch (SQLException ex) {
             ex.printStackTrace();
             return false;
@@ -920,8 +891,7 @@ public class DataBase {
             if(stNull)
                 stat.setNull(1, Types.VARCHAR);
             else
-                stat.setString(1, s1);
-                    
+                stat.setString(1, s1);                   
             stat.execute();         
             return true;           
         } catch (SQLException ex) {
@@ -942,10 +912,8 @@ public class DataBase {
          try {
             PreparedStatement stat = conn.prepareStatement(query);
             stat.setString(1, isbn);
-            stat.setString(2, matricola);
-       
-            stat.execute();
-            
+            stat.setString(2, matricola);       
+            stat.execute();            
             return true;           
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -971,8 +939,7 @@ public class DataBase {
             n = rs.getInt(1);
     
         } catch (SQLException ex) {
-            ex.printStackTrace();
-         
+            ex.printStackTrace();         
         }
         return n;
     }
@@ -997,8 +964,7 @@ public class DataBase {
             n=rs.getInt(1);
             return n;
         } catch (SQLException ex) {
-            ex.printStackTrace();
-            
+            ex.printStackTrace();           
         }
         return n;
     }
@@ -1008,22 +974,18 @@ public class DataBase {
      * @param isbn ISBN da controllare.
      * @return true se presente, false altrimenti.
      */
-    public static boolean isIsbnPresent(String isbn){
-    
+    public static boolean isIsbnPresent(String isbn){    
         String query = "SELECT * FROM libri where isbn=?";
         try {
             PreparedStatement stat = conn.prepareStatement(query);
             stat.setString(1, isbn);
-            ResultSet rs = stat.executeQuery();
-            
-            
+            ResultSet rs = stat.executeQuery();                       
             return rs.next();
         } catch (SQLException ex) {
             ex.printStackTrace();
             return false;
         }
     }
-    
 
     
 }

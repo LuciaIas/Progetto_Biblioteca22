@@ -26,29 +26,28 @@ import javafx.stage.Stage;
  * - Aggiornamento dei dati dell'utente nel database
  * - Notifica all'utente tramite alert grafici in caso di errore o conferma
  *
- * Tutti gli alert sono stilizzati con un CSS personalizzato.
  * 
  * @author gruppo22
  */
 public class ModificaUtenteController {
     
     @FXML
-    private Label lblMatricola; //label che mostra la matricola dell'utente selezionato
+    private Label lblMatricola; 
     
     @FXML
-    private TextField txtNome; //input nome
+    private TextField txtNome; 
     
     @FXML
-    private TextField txtCognome; //input cognome
+    private TextField txtCognome; 
     
     @FXML
-    private TextField txtEmail; //input email
+    private TextField txtEmail; 
     
     @FXML
-    private Button btnSalva; //bottone per salvare le modifiche
+    private Button btnSalva; 
     
     @FXML
-    private Button btnAnnulla; //bottone per annullare l'operazione
+    private Button btnAnnulla; 
     
     public static String matricola; //serve per sapere quale utente aggiornare dopo aver premuto modifica nella tabella utenti 
  
@@ -141,7 +140,7 @@ public class ModificaUtenteController {
                 
                 dialogPane.getStyleClass().add("my-alert");
                 IsbnAlert.showAndWait();
-                Stage s = (Stage)btnSalva.getScene().getWindow(); ///chiusura finestra
+                Stage s = (Stage)btnSalva.getScene().getWindow(); 
                 s.close();
             });   
     }   

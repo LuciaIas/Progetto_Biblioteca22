@@ -32,8 +32,7 @@ import static org.testfx.util.WaitForAsyncUtils.waitForFxEvents;
 public class ModificaLibroControllerTest extends ApplicationTest {
 
     private ModificaLibroController controller;
-    
-   
+      
     private static final String H2_URL = "jdbc:h2:mem:testdbModificaCrashFixed;DB_CLOSE_DELAY=-1;MODE=MySQL"; 
     private static final String H2_USER = "sa";
     private static final String H2_PASSWORD = "";
@@ -64,8 +63,7 @@ public class ModificaLibroControllerTest extends ApplicationTest {
 
     
     @BeforeEach
-    public void resetData() throws SQLException {
-     
+    public void resetData() throws SQLException {     
         insertTestData(h2Connection);
     }
     
@@ -76,8 +74,7 @@ public class ModificaLibroControllerTest extends ApplicationTest {
 
    
     @Override
-    public void start(Stage stage) throws IOException, SQLException {
-      
+    public void start(Stage stage) throws IOException, SQLException {      
         ModificaLibroController.isbn = "111"; 
 
         if (h2Connection == null || h2Connection.isClosed()) {
@@ -85,9 +82,7 @@ public class ModificaLibroControllerTest extends ApplicationTest {
         }
         DataBase.conn = h2Connection;
 
-
         insertTestData(h2Connection);
-
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/ModificaLibro.fxml"));
         Scene scene = new Scene(loader.load());
@@ -99,13 +94,11 @@ public class ModificaLibroControllerTest extends ApplicationTest {
  
     private void insertTestData(Connection conn) throws SQLException {
         Statement stmt = conn.createStatement();
-        
-   
+          
         stmt.execute("DELETE FROM scritto_da");
         stmt.execute("DELETE FROM libri");
         stmt.execute("DELETE FROM autori");
         stmt.execute("ALTER TABLE autori ALTER COLUMN id RESTART WITH 1");
-
  
         stmt.execute("INSERT INTO autori (id, nome, cognome, num_opere) VALUES (1, 'J.R.R.', 'Tolkien', 50)");
         stmt.execute("INSERT INTO autori (id, nome, cognome, num_opere) VALUES (2, 'George', 'Martin', 20)");
@@ -128,8 +121,7 @@ public class ModificaLibroControllerTest extends ApplicationTest {
     @Test
     public void testModificaDatiBase() {
         doubleClickOn("#txtTitolo").eraseText(13).doubleClickOn("#txtTitolo").eraseText(13).write("Lo Hobbit 2");
-        
-        
+               
         doubleClickOn("#txtEditore").write("Adelphi");
         
         clickOn("#spinAnno").eraseText(4).write("2000");

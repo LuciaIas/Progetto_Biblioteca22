@@ -33,7 +33,7 @@ import javafx.stage.Stage;
  * - Esistenza di ISBN e Matricola (tramite pulsanti di verifica dedicati).
  * - Disponibilità del libro (copie > 0).
  * - Stato dell'utente (non bloccato, max 3 prestiti attivi).
- * - Validità temporale delle date (inizio < scadenza).
+ * - Validità temporale delle date (inizio precedente a scadenza).
  * - Evita duplicati di prestito attivo.
  *
  * @author gruppo22
@@ -81,10 +81,10 @@ public class AggiungiPrestitoController {
      */
     @FXML
     public void initialize(){
-    dateInizio.setValue(LocalDate.now());// Imposto data inizio come oggi
+    dateInizio.setValue(LocalDate.now());
     buttonInitialize();
     buttonCheckingInitialize();
-    initializeProperty();// Listener su ISBN e matricola
+    initializeProperty();
     }
       
     
@@ -95,14 +95,14 @@ public class AggiungiPrestitoController {
      * resetta il flag e cancella la label di conferma.
      */
     public void initializeProperty(){    
-        txtIsbn.textProperty().addListener( (a,b,c) ->{// Se cambia il testo dell’ISBN       
-            CompletedCheckIsbn=false;// Disattivo validazione precedente
-            IsbnCheck.setText("");// Cancello testo di conferma
+        txtIsbn.textProperty().addListener( (a,b,c) ->{ 
+            CompletedCheckIsbn=false;
+            IsbnCheck.setText("");
         } );
                 
-        txtMatricola.textProperty().addListener( (a,b,c) ->{ // Se cambia la matricola       
-            CompletedCheckMatricola=false;// Disattivo validazione precedente
-            matricolaCheck.setText("");// Cancello testo di conferma
+        txtMatricola.textProperty().addListener( (a,b,c) ->{    
+            CompletedCheckMatricola=false;
+            matricolaCheck.setText("");
         } );  
     }
     
@@ -117,7 +117,7 @@ public class AggiungiPrestitoController {
     public void buttonInitialize(){
         AnnullaButton.setOnAction(eh->{        
             Stage s = (Stage) AnnullaButton.getScene().getWindow();
-            s.close();// Chiudo la finestra senza salvare
+            s.close();
         });
         
         SalvaButton.setOnAction(eh->{       
@@ -135,10 +135,10 @@ public class AggiungiPrestitoController {
                 dialogPane.getStylesheets().add(
                     getClass().getResource("/CSS/StyleAccess.css").toExternalForm()// Applico CSS personalizzato
                 );               
-                dialogPane.getStyleClass().add("my-alert");// Classe CSS alert
+                dialogPane.getStyleClass().add("my-alert");
                 
-                IsbnAlert.showAndWait();// Mostro alert e attendo chiusura
-                return; // Termino evento Salva   
+                IsbnAlert.showAndWait();
+                return; 
                 
             }else if(!CompletedCheckIsbn){ // Se non controllato solo ISBN
             
@@ -171,13 +171,13 @@ public class AggiungiPrestitoController {
                 return;
             }
             
-            LocalDate inizio = dateInizio.getValue(); // Leggo data inizio prestito
+            LocalDate inizio = dateInizio.getValue(); 
             
-            if(inizio==null) // Se non impostata
-                inizio = LocalDate.now();// Imposto come oggi
+            if(inizio==null) 
+                inizio = LocalDate.now();
             
-            LocalDate scadenza = dateScadenza.getValue();// Leggo data scadenza prestito
-            if(scadenza==null){// Se non impostata
+            LocalDate scadenza = dateScadenza.getValue();
+            if(scadenza==null){
             
                 Alert IsbnAlert = new Alert(Alert.AlertType.ERROR); // Alert errore
                 IsbnAlert.setHeaderText("Campo vuoto");
@@ -193,8 +193,7 @@ public class AggiungiPrestitoController {
                 return;     
             }
             
-            if(scadenza.isBefore(inizio)){// Controllo se la data di scadenza è prima della data inizio
-            
+            if(scadenza.isBefore(inizio)){            
                 Alert IsbnAlert = new Alert(Alert.AlertType.ERROR);
                 IsbnAlert.setHeaderText("Operazione impossibile");
                 IsbnAlert.setContentText("Hai impostato una data di scadenza che viene prima in ordine cronologico della data di inizio prestito");
@@ -209,7 +208,7 @@ public class AggiungiPrestitoController {
                 return;     
             }
             
-            if(inizio.isBefore(LocalDate.now())){// Controllo se data inizio è nel passato
+            if(inizio.isBefore(LocalDate.now())){
                 Alert IsbnAlert = new Alert(Alert.AlertType.ERROR);
                 IsbnAlert.setHeaderText("Operazione impossibile");
                 IsbnAlert.setContentText("Hai impostato una data di inizio prestito antecedente a quella odierna");
@@ -279,13 +278,13 @@ public class AggiungiPrestitoController {
             }
             
             // Controllo se l'utente ha già 3 libri in prestito attivi
-            ArrayList<Prestito> prestiti = DataBase.getPrestiti();// Lista prestiti
+            ArrayList<Prestito> prestiti = DataBase.getPrestiti();
             String mat1 = matricola;
             int count=0;
             for(Prestito p : prestiti)
                 if(p.getMatricola().equals(mat1) && p.getStato()!=Stato.RESTITUITO)
                     count+=1;// Conto libri attivi
-            if(count>=3){// Se ho già 3 libri        
+            if(count>=3){       
                 Alert IsbnAlert = new Alert(Alert.AlertType.ERROR);
                 IsbnAlert.setHeaderText("Operazione fallita");
                 IsbnAlert.setContentText("L'utente risulta avere ancora 3 libri da restituire");
@@ -314,7 +313,7 @@ public class AggiungiPrestitoController {
                 );
                 dialogPane.getStyleClass().add("my-alert");
                 
-                IsbnAlert.showAndWait();// Mostro conferma prestito
+                IsbnAlert.showAndWait();
                      
                 int totale_prestiti = DataBase.getPrestiti().size();
                 
@@ -397,8 +396,7 @@ public class AggiungiPrestitoController {
     public void buttonCheckingInitialize(){
     
         IsbnCheckButton.setOnAction(eh->{// Click pulsante verifica ISBN
-        
-            //CONTROLLO ISBN
+
             String isbn = txtIsbn.getText().trim();
             if(isbn.length()!=13){
             
@@ -451,7 +449,6 @@ public class AggiungiPrestitoController {
         
         MatricolaCheckButton.setOnAction(eh->{ // Click pulsante verifica matricola        
             String matricola = txtMatricola.getText().trim();
-            //CONTROLLO MATRICOLA
             if(matricola.length()!=10){// Controllo lunghezza 10 cifre
             
                 Alert IsbnAlert = new Alert(Alert.AlertType.ERROR);

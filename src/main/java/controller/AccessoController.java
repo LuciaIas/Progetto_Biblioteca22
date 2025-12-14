@@ -121,7 +121,7 @@ public class AccessoController {
      */
     public void buttonInitialize(){ 
  
-        setSliding(); // Imposta sliding iniziale
+        setSliding(); 
         
         SlidingButton.setOnAction(eh->{  // Azione bottone sliding
             cleanForm(!direction);
@@ -142,7 +142,7 @@ public class AccessoController {
         });
                
         RegisterButton.setOnAction(eh->{ // Azione bottone registrazione
-            if(CheckShowPassRegister.isSelected()){// Sincronizza password visibile e nascosta
+            if(CheckShowPassRegister.isSelected()){
                 PassRegister.setText(PassRegisterVisible.getText());
                 PassConRegister.setText(PassConRegisterVisible.getText());
             }else{
@@ -152,7 +152,7 @@ public class AccessoController {
                      
             String password = PassRegister.getText();
 
-            if(!model.servizi.ControlloFormato.controlloFormatoPassword(password)){// Controllo formato password
+            if(!model.servizi.ControlloFormato.controlloFormatoPassword(password)){
                 Alert al = new Alert(Alert.AlertType.ERROR);
                 al.setTitle("Errore Validazione"); // Titolo della finestra
                 al.setHeaderText("Password non sicura"); // Titolo interno 
@@ -182,7 +182,7 @@ public class AccessoController {
                 return;    
             }        
             
-            if(model.servizi.DataBase.inserisciBibliotecario(password)){// Inserisco bibliotecario nel DB
+            if(model.servizi.DataBase.inserisciBibliotecario(password)){
                 Alert al = new Alert(Alert.AlertType.INFORMATION);
                 al.setTitle("Operazione Completata");
                 al.setHeaderText("Registrazione effettuata 🚀"); // Ho aggiunto un'emoji per coerenza
@@ -269,7 +269,7 @@ public class AccessoController {
  * Sliding e RegisterForm. L'animazione viene aggiornata ricorsivamente
  * per ripristinare la direzione alla fine di ogni movimento.
  */
-    public void setSliding(){//Imposta le animazioni di sliding dei Pane
+    public void setSliding(){
         double moving = 325;
       
          if(direction)

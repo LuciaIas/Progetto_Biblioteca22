@@ -59,7 +59,7 @@ public class TransizioneScena {
         // 4. Imposto dimensioni e centro (1280x800)
         stage.setWidth(1280);
         stage.setHeight(835);
-        stage.centerOnScreen(); // Metodo nativo di JavaFX per centrare, più affidabile
+        stage.centerOnScreen(); 
 
         // 5. Effetto Dissolvenza 
         FadeTransition fadeIn = new FadeTransition(Duration.seconds(0.5), newRoot);

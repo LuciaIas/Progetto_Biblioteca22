@@ -79,10 +79,10 @@ public class CambioPasswordController {
         BtnSalva.setOnAction(eh->{
             String pass,pass1;
             if(!CheckShowPass.isSelected()){// Se la password non è visibile
-             pass = NewPass.getText();// Prendo testo campo password
+             pass = NewPass.getText();
              pass1 = ConfirmPass.getText();
             }else{// Se la password è visibile
-            pass = NewPassVisible.getText();// Prendo testo campo visibile
+            pass = NewPassVisible.getText();
              pass1 = ConfirmPassVisible.getText();
             }
             
@@ -117,8 +117,8 @@ public class CambioPasswordController {
                 return;                
             }
                 // Aggiorno password nel database     
-                DataBase.rimuoviBibliotecario();// Rimuovo vecchia password
-                DataBase.inserisciBibliotecario(pass);// Inserisco nuova password
+                DataBase.rimuoviBibliotecario();
+                DataBase.inserisciBibliotecario(pass);
                  Alert IsbnAlert = new Alert(AlertType.INFORMATION); // Alert informativo
                 IsbnAlert.setHeaderText("Password aggiornata");// Alert interno
                 IsbnAlert.setContentText("Modifica effettuata con successo");// Contenuto alert
@@ -132,7 +132,7 @@ public class CambioPasswordController {
                 IsbnAlert.showAndWait();// Mostro alert conferma
                 
                 Stage f =  (Stage) BtnSalva.getScene().getWindow();// Ottengo finestra corrente
-                f.close();// Chiudo finestra                     
+                f.close();                    
         });
         BtnAnnulla.setOnMouseClicked(eh->{       
             Stage f =  (Stage) BtnAnnulla.getScene().getWindow();// Ottengo finestra corrente

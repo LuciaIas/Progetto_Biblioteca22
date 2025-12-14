@@ -22,7 +22,7 @@ import javafx.scene.control.Label;
  */
 public class NotificaController {
     @FXML
-    private Label numRit; //label usato per mostrare il numero di prestiti in ritardo
+    private Label numRit; //label usata per mostrare il numero di prestiti in ritardo
     
     
      /**

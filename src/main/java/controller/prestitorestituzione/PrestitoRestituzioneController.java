@@ -89,10 +89,10 @@ public class PrestitoRestituzioneController {
       int n=  Prestito.getPrestitiByStato(DataBase.getPrestiti(), ATTIVO).size()+Prestito.getPrestitiByStato(DataBase.getPrestiti(), Stato.IN_RITARDO).size()
               +Prestito.getPrestitiByStato(DataBase.getPrestiti(), Stato.PROROGATO).size();
       //n rappresenta il totale dei prestiti “non ancora restituiti” (attivi, in ritardo o prorogati)
-    lblActiveLoans.setText("Prestiti attivi: "+n);// Aggiorno label
-    updatePrestiti(DataBase.getPrestiti()); // Mostro tutti i prestiti
-    buttonInitialize();// Inizializzo pulsanti
-    menuButtonInitialize();// Inizializzo menu filtraggio
+    lblActiveLoans.setText("Prestiti attivi: "+n);
+    updatePrestiti(DataBase.getPrestiti()); 
+    buttonInitialize();
+    menuButtonInitialize();
     }
     
     
@@ -284,7 +284,7 @@ private void aggiungiRigaPrestito(String titoloLibro, String isbn, String nomeUt
     for(Prestito p : DataBase.getPrestiti())
         if(p.getIsbn().equals(isbn) && p.getMatricola().equals(matricola))
             prest = p;// Trovo prestito corrispondente   
-    HBox riga = new HBox();// Contenitore orizzontale per la riga
+    HBox riga = new HBox();
     riga.setAlignment(Pos.CENTER_LEFT);
     riga.setSpacing(20);
     riga.setPrefHeight(90);
@@ -388,8 +388,8 @@ private void aggiungiRigaPrestito(String titoloLibro, String isbn, String nomeUt
 
     // Pulsante proroga se necessario
      if (statoEnum != Stato.RESTITUITO && LocalDate.now().isAfter(prest.getData_scadenza().minusDays(8))) {       
-        Button btnProroga = new Button("⏳"); // Icona Clessidra
-        btnProroga.getStyleClass().add("icon-button"); // Stile grigio/blu standard
+        Button btnProroga = new Button("⏳"); 
+        btnProroga.getStyleClass().add("icon-button"); 
         
         // Tooltip per spiegare
         Tooltip ttProroga = new Tooltip("Proroga Scadenza di 15 giorni a partire da adesso");
@@ -463,7 +463,7 @@ private void aggiungiRigaPrestito(String titoloLibro, String isbn, String nomeUt
         actionsBox.getChildren().add(btnMail);
     }  
     riga.getChildren().addAll(iconContainer, boxLibro, boxUtente, boxData, spacer, lblStato, actionsBox);
-    loansContainer.getChildren().add(riga);// Aggiungo riga al container
+    loansContainer.getChildren().add(riga);
 }
     
 }

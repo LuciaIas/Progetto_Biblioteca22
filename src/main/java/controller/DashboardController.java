@@ -49,39 +49,39 @@ import main.Main;
 public class DashboardController {
      
     @FXML
-    private Button CatalogoLibriButton; //bottone catalogo libri
+    private Button CatalogoLibriButton; 
     
     @FXML
-    private Button mailButton; //bottone mail
+    private Button mailButton; 
     
     @FXML
-    private Button BLButton; //bottone blacklist
+    private Button BLButton; 
     
     @FXML
-    private Button DashboardButton; //bottone dashboard (home)
+    private Button DashboardButton; 
     
     @FXML
-    private Button utentiButton; //bottone utenti
+    private Button utentiButton;
     @FXML
-    private Button PrestitiRestituzioniButton; //bottone prestiti/restituzioni
+    private Button PrestitiRestituzioniButton; 
     
     @FXML
-    private Label numLibri; //mostra numero totale di libri presenti nel cataloog
+    private Label numLibri; 
     
     @FXML
-    private Label numLoanAttivi; //mostra numero di prestiti attivi
+    private Label numLoanAttivi; 
     
     @FXML
-    private Label numUsers; //mostra il numero di utenti registrati nel sistema
+    private Label numUsers;
     
     @FXML
-    private Label numScaduti; //mostra il numero di prestiti scaduti o in ritardo
+    private Label numScaduti; 
            
     @FXML
-    private VBox DashboardBox; //contenitore verticale in cui possono essere inseriti altri nodi GUI
+    private VBox DashboardBox; 
     
     @FXML
-    private ScrollPane DashboardScrollPane; //contenitore che permette lo scroll orizzontale e verticale
+    private ScrollPane DashboardScrollPane; 
     
     @FXML
     private BorderPane HomeBorderPane; //usato per cambiare dinamicamente la vista centrale quando si clcca un bottone del menu
@@ -89,12 +89,14 @@ public class DashboardController {
     private List<Button> menuButtons; //lista che contiene tutti i bottoni principali del menu
     
     @FXML
-    private Button LogoutButton; //bottone per uscire dalla dashboard e tornare alla schermata di login
+    private Button LogoutButton; 
     @FXML
-    private Button modPassButton; //bottone per modificare la password dell'utente/bibliotecario
+    private Button modPassButton; 
+    
     @FXML
-    private Button BackupButton; //bottone per eseguire il backup dei dati della biblioteca
-     
+    private Button BackupButton; 
+    
+    public static Stage PassRec;// finestra usata per modifica password
     
 /**
  * @brief Metodo di inizializzazione del controller.
@@ -134,9 +136,7 @@ public class DashboardController {
                 i+=1;
         numScaduti.setText(""+i);   
     }
-    
-    public static Stage PassRec;// finestra usata per modifica password
-        
+       
     
 /**
  * @brief Configura le azioni dei pulsanti principali della Dashboard.
@@ -163,7 +163,7 @@ public class DashboardController {
                 alert.setHeaderText("Eseguire il backup dei dati?");
                 alert.setContentText("Potrebbe richiedere diverso tempo in base alla quantita dei dati");
                
-                Optional<ButtonType> result = alert.showAndWait(); //attendo risposta utente
+                Optional<ButtonType> result = alert.showAndWait(); //attendo risposta bibliotecario
 
                 // Controlliamo cosa ha cliccato
                 if (result.isPresent() && result.get() == ButtonType.OK){
@@ -174,7 +174,7 @@ public class DashboardController {
         
         //modifica password
         modPassButton.setOnAction(eh->{
-                 PassRec = new Stage(); //nuova finestra modale
+                PassRec = new Stage(); 
                 PassRec.setTitle("Modifica Password");
                 PassRec.setResizable(false);
                 PassRec.initModality(Modality.APPLICATION_MODAL); //blocco finestra principale
@@ -185,7 +185,7 @@ public class DashboardController {
             } catch (IOException ex) {
                 Logger.getLogger(DashboardController.class.getName()).log(Level.SEVERE, null, ex);
             }
-                PassRec.showAndWait();  //mostro la finestra e aspetto chiusura 
+                PassRec.showAndWait();  
         });
         
         //logout
@@ -211,7 +211,7 @@ public class DashboardController {
                  Parent root = FXMLLoader.load(getClass().getResource("/View/Dashboard.fxml"));
                  Scene s = DashboardButton.getScene();
                  s.setRoot(root); //sostituisco la scena corrente
-                 evidenziaBottone(DashboardButton); //evidenzio bottone
+                 evidenziaBottone(DashboardButton); 
             } catch (IOException ex) {
                 Logger.getLogger(DashboardController.class.getName()).log(Level.SEVERE, null, ex);
             }      
@@ -221,7 +221,7 @@ public class DashboardController {
         CatalogoLibriButton.setOnAction(eh->{     
             try {
                  Parent root = FXMLLoader.load(getClass().getResource("/View/Catalogo.fxml"));
-                 HomeBorderPane.setCenter(root); //carico la pagina nel BorderPane
+                 HomeBorderPane.setCenter(root);
                  evidenziaBottone(CatalogoLibriButton);
             } catch (IOException ex) {
                 Logger.getLogger(DashboardController.class.getName()).log(Level.SEVERE, null, ex);
@@ -278,7 +278,7 @@ public class DashboardController {
  * @brief Evidenzia il pulsante attivo della sidebar.
  *
  * Rimuove la classe CSS "active" da tutti i pulsanti e la assegna solo
- * al pulsante cliccato. Fornisce un feedback visivo all'utente su quale
+ * al pulsante cliccato. Fornisce un feedback visivo al bibliotecario su quale
  * sezione è attualmente visualizzata.
  *
  * @param bottoneAttivo il pulsante appena cliccato da evidenziare

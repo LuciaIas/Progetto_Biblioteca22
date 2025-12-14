@@ -28,7 +28,6 @@ public class EmailInfoTest {
 
         String risultato = email.toString();
 
-
         assertTrue(risultato.contains("Avviso Scadenza"), "Deve contenere l'oggetto");
         assertTrue(risultato.contains("studenti@unisa.it"), "Deve contenere il destinatario");
         assertTrue(risultato.contains(" - A: "), "Deve rispettare il separatore di formattazione");
@@ -42,7 +41,6 @@ public class EmailInfoTest {
         assertNull(email.getOggetto());
         assertNull(email.getDestinatario());
         assertNull(email.getDataInvio());
-
      
         String risultato = email.toString();
         assertNotNull(risultato);

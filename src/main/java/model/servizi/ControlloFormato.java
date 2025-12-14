@@ -13,17 +13,14 @@ import java.security.MessageDigest;
  * Fornisce metodi statici per validare una password se rispetta i criteri di sicurezza
  * e un indirizzo email se è nel formato corretto.
  * 
- * Criteri password: almeno una maiuscola, una minuscola, un numero, un carattere speciale,
- * senza spazi e lunghezza minima di 8 caratteri.
- * 
- * Email: validazione semplice tramite espressione regolare.
- * 
  * @author gruppo22
  */
 public class ControlloFormato {
     
      /**
      * @brief Controlla se una password rispetta il formato richiesto.
+     * Criteri password: almeno una maiuscola, una minuscola, un numero, un carattere speciale,
+     * senza spazi e lunghezza minima di 8 caratteri.
      * 
      * @param password password da controllare
      * @return true se la password rispetta i criteri di sicurezza, false altrimenti
@@ -37,8 +34,8 @@ public class ControlloFormato {
     
     /**
      * @brief Controlla se un indirizzo email ha un formato valido.
-     * La validazione è basata su una regex che verifica la presenza
-     * di un singolo '@' e di un dominio.
+     * Criteri email: presenza di un singolo '@', massimo 200 caratteri prima della chiocciola,
+     * massimo 20 caratteri per il dominio, massimo 10 caratteri per l'estensione.
      * 
      * @param email indirizzo email da controllare
      * @return true se l'email è valida, false altrimenti
