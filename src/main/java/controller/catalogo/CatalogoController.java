@@ -242,31 +242,25 @@ public class CatalogoController {
     });   
     Button Elimina = new Button("Elimina");
     Elimina.setStyle(btnStyle);
-    Elimina.setOnAction(eh->{    
-        
+    Elimina.setOnAction(eh->{           
         Alert IsbnAlert = new Alert(AlertType.CONFIRMATION);
                 IsbnAlert.setHeaderText("Messaggio di sicurezza");
-                IsbnAlert.setContentText("Sei sicuro di voler rimuovere "+libro.getTitolo()+" dal cataalogo");               
+                IsbnAlert.setContentText("Sei sicuro di voler rimuovere "+libro.getTitolo()+" dal catalogo");               
                 DialogPane dialogPane = IsbnAlert.getDialogPane();              
                 dialogPane.getStylesheets().add(getClass().getResource("/CSS/StyleAccess.css").toExternalForm());              
-                dialogPane.getStyleClass().add("my-alert");               
-                
+                dialogPane.getStyleClass().add("my-alert");                          
                 Optional<ButtonType> result = IsbnAlert.showAndWait();
-
             if (result.isPresent() && result.get() == ButtonType.OK) {
-                DataBase.rimuoviLibro(libro.getIsbn());
-                
+                DataBase.rimuoviLibro(libro.getIsbn());             
                 Alert IsbnAlert1 = new Alert(AlertType.INFORMATION);
                 IsbnAlert1.setHeaderText("Operazione eseguita");
                 IsbnAlert1.setContentText("Libro rimosso");               
                 DialogPane dialogPane1 = IsbnAlert1.getDialogPane();              
                 dialogPane1.getStylesheets().add(getClass().getResource("/CSS/StyleAccess.css").toExternalForm());              
                 dialogPane1.getStyleClass().add("my-alert");               
-                IsbnAlert1.showAndWait();
-                
-            }      
-                
-                updateCatalogo(DataBase.getCatalogo());        
+                IsbnAlert1.showAndWait();             
+            }                    
+               updateCatalogo(DataBase.getCatalogo());        
     });   
     HBox opME = new HBox(5,Modifica,Elimina);
     opME.setAlignment(Pos.CENTER);   
@@ -289,25 +283,20 @@ public class CatalogoController {
     lblTitolo.setWrapText(true);
     lblTitolo.setMaxWidth(200);
     lblTitolo.setAlignment(Pos.CENTER);
-    lblTitolo.setStyle("-fx-font-family: 'Segoe UI', sans-serif; -fx-font-weight: 800; -fx-text-fill: #1A2980; -fx-font-size: 14px; -fx-text-alignment: center;");
-    
+    lblTitolo.setStyle("-fx-font-family: 'Segoe UI', sans-serif; -fx-font-weight: 800; -fx-text-fill: #1A2980; -fx-font-size: 14px; -fx-text-alignment: center;"); 
     TextField lblIsbn = new TextField("Isbn: "+ libro.getIsbn());
     lblIsbn.setEditable(false);lblIsbn.setStyle(
     "-fx-background-color: transparent; " +
     "-fx-background-insets: 0; " +
     "-fx-padding: 5px 10px; " +              // Un po' di aria intorno
-    "-fx-background-color: #dfe6e9; " +      // (Opzionale) Sfondo grigino chiaro tipo "badge"
+    "-fx-background-color: #dfe6e9; " +      // Sfondo grigino chiaro 
     "-fx-background-radius: 5px; " +         // Angoli stondati dello sfondo
-    "-fx-text-fill: #0984e3; " +             // Colore: Blu tecnico
-    "-fx-font-family: 'Consolas', 'Monospaced'; " + // Font da programmatore
+    "-fx-text-fill: #0984e3; " +             // Colore Blu 
+    "-fx-font-family: 'Consolas', 'Monospaced'; " + // Font 
     "-fx-font-weight: bold; " +              // Grassetto
     "-fx-focus-color: transparent;"                    
     );
     lblIsbn.setAlignment(Pos.CENTER);
-
-
-
-    
     VBox mainContainer = new VBox(10);
     mainContainer.setAlignment(Pos.TOP_CENTER);
     mainContainer.getChildren().addAll(bookStack, lblTitolo, lblIsbn);    
