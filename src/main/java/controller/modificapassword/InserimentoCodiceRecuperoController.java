@@ -23,6 +23,15 @@ import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+/**
+ * @brief Controller per la schermata di inserimento del codice OTP per il recupero password.
+ * 
+ * Gestisce l'inserimento del codice di 6 cifre, l'auto-focus tra i campi, la
+ * limitazione dell'input e l'abilitazione del bottone di verifica.
+ * 
+ * @author gruppo22
+ */
+
 public class InserimentoCodiceRecuperoController {
     @FXML 
     private TextField digit1;
@@ -41,18 +50,28 @@ public class InserimentoCodiceRecuperoController {
     @FXML 
     private Label ResendLabel;
    
+    /**
+     * @brief Metodo chiamato automaticamente all'inizializzazione della scena.
+     * 
+     * Imposta gli effetti sui campi e la funzione del bottone.
+     */
     @FXML
     public void initialize() {
         setEffect();
         setButtonFunction();     
     }
     
+    /**
+     * @brief Imposta l'azione del bottone VerifyButton.
+     * 
+     * Verifica se il codice inserito corrisponde a quello generato
+     * e apre la finestra per la modifica della password.
+     */
     public void setButtonFunction(){
         VerifyButton.setOnAction(eh->{
                 String code = getFullCode();
                 if(code.equals(RecuperaPasswordController.code))
                 {
-                
                                     PassRec = new Stage(); 
                 PassRec.setTitle("Modifica Password");
                 PassRec.setResizable(false);
@@ -65,17 +84,23 @@ public class InserimentoCodiceRecuperoController {
             }
                 PassRec.show();
                 Stage s = (Stage) VerifyButton.getScene().getWindow();
-                s.close();
-                
-                }
-                
-        });
-
-        
+                s.close();    
+                }              
+        });      
     }
     
+    
+    /**
+     * @brief Imposta gli effetti sui campi di testo dell'OTP.
+     * 
+     * Gestisce:
+     * - Limitazione dell'input (solo numeri, max 1 carattere)
+     * - Auto-avanzamento al campo successivo
+     * - Navigazione con BACKSPACE e frecce sinistra/destra
+     * - Abilitazione/disabilitazione del bottone VerifyButton
+     */
     public void setEffect(){
-    // Mettiamo i campi in un array per gestirli facilmente
+    //campi in un array per gestirli facilmente
         TextField[] otpFields = {digit1, digit2, digit3, digit4, digit5, digit6};
         for (int i = 0; i < otpFields.length; i++) {
             final int currentIndex = i;
@@ -119,7 +144,12 @@ public class InserimentoCodiceRecuperoController {
         }
     }
     
-    // Metodo per ottenere il codice completo come stringa unica
+    
+    /**
+     * @brief Restituisce il codice completo inserito dall'utente come stringa.
+     * 
+     * @return Stringa contenente le 6 cifre dell'OTP
+     */
     public String getFullCode() {
         return digit1.getText() + digit2.getText() + digit3.getText() + 
                digit4.getText() + digit5.getText() + digit6.getText();

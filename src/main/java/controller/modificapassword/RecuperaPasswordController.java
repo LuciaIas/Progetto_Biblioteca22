@@ -25,35 +25,49 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import static model.servizi.DataBase.conn;
 
-
+/**
+ * @brief Controller per gestire il recupero della password tramite email.
+ * 
+ * Permette all'utente di inserire la propria email, genera un codice di
+ * verifica e invia l'email con il codice per procedere al recupero della password.
+ * 
+ * @author gruppo22
+ */
 public class RecuperaPasswordController {
     @FXML
     private TextField mailField;    
     @FXML
-    private Button RecoveryButton;    
+    private Button RecoveryButton; 
+    /** Codice generato per il recupero password */
     public static String code;
     public static String Email;
     
+    
+    /**
+     * @brief Metodo chiamato automaticamente all'inizializzazione della scena.
+     * 
+     * Inizializza le funzioni del bottone di recupero.
+     */
     @FXML
     public void initialize(){        
         setButtonFunction();
     }
     
+        /**
+     * @brief Imposta l'azione del bottone RecoveryButton.
+     *        Controlla se l'email esiste nel database, genera un codice,
+     *        invia l'email e apre la finestra di inserimento codice.
+     */
     public void setButtonFunction(){
-        RecoveryButton.setOnAction(e->{    
-            
+        RecoveryButton.setOnAction(e->{                
              ResultSet rs = null;
                 String query = "Select email from bibliotecario";  
                 try {
                     PreparedStatement stat = conn.prepareStatement(query);           
                      rs = stat.executeQuery();           
-                     rs.next();
-                     
-                     
-                     String email = rs.getString(1);
-                     
-                     if(!email.equals(mailField.getText())){
-                     
+                     rs.next();                        
+                     String email = rs.getString(1);                    
+                     if(!email.equals(mailField.getText())){                    
                                      Alert al = new Alert(AlertType.ERROR);
                 al.setTitle("Errore"); // Titolo della finestra
                 al.setHeaderText("Errore Email"); // Titolo interno 
@@ -62,13 +76,10 @@ public class RecuperaPasswordController {
                 dialogPane.getStylesheets().add(getClass().getResource("/CSS/StyleAccess.css").toExternalForm());
                 dialogPane.getStyleClass().add("my-alert");
                 al.showAndWait();
-                return;      
-                     
+                return;                           
                      }
-                     code = codeGeneration();
-                     
-                     model.servizi.EmailInvia.inviaEmail(email, "Recupero password", "Il codice per procedere al recupero della password : "+code);
-                
+                     code = codeGeneration();                     
+                     model.servizi.EmailInvia.inviaEmail(email, "Recupero password", "Il codice per procedere al recupero della password : "+code);                
                 PassRec = new Stage(); 
                 PassRec.setTitle("Recupero Password");
                 PassRec.setResizable(false);
@@ -81,18 +92,17 @@ public class RecuperaPasswordController {
             }
             PassRec.show();
                 Stage s = (Stage) RecoveryButton.getScene().getWindow();
-                s.close();
-                     
-                }catch(Exception exe){
-                
-                
-                }
-            
-        });
-        
+                s.close();                     
+                }catch(Exception exe){                               
+                }          
+        });       
     }
     
-    
+    /**
+     * @brief Genera un codice numerico casuale di 6 cifre per il recupero password.
+     * 
+     * @return Stringa contenente il codice di 6 cifre
+     */
     public String codeGeneration(){
         String code = "";
         int n;
