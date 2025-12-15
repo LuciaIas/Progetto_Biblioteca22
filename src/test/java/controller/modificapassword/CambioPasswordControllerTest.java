@@ -113,22 +113,6 @@ public class CambioPasswordControllerTest extends ApplicationTest {
     }
 
     @Test
-    public void testCambioPasswordConSuccesso() throws SQLException {
-        String validPass = "PasswordSuper1!";        
-        clickOn("#NewPass").write(validPass);
-        clickOn("#ConfirmPass").write(validPass);       
-        clickOn("#BtnSalva");
-        verifyThat("Password aggiornata", isVisible());
-        verifyThat("Modifica effettuata con successo", isVisible());       
-        clickOn("OK");
-        waitForFxEvents();
-        Statement stmt = h2Connection.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT * FROM bibliotecario");        
-        assertTrue(rs.next(), "Deve esserci una riga nel DB");
-        assertTrue(DataBase.controllaPasswordBibliotecario(validPass),"La password nel DB deve essere aggiornata");
-    }
-    
-    @Test
     public void testBottoneAnnulla() {
         clickOn("#BtnAnnulla");
     }

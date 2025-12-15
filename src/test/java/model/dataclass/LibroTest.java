@@ -11,9 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class LibroTest {
 
-    /**
-     * Test Base: Verifica costruttore e getter.
-     */
+
     @Test
     public void testCostruttoreEGetters() {
         Autore autore = new Autore("Dante", "Alighieri", 5, LocalDate.of(1956, 5, 8));

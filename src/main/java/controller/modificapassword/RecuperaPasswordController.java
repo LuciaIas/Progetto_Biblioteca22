@@ -78,8 +78,9 @@ public class RecuperaPasswordController {
                 al.showAndWait();
                 return;                           
                      }
-                     code = codeGeneration();                     
-                     model.servizi.EmailInvia.inviaEmail(email, "Recupero password", "Il codice per procedere al recupero della password : "+code);                
+                     code = codeGeneration();      
+                     Email = email;
+                     model.servizi.EmailInvia.inviaEmail(email, "Recupero Password", "Il codice per procedere al recupero della password : "+code);                
                 PassRec = new Stage(); 
                 PassRec.setTitle("Recupero Password");
                 PassRec.setResizable(false);

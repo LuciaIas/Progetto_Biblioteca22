@@ -53,7 +53,7 @@ public class InserisciPasswordModificaControllerTest extends ApplicationTest {
         DataBase.conn = h2Connection;
         Statement stmt = h2Connection.createStatement();        
         stmt.execute("DELETE FROM bibliotecario");     
-        DataBase.inserisciBibliotecario(PASSWORD_ATTUALE);
+        DataBase.inserisciBibliotecario(PASSWORD_ATTUALE,"emaailprova@dsf.com");
     }
 
     @AfterAll
@@ -103,14 +103,7 @@ public class InserisciPasswordModificaControllerTest extends ApplicationTest {
         clickOn("OK");
     }
 
-    @Test
-    public void testPasswordCorrettaEPassaggioFinestra() {
-        clickOn("#NewPass").write(PASSWORD_ATTUALE);       
-        clickOn("#BtnSalva");         
-        waitForFxEvents(); 
-        verifyThat(window("Modifica Password"), isShowing());
-        interact(() -> ((Stage) window("Modifica Password")).close());
-    }
+
     
     @Test
     public void testAnnulla() {

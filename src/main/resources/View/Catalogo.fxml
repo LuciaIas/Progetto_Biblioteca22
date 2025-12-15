@@ -14,11 +14,7 @@
    
    <children>
       
-    <HBox alignment="CENTER_LEFT" 
-      prefHeight="80.0" 
-      minHeight="80.0" 
-      spacing="15.0" 
-      style="-fx-background-color: white; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 10, 0, 0, 2);">
+    <HBox alignment="CENTER_LEFT" minHeight="80.0" prefHeight="80.0" spacing="15.0" style="-fx-background-color: white; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 10, 0, 0, 2);">
     
     <padding>
         <Insets left="30.0" right="30.0" />
@@ -29,23 +25,17 @@
         
         <Pane HBox.hgrow="ALWAYS" />
         
-        <TextField fx:id="searchBar" prefHeight="40.0" prefWidth="350.0" promptText="Cerca per ISBN o titolo" styleClass="search-bar" />
+        <TextField fx:id="searchBar" prefHeight="40.0" prefWidth="350.0" promptText="Cerca per ISBN, titolo o autore" styleClass="search-bar" />
         
         <Button fx:id="btnCerca" mnemonicParsing="false" prefHeight="40.0" prefWidth="100.0" styleClass="button-accent" text="CERCA" />
         <Button fx:id="addButton" mnemonicParsing="false" prefHeight="40.0" prefWidth="100.0" styleClass="button-accent" text="AGGIUNGI" />
     </children>
 </HBox>
 
-<ScrollPane fitToWidth="true" 
-            hbarPolicy="NEVER" 
-            vbarPolicy="AS_NEEDED" 
-            pannable="true" 
-            focusTraversable="false" 
-            style="-fx-background: #f4f7fa; -fx-background-color: transparent;" 
-            VBox.vgrow="ALWAYS">
+<ScrollPane fitToWidth="true" focusTraversable="false" hbarPolicy="NEVER" pannable="true" style="-fx-background: #f4f7fa; -fx-background-color: transparent;" vbarPolicy="AS_NEEDED" VBox.vgrow="ALWAYS">
     <content>
        
-       <GridPane fx:id="containerLibri" hgap="25.0" vgap="25.0" style="-fx-background-color: #f4f7fa;">
+       <GridPane fx:id="containerLibri" hgap="25.0" style="-fx-background-color: #f4f7fa;" vgap="25.0">
           <padding>
              <Insets bottom="150.0" left="30.0" right="30.0" top="30.0" />
           </padding>

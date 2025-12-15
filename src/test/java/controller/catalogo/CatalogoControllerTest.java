@@ -183,11 +183,12 @@ public class CatalogoControllerTest extends ApplicationTest {
         assertEquals(4, copieNelDb, "Le copie dovrebbero essere passate da 5 a 4");
     }
 
-    @Test
+@Test
     public void testEliminaLibro() {
         GridPane grid = lookup("#containerLibri").queryAs(GridPane.class);
         int sizeIniziale = grid.getChildren().size();
         assertEquals(4, sizeIniziale);
+        
         Node cardTarget = null;
         for(Node n : grid.getChildren()){
             if(from(n).lookup("Silmarillion").tryQuery().isPresent()){
@@ -195,14 +196,25 @@ public class CatalogoControllerTest extends ApplicationTest {
                 break;
             }
         }
-        if(cardTarget==null) throw new AssertionError("Libro non trovato");
+        
+        if(cardTarget == null) throw new AssertionError("Libro non trovato");
+        
         moveTo(cardTarget);
         Node btnElimina = from(cardTarget).lookup(".button").match(hasText("Elimina")).query();
+        
+
         clickOn(btnElimina); 
-        sleep(1000); 
+        
+
         clickOn("OK");         
-        waitForFxEvents();       
-        int sizeFinale = grid.getChildren().size();         
+        
+
+        sleep(500); 
+        clickOn("OK"); 
+
+        waitForFxEvents();        
+        
+        int sizeFinale = grid.getChildren().size();          
         assertEquals(false, DataBase.isIsbnPresent("333"), "Il libro 333 deve essere rimosso dal DB");
         assertEquals(sizeIniziale - 1, sizeFinale, "Dovrebbe esserci un libro in meno nella griglia");
     }
