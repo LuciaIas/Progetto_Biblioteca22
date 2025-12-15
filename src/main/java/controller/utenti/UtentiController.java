@@ -264,10 +264,20 @@ public class UtentiController {
         VBox boxMatricola = new VBox();
         boxMatricola.setAlignment(Pos.CENTER_LEFT);
         boxMatricola.setPrefWidth(150);       
-        Label lblMatTitle = new Label("MATRICOLA");
+        Label lblMatTitle = new Label("   MATRICOLA");
         lblMatTitle.setStyle("-fx-text-fill: #7f8fa6; -fx-font-size: 10px; -fx-font-weight: bold;");      
-        Label lblMatValue = new Label(matricola);
-        lblMatValue.setStyle("-fx-text-fill: #2d3436; -fx-font-weight: bold;");      
+
+        TextField lblMatValue = new TextField(matricola);
+
+        lblMatValue.setEditable(false);lblMatValue.setStyle(
+        "-fx-background-color: transparent; " +
+
+        "-fx-font-family: 'Consolas', 'Monospaced'; " + // Font da programmatore
+        "-fx-font-weight: bold; " +              // Grassetto
+        "-fx-focus-color: transparent;"                    
+        );
+
+        //lblMatValue.setStyle("-fx-text-fill: #2d3436; -fx-font-weight: bold;");      
         boxMatricola.getChildren().addAll(lblMatTitle, lblMatValue);
         //SPAZIATORE (Pane vuoto che spinge tutto a destra)
         Pane spacer = new Pane();

@@ -10,6 +10,7 @@ import model.servizi.Catalogo;
 import model.servizi.DataBase;
 import model.dataclass.Libro;
 import java.io.IOException;
+import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.scene.paint.Color;
@@ -28,6 +29,7 @@ import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.DialogPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -36,6 +38,8 @@ import javafx.scene.effect.DropShadow;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.transform.Rotate;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -239,14 +243,29 @@ public class CatalogoController {
     Button Elimina = new Button("Elimina");
     Elimina.setStyle(btnStyle);
     Elimina.setOnAction(eh->{    
-        DataBase.rimuoviLibro(libro.getIsbn());
-        Alert IsbnAlert = new Alert(AlertType.INFORMATION);
-                IsbnAlert.setHeaderText("Operazione eseguita");
-                IsbnAlert.setContentText("Libro rimosso");               
+        
+        Alert IsbnAlert = new Alert(AlertType.CONFIRMATION);
+                IsbnAlert.setHeaderText("Messaggio di sicurezza");
+                IsbnAlert.setContentText("Sei sicuro di voler rimuovere "+libro.getTitolo()+" dal cataalogo");               
                 DialogPane dialogPane = IsbnAlert.getDialogPane();              
                 dialogPane.getStylesheets().add(getClass().getResource("/CSS/StyleAccess.css").toExternalForm());              
                 dialogPane.getStyleClass().add("my-alert");               
-                IsbnAlert.showAndWait();
+                
+                Optional<ButtonType> result = IsbnAlert.showAndWait();
+
+            if (result.isPresent() && result.get() == ButtonType.OK) {
+                DataBase.rimuoviLibro(libro.getIsbn());
+                
+                Alert IsbnAlert1 = new Alert(AlertType.INFORMATION);
+                IsbnAlert1.setHeaderText("Operazione eseguita");
+                IsbnAlert1.setContentText("Libro rimosso");               
+                DialogPane dialogPane1 = IsbnAlert1.getDialogPane();              
+                dialogPane1.getStylesheets().add(getClass().getResource("/CSS/StyleAccess.css").toExternalForm());              
+                dialogPane1.getStyleClass().add("my-alert");               
+                IsbnAlert1.showAndWait();
+                
+            }      
+                
                 updateCatalogo(DataBase.getCatalogo());        
     });   
     HBox opME = new HBox(5,Modifica,Elimina);
@@ -272,11 +291,22 @@ public class CatalogoController {
     lblTitolo.setAlignment(Pos.CENTER);
     lblTitolo.setStyle("-fx-font-family: 'Segoe UI', sans-serif; -fx-font-weight: 800; -fx-text-fill: #1A2980; -fx-font-size: 14px; -fx-text-alignment: center;");
     
-    Label lblIsbn = new Label("Isbn: "+libro.getIsbn());
-    lblTitolo.setWrapText(true);
-    lblTitolo.setMaxWidth(200);
-    lblTitolo.setAlignment(Pos.CENTER);
-    lblTitolo.setStyle("-fx-font-family: 'Segoe UI', sans-serif; -fx-font-weight: 800; -fx-text-fill: #1A2980; -fx-font-size: 14px; -fx-text-alignment: center;");
+    TextField lblIsbn = new TextField("Isbn: "+ libro.getIsbn());
+    lblIsbn.setEditable(false);lblIsbn.setStyle(
+    "-fx-background-color: transparent; " +
+    "-fx-background-insets: 0; " +
+    "-fx-padding: 5px 10px; " +              // Un po' di aria intorno
+    "-fx-background-color: #dfe6e9; " +      // (Opzionale) Sfondo grigino chiaro tipo "badge"
+    "-fx-background-radius: 5px; " +         // Angoli stondati dello sfondo
+    "-fx-text-fill: #0984e3; " +             // Colore: Blu tecnico
+    "-fx-font-family: 'Consolas', 'Monospaced'; " + // Font da programmatore
+    "-fx-font-weight: bold; " +              // Grassetto
+    "-fx-focus-color: transparent;"                    
+    );
+    lblIsbn.setAlignment(Pos.CENTER);
+
+
+
     
     VBox mainContainer = new VBox(10);
     mainContainer.setAlignment(Pos.TOP_CENTER);
