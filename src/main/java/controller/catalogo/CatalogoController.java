@@ -79,7 +79,7 @@ public class CatalogoController {
      * - Bottone per aggiungere un nuovo libro.
      */
     @FXML
-    public void initialize(){  
+    public void initialize(){ 
        updateCatalogo(DataBase.getCatalogo());// Visualizza tutti i libri presenti nel database all'avvio
        btnCerca.setOnAction(eh->{ // Bottone cerca: avvia la funzione di ricerca          
             searchFunction();           
