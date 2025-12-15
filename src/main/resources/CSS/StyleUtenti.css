@@ -1,7 +1,3 @@
-/* =============================================================================
- * THEME: GESTIONE UTENTI (Electric Cobalt - VERSIONE FINAL)
- * File: StyleUtenti.css
- * ============================================================================= */
 
 .root {
     -fx-font-family: "Segoe UI Emoji", "Segoe UI", sans-serif;
@@ -11,7 +7,8 @@
     -fx-background-position: center;
 }
 
-/* ================= HEADER & RICERCA ================= */
+
+/* HEADER & RICERCA */
 
 .page-title {
     -fx-font-size: 28px;
@@ -56,7 +53,8 @@
     -fx-background-color: linear-gradient(to right, #26D0CE, #1A2980);
 }
 
-/* ================= FILTRI ================= */
+
+/* FILTRI */
 
 .menu-button-custom {
     -fx-background-color: white;
@@ -73,9 +71,10 @@
     -fx-text-fill: #1A2980;
 }
 
-/* ================= LISTA UTENTI (CARD) ================= */
 
-/* --- 1. Riga Utente NORMALE (Bianca) --- */
+/* LISTA UTENTI (CARD) */
+
+/* 1. Riga Utente NORMALE (Bianca) */
 .user-row {
     -fx-background-color: white;
     -fx-background-radius: 10;
@@ -93,7 +92,7 @@
     -fx-effect: dropshadow(three-pass-box, rgba(38, 208, 206, 0.15), 8, 0, 0, 2);
 }
 
-/* --- 2. Riga Utente BLOCCATO (Rossa/Rosa) --- */
+/* 2. Riga Utente BLOCCATO (Rossa/Rosa) */
 .user-row-blocked {
     -fx-background-color: #fff0f0; /* Sfondo rosa chiaro */
     -fx-background-radius: 10;
@@ -111,7 +110,7 @@
     -fx-effect: dropshadow(three-pass-box, rgba(255, 107, 107, 0.15), 8, 0, 0, 2);
 }
 
-/* --- Testi --- */
+/* Testi */
 .row-title {
     -fx-font-size: 14px;
     -fx-font-weight: 800;
@@ -122,7 +121,9 @@
     -fx-text-fill: #7f8fa6;
 }
 
-/* ================= ICONE & BADGE ================= */
+
+
+/* ICONE & BADGE */
 
 /* Icona Blu (Attivo) */
 .icon-container-blue {
@@ -162,7 +163,8 @@
     -fx-background-radius: 15;
 }
 
-/* ================= BOTTONI AZIONE ================= */
+
+/* BOTTONI AZIONE */
 
 .icon-button {
     -fx-background-color: transparent;
@@ -214,7 +216,6 @@
 .scroll-bar:vertical .thumb { -fx-background-color: #cbd5e0; -fx-background-radius: 10; }
 
 /* StyleIDCard.css - (Estratto essenziale per questo form) */
-
 .id-card-body {
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 20, 0, 0, 5);
     -fx-background-radius: 15;

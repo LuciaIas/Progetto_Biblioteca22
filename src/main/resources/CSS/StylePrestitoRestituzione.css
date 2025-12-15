@@ -1,14 +1,9 @@
-/* =============================================================================
- * THEME: GESTIONE PRESTITI (Electric Cobalt)
- * Palette: #1A2980 (Blu) -> #26D0CE (Ciano)
- * ============================================================================= */
-
 .root {
     -fx-font-family: "Segoe UI Emoji", "Segoe UI", sans-serif;
     -fx-background-color: #f4f7fa;
 }
 
-/* ================= HEADER & RICERCA ================= */
+/* HEADER & RICERCA */
 
 .page-title {
     -fx-font-size: 28px;
@@ -52,7 +47,7 @@
     -fx-scale-x: 1.02;
 }
 
-/* ================= FILTRI ================= */
+/* FILTRI */
 
 .menu-button-custom {
     -fx-background-color: white;
@@ -69,7 +64,7 @@
     -fx-text-fill: #1A2980;
 }
 
-/* ================= LISTA PRESTITI (RIGHE CARD) ================= */
+/* LISTA PRESTITI (RIGHE CARD) */
 
 /* 1. Riga ATTIVO (Standard - Bianco) */
 .loan-row-active {
@@ -128,7 +123,7 @@
     -fx-opacity: 0.8;
 }
 
-/* --- Testi Riga --- */
+/* Testi Riga */
 .row-title {
     -fx-font-size: 14px;
     -fx-font-weight: 800;
@@ -139,7 +134,7 @@
     -fx-text-fill: #7f8fa6;
 }
 
-/* ================= ICONE & BADGE ================= */
+/* ICONE & BADGE */
 
 /* Sfondi Icone */
 .icon-container-blue   { -fx-background-color: #eaf2ff; -fx-background-radius: 10; -fx-alignment: center; }
@@ -153,7 +148,7 @@
 .tag-extended { -fx-background-color: rgba(155, 89, 182, 0.15); -fx-text-fill: #9b59b6; -fx-font-size: 10px; -fx-font-weight: 800; -fx-padding: 5 12; -fx-background-radius: 15; }
 .tag-returned { -fx-background-color: rgba(46, 204, 113, 0.15); -fx-text-fill: #27ae60; -fx-font-size: 10px; -fx-font-weight: 800; -fx-padding: 5 12; -fx-background-radius: 15; }
 
-/* ================= BOTTONI AZIONE ================= */
+/* BOTTONI AZIONE  */
 
 .icon-button {
     -fx-background-color: transparent;
