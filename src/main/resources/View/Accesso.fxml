@@ -10,7 +10,7 @@
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="750.0" stylesheets="CSS/StyleAccess.css" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AccessoController">
    <children>
       
-      <Pane fx:id="LoginPane" layoutX="0.0" layoutY="0.0" prefHeight="500.0" prefWidth="375.0" styleClass="pane-white">
+      <Pane fx:id="LoginPane" prefHeight="500.0" prefWidth="375.0" styleClass="pane-white">
          <children>
             <Label layoutX="50.0" layoutY="100.0" styleClass="label-title" text="AREA RISERVATA 🔒" />
             <Label layoutX="50.0" layoutY="135.0" styleClass="label-subtitle" text="Inserisci la password per entrare" />
@@ -29,22 +29,25 @@
          </children>
       </Pane>
       
-      <Pane fx:id="RegisterForm" layoutX="375.0" layoutY="0.0" prefHeight="500.0" prefWidth="375.0" styleClass="pane-white">
+      <Pane fx:id="RegisterForm" layoutX="375.0" prefHeight="500.0" prefWidth="375.0" styleClass="pane-white">
          <children>
             <Label layoutX="75.0" layoutY="80.0" styleClass="label-title" text="CREA PASSWORD 🛡️" />
             <Label layoutX="75.0" layoutY="115.0" styleClass="label-subtitle" text="Imposta le tue nuove credenziali" />
             
-            <Label layoutX="75.0" layoutY="170.0" styleClass="label-small" text="NUOVA PASSWORD" />
-            <TextField fx:id="PassRegisterVisible" layoutX="75.0" layoutY="185.0" prefWidth="250.0" visible="false" />
-            <PasswordField fx:id="PassRegister" layoutX="75.0" layoutY="185.0" prefWidth="250.0" />
+            <Label layoutX="79.0" layoutY="232.0" styleClass="label-small" text="NUOVA PASSWORD" />
+            <TextField fx:id="PassRegisterVisible" layoutX="79.0" layoutY="247.0" prefWidth="250.0" visible="false" />
+            <PasswordField fx:id="PassRegister" layoutX="79.0" layoutY="247.0" prefWidth="250.0" />
             
-            <Label layoutX="75.0" layoutY="235.0" styleClass="label-small" text="CONFERMA PASSWORD" />
-            <TextField fx:id="PassConRegisterVisible" layoutX="75.0" layoutY="250.0" prefWidth="250.0" visible="false" />
-            <PasswordField fx:id="PassConRegister" layoutX="75.0" layoutY="250.0" prefWidth="250.0" />
+            <Label layoutX="79.0" layoutY="297.0" styleClass="label-small" text="CONFERMA PASSWORD" />
+            <TextField fx:id="PassConRegisterVisible" layoutX="79.0" layoutY="312.0" prefWidth="250.0" visible="false" />
+            <PasswordField fx:id="PassConRegister" layoutX="79.0" layoutY="312.0" prefWidth="250.0" />
             
-            <CheckBox fx:id="CheckShowPassRegister" layoutX="75.0" layoutY="290.0" mnemonicParsing="false" styleClass="custom-checkbox" text="Mostra caratteri" />
+            <CheckBox fx:id="CheckShowPassRegister" layoutX="81.0" layoutY="366.0" mnemonicParsing="false" styleClass="custom-checkbox" text="Mostra caratteri" />
             
-            <Button fx:id="RegisterButton" layoutX="75.0" layoutY="340.0" mnemonicParsing="false" prefWidth="250.0" styleClass="button-primary" text="SALVA E ACCEDI 🚀" />
+            <Button fx:id="RegisterButton" layoutX="79.0" layoutY="405.0" mnemonicParsing="false" prefWidth="250.0" styleClass="button-primary" text="SALVA E ACCEDI 🚀" />
+            <Label layoutX="79.0" layoutY="165.0" styleClass="label-small" text="EMAIL" />
+            <TextField fx:id="PassConRegisterVisible1" layoutX="79.0" layoutY="180.0" prefWidth="250.0" visible="false" />
+            <PasswordField fx:id="emailField" layoutX="79.0" layoutY="180.0" prefWidth="250.0" />
          </children>
       </Pane>
       

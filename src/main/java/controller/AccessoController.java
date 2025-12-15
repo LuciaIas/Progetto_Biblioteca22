@@ -69,6 +69,10 @@ public class AccessoController {
     private Button RegisterButton;
     
     //REGISTER FORM
+    
+    @FXML
+    private TextField emailField;
+    
     @FXML
     private PasswordField PassRegister;// campo password nascosto
     
@@ -145,6 +149,24 @@ public class AccessoController {
                 PassConRegisterVisible.setText(PassConRegister.getText());
             }                    
             String password = PassRegister.getText();
+            
+            String email = emailField.getText();
+            if(! model.servizi.ControlloFormato.controlloFormatoEmail(email)){
+            
+                Alert al = new Alert(Alert.AlertType.ERROR);
+                al.setTitle("Errore Formato"); // Titolo della finestra
+                al.setHeaderText("Email non valida"); // Titolo interno 
+                al.setContentText("Il formato dell'email deve essere del tipo xxx@xx.xxx");
+                DialogPane dialogPane = al.getDialogPane();
+                dialogPane.getStylesheets().add(
+                    getClass().getResource("/CSS/StyleAccess.css").toExternalForm()
+                );
+                dialogPane.getStyleClass().add("my-alert");
+                al.showAndWait();
+                return;
+            
+            }
+            
             if(!model.servizi.ControlloFormato.controlloFormatoPassword(password)){
                 Alert al = new Alert(Alert.AlertType.ERROR);
                 al.setTitle("Errore Validazione"); // Titolo della finestra

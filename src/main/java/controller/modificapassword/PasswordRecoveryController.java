@@ -44,49 +44,7 @@ public class PasswordRecoveryController {
     public void setButtonFunction(){
         RecoveryButton.setOnAction(e->{
         
-            String email = mailField.getText();
-            //RICORDA DI MODIFICARE ALLINSERT USER IL CheckEmailFormat E RENDERE EMAIL NON DUPLICABILI
-            if(Model.FormatValidation.CheckEmailFormat(email)){
-                
-                if(BinaryDB.SearchUserByEmail(email)!=null){
-                    
-                    code = CodeGeneration();
-                    Email = email;
-                    
-                    try {
-                        ControllerAccess.getPas().setScene(new Scene(FXMLLoader.load(getClass().getResource("/View/InsertCodePassRecovery.fxml"))));
-                        ControllerAccess.getPas().setOnCloseRequest(eh->{code=null;Email=null;});
-                        
-                            Thread threadParallelo = new Thread(() -> {
-
-                                 Model.EmailSender.sendEmail(email, "Password Recovery",code);
-
-                            });
-
-                            
-                            threadParallelo.setDaemon(true); //CHIUDO IL TRHEAD PER PRECAUZIONE
-                            threadParallelo.start();
-
-                        
-                        
-                       
-                    } catch (IOException ex) {
-                        Logger.getLogger(PasswordRecoveryController.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                    
-                    
-                }
-                else{
-             Alert err = new Alert(Alert.AlertType.WARNING);
-             err.setContentText("L'email inserita non e presente nel sistema");
-             err.showAndWait();
-            }
-            }else{
-             Alert err = new Alert(Alert.AlertType.WARNING);
-             err.setContentText("L'email inserita non e valida");
-             err.showAndWait();
-            }
-        
+         
         });
         
     }

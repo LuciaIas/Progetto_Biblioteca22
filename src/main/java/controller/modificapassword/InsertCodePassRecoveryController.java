@@ -44,23 +44,7 @@ public class InsertCodePassRecoveryController {
     
     public void SetButtonFunction(){
     
-        VerifyButton.setDisable(true);
-        
-        VerifyButton.setOnAction(eh->{
-        
-            String code = PasswordRecoveryController.code;
-            String code1 = getFullCode();
-            if(code.equals(code1)){
-                try {
-                    ControllerAccess.getPas().setScene(new Scene(FXMLLoader.load(getClass().getResource("/View/PasswordCharge.fxml"))));
-                } catch (IOException ex) {
-                    Logger.getLogger(InsertCodePassRecoveryController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-            else
-                System.out.println("Codice sbagliato");
-        
-        });
+  
         
     
     }
