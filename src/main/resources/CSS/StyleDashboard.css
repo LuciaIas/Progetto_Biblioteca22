@@ -4,19 +4,19 @@
     -fx-background-color: #eef2f3; 
 }
 
-/* Il contenitore principale (la Card) */
+/* Il contenitore principale  */
 .action-card {
     -fx-background-color: white;
     -fx-background-radius: 12px; /* Angoli morbidi */
     -fx-border-radius: 12px;
     /* Ombra sottile per dare profondità senza appesantire */
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.08), 8, 0, 0, 4);
-    /* Bordo laterale colorato per evidenziare che è una "Azione" (opzionale) */
+    /* Bordo laterale colorato per evidenziare che è una "Azione"  */
     -fx-border-color: transparent transparent transparent #e74c3c; /* Rosso/Arancio per avviso */
     -fx-border-width: 0 0 0 4px;
 }
 
-/* L'etichetta del titolo ("Azione suggerita") */
+/* L'etichetta del titolo  */
 .action-title {
     -fx-font-family: 'Segoe UI', sans-serif;
     -fx-font-size: 11px;
@@ -26,7 +26,7 @@
     -fx-letter-spacing: 0.5px;
 }
 
-/* L'etichetta del valore ("Ci sono 98 prestiti...") */
+/* L'etichetta del valore  */
 .action-value {
     -fx-font-family: 'Segoe UI', sans-serif;
     -fx-font-size: 14px;
@@ -34,8 +34,7 @@
     -fx-text-fill: #2c3e50; /* Grigio scuro quasi nero */
 }
 
-/* SIDEBAR (MENU LATERALE)*/
-/* STILE: CORNICE DOPPIA */
+/* Sidebar (menu laterale)*/
 .sidebar-logo-text {
     /* Colore: Bianco Brillante */
     -fx-text-fill: #ffffff; 
@@ -48,11 +47,11 @@
     /* Spaziatura lettere per stile "Tech" */
     -fx-letter-spacing: 1px;
     
-    /* EFFETTO GLOW (Ombra luminosa) */
+    /* Effetto glow */
     /* Rende il testo leggibile su qualsiasi sfondo scuro */
     -fx-effect: dropshadow(three-pass-box, rgba(38, 208, 206, 0.6), 10, 0, 0, 0);
     
-    /* (Opzionale) Allineamento se serve */
+    /*  Allineamento  */
     -fx-alignment: CENTER_LEFT;
 }
 .image-card {
@@ -80,7 +79,7 @@
     -fx-font-size: 42px;
     -fx-font-weight: 900; /* Extra Bold */
     
-    /* IL TRUCCO: Gradiente applicato al testo */
+    /* Gradiente applicato al testo */
     -fx-text-fill: linear-gradient(to right, #1A2980, #26D0CE);
     
     /* Ombra morbida per staccarlo dallo sfondo */
@@ -197,7 +196,7 @@
     -fx-scale-x: 1.02;
 }
 
-/* KPI CARDS (STATISTICHE) */
+/* Statistiche*/
 
 .card-kpi {
     -fx-background-color: white;
@@ -221,7 +220,7 @@
 .kpi-change-pos { -fx-font-size: 11px; -fx-text-fill: #26D0CE; -fx-font-weight: bold; }
 .kpi-change-neg { -fx-font-size: 11px; -fx-text-fill: #ff6b6b; -fx-font-weight: bold; }
 
-/* Icone Sfondi (Tinte pastello coerenti) */
+/* Icone Sfondi  */
 .icon-container-blue   { -fx-background-color: #eaf2ff; -fx-background-radius: 10; }
 .icon-container-purple { -fx-background-color: #f3e5f5; -fx-background-radius: 10; }
 .icon-container-cyan   { -fx-background-color: rgba(38, 208, 206, 0.1); -fx-background-radius: 10; }
@@ -237,7 +236,7 @@
 .kpi-value-white { -fx-text-fill: white; -fx-font-size: 32px; -fx-font-weight: 900; }
 .kpi-alert-text { -fx-text-fill: white; -fx-font-size: 11px; -fx-font-weight: bold; -fx-underline: true; }
 
-/* TABELLA */
+/* Tabella */
 
 .card-table {
     -fx-background-color: white;
@@ -308,7 +307,7 @@
 .scroll-bar:vertical .thumb:hover { -fx-background-color: #1A2980; }
 .scroll-bar:vertical .track { -fx-background-color: transparent; }
 
-/* STILE LISTA UTENTI (HBOX) */
+/* Stile lista utenti */
 .user-row {
     -fx-background-color: white;
     -fx-background-radius: 10;
@@ -373,7 +372,7 @@
     -fx-background-radius: 15;
 }
 
-/* STILE COPERTINA LIBRO (ImageView)*/
+/* Stile copertina libro)*/
 .book-cover {
     /* Un'ombra elegante dietro al libro */
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 10, 0, 0, 0);
@@ -389,7 +388,7 @@
     -fx-effect: dropshadow(three-pass-box, rgba(26, 41, 128, 0.6), 15, 0, 0, 5);
 }
 
-/* STILE TITOLO (Label) */
+/* Stile titolo (label) */
 .card-title {
     -fx-text-fill: #1A2980; /* Blu Scuro */
     -fx-font-size: 14px;
@@ -401,7 +400,6 @@
     -fx-max-width: 140px; /* Non deve essere più largo dell'immagine */
 }
 
-/* (Opzionale) Se usi una VBox per contenerli */
 .book-card {
     -fx-background-color: white;
     -fx-background-radius: 10;
@@ -415,7 +413,7 @@
     -fx-background-color: #f0f8ff; /* Leggermente azzurro al passaggio */
 }
 
-/* STILE CARD EMAIL */
+/* Stile card email */
 .email-row {
     -fx-background-color: white;
     -fx-background-radius: 10;
@@ -443,7 +441,7 @@
     -fx-alignment: center;
 }
 
-/* Bottone Leggi (Viola Outline) */
+/* Bottone Leggi */
 .button-outline-purple {
     -fx-background-color: transparent;
     -fx-border-color: #8E2DE2;

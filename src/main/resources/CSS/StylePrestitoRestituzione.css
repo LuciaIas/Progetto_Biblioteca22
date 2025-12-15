@@ -3,8 +3,7 @@
     -fx-background-color: #f4f7fa;
 }
 
-/* HEADER & RICERCA */
-
+/* Header e ricerca */
 .page-title {
     -fx-font-size: 28px;
     -fx-font-weight: 900;
@@ -47,7 +46,7 @@
     -fx-scale-x: 1.02;
 }
 
-/* FILTRI */
+/* Filtri */
 
 .menu-button-custom {
     -fx-background-color: white;
@@ -64,9 +63,9 @@
     -fx-text-fill: #1A2980;
 }
 
-/* LISTA PRESTITI (RIGHE CARD) */
+/* Lista prestiti */
 
-/* 1. Riga ATTIVO (Standard - Bianco) */
+/* Riga ATTIVO  */
 .loan-row-active {
     -fx-background-color: white;
     -fx-background-radius: 10;
@@ -83,7 +82,7 @@
     -fx-effect: dropshadow(three-pass-box, rgba(38, 208, 206, 0.15), 8, 0, 0, 2);
 }
 
-/* 2. Riga IN RITARDO (Rossa) */
+/* Riga IN RITARDO */
 .loan-row-late {
     -fx-background-color: #fff5f5; /* Rosso chiarissimo */
     -fx-background-radius: 10;
@@ -98,7 +97,7 @@
     -fx-effect: dropshadow(three-pass-box, rgba(255, 107, 107, 0.15), 8, 0, 0, 2);
 }
 
-/* 3. Riga PROROGATO (Viola) */
+/* Riga PROROGATO  */
 .loan-row-extended {
     -fx-background-color: #fbfaff; /* Viola chiarissimo */
     -fx-background-radius: 10;
@@ -113,7 +112,7 @@
     -fx-effect: dropshadow(three-pass-box, rgba(149, 117, 205, 0.15), 8, 0, 0, 2);
 }
 
-/* 4. Riga RESTITUITO (Grigio) */
+/* Riga RESTITUITO  */
 .loan-row-returned {
     -fx-background-color: #f8f9fa;
     -fx-background-radius: 10;
@@ -134,7 +133,7 @@
     -fx-text-fill: #7f8fa6;
 }
 
-/* ICONE & BADGE */
+/* Icone */
 
 /* Sfondi Icone */
 .icon-container-blue   { -fx-background-color: #eaf2ff; -fx-background-radius: 10; -fx-alignment: center; }
@@ -148,7 +147,7 @@
 .tag-extended { -fx-background-color: rgba(155, 89, 182, 0.15); -fx-text-fill: #9b59b6; -fx-font-size: 10px; -fx-font-weight: 800; -fx-padding: 5 12; -fx-background-radius: 15; }
 .tag-returned { -fx-background-color: rgba(46, 204, 113, 0.15); -fx-text-fill: #27ae60; -fx-font-size: 10px; -fx-font-weight: 800; -fx-padding: 5 12; -fx-background-radius: 15; }
 
-/* BOTTONI AZIONE  */
+/* Bottoni  */
 
 .icon-button {
     -fx-background-color: transparent;

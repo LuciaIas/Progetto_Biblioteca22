@@ -1,14 +1,12 @@
-
 .root {
     -fx-font-family: "Segoe UI Emoji", "Segoe UI", sans-serif;
-    /* Immagine di sfondo (assicurati che il file esista!) */
     -fx-background-image: url("../Images/background_utenti.jpg");
     -fx-background-size: cover;
     -fx-background-position: center;
 }
 
 
-/* HEADER & RICERCA */
+/* Header e ricerca */
 
 .page-title {
     -fx-font-size: 28px;
@@ -54,7 +52,7 @@
 }
 
 
-/* FILTRI */
+/* Filtri */
 
 .menu-button-custom {
     -fx-background-color: white;
@@ -72,9 +70,9 @@
 }
 
 
-/* LISTA UTENTI (CARD) */
+/* Lista utenti */
 
-/* 1. Riga Utente NORMALE (Bianca) */
+/* Riga Utente NORMALE (Bianca) */
 .user-row {
     -fx-background-color: white;
     -fx-background-radius: 10;
@@ -92,7 +90,7 @@
     -fx-effect: dropshadow(three-pass-box, rgba(38, 208, 206, 0.15), 8, 0, 0, 2);
 }
 
-/* 2. Riga Utente BLOCCATO (Rossa/Rosa) */
+/* Riga Utente BLOCCATO (Rossa/Rosa) */
 .user-row-blocked {
     -fx-background-color: #fff0f0; /* Sfondo rosa chiaro */
     -fx-background-radius: 10;
@@ -123,7 +121,7 @@
 
 
 
-/* ICONE & BADGE */
+/* Icone */
 
 /* Icona Blu (Attivo) */
 .icon-container-blue {
@@ -164,7 +162,7 @@
 }
 
 
-/* BOTTONI AZIONE */
+/* Bottoni */
 
 .icon-button {
     -fx-background-color: transparent;
@@ -215,7 +213,6 @@
 .scroll-bar:vertical { -fx-background-color: transparent; }
 .scroll-bar:vertical .thumb { -fx-background-color: #cbd5e0; -fx-background-radius: 10; }
 
-/* StyleIDCard.css - (Estratto essenziale per questo form) */
 .id-card-body {
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 20, 0, 0, 5);
     -fx-background-radius: 15;
