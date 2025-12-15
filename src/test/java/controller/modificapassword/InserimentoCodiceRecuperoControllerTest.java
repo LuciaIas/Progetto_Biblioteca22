@@ -15,10 +15,7 @@ import javax.swing.SwingUtilities;
 import java.lang.reflect.Field;
 
 public class InserimentoCodiceRecuperoControllerTest {
-
-    private InserimentoCodiceRecuperoController controller;
-
-   
+    private InserimentoCodiceRecuperoController controller;  
     private TextField t1, t2, t3, t4, t5, t6;
     private Button btnVerify;
     private Label lblResend;
@@ -34,9 +31,7 @@ public class InserimentoCodiceRecuperoControllerTest {
 
     @BeforeEach
     public void setUp() throws Exception {
-        controller = new InserimentoCodiceRecuperoController();
-
-        
+        controller = new InserimentoCodiceRecuperoController();      
         t1 = new TextField();
         t2 = new TextField();
         t3 = new TextField();
@@ -44,9 +39,7 @@ public class InserimentoCodiceRecuperoControllerTest {
         t5 = new TextField();
         t6 = new TextField();
         btnVerify = new Button();
-        lblResend = new Label();
-
-      
+        lblResend = new Label();    
         inject(controller, "digit1", t1);
         inject(controller, "digit2", t2);
         inject(controller, "digit3", t3);
@@ -59,64 +52,45 @@ public class InserimentoCodiceRecuperoControllerTest {
 
  
     @Test
-    public void testGetFullCode() {
-     
+    public void testGetFullCode() {    
         t1.setText("1");
         t2.setText("2");
         t3.setText("3");
         t4.setText("4");
         t5.setText("5");
-        t6.setText("6");
-
-  
+        t6.setText("6"); 
         String risultato = controller.getFullCode();
-
-  
         assertEquals("123456", risultato, "Il codice completo dovrebbe unire tutte le caselle");
     }
 
 
     @Test
     public void testInitializeAndListeners() {
-
         controller.initialize();
-
         t1.setText("1");
         t2.setText("2");
         t3.setText("3");
-
         if (controller.getFullCode().length() < 6) {
             btnVerify.setDisable(true); 
         }
-        
-        assertTrue(btnVerify.isDisabled(), "Il bottone deve essere disabilitato se il codice è incompleto");
-
-      
+       
+        assertTrue(btnVerify.isDisabled(), "Il bottone deve essere disabilitato se il codice è incompleto");    
         t4.setText("4");
         t5.setText("5");
-        t6.setText("6");
-        
-    
+        t6.setText("6");        
         if (controller.getFullCode().length() == 6) {
             btnVerify.setDisable(false);
         }
-
         assertFalse(btnVerify.isDisabled(), "Il bottone deve essere abilitato se il codice è di 6 cifre");
     }
     
 
     @Test
-    public void testInputValidationLogic() {
-     
-        controller.initialize();
-        
-        t1.setText("A");
-
-        
+    public void testInputValidationLogic() {    
+        controller.initialize();       
+        t1.setText("A");        
         String val = t1.getText();
-        if (!val.matches("\\d*")) {
-
-   
+        if (!val.matches("\\d*")) {  
         }
     }
 

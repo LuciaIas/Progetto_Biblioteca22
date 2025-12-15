@@ -23,9 +23,8 @@ import static org.testfx.api.FxAssert.verifyThat;
 import static org.testfx.matcher.base.NodeMatchers.isVisible;
 
 public class AccessoControllerTest extends ApplicationTest {
-
     private Connection testConnection;
-
+    
     @Override
     public void start(Stage stage) throws Exception {
         Main.stage = stage;
@@ -35,17 +34,13 @@ public class AccessoControllerTest extends ApplicationTest {
         stage.show();
         stage.toFront();
     }
-
+    
     @BeforeEach
     public void setUpDB() throws SQLException {
-
         testConnection = DriverManager.getConnection("jdbc:h2:mem:testaccessodb;MODE=MySQL;DB_CLOSE_DELAY=-1");
         DataBase.conn = testConnection; 
-
         try (Statement stmt = testConnection.createStatement()) {
-            stmt.execute("DROP TABLE IF EXISTS bibliotecario");
-
-       
+            stmt.execute("DROP TABLE IF EXISTS bibliotecario");      
             stmt.execute("CREATE TABLE bibliotecario (" +
                          "password_ VARCHAR(255) PRIMARY KEY, " + 
                          "email VARCHAR(255))");
@@ -66,31 +61,20 @@ public class AccessoControllerTest extends ApplicationTest {
 
     @Test
     public void testLoginRiuscito() throws SQLException {
-        System.out.println("TEST: Login Riuscito");
-        
+        System.out.println("TEST: Login Riuscito");       
         String email = "admin@test.it";
         String pass = "PasswordSegreta1!";
-
-        DataBase.inserisciBibliotecario(pass, email);
-
-  
+        DataBase.inserisciBibliotecario(pass, email); 
         clickOn("#PassLogin").write(pass);
-        
-
         try {
             clickOn("#LoginButton");
-        } catch (Exception e) {
-          
-        }
-        
-     
-        boolean erroreVisibile = !lookup(".dialog-pane").queryAll().isEmpty();
-        
+        } catch (Exception e) {         
+        }    
+        boolean erroreVisibile = !lookup(".dialog-pane").queryAll().isEmpty();        
         if (erroreVisibile) {
             String testo = lookup(".dialog-pane .content").queryLabeled().getText();
             System.err.println("FALLITO: È apparso l'Alert -> " + testo);
         }
-
         assertFalse(erroreVisibile, "Il login è fallito (Alert visibile)");
     }
 
@@ -98,31 +82,23 @@ public class AccessoControllerTest extends ApplicationTest {
     public void testLoginFallito() {
         System.out.println("TEST: Login Fallito");
         clickOn("#PassLogin").write("sbagliata");
-        clickOn("#LoginButton");
-        
-
+        clickOn("#LoginButton");      
         verifyThat(".dialog-pane", isVisible());
         clickOn("OK"); 
     }
 
     @Test
     public void testRegistrazioneRiuscita() throws SQLException {
-        System.out.println("TEST: Registrazione Riuscita");
-        
+        System.out.println("TEST: Registrazione Riuscita");       
         clickOn("#SlidingButton");
         sleep(1200); 
-
         clickOn("#emailField").write("nuovo@test.it");
         String pass = "PasswordSicura1!";
         clickOn("#PassRegister").write(pass);
-        clickOn("#PassConRegister").write(pass);
-        
-    
+        clickOn("#PassConRegister").write(pass);         
         try {
             clickOn("#RegisterButton");
-        } catch (Exception e) {}
-
-  
+        } catch (Exception e) {}  
         verifyThat("Registrazione effettuata 🚀", isVisible());
         clickOn("OK");
     }

@@ -24,9 +24,7 @@ import static org.testfx.api.FxAssert.verifyThat;
 import static org.testfx.matcher.base.NodeMatchers.isVisible;
 
 public class BlacklistControllerTest extends ApplicationTest {
-
     private Connection testConnection;
-
 
     public void setUpDB() throws SQLException {        
         testConnection = DriverManager.getConnection("jdbc:h2:mem:testblacklistdb;MODE=MySQL;DB_CLOSE_DELAY=-1");

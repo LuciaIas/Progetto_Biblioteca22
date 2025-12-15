@@ -27,7 +27,6 @@ import static org.testfx.api.FxAssert.verifyThat;
 import static org.testfx.matcher.base.NodeMatchers.isVisible;
 
 public class AggiungiLibroControllerTest extends ApplicationTest {
-
     private Connection testConnection;
 
 @AfterEach
@@ -56,7 +55,7 @@ public class AggiungiLibroControllerTest extends ApplicationTest {
         stage.toFront();
     }
 
-private void initDB() throws SQLException {   
+    private void initDB() throws SQLException {   
         testConnection = DriverManager.getConnection("jdbc:h2:mem:testaggiungilibro;MODE=MySQL;DB_CLOSE_DELAY=-1");
         DataBase.conn = testConnection;
         try (Statement stmt = testConnection.createStatement()) {
@@ -145,6 +144,5 @@ private void initDB() throws SQLException {
         );       
         clickOn("OK");
     }
-
 
 }

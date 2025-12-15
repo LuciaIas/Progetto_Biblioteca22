@@ -21,7 +21,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.testfx.api.FxAssert.verifyThat;
 
 public class NotificaControllerTest extends ApplicationTest {
-
     private Connection testConnection;
 
     @AfterEach
@@ -60,7 +59,6 @@ public class NotificaControllerTest extends ApplicationTest {
             stmt.execute("INSERT INTO prestito VALUES ('333', 'U3', CURRENT_DATE, NULL, 'ATTIVO', CURRENT_DATE)");
         }
     }
-
 
     @Test
     public void testMessaggioNotifica() {

@@ -41,15 +41,13 @@ public class CatalogoControllerTest extends ApplicationTest {
             Statement stmt = h2Connection.createStatement();        
             stmt.execute("DROP TABLE IF EXISTS scritto_da");
             stmt.execute("DROP TABLE IF EXISTS libri");
-            stmt.execute("DROP TABLE IF EXISTS autori");
-           
+            stmt.execute("DROP TABLE IF EXISTS autori");          
             stmt.execute("CREATE TABLE autori (" +
                     "id INT AUTO_INCREMENT PRIMARY KEY, " +
                     "nome VARCHAR(100), " +
                     "cognome VARCHAR(100), " +
                     "num_opere INT, " +
                     "data_nascita DATE)");
-
             stmt.execute("CREATE TABLE libri (" +
                     "isbn VARCHAR(20) PRIMARY KEY, " +
                     "titolo VARCHAR(100), " +
@@ -57,7 +55,6 @@ public class CatalogoControllerTest extends ApplicationTest {
                     "num_copie INT, " +          
                     "anno_pubblicazione INT, " +   
                     "url_immagine VARCHAR(255))");
-
             stmt.execute("CREATE TABLE scritto_da (" +
                     "isbn VARCHAR(20), " +
                     "id_autore INT, " +
@@ -92,20 +89,16 @@ public class CatalogoControllerTest extends ApplicationTest {
     
 
     private void resetAndInsertData(Connection conn) throws SQLException {
-        Statement stmt = conn.createStatement();       
- 
+        Statement stmt = conn.createStatement();        
         stmt.execute("DELETE FROM scritto_da");
         stmt.execute("DELETE FROM libri");
-        stmt.execute("DELETE FROM autori");       
-     
+        stmt.execute("DELETE FROM autori");           
         stmt.execute("INSERT INTO autori (id, nome, cognome, num_opere, data_nascita) VALUES " +
                 "(1, 'J.R.R.', 'Tolkien', 50, '1892-01-03')");
-
         stmt.execute("INSERT INTO libri VALUES " +
                 "('111', 'Il Signore degli Anelli', 'Bompiani', 10, 1954, ''), " +
                 "('222', 'Lo Hobbit', 'Adelphi', 5, 1937, ''), " +
                 "('333', 'Silmarillion', 'Bompiani', 2, 1977, '')");
-
         stmt.execute("INSERT INTO scritto_da VALUES ('111', 1), ('222', 1), ('333', 1)");
     }
     
@@ -187,33 +180,22 @@ public class CatalogoControllerTest extends ApplicationTest {
     public void testEliminaLibro() {
         GridPane grid = lookup("#containerLibri").queryAs(GridPane.class);
         int sizeIniziale = grid.getChildren().size();
-        assertEquals(4, sizeIniziale);
-        
+        assertEquals(4, sizeIniziale);       
         Node cardTarget = null;
         for(Node n : grid.getChildren()){
             if(from(n).lookup("Silmarillion").tryQuery().isPresent()){
                 cardTarget = n;
                 break;
             }
-        }
-        
-        if(cardTarget == null) throw new AssertionError("Libro non trovato");
-        
+        }       
+        if(cardTarget == null) throw new AssertionError("Libro non trovato");       
         moveTo(cardTarget);
-        Node btnElimina = from(cardTarget).lookup(".button").match(hasText("Elimina")).query();
-        
-
-        clickOn(btnElimina); 
-        
-
-        clickOn("OK");         
-        
-
+        Node btnElimina = from(cardTarget).lookup(".button").match(hasText("Elimina")).query();        
+        clickOn(btnElimina);        
+        clickOn("OK");                
         sleep(500); 
         clickOn("OK"); 
-
-        waitForFxEvents();        
-        
+        waitForFxEvents();                
         int sizeFinale = grid.getChildren().size();          
         assertEquals(false, DataBase.isIsbnPresent("333"), "Il libro 333 deve essere rimosso dal DB");
         assertEquals(sizeIniziale - 1, sizeFinale, "Dovrebbe esserci un libro in meno nella griglia");

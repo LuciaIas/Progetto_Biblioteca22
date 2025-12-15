@@ -24,9 +24,7 @@ import static org.testfx.api.FxAssert.verifyThat;
 import static org.testfx.matcher.base.NodeMatchers.isVisible;
 
 public class DashboardControllerTest extends ApplicationTest {
-
     private Connection testConnection;
-
 
     @AfterEach
     public void tearDown() throws Exception {
@@ -68,15 +66,12 @@ public class DashboardControllerTest extends ApplicationTest {
                     "data_inizio DATE, data_restituzione DATE, " +
                     "stato_prestito VARCHAR(20), data_scadenza DATE)");                      
             stmt.execute("CREATE TABLE IF NOT EXISTS autori (id INT, nome VARCHAR(50), cognome VARCHAR(50), num_opere INT, data_nascita DATE)");
-            stmt.execute("CREATE TABLE IF NOT EXISTS scritto_da (isbn VARCHAR(20), id_autore INT)"); 
-            
+            stmt.execute("CREATE TABLE IF NOT EXISTS scritto_da (isbn VARCHAR(20), id_autore INT)");             
             stmt.execute("INSERT INTO libri VALUES ('111', 'Libro A', 'Ed', 2000, 5, '')");
-            stmt.execute("INSERT INTO libri VALUES ('222', 'Libro B', 'Ed', 2000, 3, '')");
-          
+            stmt.execute("INSERT INTO libri VALUES ('222', 'Libro B', 'Ed', 2000, 3, '')");         
             stmt.execute("INSERT INTO utenti VALUES ('U1', 'A', 'B', 'c', false)");
             stmt.execute("INSERT INTO utenti VALUES ('U2', 'D', 'E', 'f', false)");
-            stmt.execute("INSERT INTO utenti VALUES ('U3', 'G', 'H', 'i', true)");
-      
+            stmt.execute("INSERT INTO utenti VALUES ('U3', 'G', 'H', 'i', true)");     
             stmt.execute("INSERT INTO prestito VALUES ('111', 'U1', CURRENT_DATE, NULL, 'ATTIVO', CURRENT_DATE)");
             stmt.execute("INSERT INTO prestito VALUES ('222', 'U2', '2000-01-01', NULL, 'IN_RITARDO', '2020-02-01')");
             stmt.execute("INSERT INTO prestito VALUES ('111', 'U3', '2000-01-01', '2020-02-01', 'RESTITUITO', '2020-02-01')");
@@ -102,7 +97,6 @@ public class DashboardControllerTest extends ApplicationTest {
         Button btnDashboard = lookup("#DashboardButton").query();
         assertFalse(btnDashboard.getStyleClass().contains("sidebar-btn-active"), 
                     "Il bottone Dashboard non deve più essere evidenziato");
-
     }
 
     //Logout
