@@ -55,10 +55,8 @@ public class AggiungiPrestitoControllerTest extends ApplicationTest {
             stmt.execute("DROP TABLE IF EXISTS scritto_da");
             stmt.execute("DROP TABLE IF EXISTS libri");
             stmt.execute("DROP TABLE IF EXISTS utenti");
-            stmt.execute("DROP TABLE IF EXISTS autori");
-            
-            stmt.execute("SET REFERENTIAL_INTEGRITY TRUE");
-            
+            stmt.execute("DROP TABLE IF EXISTS autori");            
+            stmt.execute("SET REFERENTIAL_INTEGRITY TRUE");            
             stmt.execute("CREATE TABLE autori (id INT AUTO_INCREMENT PRIMARY KEY, nome VARCHAR(100), cognome VARCHAR(100), num_opere INT, data_nascita DATE)");            
             stmt.execute("CREATE TABLE libri (isbn VARCHAR(20) PRIMARY KEY, titolo VARCHAR(100), editore VARCHAR(100), anno_pubblicazione INT, num_copie INT, url_immagine VARCHAR(255))");           
             stmt.execute("CREATE TABLE utenti (matricola VARCHAR(20) PRIMARY KEY, nome VARCHAR(100), cognome VARCHAR(100), email VARCHAR(100), bloccato BOOLEAN DEFAULT FALSE)");            
@@ -96,7 +94,6 @@ public class AggiungiPrestitoControllerTest extends ApplicationTest {
         }
         DataBase.conn = h2Connection;
         insertTestData(h2Connection);
-
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/AggiungiPrestito.fxml"));
         Scene scene = new Scene(loader.load());
         stage.setScene(scene);
@@ -109,42 +106,27 @@ public class AggiungiPrestitoControllerTest extends ApplicationTest {
         stmt.execute("DELETE FROM scritto_da");
         stmt.execute("DELETE FROM libri");
         stmt.execute("DELETE FROM utenti");
-        stmt.execute("DELETE FROM autori");
-
-       
+        stmt.execute("DELETE FROM autori");   
         stmt.execute("INSERT INTO autori VALUES (1, 'Autore', 'Test', 1, '2000-01-01')");
-
-        
         stmt.execute("INSERT INTO libri VALUES ('" + ISBN_VALIDO + "', 'Libro Disponibile', 'Editore A', 2020, 5, '')");
         stmt.execute("INSERT INTO scritto_da VALUES ('" + ISBN_VALIDO + "', 1)");
-
-        
         stmt.execute("INSERT INTO libri VALUES ('" + ISBN_NO_COPIE + "', 'Libro Esaurito', 'Editore B', 2020, 0, '')");
         stmt.execute("INSERT INTO scritto_da VALUES ('" + ISBN_NO_COPIE + "', 1)");
-
-        
         stmt.execute("INSERT INTO utenti VALUES ('" + MATRICOLA_VALIDA + "', 'Mario', 'Rossi', 'mario@test.com', FALSE)");
-        
-       
         stmt.execute("INSERT INTO utenti VALUES ('" + MATRICOLA_BLOCCATA + "', 'Luigi', 'Neri', 'luigi@test.com', TRUE)");
     }
 
 
     @Test
     public void testValidazioneIsbnErrato() {
-
         clickOn("#txtIsbn").write("123");
         clickOn("#IsbnCheckButton");
         verifyThat("Codice ISBN non valido", isVisible());
         clickOn("OK");
-
-       
         doubleClickOn("#txtIsbn").write("abcde12345678");
         clickOn("#IsbnCheckButton");
         verifyThat("Codice ISBN non valido", isVisible());
         clickOn("OK");
-
-       
         doubleClickOn("#txtIsbn").write("9999999999999");
         clickOn("#IsbnCheckButton");
         verifyThat("Non e stato trovato alcun libro con questo codice nel nostro sistema", isVisible());
@@ -153,17 +135,14 @@ public class AggiungiPrestitoControllerTest extends ApplicationTest {
 
     @Test
     public void testValidazioneMatricolaErrata() {
-
         clickOn("#txtMatricola").write("123");
         clickOn("#MatricolaCheckButton");
         verifyThat("Matricola non valida", isVisible());
         clickOn("OK");
-
         doubleClickOn("#txtMatricola").write("abcdefghil");
         clickOn("#MatricolaCheckButton");
         verifyThat("La matricola deve contenere solo numeri", isVisible());
         clickOn("OK");
-
         doubleClickOn("#txtMatricola").write("9999999999");
         clickOn("#MatricolaCheckButton");
         verifyThat("La matricola inserita non e associata ad alcun studente nel database", isVisible());
@@ -175,9 +154,7 @@ public class AggiungiPrestitoControllerTest extends ApplicationTest {
 
     @Test
     public void testDateErrate() {
-       
         validaCampi();
-      
         DatePicker dScadenza = lookup("#dateScadenza").query();
         DatePicker dInizio = lookup("#dateInizio").query();       
         interact(() -> {
@@ -187,7 +164,6 @@ public class AggiungiPrestitoControllerTest extends ApplicationTest {
         clickOn("#SalvaButton");
         verifyThat("Hai impostato una data di scadenza che viene prima in ordine cronologico della data di inizio prestito", isVisible());
         clickOn("OK");
-
         interact(() -> {
             dInizio.setValue(LocalDate.now().minusDays(10));
             dScadenza.setValue(LocalDate.now().plusDays(10));
@@ -200,8 +176,7 @@ public class AggiungiPrestitoControllerTest extends ApplicationTest {
   
 
     @Test
-    public void testSalvataggioSenzaValidazione() {
-       
+    public void testSalvataggioSenzaValidazione() {       
         clickOn("#SalvaButton");
         verifyThat("Controlli non completati", isVisible());
         clickOn("OK");
@@ -214,8 +189,7 @@ public class AggiungiPrestitoControllerTest extends ApplicationTest {
         clickOn("#txtMatricola").write(MATRICOLA_VALIDA);
         clickOn("#MatricolaCheckButton");       
         impostaDateValide();
-        clickOn("#SalvaButton");        
-      
+        clickOn("#SalvaButton");              
         verifyThat("Operazione fallita", isVisible());
         clickOn("OK");
     }
@@ -233,23 +207,16 @@ public class AggiungiPrestitoControllerTest extends ApplicationTest {
     }
 
     @Test
-    public void testSalvataggioConSuccesso() throws SQLException {        
-      
-        validaCampi();        
-   
+    public void testSalvataggioConSuccesso() throws SQLException {              
+        validaCampi();
         impostaDateValide();
-     
         clickOn("#SalvaButton");
-       
         verifyThat("Operazione eseguita", isVisible());
         clickOn("OK");
-        
-        Statement stmt = h2Connection.createStatement();       
-       
+        Statement stmt = h2Connection.createStatement();              
         ResultSet rs = stmt.executeQuery("SELECT * FROM prestito WHERE isbn='" + ISBN_VALIDO + "' AND matricola='" + MATRICOLA_VALIDA + "'");
         assertTrue(rs.next(), "Il prestito deve essere stato salvato nel DB");
-        assertEquals("ATTIVO", rs.getString("stato"));
-      
+        assertEquals("ATTIVO", rs.getString("stato"));      
         ResultSet rsLibro = stmt.executeQuery("SELECT num_copie FROM libri WHERE isbn='" + ISBN_VALIDO + "'");
         rsLibro.next();
         assertEquals(4, rsLibro.getInt("num_copie"), "Il numero di copie deve essere diminuito");

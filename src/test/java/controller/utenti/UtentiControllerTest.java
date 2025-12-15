@@ -51,19 +51,14 @@ public class UtentiControllerTest extends ApplicationTest {
           
             h2Connection = DriverManager.getConnection(H2_URL, H2_USER, H2_PASSWORD);
             DataBase.conn = h2Connection; 
-
-            Statement stmt = h2Connection.createStatement();
-            
-         
-            stmt.execute("DROP TABLE IF EXISTS utenti");
-            
+            Statement stmt = h2Connection.createStatement();    
+            stmt.execute("DROP TABLE IF EXISTS utenti");     
             stmt.execute("CREATE TABLE utenti (" +
                     "matricola VARCHAR(20) PRIMARY KEY, " +
                     "nome VARCHAR(100), " +
                     "cognome VARCHAR(100), " +
                     "email VARCHAR(100), " +
                     "bloccato BOOLEAN DEFAULT FALSE)");
-
             stmt.execute("CREATE TABLE IF NOT EXISTS libri (isbn VARCHAR(20) PRIMARY KEY)"); 
             stmt.execute("CREATE TABLE IF NOT EXISTS prestito (isbn VARCHAR(20), matricola VARCHAR(20))"); 
 
@@ -74,7 +69,6 @@ public class UtentiControllerTest extends ApplicationTest {
 
     @BeforeEach
     public void resetData() throws SQLException {
-     
         insertTestData(h2Connection);
     }
 
@@ -85,14 +79,11 @@ public class UtentiControllerTest extends ApplicationTest {
 
     @Override
     public void start(Stage stage) throws IOException, SQLException {
-       
         if (h2Connection == null || h2Connection.isClosed()) {
              h2Connection = DriverManager.getConnection(H2_URL, H2_USER, H2_PASSWORD);
         }
-        DataBase.conn = h2Connection;
-        
-        insertTestData(h2Connection); 
-        
+        DataBase.conn = h2Connection; 
+        insertTestData(h2Connection);      
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/Utenti.fxml"));
         Scene scene = new Scene(loader.load());
         stage.setScene(scene);
@@ -102,9 +93,7 @@ public class UtentiControllerTest extends ApplicationTest {
     private void insertTestData(Connection conn) throws SQLException {
         Statement stmt = conn.createStatement();      
         stmt.execute("DELETE FROM utenti");       
-
         stmt.execute("INSERT INTO utenti VALUES ('" + MATR_ATTIVO + "', 'Mario', 'Rossi', '" + MAIL_ATTIVO + "', FALSE)");              
-
         stmt.execute("INSERT INTO utenti VALUES ('" + MATR_BLOCCATO + "', 'Luigi', 'Verdi', '" + MAIL_BLOCCATO + "', TRUE)");
     }
 
@@ -112,15 +101,10 @@ public class UtentiControllerTest extends ApplicationTest {
 
     @Test
     public void testCaricamentoIniziale() {    
-
         verifyThat(NOME_ATTIVO, isVisible());
         verifyThat(NOME_BLOCCATO, isVisible());             
-        
-
         verifyThat("Attivo", isVisible());
-        verifyThat("Blacklist", isVisible());             
-        
-     
+        verifyThat("Blacklist", isVisible());               
         verifyThat("#lblTotalUsers", hasText("2 iscritti totali"));
     }
 
@@ -128,35 +112,27 @@ public class UtentiControllerTest extends ApplicationTest {
     public void testRicercaPerNome() {
         clickOn("#searchUser").write("Mario");
         press(KeyCode.ENTER).release(KeyCode.ENTER);
-        sleep(500); 
-        
-        verifyThat(NOME_ATTIVO, isVisible());      
-       
+        sleep(500);         
+        verifyThat(NOME_ATTIVO, isVisible());             
         assertTrue(lookup(NOME_BLOCCATO).queryAll().isEmpty(), "Luigi non dovrebbe essere visibile");
     }
 
     @Test
-    public void testRicercaPerMatricola() {
-      
+    public void testRicercaPerMatricola() {      
         clickOn("#searchUser").write(MATR_BLOCCATO);
         press(KeyCode.ENTER).release(KeyCode.ENTER);
-        sleep(500);        
-        
+        sleep(500);               
         verifyThat(NOME_BLOCCATO, isVisible());      
         assertTrue(lookup(NOME_ATTIVO).queryAll().isEmpty(), "Mario non dovrebbe essere visibile");
     }
 
     @Test
-    public void testRicercaReset() {
-      
+    public void testRicercaReset() {      
         clickOn("#searchUser").write("Mario");
         press(KeyCode.ENTER).release(KeyCode.ENTER);
-        sleep(200);
-       
+        sleep(200);       
         clickOn("#searchUser").eraseText(10);
-        sleep(500); 
-        
-        
+        sleep(500);       
         verifyThat(NOME_ATTIVO, isVisible());
         verifyThat(NOME_BLOCCATO, isVisible());
     }
@@ -165,8 +141,7 @@ public class UtentiControllerTest extends ApplicationTest {
     public void testFiltroSoloAttivi() {
         clickOn("#FilterButton");
         clickOn("Solo attivi");
-        sleep(200);                    
-        
+        sleep(200);                            
         verifyThat(NOME_ATTIVO, isVisible());      
         assertTrue(lookup(NOME_BLOCCATO).queryAll().isEmpty(), "Utenti bloccati non dovrebbero apparire");
     }
@@ -175,8 +150,7 @@ public class UtentiControllerTest extends ApplicationTest {
     public void testFiltroSoloBloccati() {
         clickOn("#FilterButton");
         clickOn("Solo bloccati");
-        sleep(200);                      
-        
+        sleep(200);                              
         verifyThat(NOME_BLOCCATO, isVisible());      
         assertTrue(lookup(NOME_ATTIVO).queryAll().isEmpty(), "Utenti attivi non dovrebbero apparire");
     }
@@ -188,37 +162,26 @@ public class UtentiControllerTest extends ApplicationTest {
        
         Node btnSblocca = lookup("SBLOCCA").query();
         clickOn(btnSblocca);
-        sleep(500);      
-        
+        sleep(500);              
         Statement stmt = h2Connection.createStatement();
         ResultSet rs = stmt.executeQuery("SELECT bloccato FROM utenti WHERE matricola='" + MATR_BLOCCATO + "'");
         rs.next();
-        assertFalse(rs.getBoolean("bloccato"), "Utente dovrebbe risultare sbloccato nel DB");      
-        
-    
+        assertFalse(rs.getBoolean("bloccato"), "Utente dovrebbe risultare sbloccato nel DB");                  
         verifyThat("BLOCCA", isVisible());
     }
 
     @Test
-    public void testEliminaUtente() throws SQLException {      
-      
+    public void testEliminaUtente() throws SQLException {            
         Node btnElimina = lookup("🗑").query(); 
         clickOn(btnElimina);        
-        
-
-        
         verifyThat("Operazione eseguita", isVisible()); 
         clickOn("OK"); 
-
         sleep(200);
         verifyThat("Operazione eseguita", isVisible()); 
-        clickOn("OK");
-        
-        sleep(500);
-      
+        clickOn("OK");        
+        sleep(500);      
         assertTrue(lookup(NOME_ATTIVO).queryAll().isEmpty(), "Mario dovrebbe essere sparito");        
-        verifyThat(NOME_BLOCCATO, isVisible());
-        
+        verifyThat(NOME_BLOCCATO, isVisible());        
         Statement stmt = h2Connection.createStatement();
         ResultSet rs = stmt.executeQuery("SELECT count(*) FROM utenti");
         rs.next();
@@ -229,11 +192,9 @@ public class UtentiControllerTest extends ApplicationTest {
     @Test
     public void testAperturaAggiungiUtente() {
         clickOn("#btnAddUser");
-        sleep(1000);
-     
+        sleep(1000);     
         Window finestra = window("Aggiungi Utente");
-        assertTrue(finestra != null && finestra.isShowing());
-        
+        assertTrue(finestra != null && finestra.isShowing());       
         interact(() -> ((Stage) finestra).close());
     }
 }
