@@ -27,13 +27,13 @@ public class DataBaseTest {
         DataBase.conn = testConnection;
         try (Statement stmt = testConnection.createStatement()) {
             // Tabella Bibliotecario
-            stmt.execute("CREATE TABLE bibliotecario (password_ VARCHAR(255))");           
+            stmt.execute("CREATE TABLE bibliotecario (password_ VARCHAR(255), email VARCHAR(255))");           
             // Tabella Utenti
             stmt.execute("CREATE TABLE utenti (" +
                     "matricola VARCHAR(20) PRIMARY KEY, " +
                     "nome VARCHAR(50), cognome VARCHAR(50), " +
                     "mail VARCHAR(50), Bloccato BOOLEAN)");
-            // Tabella Autori (ID auto-incrementante per simulare MySQL)
+            // Tabella Autori 
             stmt.execute("CREATE TABLE autori (" +
                     "id INT AUTO_INCREMENT PRIMARY KEY, " +
                     "nome VARCHAR(50), cognome VARCHAR(50), " +
@@ -61,20 +61,29 @@ public class DataBaseTest {
     }
 
     //TEST BIBLIOTECARIO 
-
-    @Test
+@Test
     public void testInserimentoEControlloPassword() {
-        // Inseriamo una password (
-        boolean inserito = DataBase.inserisciBibliotecario("password");
+        String rawPassword = "passwordSegreta123";
+        String email = "emailprova@test.com";
+
+        boolean inserito = DataBase.inserisciBibliotecario(rawPassword, email);
+        
         assertTrue(inserito, "Il bibliotecario dovrebbe essere inserito correttamente");
-        // Verifichiamo se esiste
-        assertTrue(DataBase.controllaEsistenzaBibliotecario());
-        // Proviamo il login con la password giusta
-        assertTrue(DataBase.controllaPasswordBibliotecario("password"), 
-                "Il login deve riuscire con la password corretta");
-        // Proviamo il login con password sbagliata
+
+        assertTrue(DataBase.controllaEsistenzaBibliotecario(), 
+                   "Dovrebbe esistere un bibliotecario nel DB");
+
+
+        assertTrue(DataBase.controllaPasswordBibliotecario(rawPassword), 
+                   "Il login deve riuscire con la password corretta");
+
+
         assertFalse(DataBase.controllaPasswordBibliotecario("sbagliata"), 
-                "Il login deve fallire con password errata");
+                    "Il login deve fallire con una password errata");
+        
+
+        boolean inseritoDue = DataBase.inserisciBibliotecario("altraPass", "altro@email.com");
+        assertFalse(inseritoDue, "Non dovrebbe essere possibile inserire un secondo bibliotecario");
     }
 
     
