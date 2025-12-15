@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package model.servizi;
 
 import javafx.scene.Parent;
@@ -119,8 +118,7 @@ public class OperazioniGiornaliere {
                     e.printStackTrace();
                 }
             });            
-        }, 0, 2, TimeUnit.SECONDS); 
-                 
+        }, 0, 2, TimeUnit.SECONDS);     
     }
     
      /**
@@ -186,5 +184,4 @@ public class OperazioniGiornaliere {
     public static void stop() {
         scheduler.shutdown();
     }
-    
 }

@@ -138,8 +138,7 @@ public class Configurazione {
     private static int parseInteger(String key, int defaultValue) {
         String val = properties.getProperty(key);
         if (val != null)
-                return Integer.parseInt(val);
-            
+                return Integer.parseInt(val);   
         return defaultValue;
     }
 }

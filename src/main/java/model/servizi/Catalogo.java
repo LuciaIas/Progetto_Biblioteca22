@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package model.servizi;
 
 import model.dataclass.Libro;
@@ -67,7 +66,6 @@ public class Catalogo {
                 return o1.getTitolo().toUpperCase().compareTo(o2.getTitolo().toUpperCase()); 
             }
         });
-        
     }
     
     /**
@@ -110,8 +108,6 @@ public class Catalogo {
                 for(Autore a : l.getAutori())
                     if(a.getId()==autore.getId())
                         lib.add(l);
-            
            return lib;        
     }
-    
 }

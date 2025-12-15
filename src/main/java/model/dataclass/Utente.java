@@ -77,7 +77,6 @@ public class Utente {
         this.bloccato = bloccato;
     }
 
-    
     /**
      * @brief Imposta la matricola dell'utente.
      * @param matricola nuova matricola

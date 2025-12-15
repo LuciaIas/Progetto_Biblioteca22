@@ -198,7 +198,7 @@ public class ModificaLibroController {
                      (l.getAnno_pubblicazione()).getValue(), l.getNumero_copieDisponibili(), urlIM, autori);            
               if(modified){// Messaggi di conferma o errore
                 Alert AL = new Alert(Alert.AlertType.INFORMATION);
-                AL.setHeaderText("Aggiornamento Catalogo");
+                AL.setHeaderText("Aggiornamento catalogo");
                 AL.setContentText("Libro modificato");                
                 DialogPane dialogPane = AL.getDialogPane();             
                 dialogPane.getStylesheets().add(getClass().getResource("/CSS/StyleAccess.css").toExternalForm());              

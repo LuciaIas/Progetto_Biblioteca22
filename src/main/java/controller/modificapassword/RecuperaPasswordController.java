@@ -56,7 +56,8 @@ public class RecuperaPasswordController {
         /**
      * @brief Imposta l'azione del bottone RecoveryButton.
      *        Controlla se l'email esiste nel database, genera un codice,
-     *        invia l'email e apre la finestra di inserimento codice.
+     *        invia l'email all'utente e apre la finestra di inserimento del codice OTP.
+     *        Se l'email non esiste, mostra un alert di errore.
      */
     public void setButtonFunction(){
         RecoveryButton.setOnAction(e->{                
@@ -113,6 +114,4 @@ public class RecuperaPasswordController {
         }
         return code;
         }
-    
-    
 }

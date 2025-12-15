@@ -36,7 +36,6 @@ public class DataBase {
     public static Connection conn; //Connessione al database condivisa tra tutti i metodi 
     static String DB_name="Biblioteca";
    
-    
      /** 
      * @brief Inizializza la connessione al database MySQL locale.
      */
@@ -48,11 +47,10 @@ public class DataBase {
         } catch (SQLException ex) {
             Logger.getLogger(DataBase.class.getName()).log(Level.SEVERE, null, ex);
         }
-    
     }
     
     //BIBLIOTECARIO  
-    
+   
     /**
      * @brief Inserisce un nuovo bibliotecario con password hashata.
      * @param password Password in chiaro.
@@ -158,12 +156,10 @@ public class DataBase {
             ResultSet rs = stat.executeQuery();      
             if(rs.next())
                 return true;
-  
         } catch (SQLException ex) {
             return false;
         }
         return false;
-  
     }
     
        //LIBRI
@@ -367,7 +363,6 @@ public class DataBase {
             System.out.println("Eccezione sql");
             return null;
         }
-        
     }
      
     /**
@@ -564,7 +559,6 @@ public class DataBase {
             ex.printStackTrace();
             return false;
         }
-    
     }
 
     /**
@@ -597,14 +591,11 @@ public class DataBase {
      * @return true se presente, false altrimenti.
      */
     public static boolean isMatricolaPresent(String matricola){
-    
         String query = "SELECT * FROM utenti where matricola=?";
         try {
             PreparedStatement stat = conn.prepareStatement(query);
             stat.setString(1, matricola);
-            ResultSet rs = stat.executeQuery();
-            
-            
+            ResultSet rs = stat.executeQuery();   
             return rs.next();
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -627,8 +618,7 @@ public class DataBase {
         } catch (SQLException ex) {
             ex.printStackTrace();
             return false;
-        }
-        
+        }  
     }
     
     
@@ -734,8 +724,7 @@ public class DataBase {
             rs.next();
             n=rs.getInt(1);            
         } catch (SQLException ex) {
-            ex.printStackTrace();
-          
+            ex.printStackTrace();  
         }
         return n;
     }
@@ -778,7 +767,6 @@ public class DataBase {
             ex.printStackTrace();
           return false;
         }
-    
     }
     
     /**
@@ -862,7 +850,6 @@ public class DataBase {
             ex.printStackTrace();
             return false;
         }
-     
     }
     
     /**
@@ -907,8 +894,7 @@ public class DataBase {
         return n;
     }
     
-
-
+    
    //RELAZIONI
     
     /**
@@ -948,6 +934,4 @@ public class DataBase {
             return false;
         }
     }
-
-    
 }

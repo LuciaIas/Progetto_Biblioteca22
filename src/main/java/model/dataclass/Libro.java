@@ -25,7 +25,6 @@ import java.util.List;
  * @author gruppo22
  */
 public class Libro implements Comparable<Libro>{
-    
     private String isbn;
     private String titolo;
     private String editore;
@@ -102,7 +101,6 @@ public class Libro implements Comparable<Libro>{
     public void setEditore(String editore) {
         this.editore = editore;
     }
-
     
     /**
      * @brief Restituisce la lista degli autori del libro.
@@ -189,5 +187,4 @@ public class Libro implements Comparable<Libro>{
     public int compareTo(Libro o) {
         return titolo.compareTo(o.titolo);
     }
-      
 }
