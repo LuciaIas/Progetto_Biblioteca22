@@ -29,8 +29,8 @@
                      </children>
                   </VBox>
                   
-                  <Pane HBox.hgrow="ALWAYS" /> <TextField fx:id="searchUser" prefHeight="40.0" prefWidth="300.0" promptText="🔍 Cerca nome, matricola o email..." styleClass="search-bar" />
-                  <Button fx:id="btnAddUser" mnemonicParsing="false" prefHeight="40.0" prefWidth="140.0" styleClass="button-accent" text="+ NUOVO UTENTE" />
+                  <Pane HBox.hgrow="ALWAYS" /> <TextField fx:id="searchUser" prefHeight="40.0" prefWidth="300.0" promptText="Cerca per nome, cognome, matricola o email" styleClass="search-bar" />
+                  <Button fx:id="btnAddUser" mnemonicParsing="false" prefHeight="40.0" prefWidth="140.0" styleClass="button-accent" text="NUOVO UTENTE" />
                </children>
             </HBox>
          </children>

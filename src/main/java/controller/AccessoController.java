@@ -96,7 +96,6 @@ public class AccessoController {
         buttonInitialize();
         checkboxInitialize();
         RecoveryLabel.setOnMouseClicked(eh->{
-        
                 PassRec = new Stage(); 
                 PassRec.setTitle("Modifica Password");
                 PassRec.setResizable(false);
@@ -107,8 +106,7 @@ public class AccessoController {
             } catch (IOException ex) {
                 Logger.getLogger(DashboardController.class.getName()).log(Level.SEVERE, null, ex);
             }
-                PassRec.showAndWait(); 
-        
+                PassRec.showAndWait();        
         });
         
     }
@@ -134,7 +132,7 @@ public class AccessoController {
                 text="Non sei registrato?";
                 text1="Registrati";
             }else{
-                text="Sei gia registrato?";
+                text="Sei già registrato?";
                 text1="Accedi";
             }                           
             typewriterEffectLabel(SwitchLabel,text);
@@ -184,8 +182,6 @@ public class AccessoController {
                 al.showAndWait();
                 return;    
             }
-            
-            
             if(model.servizi.DataBase.inserisciBibliotecario(password,email)){
                 Alert al = new Alert(Alert.AlertType.INFORMATION);
                 al.setTitle("Operazione Completata");
@@ -201,7 +197,7 @@ public class AccessoController {
                 return;
             }else{               
                 Alert al = new Alert(Alert.AlertType.ERROR);
-                al.setContentText("Esiste gia un bibliotecario");
+                al.setContentText("Esiste già un bibliotecario");
                 al.setHeaderText("Registrazione fallita");           
                 DialogPane dialogPane = al.getDialogPane();
                 dialogPane.getStylesheets().add(getClass().getResource("/CSS/StyleAccess.css").toExternalForm());               
@@ -220,7 +216,7 @@ public class AccessoController {
             if(!model.servizi.DataBase.controllaPasswordBibliotecario(password)){
                 Alert al = new Alert(Alert.AlertType.ERROR);
                 al.setContentText("Password sbagliata");
-                al.setHeaderText("La password e sbagliata");                            
+                al.setHeaderText("La password è sbagliata");                            
                 DialogPane dialogPane = al.getDialogPane();            
                 dialogPane.getStylesheets().add(getClass().getResource("/CSS/StyleAccess.css").toExternalForm());              
                 dialogPane.getStyleClass().add("my-alert");              

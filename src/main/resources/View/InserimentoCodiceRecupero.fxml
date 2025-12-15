@@ -7,14 +7,11 @@
 <?import javafx.scene.layout.Pane?>
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="CSS/InsertCodePassRecovery.css" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.modificapassword.InserimentoCodiceRecuperoController">
-   <children>
-      
+   <children>      
       <Pane layoutX="100.0" layoutY="50.0" prefHeight="300.0" prefWidth="400.0" styleClass="pane-white">
          <children>
-            <Label layoutX="0.0" layoutY="30.0" prefWidth="400.0" alignment="CENTER" styleClass="label-title" text="Verifica Identità 🛡️" />
-            
-            <Label layoutX="0.0" layoutY="70.0" prefWidth="400.0" alignment="CENTER" styleClass="label-description" text="Abbiamo inviato un codice a 6 cifre alla tua email." />
-            
+            <Label layoutX="0.0" layoutY="30.0" prefWidth="400.0" alignment="CENTER" styleClass="label-title" text="Verifica Identità" />           
+            <Label layoutX="0.0" layoutY="70.0" prefWidth="400.0" alignment="CENTER" styleClass="label-description" text="Abbiamo inviato un codice a 6 cifre alla tua email." />           
             <HBox alignment="CENTER" layoutX="50.0" layoutY="110.0" prefHeight="50.0" prefWidth="300.0" spacing="10.0">
                <children>
                   <TextField fx:id="digit1" prefHeight="40.0" prefWidth="40.0" styleClass="otp-field" />
@@ -24,11 +21,9 @@
                   <TextField fx:id="digit5" prefHeight="40.0" prefWidth="40.0" styleClass="otp-field" />
                   <TextField fx:id="digit6" prefHeight="40.0" prefWidth="40.0" styleClass="otp-field" />
                </children>
-            </HBox>
-            
+            </HBox>           
             <Label layoutX="100.0" layoutY="180.0" styleClass="label-subtitle" text="Non hai ricevuto il codice?" />
-            <Label fx:id="ResendLabel" layoutX="255.0" layoutY="180.0" styleClass="label-link" text="Invia di nuovo" underline="true" />
-            
+            <Label fx:id="ResendLabel" layoutX="255.0" layoutY="180.0" styleClass="label-link" text="Invia di nuovo" underline="true" />           
             <Button fx:id="VerifyButton" layoutX="100.0" layoutY="230.0" mnemonicParsing="false" prefWidth="200.0" styleClass="button-primary" text="VERIFICA CODICE" />
          </children>
       </Pane>

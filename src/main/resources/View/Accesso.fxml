@@ -31,7 +31,7 @@
       
       <Pane fx:id="RegisterForm" layoutX="375.0" prefHeight="500.0" prefWidth="375.0" styleClass="pane-white">
          <children>
-            <Label layoutX="75.0" layoutY="80.0" styleClass="label-title" text="CREA ACCOUNT 🛡️" />
+            <Label layoutX="75.0" layoutY="80.0" styleClass="label-title" text="CREA ACCOUNT" />
             <Label layoutX="75.0" layoutY="115.0" styleClass="label-subtitle" text="Imposta le tue nuove credenziali" />
             
             <Label layoutX="79.0" layoutY="232.0" styleClass="label-small" text="NUOVA PASSWORD" />

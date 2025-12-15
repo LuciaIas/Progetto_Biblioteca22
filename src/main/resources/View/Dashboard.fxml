@@ -16,7 +16,6 @@
 <?import javafx.scene.layout.VBox?>
 
 <BorderPane fx:id="HomeBorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" stylesheets="CSS/StyleDashboard.css" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.DashboardController">
-   
    <left>
       <VBox prefHeight="800.0" prefWidth="260.0" styleClass="sidebar">
          <children>
@@ -24,17 +23,14 @@
                 <padding><Insets left="25.0" /></padding>
                 <Label style="-fx-text-fill: #26D0CE; -fx-font-size: 28px;" text="⚡" />
                 <Label styleClass="sidebar-logo-text" text="BIBLIOTECA" />
-            </HBox>
-            
+            </HBox>   
             <Label styleClass="sidebar-section-label" text="MENU PRINCIPALE">
                 <VBox.margin><Insets bottom="10.0" left="25.0" top="20.0" /></VBox.margin>
             </Label>
-            
             <Button fx:id="DashboardButton" graphicTextGap="15.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="240.0" styleClass="sidebar-btn-active" text="🏠  Dashboard" />
             <Button fx:id="CatalogoLibriButton" graphicTextGap="15.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="240.0" styleClass="sidebar-btn" text="📚  Catalogo Libri" />
             <Button fx:id="PrestitiRestituzioniButton" graphicTextGap="15.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="240.0" styleClass="sidebar-btn" text="🔄  Prestiti &amp; Resi" />
             <Button fx:id="utentiButton" graphicTextGap="15.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="240.0" styleClass="sidebar-btn" text="👥  Utenti" />
-            
             <Pane VBox.vgrow="ALWAYS">
                <children>
                   <Button fx:id="BLButton" graphicTextGap="15.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="240.0" styleClass="sidebar-btn" text="🚫 BlackList" />
@@ -53,7 +49,6 @@
          </children>
       </VBox>
    </left>
-
    <center>
       <ScrollPane fx:id="DashboardScrollPane" fitToWidth="true" style="-fx-background-color: transparent; -fx-border-color: transparent;" BorderPane.alignment="CENTER">
          <content>
@@ -62,7 +57,6 @@
                   <Insets bottom="40.0" left="50.0" right="50.0" top="40.0" />
                </padding>
                <children>
-                  
                   <HBox alignment="CENTER_LEFT" spacing="20.0">
                      <children>
                         <VBox prefHeight="39.0" prefWidth="338.0" spacing="5.0">
@@ -77,7 +71,6 @@
                            </children></Pane>
                      </children>
                   </HBox>
-
                   <GridPane hgap="25.0" vgap="25.0">
                     <columnConstraints>
                       <ColumnConstraints hgrow="ALWAYS" percentWidth="25.0" />
@@ -136,11 +129,9 @@
                         </ImageView>
                      </children>
                   </StackPane>
-
                </children>
             </VBox>
          </content>
       </ScrollPane>
-   </center>
-   
+   </center> 
 </BorderPane>

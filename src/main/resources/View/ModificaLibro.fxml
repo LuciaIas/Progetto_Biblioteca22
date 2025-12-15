@@ -15,36 +15,28 @@
 <?import javafx.scene.layout.VBox?>
 
 <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1000.0" stylesheets="/CSS/StyleAddBook.css" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.catalogo.ModificaLibroController">
-   <children>
-      
+   <children>     
       <ImageView fitHeight="700.0" fitWidth="1000.0" pickOnBounds="true" preserveRatio="false">
          <image>
             <Image url="@/Images/book.jpg" />
          </image>
       </ImageView>
-
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="80.0">
          <padding>
             <Insets bottom="50.0" left="120.0" right="120.0" top="80.0" />
-         </padding>
-         
-         <children>
-            
+         </padding>       
+         <children>           
             <VBox alignment="TOP_LEFT" prefHeight="200.0" prefWidth="380.0" spacing="18.0" style="-fx-rotate: -1.5;">
                <padding>
                   <Insets left="10.0" right="20.0" /> 
-               </padding>
-               
+               </padding>            
                <children>
-                  <Label styleClass="handwritten-title" text="Registro Nuovi Arrivi" />
-                  
+                  <Label styleClass="handwritten-title" text="Registro Nuovi Arrivi" />                 
                   <Label style="-fx-text-fill: #555; -fx-font-size: 10px;" text="~~~~~~~~~~~~~~~~~~~~~~" />
-
                   <VBox spacing="5.0">
                      <Label styleClass="ink-label" text="Titolo dell'opera:" />
                      <TextField fx:id="txtTitolo" promptText="..." styleClass="ink-input" />
-                  </VBox>
-                  
+                  </VBox>                 
                   <VBox spacing="5.0">
                      <Label styleClass="ink-label" text="Autori:" />
                      <MenuButton fx:id="menuAutori" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="ink-menu-button" text="Scegli dalla lista...">
@@ -53,25 +45,19 @@
                            <MenuItem mnemonicParsing="false" text="Tolkien" />
                         </items>
                      </MenuButton>
-                  </VBox>
-                  
+                  </VBox>                 
                   <VBox spacing="5.0">
                      <Label styleClass="ink-label" text="Casa Editrice:" />
                      <TextField fx:id="txtEditore" promptText="..." styleClass="ink-input" />
-                  </VBox>
-                  
-                  <VBox spacing="5.0" />
-                  
+                  </VBox>                
+                  <VBox spacing="5.0" />                 
                </children>
-            </VBox>
-            
+            </VBox>           
             <VBox alignment="TOP_LEFT" prefHeight="200.0" prefWidth="380.0" spacing="20.0" style="-fx-rotate: 1.5;">
                <padding>
                   <Insets left="20.0" right="10.0" />
-               </padding>
-               
-               <children>
-                  
+               </padding>              
+               <children>                 
                   <HBox alignment="CENTER_LEFT" spacing="15.0">
                      <children>
                         <VBox spacing="5.0">
@@ -84,12 +70,10 @@
                            <Spinner fx:id="spinCopie" editable="true" prefWidth="80.0" styleClass="ink-spinner" />
                         </VBox>
                      </children>
-                  </HBox>
-                  
+                  </HBox>                 
                   <VBox alignment="CENTER" spacing="10.0">
                      <children>
-                        <Label styleClass="ink-label" text="Allegato Copertina:" />
-                        
+                        <Label styleClass="ink-label" text="Allegato Copertina:" />                       
                         <StackPane maxHeight="-Infinity" maxWidth="-Infinity" styleClass="polaroid-frame">
                            <children>
                               <ImageView fx:id="imgAnteprima" fitHeight="160.0" fitWidth="110.0" pickOnBounds="true" preserveRatio="true">
@@ -103,12 +87,10 @@
                   </VBox>
                   <Pane prefHeight="40.0" prefWidth="310.0">
                      <children>
-                        
-                                    <Button fx:id="ScegliFileButton" layoutX="155.0" layoutY="6.0" mnemonicParsing="false" styleClass="ink-button-small" text="📎 Scegli File" />
+                         <Button fx:id="ScegliFileButton" layoutX="155.0" layoutY="6.0" mnemonicParsing="false" styleClass="ink-button-small" text="📎 Scegli File" />
                         <Button fx:id="RimuoviCopButton" layoutX="80.0" layoutY="9.0" mnemonicParsing="false" styleClass="stamp-button-cancel" text="Rimuovi" />
                      </children>
-                  </Pane>
-                  
+                  </Pane>                  
                   <Pane VBox.vgrow="ALWAYS">
                      <children> <HBox alignment="BOTTOM_RIGHT" layoutX="99.0" layoutY="42.0" spacing="20.0">
                            <children>
@@ -116,13 +98,10 @@
                               <Button fx:id="SalvaButton" mnemonicParsing="false" styleClass="stamp-button-ok" text="APPROVATO" />
                            </children>
                         </HBox>
-                     </children></Pane>
-                  
+                     </children></Pane>                 
                </children>
-            </VBox>
-            
+            </VBox>           
          </children>
-      </HBox>
-      
+      </HBox>      
    </children>
 </StackPane>

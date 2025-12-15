@@ -14,22 +14,18 @@
 <?import javafx.scene.layout.VBox?>
 
 <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="900.0" stylesheets="/CSS/StyleAddPrestito.css" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.prestitorestituzione.AggiungiPrestitoController">
-   <children>
-      
+   <children>     
       <ImageView fitHeight="650.0" fitWidth="900.0" pickOnBounds="true" preserveRatio="false">
          <image>
             <Image url="@/Images/libri.jpg" />
          </image>
-      </ImageView>
-      
+      </ImageView>     
       <Pane style="-fx-background-color: rgba(0,0,0,0.3);" />
-
       <VBox maxWidth="500.0" spacing="20.0" styleClass="paper-form">
          <padding>
             <Insets bottom="40.0" left="40.0" right="40.0" top="40.0" />
          </padding>
-         <children>
-            
+         <children>           
             <HBox alignment="CENTER_LEFT" spacing="15.0">
                <children>
                   <Label style="-fx-font-size: 32px;" text="📝" />
@@ -40,12 +36,9 @@
                      </children>
                   </VBox>
                </children>
-            </HBox>
-            
+            </HBox>            
             <Separator styleClass="blue-separator" />
-
-            <Label styleClass="section-label" text="DATI IDENTIFICATIVI" />
-            
+            <Label styleClass="section-label" text="DATI IDENTIFICATIVI" />           
             <VBox spacing="15.0">
                <children>
                   <VBox spacing="5.0">
@@ -58,7 +51,6 @@
                      </HBox>
                      <Label fx:id="IsbnCheck" styleClass="preview-label" />
                   </VBox>
-
                   <VBox spacing="5.0">
                      <Label styleClass="field-label" text="MATRICOLA UTENTE" />
                      <HBox spacing="10.0">
@@ -70,35 +62,28 @@
                      <Label fx:id="matricolaCheck" styleClass="preview-label" />
                   </VBox>
                </children>
-            </VBox>
-            
+            </VBox>            
             <Separator styleClass="blue-separator" />
-
-            <Label styleClass="section-label" text="TERMINI DEL PRESTITO" />
-            
+            <Label styleClass="section-label" text="TERMINI DEL PRESTITO" />            
             <HBox spacing="20.0">
                <children>
                   <VBox spacing="5.0" HBox.hgrow="ALWAYS">
                      <Label styleClass="field-label" text="DATA INIZIO" />
                      <DatePicker fx:id="dateInizio" maxWidth="1.7976931348623157E308" styleClass="date-picker-modern" />
-                  </VBox>
-                  
+                  </VBox>                 
                   <VBox spacing="5.0" HBox.hgrow="ALWAYS">
                      <Label styleClass="field-label" text="SCADENZA PREVISTA" />
                      <DatePicker fx:id="dateScadenza" maxWidth="1.7976931348623157E308" styleClass="date-picker-modern" />
                   </VBox>
                </children>
-            </HBox>
-            
+            </HBox>            
             <Pane VBox.vgrow="ALWAYS" /> <HBox alignment="CENTER_RIGHT" spacing="15.0">
                <children>
                   <Button fx:id="AnnullaButton" mnemonicParsing="false" styleClass="btn-cancel" text="ANNULLA" />
-                  <Button fx:id="SalvaButton" mnemonicParsing="false" styleClass="btn-save" text="CONFERMA PRESTITO ✅" />
+                  <Button fx:id="SalvaButton" mnemonicParsing="false" styleClass="btn-save" text="CONFERMA PRESTITO" />
                </children>
             </HBox>
-
          </children>
-      </VBox>
-      
+      </VBox>      
    </children>
 </StackPane>

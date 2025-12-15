@@ -144,7 +144,7 @@ public class DashboardController {
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION); //popup conferma
                 alert.setTitle("Backup");
                 alert.setHeaderText("Eseguire il backup dei dati?");
-                alert.setContentText("Potrebbe richiedere diverso tempo in base alla quantita dei dati");              
+                alert.setContentText("Potrebbe richiedere diverso tempo in base alla quantità dei dati");              
                 Optional<ButtonType> result = alert.showAndWait(); //attendo risposta bibliotecario
                 // Controlliamo cosa ha cliccato
                 if (result.isPresent() && result.get() == ButtonType.OK){

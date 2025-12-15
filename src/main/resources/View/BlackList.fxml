@@ -10,8 +10,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1020.0" stylesheets="/CSS/StyleBlacklist.css" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.BlacklistController">
-   
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1020.0" stylesheets="/CSS/StyleBlacklist.css" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.BlacklistController"> 
    <top>
       <VBox style="-fx-background-color: white; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 10, 0, 0, 2);" BorderPane.alignment="CENTER">
          <children>
@@ -25,41 +24,33 @@
                         <Label styleClass="page-title" text="Blacklist Utenti 🚫" />
                         <Label styleClass="label-subtitle" text="Gestione restrizioni e riammissione utenti." />
                      </children>
-                  </VBox>
-                  
-                  <Pane HBox.hgrow="ALWAYS" /> 
-                  
-                  <TextField fx:id="searchUser" prefHeight="40.0" prefWidth="300.0" promptText="🔍 Cerca matricola bloccata..." styleClass="search-bar" />
-                  
-                  <Button fx:id="UnLockAllButton" mnemonicParsing="false" prefHeight="40.0" prefWidth="160.0" styleClass="button-danger-filled" text="SBLOCCA TUTTI 🗑️" />
+                  </VBox>                 
+                  <Pane HBox.hgrow="ALWAYS" />                   
+                  <TextField fx:id="searchUser" prefHeight="40.0" prefWidth="300.0" promptText="Cerca per matricola bloccata" styleClass="search-bar" />                  
+                  <Button fx:id="UnLockAllButton" mnemonicParsing="false" prefHeight="40.0" prefWidth="160.0" styleClass="button-danger-filled" text="SBLOCCA TUTTI" />
                </children>
             </HBox>
          </children>
       </VBox>
    </top>
-
    <center>
       <VBox spacing="20.0" style="-fx-background-color: #f4f7fa;">
          <padding>
             <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
          </padding>
-         <children>
-            
+         <children>           
             <HBox alignment="CENTER_LEFT" spacing="15.0">
                <children>
                   <Label style="-fx-font-weight: bold; -fx-text-fill: #7f8fa6;" text="Utenti attualmente sospesi:" />
                   <Label fx:id="lblTotalBlocked" styleClass="tag-counter" text="5 Utenti" />
                </children>
             </HBox>
-
             <ScrollPane fitToWidth="true" hbarPolicy="NEVER" style="-fx-background-color: transparent;" vbarPolicy="AS_NEEDED" VBox.vgrow="ALWAYS">
                <content>
-                  <VBox fx:id="blacklistContainer" spacing="10.0" style="-fx-background-color: transparent;">
-                     
+                  <VBox fx:id="blacklistContainer" spacing="10.0" style="-fx-background-color: transparent;">                     
                      </VBox>
                </content>
-            </ScrollPane>
-            
+            </ScrollPane>           
          </children>
       </VBox>
    </center>

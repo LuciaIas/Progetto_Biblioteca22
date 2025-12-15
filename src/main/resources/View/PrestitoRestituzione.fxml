@@ -31,8 +31,8 @@
                   
                   <Pane HBox.hgrow="ALWAYS" />
                   
-                  <TextField fx:id="searchLoan" prefHeight="40.0" prefWidth="300.0" promptText="🔍 Cerca prestito, utente o libro..." styleClass="search-bar" />
-                  <Button fx:id="NewLoanButton" mnemonicParsing="false" prefHeight="40.0" prefWidth="140.0" styleClass="button-accent" text="+ NUOVO PRESTITO" />
+                  <TextField fx:id="searchLoan" prefHeight="40.0" prefWidth="300.0" promptText="Cerca per ISBN o utente" styleClass="search-bar" />
+                  <Button fx:id="NewLoanButton" mnemonicParsing="false" prefHeight="40.0" prefWidth="140.0" styleClass="button-accent" text="NUOVO PRESTITO" />
                </children>
             </HBox>
          </children>

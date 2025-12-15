@@ -209,7 +209,6 @@ public class BlacklistController {
                 dialogPane.getStyleClass().add("my-alert");
                 IsbnAlert.showAndWait();
                 return;
-
         });        
         // Bottone sblocca utente
         Button btnAction = new Button("SBLOCCA");

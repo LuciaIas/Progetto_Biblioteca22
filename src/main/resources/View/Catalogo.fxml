@@ -29,7 +29,7 @@
         
         <Pane HBox.hgrow="ALWAYS" />
         
-        <TextField fx:id="searchBar" prefHeight="40.0" prefWidth="350.0" promptText="Cerca per titolo, autore o ISBN..." styleClass="search-bar" />
+        <TextField fx:id="searchBar" prefHeight="40.0" prefWidth="350.0" promptText="Cerca per ISBN o titolo" styleClass="search-bar" />
         
         <Button fx:id="btnCerca" mnemonicParsing="false" prefHeight="40.0" prefWidth="100.0" styleClass="button-accent" text="CERCA" />
         <Button fx:id="addButton" mnemonicParsing="false" prefHeight="40.0" prefWidth="100.0" styleClass="button-accent" text="AGGIUNGI" />
