@@ -339,7 +339,7 @@ public class AggiungiPrestitoController {
             return;
             }               
             CompletedCheckIsbn=true;// Imposto flag ISBN come verificato
-            IsbnCheck.setText(isbn); // Mostro ISBN confermato nella label 
+            IsbnCheck.setText(DataBase.cercaLibro(isbn).getTitolo()); // Mostro ISBN confermato nella label 
         });       
         MatricolaCheckButton.setOnAction(eh->{ // Click pulsante verifica matricola        
             String matricola = txtMatricola.getText().trim();
@@ -373,7 +373,8 @@ public class AggiungiPrestitoController {
             return;         
             }
             CompletedCheckMatricola=true;// Imposto flag matricola verificata
-            matricolaCheck.setText(matricola);// Mostro matricola confermata nella label
+            Utente user = DataBase.cercaUtente(matricola);
+            matricolaCheck.setText(user.getNome()+" "+user.getCognome());// Mostro matricola confermata nella label
         });
     }  
 }
