@@ -5,6 +5,11 @@
  */
 package controller.modificapassword;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import model.servizi.ControlloFormato;
 import model.servizi.DataBase;
 import javafx.fxml.FXML;
@@ -17,6 +22,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import static model.servizi.DataBase.conn;
 
 /**
  * @brief Controller per la gestione della modifica della password.
@@ -98,9 +104,17 @@ public class CambioPasswordController {
                 al.showAndWait();
                 return;                
             }
+            ResultSet rs = null;
+                String query = "Select email from bibliotecario";  
+                try {
+                    PreparedStatement stat = conn.prepareStatement(query);           
+                     rs = stat.executeQuery();           
+                     rs.next();
+
+            
                 // Aggiorno password nel database     
                 DataBase.rimuoviBibliotecario();
-                DataBase.inserisciBibliotecario(pass);
+                DataBase.inserisciBibliotecario(pass,rs.getString(1));
                  Alert IsbnAlert = new Alert(AlertType.INFORMATION); // Alert informativo
                 IsbnAlert.setHeaderText("Password aggiornata");// Alert interno
                 IsbnAlert.setContentText("Modifica effettuata con successo");// Contenuto alert
@@ -109,7 +123,10 @@ public class CambioPasswordController {
                 dialogPane.getStyleClass().add("my-alert");                
                 IsbnAlert.showAndWait();// Mostro alert conferma
                 Stage f =  (Stage) BtnSalva.getScene().getWindow();// Ottengo finestra corrente
-                f.close();                    
+                f.close();        
+                                } catch (SQLException ex) {
+                    Logger.getLogger(DataBase.class.getName()).log(Level.SEVERE, null, ex);
+                }
         });
         BtnAnnulla.setOnMouseClicked(eh->{       
             Stage f =  (Stage) BtnAnnulla.getScene().getWindow();// Ottengo finestra corrente

@@ -1,5 +1,6 @@
 package controller;
  
+import static controller.DashboardController.PassRec;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -18,6 +19,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 import main.Main;
 
@@ -63,6 +66,8 @@ public class AccessoController {
     @FXML
     private TextField emailField;    
     @FXML
+    private Label RecoveryLabel;
+    @FXML
     private PasswordField PassRegister;// campo password nascosto    
     @FXML
     private TextField PassRegisterVisible; // campo password visibile    
@@ -90,6 +95,22 @@ public class AccessoController {
     public void initialize(){ 
         buttonInitialize();
         checkboxInitialize();
+        RecoveryLabel.setOnMouseClicked(eh->{
+        
+                PassRec = new Stage(); 
+                PassRec.setTitle("Modifica Password");
+                PassRec.setResizable(false);
+                PassRec.initModality(Modality.APPLICATION_MODAL); //blocco finestra principale                
+            try {
+                //carico la schermata di inserimento nuova password 
+                PassRec.setScene(new Scene(FXMLLoader.load(getClass().getResource("/View/RecuperaPassword.fxml"))));
+            } catch (IOException ex) {
+                Logger.getLogger(DashboardController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+                PassRec.showAndWait(); 
+        
+        });
+        
     }
    
     /**
@@ -162,8 +183,10 @@ public class AccessoController {
                 dialogPane.getStyleClass().add("my-alert");
                 al.showAndWait();
                 return;    
-            }                  
-            if(model.servizi.DataBase.inserisciBibliotecario(password)){
+            }
+            
+            
+            if(model.servizi.DataBase.inserisciBibliotecario(password,email)){
                 Alert al = new Alert(Alert.AlertType.INFORMATION);
                 al.setTitle("Operazione Completata");
                 al.setHeaderText("Registrazione effettuata 🚀"); // Ho aggiunto un'emoji per coerenza

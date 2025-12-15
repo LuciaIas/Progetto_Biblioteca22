@@ -58,7 +58,7 @@ public class DataBase {
      * @param password Password in chiaro.
      * @return true se l'inserimento ha avuto successo, false altrimenti.
      */
-    public static boolean inserisciBibliotecario(String password){
+    public static boolean inserisciBibliotecario(String password,String email){
         if(controllaEsistenzaBibliotecario())
             return false;
         StringBuilder hexString;
@@ -79,10 +79,11 @@ public class DataBase {
             throw new RuntimeException("Errore critico: Algoritmo SHA-256 non trovato.", e);
         }     
         // Inserimento nel database
-        String query = "Insert into bibliotecario values(?)";
+        String query = "Insert into bibliotecario values(?,?)";
         try {
             PreparedStatement stat= conn.prepareStatement(query);
             stat.setString(1, hexString.toString());
+            stat.setString(2, email);
             stat.execute();    
         } catch (SQLException ex) {
             return false;

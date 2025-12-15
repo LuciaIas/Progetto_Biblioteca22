@@ -5,6 +5,8 @@
  */
 package controller.modificapassword;
 
+import controller.DashboardController;
+import static controller.DashboardController.PassRec;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -18,6 +20,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 public class InserimentoCodiceRecuperoController {
     @FXML 
@@ -44,7 +48,30 @@ public class InserimentoCodiceRecuperoController {
     }
     
     public void setButtonFunction(){
+        VerifyButton.setOnAction(eh->{
+                String code = getFullCode();
+                if(code.equals(RecuperaPasswordController.code))
+                {
+                
+                                    PassRec = new Stage(); 
+                PassRec.setTitle("Modifica Password");
+                PassRec.setResizable(false);
+                PassRec.initModality(Modality.APPLICATION_MODAL); //blocco finestra principale                
+            try {
+                //carico la schermata di inserimento nuova password 
+                PassRec.setScene(new Scene(FXMLLoader.load(getClass().getResource("/View/CambioPassword.fxml"))));
+            } catch (IOException ex) {
+                Logger.getLogger(DashboardController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+                PassRec.show();
+                Stage s = (Stage) VerifyButton.getScene().getWindow();
+                s.close();
+                
+                }
+                
+        });
 
+        
     }
     
     public void setEffect(){

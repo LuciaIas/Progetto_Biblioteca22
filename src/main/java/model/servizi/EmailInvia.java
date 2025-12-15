@@ -11,6 +11,8 @@ import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import model.Configurazione;
 
 
@@ -112,7 +114,7 @@ public class EmailInvia {
      * @return true se l'invio è stato avviato correttamente, false altrimenti
      */
     public static boolean inviaAvviso(String recipientEmail,String titolo,String nome,String cognome,LocalDate inizioPrestito){        
-        new Thread(() -> {
+       Thread t = new Thread(() -> {
         try {       
             if(titolo!=null)
             EmailInvia.inviaEmail(recipientEmail, "Mancata Restituzione del libro", "Carissimo "+nome+" "+cognome+
@@ -125,7 +127,14 @@ public class EmailInvia {
         } catch (Exception ev) {
             ret=false;// In caso di errore nell'invio, il flag viene impostato a falso        
         }
-    }).start();        
+    });
+       t.start();
+        try {
+            t.join();
+        } catch (InterruptedException ex) {
+            Logger.getLogger(EmailInvia.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         return ret;
     }    
 }

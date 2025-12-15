@@ -23,7 +23,7 @@
             <CheckBox fx:id="CheckShowPassLogin" layoutX="50.0" layoutY="255.0" mnemonicParsing="false" styleClass="custom-checkbox" text="Mostra caratteri" />
             
             <Button fx:id="LoginButton" layoutX="50.0" layoutY="310.0" mnemonicParsing="false" prefWidth="250.0" styleClass="button-primary" text="ACCEDI ⚡" />
-            <Label layoutX="67.0" layoutY="283.0" styleClass="label-link" text="Hai dimenticato la password? Recuperala" underline="true" />
+            <Label fx:id="RecoveryLabel" layoutX="67.0" layoutY="283.0" styleClass="label-link" text="Hai dimenticato la password? Recuperala" underline="true" />
             
 <!--            <Label layoutX="90.0" layoutY="360.0" styleClass="label-link" text="Password dimenticata?" underline="true" />-->
          </children>
@@ -47,7 +47,7 @@
             <Button fx:id="RegisterButton" layoutX="79.0" layoutY="405.0" mnemonicParsing="false" prefWidth="250.0" styleClass="button-primary" text="SALVA E ACCEDI 🚀" />
             <Label layoutX="79.0" layoutY="165.0" styleClass="label-small" text="EMAIL" />
             <TextField fx:id="PassConRegisterVisible1" layoutX="79.0" layoutY="180.0" prefWidth="250.0" visible="false" />
-            <PasswordField fx:id="emailField" layoutX="79.0" layoutY="180.0" prefWidth="250.0" />
+            <TextField fx:id="emailField" layoutX="79.0" layoutY="180.0" prefHeight="25.0" prefWidth="250.0" />
          </children>
       </Pane>
       
