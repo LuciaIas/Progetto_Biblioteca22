@@ -103,8 +103,7 @@ public class InserisciPasswordModificaControllerTest extends ApplicationTest {
         clickOn("OK");
     }
 
-
-    
+  
     @Test
     public void testAnnulla() {
         clickOn("#BtnAnnulla");

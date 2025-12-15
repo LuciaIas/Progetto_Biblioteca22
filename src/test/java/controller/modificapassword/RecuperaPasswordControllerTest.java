@@ -14,7 +14,6 @@ import javax.swing.SwingUtilities;
 import java.lang.reflect.Field;
 
 public class RecuperaPasswordControllerTest {
-
     private RecuperaPasswordController controller;
 
     @BeforeAll
@@ -31,10 +30,8 @@ public class RecuperaPasswordControllerTest {
 
 
     @Test
-    public void testCodeGeneration() {
-   
-        String code = controller.codeGeneration();
-        
+    public void testCodeGeneration() {  
+        String code = controller.codeGeneration();        
         assertNotNull(code, "Il codice non deve essere nullo");
         assertEquals(6, code.length(), "Il codice deve essere di 6 caratteri");
         assertTrue(code.matches("[0-9]+"), "Il codice deve contenere solo numeri");
@@ -42,16 +39,12 @@ public class RecuperaPasswordControllerTest {
 
  
     @Test
-    public void testInitialize() throws Exception {
-      
+    public void testInitialize() throws Exception {     
         TextField txt = new TextField();
         Button btn = new Button();
-
         injectPrivateField(controller, "mailField", txt);
         injectPrivateField(controller, "RecoveryButton", btn);
-
         controller.initialize();
-
         assertNotNull(btn.getOnAction(), "Il bottone RecoveryButton deve avere un'azione collegata");
     }
 

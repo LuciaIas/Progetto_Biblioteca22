@@ -28,8 +28,7 @@ import static org.testfx.util.WaitForAsyncUtils.waitForFxEvents;
 public class CambioPasswordControllerTest extends ApplicationTest {  
     private static final String H2_URL = "jdbc:h2:mem:testdbPassFinal;DB_CLOSE_DELAY=-1;MODE=MySQL";
     private static final String H2_USER = "sa";
-    private static final String H2_PASSWORD = "";
-    
+    private static final String H2_PASSWORD = "";   
     private static Connection h2Connection;
  
     @BeforeAll

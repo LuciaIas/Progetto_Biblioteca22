@@ -30,30 +30,24 @@ import static org.testfx.matcher.control.TextInputControlMatchers.hasText;
 import static org.testfx.util.WaitForAsyncUtils.waitForFxEvents;
 
 public class ModificaLibroControllerTest extends ApplicationTest {
-    private ModificaLibroController controller;    
-   
+    private ModificaLibroController controller;      
     private static final String H2_URL = "jdbc:h2:mem:testdbModificaCrashFixed;DB_CLOSE_DELAY=-1;MODE=MySQL"; 
     private static final String H2_USER = "sa";
-    private static final String H2_PASSWORD = "";
-    
+    private static final String H2_PASSWORD = "";   
     private static Connection h2Connection; 
-
 
     @BeforeAll
     public static void initDbInfrastructure() {
         try {
             h2Connection = DriverManager.getConnection(H2_URL, H2_USER, H2_PASSWORD);
             DataBase.conn = h2Connection; 
-            Statement stmt = h2Connection.createStatement();
-            
+            Statement stmt = h2Connection.createStatement();           
             stmt.execute("DROP TABLE IF EXISTS scritto_da");
             stmt.execute("DROP TABLE IF EXISTS libri");
             stmt.execute("DROP TABLE IF EXISTS autori");
-
             stmt.execute("CREATE TABLE autori (id INT AUTO_INCREMENT PRIMARY KEY, nome VARCHAR(100), cognome VARCHAR(100), num_opere INT, data_nascita DATE)");
             stmt.execute("CREATE TABLE libri (isbn VARCHAR(20) PRIMARY KEY, titolo VARCHAR(100), editore VARCHAR(100), num_copie INT, anno_pubblicazione INT, url_immagine VARCHAR(255))");
             stmt.execute("CREATE TABLE scritto_da (isbn VARCHAR(20), id_autore INT, FOREIGN KEY (isbn) REFERENCES libri(isbn) ON DELETE CASCADE, FOREIGN KEY (id_autore) REFERENCES autori(id))");
-
         } catch (SQLException e) {
             throw new RuntimeException("Errore critico initDB: " + e.getMessage());
         }
@@ -88,16 +82,13 @@ public class ModificaLibroControllerTest extends ApplicationTest {
 
  
     private void insertTestData(Connection conn) throws SQLException {
-        Statement stmt = conn.createStatement();
-          
+        Statement stmt = conn.createStatement();         
         stmt.execute("DELETE FROM scritto_da");
         stmt.execute("DELETE FROM libri");
         stmt.execute("DELETE FROM autori");
-        stmt.execute("ALTER TABLE autori ALTER COLUMN id RESTART WITH 1");
- 
+        stmt.execute("ALTER TABLE autori ALTER COLUMN id RESTART WITH 1"); 
         stmt.execute("INSERT INTO autori (id, nome, cognome, num_opere) VALUES (1, 'J.R.R.', 'Tolkien', 50)");
         stmt.execute("INSERT INTO autori (id, nome, cognome, num_opere) VALUES (2, 'George', 'Martin', 20)");
-
         stmt.execute("INSERT INTO libri VALUES ('111', 'Il Signore degli Anelli', 'Bompiani', 10, 1954, '/Images/default.jpg')");
         stmt.execute("INSERT INTO scritto_da VALUES ('111', 1)");
     }
@@ -115,15 +106,12 @@ public class ModificaLibroControllerTest extends ApplicationTest {
     @Test
     public void testModificaDatiBase() {
         doubleClickOn("#txtTitolo").eraseText(13).doubleClickOn("#txtTitolo").eraseText(13).write("Lo Hobbit 2");                
-        doubleClickOn("#txtEditore").write("Adelphi");
-        
+        doubleClickOn("#txtEditore").write("Adelphi");       
         clickOn("#spinAnno").eraseText(4).write("2000");
         type(javafx.scene.input.KeyCode.ENTER); 
-
         clickOn("#SalvaButton");
         clickOn("OK");
         waitForFxEvents();
-
         Libro libroModificato = DataBase.cercaLibro("111");
         assertEquals("Lo Hobbit 2", libroModificato.getTitolo());
     }
@@ -134,7 +122,6 @@ public class ModificaLibroControllerTest extends ApplicationTest {
         clickOn("#SalvaButton");
         clickOn("OK");
         waitForFxEvents();
-
         Libro l = DataBase.cercaLibro("111");
         assertEquals("/Images/default.jpg", l.getUrl());
     }
