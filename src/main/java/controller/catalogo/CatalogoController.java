@@ -10,6 +10,7 @@ import model.servizi.Catalogo;
 import model.servizi.DataBase;
 import model.dataclass.Libro;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -38,13 +39,12 @@ import javafx.scene.effect.DropShadow;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import javafx.scene.transform.Rotate;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.Configurazione;
+import model.dataclass.Autore;
  
 
 /**
@@ -123,8 +123,37 @@ public class CatalogoController {
             // Cerco per titolo
             for(Libro l1 : DataBase.getLibriByTitolo(text))
                 libri.aggiungiLibro(l1);            
-               updateCatalogo(libri);
-               return;       
+         
+            
+            String[] nomi = text.split(" ");
+            if(nomi.length>1){
+            
+                for(Libro li1 : DataBase.getCatalogo().getLibri()){
+                
+                    for(Autore aut : li1.getAutori())
+                        if( (aut.getNome().equalsIgnoreCase(nomi[0]) && aut.getCognome().equalsIgnoreCase(nomi[1]) )  || (aut.getNome().equalsIgnoreCase(nomi[1]) && aut.getCognome().equalsIgnoreCase(nomi[0]) ) )
+                                libri.aggiungiLibro(li1);
+                }
+            
+            
+            }
+            ArrayList<String> isbn_cattivi = new ArrayList<>();
+            ArrayList<Libro> lista_Finale = new ArrayList<>();
+            for(Libro lib: libri.getLibri()){
+                if( ! isbn_cattivi.contains(lib.getIsbn()))
+                lista_Finale.add(lib);
+                isbn_cattivi.add(lib.getIsbn());
+       
+                    
+                
+                
+            }
+            Catalogo cat_finale = new Catalogo();
+            for(Libro libh : lista_Finale)
+                cat_finale.aggiungiLibro(libh);
+            
+            updateCatalogo(cat_finale);
+            
     }
         
     
