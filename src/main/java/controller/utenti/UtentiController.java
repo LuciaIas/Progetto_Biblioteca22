@@ -114,8 +114,9 @@ public class UtentiController {
            }
            //cerco per nome,cognome o email
            utenti = DataBase.getUtenti();
+           text = text.replace(" ", "");
            for(Utente u1 : utenti)
-               if(u1.getNome().equals(text) || u1.getCognome().equals(text) || u1.getMail().equals(text))
+               if(u1.getNome().equals(text) || u1.getCognome().equals(text) || u1.getMail().equals(text) || text.contains(u1.getNome()+""+u1.getCognome()))
                    app.add(u1);
            updateUtentiList(app);    
     }
