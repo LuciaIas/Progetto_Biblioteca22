@@ -73,7 +73,6 @@ public class ControlloFormatoTest {
     }
 
     // TEST EMAIL
-
     @Test
     public void testEmailValida() {
         assertTrue(ControlloFormato.controlloFormatoEmail("test@unisa.com"));

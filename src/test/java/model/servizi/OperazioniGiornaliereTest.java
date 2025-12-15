@@ -5,7 +5,6 @@ import model.dataclass.Stato;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import java.lang.reflect.Method;
 import java.sql.Connection;
 import java.sql.Date;
@@ -15,11 +14,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 public class OperazioniGiornaliereTest {
-
     private Connection testConnection;
 
     @BeforeEach
@@ -77,7 +74,6 @@ public class OperazioniGiornaliereTest {
         assertEquals(Stato.ATTIVO, prestiti.get(0).getStato(), "Il prestito non scaduto deve rimanere ATTIVO");
     }
 
-
     @Test
     public void testCalcolaRitardoVersoMezzanotte() throws Exception { 
         Method method = OperazioniGiornaliere.class.getDeclaredMethod("calcolaRitardoVersoMezzanotte");
@@ -85,7 +81,6 @@ public class OperazioniGiornaliereTest {
         long secondi = (long) method.invoke(null); // Metodo statico, quindi null come oggetto
         assertTrue(secondi >= 0, "I secondi non possono essere negativi");
         assertTrue(secondi <= 86400, "I secondi non possono superare le 24 ore");
-        
     }
     
     @Test

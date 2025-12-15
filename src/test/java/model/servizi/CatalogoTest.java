@@ -8,11 +8,9 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 public class CatalogoTest {
-
     private Catalogo catalogo;
     private Libro libro1;
     private Libro libro2;

@@ -16,7 +16,6 @@ public class UtenteTest {
         assertFalse(u.isBloccato(), "L'utente non dovrebbe essere bloccato all'inizio");
     }
 
-
     @Test
     public void testFiltroBlacklist() {
         ArrayList<Utente> lista = new ArrayList<>();        
@@ -36,7 +35,6 @@ public class UtenteTest {
         assertFalse(bloccati.contains(u2), "Non deve contenere utenti attivi");
     }
 
-
     @Test
     public void testModificaStatoBlocco() {
         Utente u = new Utente("1111111111", "Maicol", "Spancher", "maicol@email.it", false);       
@@ -48,7 +46,6 @@ public class UtenteTest {
         assertFalse(u.isBloccato(), "L'utente dovrebbe risultare attivo dopo lo sblocco");
     }
 
-
     @Test
     public void testAggiornamentoProfilo() {
         Utente u = new Utente("1", "N", "C", "NC@mail.it", false);        
@@ -59,7 +56,6 @@ public class UtenteTest {
         assertEquals("N1", u.getNome());
         assertEquals("NC1@mail.it", u.getMail());
     }
-
 
     @Test
     public void testBlacklistVuota() {

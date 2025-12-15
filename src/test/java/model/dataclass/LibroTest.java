@@ -6,11 +6,9 @@ import java.time.Year;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 public class LibroTest {
-
 
     @Test
     public void testCostruttoreEGetters() {
@@ -28,7 +26,6 @@ public class LibroTest {
         assertEquals("img.jpg", libro.getUrl());
     }
 
-
     @Test
     public void testSetters() {
         Libro libro = new Libro("1", "Alibali", "EditBell", null, Year.of(1900), 1, null);
@@ -41,7 +38,6 @@ public class LibroTest {
         assertEquals(50, libro.getNumero_copieDisponibili());
     }
 
-    
     @Test
     public void testCompareTo() {
         Libro libroA = new Libro("1", "A", "", null, null, 0, "");
@@ -55,7 +51,6 @@ public class LibroTest {
         assertEquals(0, libroA.compareTo(libroC), "Libri con lo stesso titolo devono ritornare 0");
     }
 
-
     @Test
     public void testGestioneListaAutori() {
         Libro libro = new Libro("111", "Test", "Ed", new ArrayList<>(), Year.of(2000), 1, "");        
@@ -67,7 +62,6 @@ public class LibroTest {
         assertEquals("diCocco", libro.getAutori().get(0).getCognome());
     }
     
-
     @Test
     public void testCompareToConTitoloNull() {
         Libro l1 = new Libro("1", null, "", null, null, 0, "");

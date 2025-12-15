@@ -8,7 +8,7 @@ import java.util.Properties;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ConfigurazioneTest {
-
+    
     @BeforeEach
     public void pulisciConfigurazione() throws Exception {
         // Accediamo al campo privato "properties" della classe Configurazione
@@ -18,7 +18,6 @@ public class ConfigurazioneTest {
         Properties props = (Properties) field.get(null);
         props.clear();
     }
-
 
     private void impostaValoreFinto(String chiave, String valore) throws Exception {
         Field field = Configurazione.class.getDeclaredField("properties");
@@ -42,7 +41,6 @@ public class ConfigurazioneTest {
         int[] open = Configurazione.getTimeOpen();
         assertEquals(7, open[0]);
         assertEquals(0, open[1]);
-
         int[] close = Configurazione.getTimeClose();
         assertEquals(20, close[0]);
         assertEquals(0, close[1]);
@@ -58,8 +56,7 @@ public class ConfigurazioneTest {
     @Test
     public void testValoriCaricatiCorrettamente() throws Exception {
         impostaValoreFinto("app.max_users", "100");
-        impostaValoreFinto("app.max_books", "50");
-        
+        impostaValoreFinto("app.max_books", "50"); 
         assertEquals(100, Configurazione.getMaxUsers());
         assertEquals(50, Configurazione.getMaxBooks());
         assertEquals(10000, Configurazione.getMaxLoans()); 
@@ -69,7 +66,6 @@ public class ConfigurazioneTest {
     public void testConfigurazioneEmail() throws Exception {
         impostaValoreFinto("mail.username", "biblioteca@test.com");
         impostaValoreFinto("mail.password.sender", "password123");
-
         assertEquals("biblioteca@test.com", Configurazione.getEmailUsername());
         assertEquals("password123", Configurazione.getPasswordSender());
     }
@@ -78,7 +74,6 @@ public class ConfigurazioneTest {
     public void testOrariPersonalizzati() throws Exception {
         impostaValoreFinto("time.open.hour", "9");
         impostaValoreFinto("time.open.minute", "30");
-
         int[] orario = Configurazione.getTimeOpen();
         assertEquals(9, orario[0]);
         assertEquals(30, orario[1]);

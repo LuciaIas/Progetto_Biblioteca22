@@ -11,30 +11,23 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
-
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 public class EmailLeggeTest {
 
     // Avvio server IMAPS finto
-
 @RegisterExtension
 static GreenMailExtension greenMail = new GreenMailExtension(ServerSetupTest.SMTP_IMAP) 
         .withConfiguration(GreenMailConfiguration.aConfig().withUser("test@mail.com", "password"));
 
     @BeforeEach
     public void setUp() throws Exception {
-
         injectPrivateStaticField("IMAP_HOST", "localhost");
-        
-
         injectPrivateStaticField("username", "test@mail.com");
         injectPrivateStaticField("password", "password");
-
         
         // GreenMail è vuoto, quindi gliela creiamo noi artificialmente la cartella di gmail
         GreenMailUser user = greenMail.getManagers().getUserManager().getUser("test@mail.com");
@@ -63,13 +56,10 @@ static GreenMailExtension greenMail = new GreenMailExtension(ServerSetupTest.SMT
 
     @Test
     public void testLeggiPostaInviata() {
-
         // Usiamo GreenMailUtil per inviare un messaggio
         GreenMailUtil.sendTextEmailTest("napoli@campione.it", "test@mail.com", 
                                         "Vincim tutt cos", "Pur a champions leugue");
-
         ArrayList<EmailInfo> risultato = EmailLegge.leggiPostaInviata();
-
         // VERIFICA
         assertNotNull(risultato, "La lista non deve essere null");
 

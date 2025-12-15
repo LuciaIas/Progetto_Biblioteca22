@@ -6,7 +6,6 @@ import model.dataclass.Utente;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -14,11 +13,9 @@ import java.sql.Statement;
 import java.time.LocalDate;
 import java.time.Year;
 import java.util.ArrayList;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 public class DataBaseTest {
-
     private Connection testConnection;
 
     @BeforeEach
@@ -65,30 +62,19 @@ public class DataBaseTest {
     public void testInserimentoEControlloPassword() {
         String rawPassword = "passwordSegreta123";
         String email = "emailprova@test.com";
-
         boolean inserito = DataBase.inserisciBibliotecario(rawPassword, email);
-        
         assertTrue(inserito, "Il bibliotecario dovrebbe essere inserito correttamente");
-
         assertTrue(DataBase.controllaEsistenzaBibliotecario(), 
                    "Dovrebbe esistere un bibliotecario nel DB");
-
-
         assertTrue(DataBase.controllaPasswordBibliotecario(rawPassword), 
                    "Il login deve riuscire con la password corretta");
-
-
         assertFalse(DataBase.controllaPasswordBibliotecario("sbagliata"), 
                     "Il login deve fallire con una password errata");
-        
-
         boolean inseritoDue = DataBase.inserisciBibliotecario("altraPass", "altro@email.com");
         assertFalse(inseritoDue, "Non dovrebbe essere possibile inserire un secondo bibliotecario");
     }
 
-    
     //TEST UTENTI
-
     @Test
     public void testGestioneUtenti() {
         Utente u = new Utente("1111111111", "Pasquale", "Mazzocchi", "pasquale@email.com", false);        
@@ -119,10 +105,8 @@ public class DataBaseTest {
         Utente sbloccato = DataBase.cercaUtente("2");
         assertFalse(sbloccato.isBloccato(), "L'utente dovrebbe essere sbloccato");
     }
-
     
     // TEST LIBRI E AUTORI
-
     @Test
     public void testFlussoInserimentoLibro() {   
         Autore autore = new Autore("J.K.", "Rowling", 10, LocalDate.of(1965, 7, 31));

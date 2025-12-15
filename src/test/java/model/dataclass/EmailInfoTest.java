@@ -17,7 +17,6 @@ public class EmailInfoTest {
         assertEquals(adesso, email.getDataInvio());
     }
 
-
     @Test
     public void testToString() {
         Date data = new Date();
@@ -27,7 +26,6 @@ public class EmailInfoTest {
         assertTrue(risultato.contains("studenti@unisa.it"), "Deve contenere il destinatario");
         assertTrue(risultato.contains(" - A: "), "Deve rispettare il separatore di formattazione");
     }
-
 
     @Test
     public void testValoriNull() {

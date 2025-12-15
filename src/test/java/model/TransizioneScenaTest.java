@@ -13,9 +13,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(ApplicationExtension.class) 
 public class TransizioneScenaTest {
-
     private Stage stage;
-
+    
     @Start
     public void start(Stage stage) {
         this.stage = stage;

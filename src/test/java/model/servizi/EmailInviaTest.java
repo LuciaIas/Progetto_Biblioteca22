@@ -7,12 +7,10 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
-
 import javax.mail.internet.MimeMessage;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.time.LocalDate;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 public class EmailInviaTest {
@@ -38,7 +36,6 @@ public class EmailInviaTest {
     }
     
     // Metodo helper per modificare i campi private static final di EmailInvia
-     
     private void injectPrivateStaticField(String fieldName, String value) throws Exception {
         Field field = EmailInvia.class.getDeclaredField(fieldName);
         field.setAccessible(true);      

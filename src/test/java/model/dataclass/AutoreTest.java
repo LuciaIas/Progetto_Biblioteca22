@@ -10,7 +10,6 @@ public class AutoreTest {
     public void testCostruttoreEGetter() {
         LocalDate nascita = LocalDate.of(1865, 2, 21);
         Autore a = new Autore("Dante", "Alighieri", 21, nascita);
-
         assertEquals("Dante", a.getNome(), "Il nome deve corrispondere");
         assertEquals("Alighieri", a.getCognome(), "Il cognome deve corrispondere");
         assertEquals(21, a.getOpere_scritte(), "Il numero di opere deve corrispondere");
