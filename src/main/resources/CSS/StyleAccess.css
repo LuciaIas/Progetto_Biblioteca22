@@ -1,16 +1,9 @@
-/* =============================================================================
- * THEME: ELECTRIC COBALT
- * Un design moderno, pulito e tecnologico.
- * Palette: #1A2980 (Blu Scuro) -> #26D0CE (Ciano)
- * ============================================================================= */
-
-/* --- IMPOSTAZIONI GENERALI --- */
 .root {
     -fx-font-family: "Segoe UI", sans-serif; /* Font pulito di sistema */
-    -fx-background-color: #eef2f3; /* Sfondo generale grigio-bluastro molto chiaro */
+    -fx-background-color: #eef2f3; /* Sfondo generale grigio-bluastro */
 }
 
-/* --- PANNELLI (CARDS) --- */
+/*Pannelli (cards)*/
 
 /* Sfondo bianco dei pannelli laterali (Login/Reset) */
 .pane-white {
@@ -27,9 +20,9 @@
     -fx-effect: dropshadow(three-pass-box, rgba(26, 41, 128, 0.4), 20, 0, 0, 0);
 }
 
-/* --- TIPOGRAFIA (TESTI) --- */
+/*Stile testi*/
 
-/* Titolo Principale (es. "AREA RISERVATA") */
+/* Titolo Principale */
 .label-title {
     -fx-font-size: 22px;
     -fx-font-weight: 800; /* Extra Bold */
@@ -52,7 +45,7 @@
     -fx-font-weight: bold;
 }
 
-/* Etichette sopra i campi (es. "LA TUA PASSWORD") */
+/* Etichette sopra i campi */
 .label-small {
     -fx-font-size: 10px;
     -fx-text-fill: #1A2980; 
@@ -61,7 +54,7 @@
     -fx-padding: 0 0 2 0; /* Un po' di spazio sotto */
 }
 
-/* Link (es. "Password dimenticata?") */
+/* Link */
 .label-link {
     -fx-font-size: 11px;
     -fx-text-fill: #95a5a6;
@@ -72,7 +65,7 @@
     -fx-underline: true;
 }
 
-/* --- CAMPI DI INPUT (TextField e PasswordField) --- */
+/* Campi di input */
 
 .text-field, .password-field {
     -fx-background-color: #f5f6fa; /* Grigio chiarissimo, quasi bianco */
@@ -93,7 +86,7 @@
     -fx-effect: dropshadow(three-pass-box, rgba(38, 208, 206, 0.15), 10, 0, 0, 0);
 }
 
-/* --- BOTTONI --- */
+/*Bottoni*/
 
 /* Bottone Principale (Accedi/Salva) */
 .button-primary {
@@ -137,7 +130,7 @@
     -fx-text-fill: #1A2980; /* Il testo diventa blu */
 }
 
-/* --- CHECKBOX PERSONALIZZATA --- */
+/* Checkbox personalizzata */
 
 .custom-checkbox {
     -fx-cursor: hand;
@@ -181,7 +174,7 @@
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 20, 0, 0, 0);
 }
 
-/* Modifica anche lo slider per avere angoli dritti (o leggermente stondati se vuoi) */
+/* Modifica anche lo slider per avere angoli dritti */
 .pane-gradient {
     -fx-background-color: linear-gradient(to bottom right, #1A2980, #26D0CE);
     -fx-effect: dropshadow(three-pass-box, rgba(26, 41, 128, 0.4), 30, 0, 0, 0);
@@ -203,7 +196,7 @@
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 20, 0, 0, 0);
 }
 
-/* --- STILE ALERT PERSONALIZZATO --- */
+/* Stile alert personalizzatp */
 
 /* Il contenitore principale */
 .my-alert {
@@ -227,7 +220,7 @@
     -fx-text-fill: #1A2980; /* Titolo Blu Scuro */
 }
 
-/* Il corpo del testo (Content) */
+/* Il corpo del testo */
 .my-alert > *.label.content {
     -fx-font-size: 13px;
     -fx-text-fill: #2f3640;
@@ -240,7 +233,7 @@
     -fx-padding: 10px;
 }
 
-/* IL BOTTONE "OK" (Stile Electric Cobalt) */
+/* Il bottone "OK" */
 .my-alert .button {
     -fx-background-color: linear-gradient(to right, #1A2980, #26D0CE);
     -fx-text-fill: white;
@@ -254,6 +247,3 @@
     -fx-background-color: linear-gradient(to right, #26D0CE, #1A2980);
     -fx-scale-x: 1.02;
 }
-
-/* Rimuove l'icona brutta di default se vuoi (opzionale) */
-/* .my-alert > .header-panel > .graphic-container { -fx-padding: 0; } */

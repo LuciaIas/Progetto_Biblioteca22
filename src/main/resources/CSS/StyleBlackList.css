@@ -1,13 +1,9 @@
-/* =============================================================================
- * THEME: BLACKLIST (Electric Cobalt + Danger Red)
- * ============================================================================= */
-
 .root {
     -fx-font-family: "Segoe UI Emoji", "Segoe UI", sans-serif;
     -fx-background-color: #f4f7fa;
 }
 
-/* --- HEADER --- */
+/* Header */
 .page-title {
     -fx-font-size: 28px;
     -fx-font-weight: 900;
@@ -33,7 +29,7 @@
     -fx-effect: dropshadow(three-pass-box, rgba(192, 57, 43, 0.2), 8, 0, 0, 0);
 }
 
-/* Bottone "SBLOCCA TUTTI" (Pieno Rosso) */
+/* Bottone "SBLOCCA TUTTI"  */
 .button-danger-filled {
     -fx-background-color: linear-gradient(to right, #ff6b6b, #ee5253);
     -fx-text-fill: white;
@@ -48,14 +44,13 @@
     -fx-scale-x: 1.02;
 }
 
-/* --- CARD RIGA BLACKLIST --- */
+/* Card riga blacklist*/
 .blacklist-row {
     -fx-background-color: white;
     -fx-background-radius: 5;
     -fx-border-color: #fab1a0; /* Bordo rosato sottile */
     -fx-border-width: 1;
-    
-    /* IL BORDO SINISTRO SPESSO ROSSO */
+
     -fx-border-insets: 0;
     -fx-border-width: 0 0 0 5; 
     -fx-border-color: transparent transparent transparent #ff6b6b;
@@ -79,7 +74,7 @@
     -fx-text-fill: #7f8fa6;
 }
 
-/* Badge del Motivo (es. "Ritardo Grave") */
+/* Badge del Motivo */
 .tag-reason {
     -fx-background-color: rgba(255, 107, 107, 0.1);
     -fx-text-fill: #c0392b;
@@ -104,7 +99,7 @@
     -fx-alignment: center;
 }
 
-/* Bottone Riammetti (Verde) */
+/* Bottone Riammetti */
 .button-success-outline {
     -fx-background-color: transparent;
     -fx-border-color: #2ecc71;
@@ -120,7 +115,7 @@
     -fx-text-fill: white;
 }
 
-/* Bottone Mail (Grigio) */
+/* Bottone Mail */
 .icon-button {
     -fx-background-color: transparent;
     -fx-cursor: hand;
@@ -134,19 +129,15 @@
 .scroll-bar:vertical { -fx-background-color: transparent; }
 .scroll-bar:vertical .thumb { -fx-background-color: #cbd5e0; -fx-background-radius: 10; }
 
-/* =============================================================================
- * THEME: GESTIONE UTENTI & BLACKLIST
- * File: StyleUtenti.css
- * ============================================================================= */
 
 .root {
     -fx-font-family: "Segoe UI Emoji", "Segoe UI", sans-serif;
     -fx-background-color: #f4f7fa; /* Sfondo generale */
 }
 
-/* ================= RIGHE DELLA LISTA (CARD) ================= */
+/* Righe della lista (card) */
 
-/* 1. Riga Utente NORMALE (Bianca) */
+/*Riga Utente NORMALE */
 .user-row {
     -fx-background-color: white;
     -fx-background-radius: 10;
@@ -163,7 +154,7 @@
     -fx-effect: dropshadow(three-pass-box, rgba(38, 208, 206, 0.15), 8, 0, 0, 2);
 }
 
-/* 2. Riga Utente BLOCCATO / BLACKLIST (Rossa) */
+/* Riga Utente BLOCCATO / BLACKLIST */
 .user-row-blocked {
     -fx-background-color: #fff5f5; /* Sfondo Rosso Chiarissimo */
     -fx-background-radius: 10;
@@ -179,7 +170,7 @@
     -fx-effect: dropshadow(three-pass-box, rgba(255, 107, 107, 0.15), 8, 0, 0, 2);
 }
 
-/* ================= TESTI E TITOLI ================= */
+/* Testi e titoli */
 
 .row-title {
     -fx-font-size: 14px;
@@ -192,9 +183,9 @@
     -fx-text-fill: #7f8fa6; /* Grigio */
 }
 
-/* ================= ICONE (CERCHI COLORATI) ================= */
+/*Icone*/
 
-/* Icona Utente Attivo (Blu) */
+/* Icona Utente Attivo */
 .icon-container-blue {
     -fx-background-color: #eaf2ff;
     -fx-background-radius: 50%;
@@ -203,7 +194,7 @@
     -fx-alignment: center;
 }
 
-/* Icona Utente Bloccato (Rossa) */
+/* Icona Utente Bloccato  */
 .icon-container-red {
     -fx-background-color: rgba(255, 107, 107, 0.15);
     -fx-background-radius: 50%;
@@ -212,9 +203,9 @@
     -fx-alignment: center;
 }
 
-/* ================= TAG DI STATO (ETICHETTE) ================= */
+/* Etichette */
 
-/* Tag Verde (ATTIVO) */
+/* Tag Attivo */
 .tag-success {
     -fx-background-color: rgba(46, 204, 113, 0.15); /* Verde trasparente */
     -fx-text-fill: #2ecc71; /* Testo Verde */
@@ -224,7 +215,7 @@
     -fx-background-radius: 15;
 }
 
-/* Tag Rosso (BLACKLIST) */
+/* Tag Blacklist */
 .tag-danger {
     -fx-background-color: rgba(255, 107, 107, 0.15); /* Rosso trasparente */
     -fx-text-fill: #ff6b6b; /* Testo Rosso */
@@ -234,9 +225,9 @@
     -fx-background-radius: 15;
 }
 
-/* ================= BOTTONI AZIONE ================= */
+/* Bottoni */
 
-/* Bottone Modifica (Matita) */
+/* Bottone Modifica */
 .icon-button {
     -fx-background-color: transparent;
     -fx-cursor: hand;
@@ -250,7 +241,7 @@
     -fx-scale-y: 1.2;
 }
 
-/* Bottone BLOCCA (Rosso Outline) */
+/* Bottone BLOCCA */
 .button-outline-danger {
     -fx-background-color: transparent;
     -fx-border-color: #ff6b6b;
@@ -266,7 +257,7 @@
     -fx-text-fill: white;
 }
 
-/* Bottone SBLOCCA (Verde Outline) */
+/* Bottone SBLOCCA */
 .button-outline-success {
     -fx-background-color: transparent;
     -fx-border-color: #2ecc71;

@@ -1,23 +1,19 @@
-/* =============================================================================
- * THEME: VINTAGE TYPEWRITER (Realismo Libro)
- * ============================================================================= */
-
 .root {
     -fx-font-family: "Courier New", "Consolas", monospace; /* Font macchina da scrivere */
-    /* 1. Imposta l'immagine di sfondo */
+    /* Imposta l'immagine di sfondo */
     -fx-background-image: url("/Images/libri.jpg");
 
-    /* 2. Fai in modo che copra tutto lo spazio senza deformarsi */
+    /* Fai in modo che copra tutto lo spazio senza deformarsi */
     -fx-background-size: cover;
 
-    /* 3. Non ripeterla a piastrella */
+    /* Non ripeterla a piastrella */
     -fx-background-repeat: no-repeat;
 
-    /* 4. Centrala */
+    /* Centrala */
     -fx-background-position: center center;
 }
 
-/* Titolo: Sembra scritto con un pennarello */
+/* Titolo */
 .handwritten-title {
     -fx-font-family: "Segoe Print", "Comic Sans MS", cursive; 
     -fx-font-size: 28px;
@@ -27,7 +23,7 @@
     -fx-effect: dropshadow(one-pass-box, rgba(0,0,0,0.1), 0, 0, 1, 1);
 }
 
-/* Etichette: Piccole e discrete */
+/* Etichette */
 .ink-label {
     -fx-font-size: 12px;
     -fx-text-fill: #555555;
@@ -35,7 +31,7 @@
     -fx-opacity: 0.8;
 }
 
-/* --- CAMPI DI TESTO (Righe del quaderno) --- */
+/* Campi di testo */
 .ink-input {
     -fx-background-color: rgba(0, 0, 0, 0.03); /* Leggero sfondo scuro (effetto carta usata) */
     -fx-background-radius: 5;
@@ -56,7 +52,7 @@
     -fx-border-style: solid; /* Diventa solida quando scrivi */
 }
 
-/* --- SPINNER & MENU --- */
+/* SPINNER & MENU */
 .ink-spinner, .ink-menu-button {
     -fx-background-color: transparent;
     -fx-border-color: #888888;
@@ -68,7 +64,7 @@
     -fx-text-fill: #1a237e;
 }
 
-/* --- POLAROID FRAME --- */
+/* frame polaroid */
 .polaroid-frame {
     -fx-background-color: white;
     -fx-padding: 8 8 25 8; /* Più spazio sotto per sembrare una polaroid */
@@ -76,7 +72,7 @@
     -fx-rotate: 2; /* Foto incollata storta */
 }
 
-/* --- BOTTONI TIMBRO --- */
+/* Bottoni timbro */
 .stamp-button-ok {
     -fx-background-color: transparent;
     -fx-text-fill: #27ae60;
