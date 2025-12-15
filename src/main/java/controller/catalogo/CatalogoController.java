@@ -310,7 +310,7 @@ public class CatalogoController {
     RotateTransition rotateOpen = new RotateTransition(speed, bookStack);
     rotateOpen.setAxis(Rotate.Y_AXIS); 
     rotateOpen.setToAngle(-10);
-    ParallelTransition openAnim = new ParallelTransition(scaleUp, rotateOpen);
+    ParallelTransition openAnim = new ParallelTransition(scaleUp);
     // Chiusura
     ScaleTransition scaleDown = new ScaleTransition(speed, mainContainer);
     scaleDown.setToX(1.0); 
@@ -318,7 +318,7 @@ public class CatalogoController {
     RotateTransition rotateClose = new RotateTransition(speed, bookStack);
     rotateClose.setAxis(Rotate.Y_AXIS); 
     rotateClose.setToAngle(0);
-    ParallelTransition closeAnim = new ParallelTransition(scaleDown, rotateClose);
+    ParallelTransition closeAnim = new ParallelTransition(scaleDown);
     // EVENTI MOUSE
     mainContainer.setOnMouseEntered(e -> {
         closeAnim.stop();
