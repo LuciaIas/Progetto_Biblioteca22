@@ -1,0 +1,89 @@
+/* --- STILE AGGIORNATO: PRO TECH --- */
+
+/* 1. LA CARD CENTRALE (Più morbida e fluttuante) */
+.pane-white {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 15; /* Angoli molto arrotondati */
+    /* Ombra più diffusa e morbida */
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.1), 30, 0, 0, 5);
+}
+
+/* 2. CAMPI OTP (I TRATTINI DIVENTANO BLOCCHI) */
+.otp-field {
+    /* Sfondo bianco sporco per farli risaltare sulla card bianca */
+    -fx-background-color: #f7f9fc; 
+    
+    /* Bordo sottile grigio */
+    -fx-border-color: #e1e4e8;
+    -fx-border-width: 1.5;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    
+    /* Testo */
+    -fx-font-size: 20px;
+    -fx-font-weight: 900;
+    -fx-text-fill: #2d3436;
+    -fx-alignment: center;
+    
+    /* Transizione fluida (simulata) */
+    -fx-cursor: text;
+}
+
+/* QUANDO IL CAMPO È ATTIVO (FOCUS) */
+.otp-field:focused {
+    -fx-background-color: #ffffff;
+    /* Bordo Ciano Elettrico */
+    -fx-border-color: #26D0CE;
+    -fx-border-width: 2;
+    /* GLOW EFFECT: Ombra colorata esterna */
+    -fx-effect: dropshadow(three-pass-box, rgba(38, 208, 206, 0.4), 10, 0, 0, 0);
+    -fx-text-fill: #1A2980; /* Il numero diventa Blu Scuro */
+}
+
+/* 3. BOTTONE "VERIFICA" (Effetto 3D) */
+.button-primary {
+    -fx-background-color: linear-gradient(to right, #1A2980, #26D0CE);
+    -fx-text-fill: white;
+    -fx-font-weight: 800;
+    -fx-font-size: 13px;
+    -fx-background-radius: 8;
+    -fx-cursor: hand;
+    /* Ombra colorata sotto il bottone */
+    -fx-effect: dropshadow(three-pass-box, rgba(26, 41, 128, 0.3), 15, 0, 0, 4);
+}
+
+.button-primary:hover {
+    /* Diventa più luminoso */
+    -fx-background-color: linear-gradient(to right, #26D0CE, #1A2980);
+    -fx-scale-x: 1.02;
+    -fx-scale-y: 1.02;
+}
+
+.button-primary:pressed {
+    /* Effetto click fisico */
+    -fx-scale-x: 0.98;
+    -fx-scale-y: 0.98;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 5, 0, 0, 0);
+}
+
+/* 4. LINK "INVIA DI NUOVO" */
+.label-link {
+    -fx-font-size: 11px;
+    -fx-text-fill: #95a5a6;
+    -fx-cursor: hand;
+    -fx-underline: false; /* Niente sottolineatura di default */
+}
+
+.label-link:hover {
+    -fx-text-fill: #26D0CE;
+    -fx-underline: true; /* Appare solo al passaggio del mouse */
+    -fx-effect: dropshadow(one-pass-box, rgba(38, 208, 206, 0.3), 5, 0, 0, 0);
+}
+
+/* 5. DESCRIZIONE */
+.label-description {
+    -fx-font-size: 12px;
+    -fx-text-fill: #636e72;
+    -fx-alignment: center;
+    -fx-padding: 0 20 0 20; /* Margine laterale interno */
+}

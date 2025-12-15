@@ -23,6 +23,7 @@
             <CheckBox fx:id="CheckShowPassLogin" layoutX="50.0" layoutY="255.0" mnemonicParsing="false" styleClass="custom-checkbox" text="Mostra caratteri" />
             
             <Button fx:id="LoginButton" layoutX="50.0" layoutY="310.0" mnemonicParsing="false" prefWidth="250.0" styleClass="button-primary" text="ACCEDI ⚡" />
+            <Label layoutX="67.0" layoutY="283.0" styleClass="label-link" text="Hai dimenticato la password? Recuperala" underline="true" />
             
 <!--            <Label layoutX="90.0" layoutY="360.0" styleClass="label-link" text="Password dimenticata?" underline="true" />-->
          </children>
