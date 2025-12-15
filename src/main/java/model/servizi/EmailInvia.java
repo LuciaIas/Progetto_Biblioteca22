@@ -14,7 +14,6 @@ import java.util.Properties;
 import javafx.application.Platform;
 import model.Configurazione;
 
-
 /**
  * @brief Classe di utilità per inviare email tramite SMTP.
  * Fornisce metodi statici per inviare email singole e avvisi di mancata restituzione
@@ -127,8 +126,5 @@ public class EmailInvia {
         }
     });
        t.start();
-
-
-
     }    
 }
