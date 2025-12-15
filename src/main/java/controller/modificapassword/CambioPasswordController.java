@@ -32,26 +32,19 @@ import javafx.stage.Stage;
  * 
  * @author gruppo22
  */
-public class CambioPasswordController {
-    
+public class CambioPasswordController {   
     @FXML
-    private PasswordField NewPass;
-    
+    private PasswordField NewPass;    
     @FXML
-    private PasswordField ConfirmPass;
-    
+    private PasswordField ConfirmPass;   
     @FXML
-    private TextField NewPassVisible;
-    
+    private TextField NewPassVisible;    
     @FXML
-    private TextField ConfirmPassVisible;
-    
+    private TextField ConfirmPassVisible;    
     @FXML
-    private CheckBox CheckShowPass;
-    
+    private CheckBox CheckShowPass;    
     @FXML
-    private Button BtnSalva;
-    
+    private Button BtnSalva;    
     @FXML 
     private Label BtnAnnulla;
     
@@ -82,8 +75,7 @@ public class CambioPasswordController {
             }else{// Se la password è visibile
             pass = NewPassVisible.getText();
              pass1 = ConfirmPassVisible.getText();
-            }
-            
+            }            
             //Controllo password e conferma password
             if(pass.equals("") || pass1.equals("")){// Controllo se i campi sono vuoti
                 Alert err = new Alert(Alert.AlertType.WARNING);
@@ -101,9 +93,7 @@ public class CambioPasswordController {
                 al.setHeaderText("Password non sicura 🔒"); // Titolo interno 
                 al.setContentText("La password deve avere:\n- Minimo 8 caratteri\n- Una maiuscola\n- Un numero\n- Un simbolo (@#$%^&+=!)");
                 DialogPane dialogPane = al.getDialogPane();
-                dialogPane.getStylesheets().add(
-                    getClass().getResource("/CSS/StyleAccess.css").toExternalForm()
-                );
+                dialogPane.getStylesheets().add(getClass().getResource("/CSS/StyleAccess.css").toExternalForm());
                 dialogPane.getStyleClass().add("my-alert");
                 al.showAndWait();
                 return;                
@@ -115,9 +105,7 @@ public class CambioPasswordController {
                 IsbnAlert.setHeaderText("Password aggiornata");// Alert interno
                 IsbnAlert.setContentText("Modifica effettuata con successo");// Contenuto alert
                 DialogPane dialogPane = IsbnAlert.getDialogPane();
-                dialogPane.getStylesheets().add(
-                    getClass().getResource("/CSS/StyleAccess.css").toExternalForm()
-                );                
+                dialogPane.getStylesheets().add(getClass().getResource("/CSS/StyleAccess.css").toExternalForm());                
                 dialogPane.getStyleClass().add("my-alert");                
                 IsbnAlert.showAndWait();// Mostro alert conferma
                 Stage f =  (Stage) BtnSalva.getScene().getWindow();// Ottengo finestra corrente

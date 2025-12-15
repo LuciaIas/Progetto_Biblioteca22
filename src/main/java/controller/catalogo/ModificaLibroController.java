@@ -44,32 +44,23 @@ import javafx.stage.Stage;
  */
 public class ModificaLibroController {
     @FXML
-    private TextField txtTitolo;
-    
+    private TextField txtTitolo;   
     @FXML
-    private MenuButton menuAutori;
-    
+    private MenuButton menuAutori;    
     @FXML
-    private TextField txtEditore;
-    
+    private TextField txtEditore;   
     @FXML
-    private Spinner<Integer> spinAnno;
-    
+    private Spinner<Integer> spinAnno;    
     @FXML
-    private Spinner<Integer> spinCopie;
-    
+    private Spinner<Integer> spinCopie;    
     @FXML
-    private ImageView imgAnteprima;
-    
+    private ImageView imgAnteprima;   
     @FXML
-    private Button ScegliFileButton;
-    
+    private Button ScegliFileButton;    
     @FXML
-    private Button AnnullaButton;
-    
+    private Button AnnullaButton;    
     @FXML
-    private Button SalvaButton;
-    
+    private Button SalvaButton;    
     @FXML
     private Button RimuoviCopButton;
     
@@ -210,9 +201,7 @@ public class ModificaLibroController {
                 AL.setHeaderText("Aggiornamento Catalogo");
                 AL.setContentText("Libro modificato");                
                 DialogPane dialogPane = AL.getDialogPane();             
-                dialogPane.getStylesheets().add(
-                    getClass().getResource("/CSS/StyleAccess.css").toExternalForm()
-                );              
+                dialogPane.getStylesheets().add(getClass().getResource("/CSS/StyleAccess.css").toExternalForm());              
                 dialogPane.getStyleClass().add("my-alert");               
                 AL.showAndWait();
               }else{
@@ -220,9 +209,7 @@ public class ModificaLibroController {
                 IsbnAlert.setHeaderText("Operazione fallita");
                 IsbnAlert.setContentText("Modifiche non completate");                
                 DialogPane dialogPane = IsbnAlert.getDialogPane();            
-                dialogPane.getStylesheets().add(
-                    getClass().getResource("/CSS/StyleAccess.css").toExternalForm()
-                );               
+                dialogPane.getStylesheets().add(getClass().getResource("/CSS/StyleAccess.css").toExternalForm());               
                 dialogPane.getStyleClass().add("my-alert");                
                 IsbnAlert.showAndWait();
             return;                                   

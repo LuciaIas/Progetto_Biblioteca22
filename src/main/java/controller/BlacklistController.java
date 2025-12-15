@@ -40,14 +40,11 @@ import javafx.util.Duration;
  */
 public class BlacklistController {    
     @FXML
-    private VBox blacklistContainer;
-    
+    private VBox blacklistContainer;   
     @FXML
-    private Label lblTotalBlocked;
-       
+    private Label lblTotalBlocked;      
     @FXML
-    private Button UnLockAllButton;
-       
+    private Button UnLockAllButton;       
     @FXML
     private TextField searchUser;
     
@@ -63,7 +60,7 @@ public class BlacklistController {
  */
     @FXML
     public void initialize(){   
-        ArrayList<Utente> us =Utente.getUtentiBlackListed(DataBase.getUtenti());//recupero utenti bloccati e aggiorno la lista
+        ArrayList<Utente> us =Utente.getUtentiBlackListed(DataBase.getUtenti());
         updateUtentiList(us);       
         UnLockAllButton.setOnAction(eh->{//azione pulsante "sblocca tutti gli utenti"       
             for(Utente u: us)
@@ -145,23 +142,23 @@ public class BlacklistController {
  * @param isBlacklisted Stato dell'utente (true se bloccato, false se sbloccato)
  */
     private void aggiungiCardUtente(String nome, String cognome, String matricola, String email, boolean isBlacklisted) {          
-        // 1. Creazione riga principale (HBox)
+        //Creazione riga principale 
         HBox riga = new HBox();
         riga.setAlignment(Pos.CENTER_LEFT);
         riga.setSpacing(20);
         riga.setPrefHeight(80);
         riga.setPadding(new Insets(0, 20, 0, 20));        
-        // Stile condizionale: Se è bloccato usa lo stile rosso, altrimenti bianco
+        //Stile condizionale: Se è bloccato usa lo stile rosso, altrimenti bianco
         if (isBlacklisted) {
             riga.getStyleClass().add("user-row-blocked");
         } else {
             riga.getStyleClass().add("user-row");
         }
-        // 2. Icona utente bloccato
+        //Icona utente bloccato
         StackPane iconContainer = new StackPane();
         // Definisce la grandezza del cerchio
         double size = 45;
-        // BLOCCO LE DIMENSIONI: Larghezza e Altezza DEVONO essere uguali
+        //BLOCCO LE DIMENSIONI: Larghezza e Altezza DEVONO essere uguali
         iconContainer.setMinWidth(size);
         iconContainer.setMinHeight(size);
         iconContainer.setPrefSize(size, size);
@@ -171,40 +168,33 @@ public class BlacklistController {
         Label iconLabel = new Label("🚫");
         iconLabel.setStyle("-fx-font-size: 20px;"); // Aumentato un po' per centrare visivamente meglio
         iconContainer.getChildren().add(iconLabel);
-        // 3. dati utente (Nome e Email)
+        //Dati utente (Nome e Email)
         VBox boxNomi = new VBox();
         boxNomi.setAlignment(Pos.CENTER_LEFT);
-        boxNomi.setPrefWidth(250);
-        
+        boxNomi.setPrefWidth(250);       
         Label lblNome = new Label(nome + " " + cognome);
-        lblNome.getStyleClass().add("row-title");
-        
+        lblNome.getStyleClass().add("row-title");        
         Label lblEmail = new Label(email);
-        lblEmail.getStyleClass().add("row-subtitle");
-        
+        lblEmail.getStyleClass().add("row-subtitle");        
         boxNomi.getChildren().addAll(lblNome, lblEmail);
-
-        // 4.Matricola utente
+        //Matricola utente
         VBox boxMatricola = new VBox();
         boxMatricola.setAlignment(Pos.CENTER_LEFT);
-        boxMatricola.setPrefWidth(150);
-        
+        boxMatricola.setPrefWidth(150);        
         Label lblMatTitle = new Label("MATRICOLA");
-        lblMatTitle.setStyle("-fx-text-fill: #7f8fa6; -fx-font-size: 10px; -fx-font-weight: bold;");
-        
+        lblMatTitle.setStyle("-fx-text-fill: #7f8fa6; -fx-font-size: 10px; -fx-font-weight: bold;");        
         Label lblMatValue = new Label(matricola);
-        lblMatValue.setStyle("-fx-text-fill: #2d3436; -fx-font-weight: bold;");
-        
+        lblMatValue.setStyle("-fx-text-fill: #2d3436; -fx-font-weight: bold;");        
         boxMatricola.getChildren().addAll(lblMatTitle, lblMatValue);
-        // 5. Spaziatore per allineamento (Pane vuoto che spinge tutto a destra)
+        //Spaziatore per allineamento (Pane vuoto che spinge tutto a destra)
         Pane spacer = new Pane();
         HBox.setHgrow(spacer, Priority.ALWAYS);
-        // 6. Stato (Attivo / Blacklist)
+        //Stato (Attivo / Blacklist)
         Label lblStato = new Label(isBlacklisted ? "Blacklist" : "Attivo");
         lblStato.getStyleClass().add(isBlacklisted ? "tag-danger" : "tag-success");
         //Bottone invio email
         Button btnEmail = new Button("✉️");
-        btnEmail.getStyleClass().add("icon-button"); // Usa lo stile trasparente/grigio        
+        btnEmail.getStyleClass().add("icon-button");        
         // Aggiungiamo un tooltip per far capire cosa fa
         Tooltip tooltip = new Tooltip("Invia email a " + email);
         btnEmail.setTooltip(tooltip);       
@@ -215,9 +205,7 @@ public class BlacklistController {
                 IsbnAlert.setHeaderText("Avviso inviato");
                 IsbnAlert.setContentText("Il sistema ha inviato un email all'utente");
                 DialogPane dialogPane = IsbnAlert.getDialogPane();
-                dialogPane.getStylesheets().add(
-                    getClass().getResource("/CSS/StyleAccess.css").toExternalForm()
-                );
+                dialogPane.getStylesheets().add(getClass().getResource("/CSS/StyleAccess.css").toExternalForm());
                 dialogPane.getStyleClass().add("my-alert");
                 IsbnAlert.showAndWait();
                 return;
@@ -228,9 +216,7 @@ public class BlacklistController {
                 IsbnAlert.setHeaderText("Errore nell'invio dell'avviso");
                 IsbnAlert.setContentText("L'utente potrebbe aver inserito una mail inesistente");
                 DialogPane dialogPane = IsbnAlert.getDialogPane();
-                dialogPane.getStylesheets().add(
-                    getClass().getResource("/CSS/StyleAccess.css").toExternalForm()
-                );
+                dialogPane.getStylesheets().add(getClass().getResource("/CSS/StyleAccess.css").toExternalForm());
                 dialogPane.getStyleClass().add("my-alert");
                 IsbnAlert.showAndWait();
                 return;
@@ -243,16 +229,8 @@ public class BlacklistController {
             model.servizi.DataBase.unsetBlackListed(matricola);
             updateUtentiList(Utente.getUtentiBlackListed(DataBase.getUtenti()));            
         });
-        // 8. Aggiunta elementi alla riga
-        riga.getChildren().addAll(
-            iconContainer, 
-            boxNomi, 
-            boxMatricola, 
-            spacer, 
-            lblStato,
-            btnEmail,
-            btnAction
-        );
+        //Aggiunta elementi alla riga
+        riga.getChildren().addAll(iconContainer,boxNomi, boxMatricola, spacer, lblStato, btnEmail,btnAction);
         blacklistContainer.getChildren().add(riga);
     }
     

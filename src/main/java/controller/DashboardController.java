@@ -48,50 +48,37 @@ import main.Main;
  */
 public class DashboardController {    
     @FXML
-    private Button CatalogoLibriButton; 
-    
+    private Button CatalogoLibriButton;     
     @FXML
-    private Button mailButton; 
-    
+    private Button mailButton;    
     @FXML
-    private Button BLButton; 
-    
+    private Button BLButton;     
     @FXML
-    private Button DashboardButton; 
-    
+    private Button DashboardButton;     
     @FXML
     private Button utentiButton;
     @FXML
-    private Button PrestitiRestituzioniButton; 
-    
+    private Button PrestitiRestituzioniButton;     
     @FXML
-    private Label numLibri; 
-    
+    private Label numLibri;     
     @FXML
-    private Label numLoanAttivi; 
-    
+    private Label numLoanAttivi;     
     @FXML
-    private Label numUsers;
-    
+    private Label numUsers;    
     @FXML
-    private Label numScaduti; 
-           
+    private Label numScaduti;            
     @FXML
-    private VBox DashboardBox; 
-    
+    private VBox DashboardBox;    
     @FXML
-    private ScrollPane DashboardScrollPane; 
-    
+    private ScrollPane DashboardScrollPane;    
     @FXML
     private BorderPane HomeBorderPane; //usato per cambiare dinamicamente la vista centrale quando si clcca un bottone del menu
     
-    private List<Button> menuButtons; //lista che contiene tutti i bottoni principali del menu
-    
+    private List<Button> menuButtons; //lista che contiene tutti i bottoni principali del menu   
     @FXML
     private Button LogoutButton; 
     @FXML
-    private Button modPassButton; 
-    
+    private Button modPassButton;     
     @FXML
     private Button BackupButton; 
     

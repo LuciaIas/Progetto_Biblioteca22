@@ -60,17 +60,14 @@ public class OperazioniGiornaliere {
     public static void avviaTaskDiMezzanotte() {
         long ritardoIniziale = calcolaRitardoVersoMezzanotte();    
         long periodo = 24 * 60 * 60; // Periodo di esecuzione: 24 ore (in secondi)  
-        
         scheduler.scheduleAtFixedRate(() -> {
             try {           
                 eseguiControlliAutomatici(false);               
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        }, ritardoIniziale, periodo, TimeUnit.SECONDS);
-        
+        }, ritardoIniziale, periodo, TimeUnit.SECONDS);        
         long durataSessioneMillis = durataSessione*60*60*1000; // Durata massima della sessione in millisecondi (1 ora) 
-
         scheduler.scheduleAtFixedRate(() -> {
             Platform.runLater(() -> {
                 try {
@@ -78,16 +75,13 @@ public class OperazioniGiornaliere {
                     if (Main.stage == null || Main.stage.getScene() == null) {// Se lo stage principale non esiste o non ha scene, resetto il timer
                         ultimoResetSessione = System.currentTimeMillis(); 
                         return;
-                    }
-                    
-                    Parent currentRoot = Main.stage.getScene().getRoot();   
-                    
+                    }                   
+                    Parent currentRoot = Main.stage.getScene().getRoot();                       
                     if (currentRoot.getProperties().get("login") != null) {// Se siamo sulla schermata di login, resetto il timer                   
                         ultimoResetSessione = System.currentTimeMillis();
                         return;
                     }                  
-                    long tempoPassato = System.currentTimeMillis() - ultimoResetSessione;
-                    
+                    long tempoPassato = System.currentTimeMillis() - ultimoResetSessione;                   
                     if (tempoPassato > durataSessioneMillis) { // Se la sessione è scaduta               
                         main.Main.checkClosed();
                         Platform.setImplicitExit(false);
@@ -99,19 +93,15 @@ public class OperazioniGiornaliere {
                         // Carica finestra di login
                         Stage loginStage = new Stage();
                         FXMLLoader loader = new FXMLLoader(OperazioniGiornaliere.class.getResource("/View/Accesso.fxml"));
-                        Parent root = loader.load();
-                                     
-                        root.getProperties().put("login", "login");
-                        
+                        Parent root = loader.load();            
+                        root.getProperties().put("login", "login");  
                         Scene s = new Scene(root, 425, 500);
-                        main.Main.stage = loginStage;
-                        
+                        main.Main.stage = loginStage;                    
                         loginStage.setScene(s);
                         loginStage.setResizable(false);
                         loginStage.centerOnScreen();
                         loginStage.show(); 
                         loginStage.setOnCloseRequest(eh->{Platform.exit();System.exit(0);});
-
                          // Chiudo tutte le altre finestre aperte
                         try {
                             javafx.collections.ObservableList<Stage> stages = com.sun.javafx.stage.StageHelper.getStages();
@@ -121,8 +111,7 @@ public class OperazioniGiornaliere {
                                     st.close();
                                 }
                             }
-                        } catch (Exception ex) { }
-                        
+                        } catch (Exception ex) { }                       
                          // Reset del timer di sessione 
                         ultimoResetSessione = System.currentTimeMillis();
                     }
@@ -171,8 +160,7 @@ public class OperazioniGiornaliere {
                
            if(p.getStato()==Stato.IN_RITARDO && !ritardi)
                ritardi=true;
-       }
-       
+       }  
        // Mostro notifica se ci sono prestiti in ritardo e SkipNotify è false
        if(ritardi && !SkipNotify){    
            Platform.runLater(() -> {

@@ -63,17 +63,13 @@ import model.Configurazione;
  */
 public class PrestitoRestituzioneController {   
     @FXML
-    private VBox loansContainer;
-    
+    private VBox loansContainer;    
     @FXML
-    private Button NewLoanButton;
-    
+    private Button NewLoanButton;    
     @FXML
-    private MenuButton FilterButton;
-    
+    private MenuButton FilterButton;    
     @FXML
-    private Label lblActiveLoans;
-    
+    private Label lblActiveLoans;    
     @FXML
     private TextField searchLoan;
     
@@ -189,8 +185,7 @@ public class PrestitoRestituzioneController {
                     @Override
                     public int compare(Prestito o1, Prestito o2) {
                         LocalDate d1 = o1.getRestituzione();
-                        LocalDate d2 = o2.getRestituzione();
-                        
+                        LocalDate d2 = o2.getRestituzione();                       
                         if (d1 == null && d2 == null) return 0;
                         if (d1 == null) return 1;
                         if (d2 == null) return -1;
@@ -205,12 +200,9 @@ public class PrestitoRestituzioneController {
             }else{// Se non è possibile aggiungere           
              Alert IsbnAlert = new Alert(AlertType.ERROR);
                 IsbnAlert.setHeaderText("Impossibile concedere un altro prestito");
-                IsbnAlert.setContentText("Ci sono troppe copie dei nostri libri prestate");
-                
+                IsbnAlert.setContentText("Ci sono troppe copie dei nostri libri prestate");               
                 DialogPane dialogPane = IsbnAlert.getDialogPane();
-                dialogPane.getStylesheets().add(
-                    getClass().getResource("/CSS/StyleAccess.css").toExternalForm()
-                );
+                dialogPane.getStylesheets().add( getClass().getResource("/CSS/StyleAccess.css").toExternalForm());
                 dialogPane.getStyleClass().add("my-alert");                
                 IsbnAlert.showAndWait();                
                 return;    
@@ -287,24 +279,21 @@ private void aggiungiRigaPrestito(String titoloLibro, String isbn, String nomeUt
             tagStyle = "tag-danger";
             iconText = "⚠️";
             statoText = "In Ritardo";
-            break;
-            
+            break;    
         case PROROGATO:
             rowStyle = "loan-row-extended";
             iconStyle = "icon-container-purple";
             tagStyle = "tag-extended";
             iconText = "⏳"; 
             statoText = "Prorogato";
-            break;
-            
+            break;           
         case RESTITUITO:
             rowStyle = "loan-row-returned";
             iconStyle = "icon-container-green";
             tagStyle = "tag-returned";
             iconText = "✅";
             statoText = "Restituito";
-            break;
-            
+            break;           
         case ATTIVO:
         default:
             rowStyle = "loan-row-active";
@@ -401,9 +390,7 @@ private void aggiungiRigaPrestito(String titoloLibro, String isbn, String nomeUt
                 IsbnAlert.setHeaderText("Avviso inviato");
                 IsbnAlert.setContentText("Il sistema ha inviato un email all'utente");               
                 DialogPane dialogPane = IsbnAlert.getDialogPane();
-                dialogPane.getStylesheets().add(
-                    getClass().getResource("/CSS/StyleAccess.css").toExternalForm()
-                );     
+                dialogPane.getStylesheets().add(getClass().getResource("/CSS/StyleAccess.css").toExternalForm());     
                 dialogPane.getStyleClass().add("my-alert");                
                 IsbnAlert.showAndWait();
                 return;
@@ -412,9 +399,7 @@ private void aggiungiRigaPrestito(String titoloLibro, String isbn, String nomeUt
                 IsbnAlert.setHeaderText("Errore nell'invio dell'avviso");
                 IsbnAlert.setContentText("L'utente potrebbe aver inserito una mail inesistente");               
                 DialogPane dialogPane = IsbnAlert.getDialogPane();
-                dialogPane.getStylesheets().add(
-                    getClass().getResource("/CSS/StyleAccess.css").toExternalForm()
-                );       
+                dialogPane.getStylesheets().add(getClass().getResource("/CSS/StyleAccess.css").toExternalForm());       
                 dialogPane.getStyleClass().add("my-alert");                
                 IsbnAlert.showAndWait();
                 return; 

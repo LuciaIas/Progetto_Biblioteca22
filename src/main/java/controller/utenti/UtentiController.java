@@ -54,17 +54,13 @@ import model.Configurazione;
  */
 public class UtentiController {
     @FXML
-    private VBox usersContainer; //Contenitore verticale dove vengono aggiunte le card degli utenti
-    
+    private VBox usersContainer; //Contenitore verticale dove vengono aggiunte le card degli utenti 
     @FXML
-    private Button btnAddUser;
-    
+    private Button btnAddUser;   
     @FXML
-    private Label lblTotalUsers; 
-    
+    private Label lblTotalUsers;    
     @FXML
-    private MenuButton FilterButton; //menu a tendina per filtrare gli utenti (tutti/attivi/bloccati)
-    
+    private MenuButton FilterButton; //menu a tendina per filtrare gli utenti (tutti/attivi/bloccati)   
     @FXML
     private TextField searchUser; //campo per ricercare un utente per nome, cognome, email o matricola
     
@@ -109,7 +105,6 @@ public class UtentiController {
         public void searchFunction(){
         ArrayList<Utente> utenti = new ArrayList<>(),app= new ArrayList<>();
            String text = searchUser.getText().trim();
-           
             //Cerca per matricola 
            Utente u = DataBase.cercaUtente(text);
            if(u!=null){
@@ -177,9 +172,7 @@ public class UtentiController {
                 IsbnAlert.setHeaderText("Impossibile aggiungere un nuovo utente");
                 IsbnAlert.setContentText("Troppi utenti registrati al sistema");
                 DialogPane dialogPane = IsbnAlert.getDialogPane();
-                dialogPane.getStylesheets().add(
-                    getClass().getResource("/CSS/StyleAccess.css").toExternalForm()
-                );
+                dialogPane.getStylesheets().add(getClass().getResource("/CSS/StyleAccess.css").toExternalForm());
                 dialogPane.getStyleClass().add("my-alert");
                 IsbnAlert.showAndWait();
                 return;
@@ -238,68 +231,50 @@ public class UtentiController {
         riga.setSpacing(20);
         riga.setPrefHeight(80);
         riga.setPadding(new Insets(0, 20, 0, 20));
-        
         // Stile condizionale: Se è bloccato usa lo stile rosso, altrimenti bianco
         if (isBlacklisted) {
             riga.getStyleClass().add("user-row-blocked");
         } else {
             riga.getStyleClass().add("user-row");
         }
-
         //ICONA
         StackPane iconContainer = new StackPane();
-
         // Definisco la grandezza del cerchio 
         double size = 45;
-
         //BLOCCO LE DIMENSIONI: Larghezza e Altezza DEVONO essere uguali
         iconContainer.setMinWidth(size);
         iconContainer.setMinHeight(size);
         iconContainer.setPrefSize(size, size);
         iconContainer.setMaxSize(size, size); // Impedisco che si allarghi e diventi ovale
-
         // Stile 
         iconContainer.getStyleClass().add(isBlacklisted ? "icon-container-red" : "icon-container-blue");
-
         Label iconLabel = new Label(isBlacklisted ? "🚫" : "👤");
         iconLabel.setStyle("-fx-font-size: 20px;"); // Aumentato un po' per centrare visivamente meglio
-
         iconContainer.getChildren().add(iconLabel);
-
         //DATI PRINCIPALI (Nome e Email)
         VBox boxNomi = new VBox();
         boxNomi.setAlignment(Pos.CENTER_LEFT);
         boxNomi.setPrefWidth(250);
-        
         Label lblNome = new Label(nome + " " + cognome);
         lblNome.getStyleClass().add("row-title");
-        
         Label lblEmail = new Label(email);
-        lblEmail.getStyleClass().add("row-subtitle");
-        
+        lblEmail.getStyleClass().add("row-subtitle");        
         boxNomi.getChildren().addAll(lblNome, lblEmail);
-
         //MATRICOLA
         VBox boxMatricola = new VBox();
         boxMatricola.setAlignment(Pos.CENTER_LEFT);
-        boxMatricola.setPrefWidth(150);
-        
+        boxMatricola.setPrefWidth(150);       
         Label lblMatTitle = new Label("MATRICOLA");
-        lblMatTitle.setStyle("-fx-text-fill: #7f8fa6; -fx-font-size: 10px; -fx-font-weight: bold;");
-        
+        lblMatTitle.setStyle("-fx-text-fill: #7f8fa6; -fx-font-size: 10px; -fx-font-weight: bold;");      
         Label lblMatValue = new Label(matricola);
-        lblMatValue.setStyle("-fx-text-fill: #2d3436; -fx-font-weight: bold;");
-        
+        lblMatValue.setStyle("-fx-text-fill: #2d3436; -fx-font-weight: bold;");      
         boxMatricola.getChildren().addAll(lblMatTitle, lblMatValue);
-
         //SPAZIATORE (Pane vuoto che spinge tutto a destra)
         Pane spacer = new Pane();
         HBox.setHgrow(spacer, Priority.ALWAYS);
-
         //ETICHETTA STATO (Attivo / Blacklist)
         Label lblStato = new Label(isBlacklisted ? "Blacklist" : "Attivo");
         lblStato.getStyleClass().add(isBlacklisted ? "tag-danger" : "tag-success");
-
         //BOTTONI AZIONE
         //Bottone Modifica (Matita)
         Button btnEdit = new Button("✏️");
@@ -331,14 +306,11 @@ public class UtentiController {
                 IsbnAlert.setHeaderText("Operazione eseguita");
                 IsbnAlert.setContentText("Utente rimosso");
                 DialogPane dialogPane = IsbnAlert.getDialogPane();
-                dialogPane.getStylesheets().add(
-                    getClass().getResource("/CSS/StyleAccess.css").toExternalForm()
-                );
+                dialogPane.getStylesheets().add(getClass().getResource("/CSS/StyleAccess.css").toExternalForm());
                 dialogPane.getStyleClass().add("my-alert");       
                 IsbnAlert.showAndWait(); 
             updateUtentiList(DataBase.getUtenti());           
         });
-
         // Bottone Blocca/Sblocca
         Button btnAction = new Button(isBlacklisted ? "SBLOCCA" : "BLOCCA");
         btnAction.getStyleClass().add(isBlacklisted ? "button-outline-success" : "button-outline-danger");
@@ -349,18 +321,8 @@ public class UtentiController {
                 model.servizi.DataBase.unsetBlackListed(matricola);
             updateUtentiList(DataBase.getUtenti()); 
         });
-
         //ASSEMBLAGGIO FINALE
-        riga.getChildren().addAll(
-            iconContainer, 
-            boxNomi, 
-            boxMatricola, 
-            spacer, 
-            lblStato, 
-            btnEdit,
-            btnDelete,
-            btnAction
-        );
+        riga.getChildren().addAll(iconContainer, boxNomi, boxMatricola, spacer, lblStato, btnEdit, btnDelete, btnAction);
         usersContainer.getChildren().add(riga);
     }
 }

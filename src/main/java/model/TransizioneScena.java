@@ -48,24 +48,19 @@ public class TransizioneScena {
         //Carico il nuovo FXML
         FXMLLoader loader = new FXMLLoader(TransizioneScena.class.getResource(fxmlPath));
         Parent newRoot = loader.load();
-
         //Lo rendo inizialmente invisibile (per fare l'effetto sorpresa)
         newRoot.setOpacity(0.0);
-
         //Cambio secco (Sostituisce subito la root, risolve tutti i bug di gerarchia)
         stage.getScene().setRoot(newRoot);
-
         //Imposto dimensioni e centro (1280x800)
         stage.setWidth(1280);
         stage.setHeight(835);
         stage.centerOnScreen(); 
-
         //Effetto Dissolvenza 
         FadeTransition fadeIn = new FadeTransition(Duration.seconds(0.5), newRoot);
         fadeIn.setFromValue(0.0);
         fadeIn.setToValue(1.0);
         fadeIn.play();
-
     } catch (IOException e) {
         e.printStackTrace();
     } catch (Exception e) {

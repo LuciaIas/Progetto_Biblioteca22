@@ -61,13 +61,11 @@ public class DataBase {
     public static boolean inserisciBibliotecario(String password){
         if(controllaEsistenzaBibliotecario())
             return false;
-        
         StringBuilder hexString;
         try {  
             // Calcolo hash della password
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
-            byte[] encodedhash = digest.digest(password.getBytes(StandardCharsets.UTF_8));
-            
+            byte[] encodedhash = digest.digest(password.getBytes(StandardCharsets.UTF_8));  
             // Converto hash in stringa esadecimale
             hexString = new StringBuilder(2 * encodedhash.length);
             for (int i = 0; i < encodedhash.length; i++) {
@@ -97,8 +95,7 @@ public class DataBase {
      * @return true se esiste almeno un bibliotecario, false altrimenti.
      */
     public static boolean controllaEsistenzaBibliotecario(){
-        String query = "Select * from bibliotecario";
-        
+        String query = "Select * from bibliotecario";  
         try {
             PreparedStatement stat = conn.prepareStatement(query);           
             ResultSet rs = stat.executeQuery();           
@@ -140,13 +137,10 @@ public class DataBase {
         StringBuilder hexString;
         try {           
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
-
-            byte[] encodedhash = digest.digest(password.getBytes(StandardCharsets.UTF_8));
-  
+            byte[] encodedhash = digest.digest(password.getBytes(StandardCharsets.UTF_8)); 
             hexString = new StringBuilder(2 * encodedhash.length);
             for (int i = 0; i < encodedhash.length; i++) {
-                String hex = Integer.toHexString(0xff & encodedhash[i]);
-                                
+                String hex = Integer.toHexString(0xff & encodedhash[i]);                               
                 if (hex.length() == 1) {
                     hexString.append('0');
                 }
@@ -154,15 +148,13 @@ public class DataBase {
             }
         } catch (NoSuchAlgorithmException e) {  
             throw new RuntimeException("Errore critico: Algoritmo SHA-256 non trovato.", e);
-        }
-        
+        }      
         String query = "Select * from bibliotecario where password_=?";       
         PreparedStatement stat;
         try {
             stat = conn.prepareStatement(query);
             stat.setString(1, hexString.toString());
-            ResultSet rs = stat.executeQuery();
-            
+            ResultSet rs = stat.executeQuery();      
             if(rs.next())
                 return true;
   
@@ -181,16 +173,14 @@ public class DataBase {
      */
     public static Catalogo getCatalogo(){       
         Catalogo libri = new Catalogo();
-        List<Autore> autori = new ArrayList<>(); 
-        
+        List<Autore> autori = new ArrayList<>();     
         String queryLibri = "Select * from Libri";
         String queryAutori = "Select * from autori";
         String queryScrittoda = "Select * from scritto_da where isbn=?";
         try {
             // Leggo tutti i libri dal DB
             PreparedStatement stat = conn.prepareStatement(queryLibri);
-            ResultSet rs = stat.executeQuery();
-            
+            ResultSet rs = stat.executeQuery();  
             while (rs.next()) {
                 // Creo oggetto Libro mappando i campi
                 libri.aggiungiLibro(new Libro(
@@ -215,7 +205,6 @@ public class DataBase {
                 a.setId(rs.getInt(1));// Salvo l'ID per associare ai libri
                 autori.add(a);
             }
-            
             // Associa gli autori ai libri tramite la tabella scritto_da
             for(Libro l : libri.getLibri()){
                  List<Autore> aut = new ArrayList<>();
@@ -224,12 +213,10 @@ public class DataBase {
                  stat.setString(1, l.getIsbn());
                  rs = stat.executeQuery();
                  while(rs.next())
-                     id.add(rs.getInt(2));// Recupero ID autori
-                 
+                     id.add(rs.getInt(2));// Recupero ID autori  
                  for(Autore a : autori)
                      if(id.contains(a.getId()))// Collego autore al libro
-                         aut.add(a);
-                 
+                         aut.add(a);     
                  l.setAutori(aut);
             }
             libri.sort();// Ordina libri per titolo
@@ -250,8 +237,7 @@ public class DataBase {
         PreparedStatement stat;
         try {
             stat = conn.prepareStatement(queryAutori);
-            ResultSet rs = stat.executeQuery();
-            
+            ResultSet rs = stat.executeQuery(); 
             while(rs.next()){
                 Autore a;
                 if(rs.getDate(5)!=null)
@@ -291,13 +277,10 @@ public class DataBase {
             ret=true;
             // Creo le relazioni con gli autori
             String queryR = "Insert Into scritto_da values(?,?)";
-            for(Autore a: l.getAutori()){
-            
-           PreparedStatement stat1 =conn.prepareStatement(queryR);
-            
+            for(Autore a: l.getAutori()){  
+           PreparedStatement stat1 =conn.prepareStatement(queryR);  
             stat1.setString(1,l.getIsbn());
-            stat1.setInt(2, a.getId());
-            
+            stat1.setInt(2, a.getId());   
             stat1.execute();          
             }
         } catch (SQLException ex) {
@@ -370,7 +353,6 @@ public class DataBase {
             PreparedStatement stat = conn.prepareStatement(query);
             stat.setString(1, nome);
             stat.setString(2, cognome);
-            
             ResultSet rs = stat.executeQuery();
             rs.next();
             Autore a;
@@ -417,16 +399,12 @@ public class DataBase {
             PreparedStatement stat1 = conn.prepareStatement(queryAutori);
             stat1.setString(1, isbn);
             stat1.execute();
-            
             //Setto le relazioni con gli autori
             String queryR = "Insert Into scritto_da values(?,?)";
             for(Autore a: autori){
-            
            PreparedStatement stat2 =conn.prepareStatement(queryR);
-            
             stat2.setString(1,isbn);
-            stat2.setInt(2, a.getId());
-            
+            stat2.setInt(2, a.getId()); 
             stat2.execute();           
             }           
             return true;
@@ -512,7 +490,6 @@ public class DataBase {
             stat.setString(3, u.getCognome());
             stat.setString(4, u.getMail());
             stat.setBoolean(5, u.isBloccato());
-            
             stat.execute();
             return true;
         } catch (SQLException ex) {
@@ -644,11 +621,8 @@ public class DataBase {
          try {
             PreparedStatement stat = conn.prepareStatement(query);
             stat.setString(1, matricola);
-          
-            stat.execute();
-            
-            return true;
-            
+            stat.execute();  
+            return true; 
         } catch (SQLException ex) {
             ex.printStackTrace();
             return false;
@@ -669,7 +643,6 @@ public class DataBase {
             try {
             PreparedStatement stat = conn.prepareStatement(query);
             ResultSet rs = stat.executeQuery();
-            
             while(rs.next()){
                 Stato stato;
             String app = rs.getString(5);
@@ -738,11 +711,8 @@ public class DataBase {
                 stat.setNull(5, Types.VARCHAR);
             else
                 stat.setString(5, s1);
-            
             stat.setDate(6, Date.valueOf(p.getData_scadenza()));
-            
-            stat.execute();
-            
+            stat.execute(); 
             return true;
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -783,7 +753,6 @@ public class DataBase {
             stat.setString(2, matricola);
             stat.execute();
             return true;
-            
         } catch (SQLException ex) {
             ex.printStackTrace();
           return false;
@@ -803,9 +772,7 @@ public class DataBase {
             stat.setString(1, isbn);
             stat.setString(2, matricola);
             ResultSet rs = stat.executeQuery();
-            
-            return rs.next();
-            
+            return rs.next();   
         } catch (SQLException ex) {
             ex.printStackTrace();
           return false;
@@ -826,9 +793,7 @@ public class DataBase {
             stat.setString(1, isbn);
             stat.setString(2, matricola);
             stat.execute();
-            
             return true;
-            
         } catch (SQLException ex) {
             ex.printStackTrace();
           return false;
@@ -873,7 +838,6 @@ public class DataBase {
             PreparedStatement stat = conn.prepareStatement(query);
             stat.setString(2, isbn);
             stat.setString(3, matricola);
-            
             boolean stNull =false;
             String s1="";
             Stato s = stato;
@@ -936,7 +900,6 @@ public class DataBase {
             ResultSet rs = stat.executeQuery();
             rs.next();
             n = rs.getInt(1);
-    
         } catch (SQLException ex) {
             ex.printStackTrace();         
         }
@@ -954,7 +917,6 @@ public class DataBase {
     public static int getNumRelationsScritto_Da(){
         int n=0;
         String query = "SELECT COUNT(*) FROM scritto_da";
-        
         try {
             PreparedStatement stat = conn.prepareStatement(query);
             

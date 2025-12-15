@@ -39,20 +39,15 @@ import javafx.stage.Stage;
  * 
  * @author gruppo22
  */
-public class InserisciPasswordModificaController {
-    
+public class InserisciPasswordModificaController {   
     @FXML
-    private PasswordField NewPass;
-    
+    private PasswordField NewPass;    
     @FXML
-    private TextField NewPassVisible;  
-    
+    private TextField NewPassVisible;      
     @FXML
-    private CheckBox CheckShowPass;
-    
+    private CheckBox CheckShowPass;    
     @FXML
-    private Button BtnSalva;
-    
+    private Button BtnSalva;    
     @FXML 
     private Label BtnAnnulla;
     
@@ -87,7 +82,7 @@ public class InserisciPasswordModificaController {
                 Alert err = new Alert(Alert.AlertType.WARNING);// Alert warning
                 err.setContentText("Devi inserire password");
                 err.showAndWait();
-                return;// Termino funzione se campo vuoto
+                return;
             }    
                 if(DataBase.controllaPasswordBibliotecario(pass)){         
             Stage PassRec = new Stage();// Creo nuova finestra per cambio password
@@ -97,11 +92,11 @@ public class InserisciPasswordModificaController {
             try {
                  // Imposto la scena della nuova finestra
                 PassRec.setScene(new Scene(FXMLLoader.load(getClass().getResource("/View/CambioPassword.fxml"))));// Carico l'interfaccia grafica del cambio password
-            } catch (IOException ex) {// Se il file FXML non viene caricato correttamente
-                Logger.getLogger(DashboardController.class.getName()).log(Level.SEVERE, null, ex);// Registro l'errore nel log
+            } catch (IOException ex) {
+                Logger.getLogger(DashboardController.class.getName()).log(Level.SEVERE, null, ex);
             }                
-                PassRec.showAndWait();// Mostro finestra e aspetto chiusura
-                Stage u = (Stage) BtnSalva.getScene().getWindow();// Ottengo finestra corrente
+                PassRec.showAndWait();
+                Stage u = (Stage) BtnSalva.getScene().getWindow();
                 u.close();// Chiudo finestra corrente dopo aver aperto la finestra CambioPassword
                 }else{     
                 Alert err = new Alert(Alert.AlertType.WARNING);
@@ -112,7 +107,7 @@ public class InserisciPasswordModificaController {
         });       
          BtnAnnulla.setOnMouseClicked(eh->{        
             Stage f =  (Stage) BtnAnnulla.getScene().getWindow();
-                f.close();// Chiudo finestra senza modificare nulla         
+                f.close();        
         });
     }
     

@@ -43,10 +43,8 @@ public class ControlloFormato {
     public static boolean controlloFormatoEmail(String email){  
         if (email == null)  // Evita NullPointerException se email è null
             return false;
-        
         if(email.matches("[^@]{1,200}@.+{0,20}\\..+{0,10}"))
-            return true;
-        
+            return true;  
         else return false;                
     }    
 }

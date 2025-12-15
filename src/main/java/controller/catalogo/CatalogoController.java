@@ -56,17 +56,13 @@ import model.Configurazione;
  */
 public class CatalogoController {
     @FXML
-    private ScrollPane LibriScrollPane;
-    
+    private ScrollPane LibriScrollPane;   
     @FXML
-    private GridPane containerLibri;
-    
+    private GridPane containerLibri;    
     @FXML
-    private Button btnCerca;
-    
+    private Button btnCerca;    
     @FXML
-    private TextField searchBar;
-    
+    private TextField searchBar;    
     @FXML
     private Button addButton;
     
@@ -166,9 +162,8 @@ public class CatalogoController {
      * @param libro Libro da visualizzare nella card.
      * @return VBox contenente la card interattiva pronta per essere aggiunta alla griglia.
      */
-    private VBox creaLibroAnimato(Libro libro) {
-    
-    // 1. IMMAGINE (Livello Base)
+    private VBox creaLibroAnimato(Libro libro) { 
+    // IMMAGINE
     ImageView imageView = new ImageView();
     try {
         String imagePath = (libro.getUrl() != null && !libro.getUrl().isEmpty()) ? libro.getUrl() : "/Images/default.jpg";
@@ -193,7 +188,7 @@ public class CatalogoController {
     imageView.setFitHeight(300); 
     imageView.setPreserveRatio(true);
     imageView.getStyleClass().add("book-cover-static");
-    // 2. CONTROLLI OVERLAY (Label Copie + Bottoni)    
+    // CONTROLLI OVERLAY (Label Copie + Bottoni)    
     // Label Copie
     Label lblCopie = new Label();
     if (libro.getIsbn() != null) {
@@ -249,9 +244,7 @@ public class CatalogoController {
                 IsbnAlert.setHeaderText("Operazione eseguita");
                 IsbnAlert.setContentText("Libro rimosso");               
                 DialogPane dialogPane = IsbnAlert.getDialogPane();              
-                dialogPane.getStylesheets().add(
-                    getClass().getResource("/CSS/StyleAccess.css").toExternalForm()
-                );              
+                dialogPane.getStylesheets().add(getClass().getResource("/CSS/StyleAccess.css").toExternalForm());              
                 dialogPane.getStyleClass().add("my-alert");               
                 IsbnAlert.showAndWait();
                 updateCatalogo(DataBase.getCatalogo());        
@@ -265,14 +258,14 @@ public class CatalogoController {
     // Nascondo controlli di default
     overlayControls.setVisible(false); 
     if (libro.getIsbn() == null) overlayControls.setVisible(false);
-    // 3. STACKPANE (Immagine + Controlli)
+    // STACKPANE (Immagine + Controlli)
     StackPane bookStack = new StackPane();
     bookStack.getChildren().addAll(imageView, overlayControls);    
     // Effetto Ombra sull'immagine
     DropShadow shadow = new DropShadow(10, Color.rgb(0, 0, 0, 0.3));
     imageView.setEffect(shadow);    
     bookStack.setDepthTest(javafx.scene.DepthTest.DISABLE); 
-    // 4. TITOLO E CONTENITORE FINALE (VBox)
+    //TITOLO E CONTENITORE VBox
     Label lblTitolo = new Label(libro.getTitolo() != null ? libro.getTitolo() : "Nuovo Libro");
     lblTitolo.setWrapText(true);
     lblTitolo.setMaxWidth(200);
@@ -281,7 +274,7 @@ public class CatalogoController {
     VBox mainContainer = new VBox(10);
     mainContainer.setAlignment(Pos.TOP_CENTER);
     mainContainer.getChildren().addAll(bookStack, lblTitolo);    
-    // 5. ANIMAZIONI (Applicate al mainContainer per evitare sovrapposizioni)
+    // ANIMAZIONI (Applicate al mainContainer per evitare sovrapposizioni)
     Duration speed = Duration.millis(300);
     // Zoom su TUTTA la card (così il titolo non viene coperto)
     ScaleTransition scaleUp = new ScaleTransition(speed, mainContainer);
@@ -316,7 +309,7 @@ public class CatalogoController {
         shadow.setRadius(10); shadow.setOffsetY(0);
         if (libro.getIsbn() != null) overlayControls.setVisible(false);
     });    
-    // 6. GESTIONE CLICK (Aggiungi Libro)
+    //GESTIONE CLICK (Aggiungi Libro)
     if (libro.getIsbn() == null) {
         mainContainer.setCursor(Cursor.HAND);
         mainContainer.setOnMouseClicked(eh -> {
@@ -340,9 +333,7 @@ public class CatalogoController {
                 IsbnAlert.setHeaderText("Impossibile aggiungere libro");
                 IsbnAlert.setContentText("Ci sono troppi Libri nel sistema");               
                 DialogPane dialogPane = IsbnAlert.getDialogPane();              
-                dialogPane.getStylesheets().add(
-                    getClass().getResource("/CSS/StyleAccess.css").toExternalForm()
-                );               
+                dialogPane.getStylesheets().add(getClass().getResource("/CSS/StyleAccess.css").toExternalForm());               
                 dialogPane.getStyleClass().add("my-alert");                
                 IsbnAlert.showAndWait();
                 return;            

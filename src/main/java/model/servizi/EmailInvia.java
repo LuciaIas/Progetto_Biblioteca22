@@ -29,15 +29,13 @@ public class EmailInvia {
     /** Username email mittente, letto dalla configurazione */    
     private static final String username = Configurazione.getEmailUsername();
     /** Password email mittente, letta dalla configurazione */
-    private static final String password = Configurazione.getPasswordSender(); 
+    private static final String password = Configurazione.getPasswordSender();    
     
-    // CONFIGURAZIONE SERVER (Modificata per essere testabile)
-    
+// CONFIGURAZIONE SERVER     
     /** Host SMTP di default */
     private static String SMTP_HOST = "smtp.gmail.com";
      /** Porta SMTP di default */
-    private static String SMTP_PORT = "587";
-    
+    private static String SMTP_PORT = "587";   
     /** Flag per l'esito dell'invio email */
     private static boolean ret = false;
     
@@ -65,11 +63,9 @@ public class EmailInvia {
         Properties props = new Properties();// Oggetto per configurazione SMTP
         props.put("mail.smtp.auth", "true");// Abilito autenticazione
         props.put("mail.smtp.starttls.enable", "true");// Abilito STARTTLS
-        
         // Qui usiamo le variabili al posto di stringhe fisse
         props.put("mail.smtp.host", SMTP_HOST); 
-        props.put("mail.smtp.port", SMTP_PORT);
-        
+        props.put("mail.smtp.port", SMTP_PORT);        
         // Questo serve per evitare errori di certificati nei test
         if (SMTP_HOST.equals("localhost")) {// Se si usa un server locale
             props.put("mail.smtp.ssl.trust", "*");// Accetto tutti i certificati
@@ -78,8 +74,7 @@ public class EmailInvia {
         } else {// Se si usa un server reale (Gmail)
             props.put("mail.smtp.ssl.protocols", "TLSv1.2"); // Protocollo TLS       
             props.put("mail.smtp.ssl.trust", "smtp.gmail.com");// Host attendibile
-        }
-        
+        }        
         // Creazione della sessione con autenticazione
         Session session = Session.getInstance(props, new Authenticator() {
             @Override
@@ -87,7 +82,6 @@ public class EmailInvia {
                 return new PasswordAuthentication(username, password);
             }
         });
-
         try {
             // Creazione del messaggio email da inviare
             Message message = new MimeMessage(session);
@@ -97,10 +91,8 @@ public class EmailInvia {
                 InternetAddress.parse(recipientEmail)       // Destinatario
             );
             message.setSubject(subject);                    // Oggetto
-            message.setText(body);                          // Corpo del testo
-         
+            message.setText(body);                          // Corpo del testo        
             Transport.send(message);
-
         } catch (MessagingException e) {
             // L'eccezione è silenziata
         }

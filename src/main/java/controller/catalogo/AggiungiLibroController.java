@@ -42,49 +42,36 @@ import model.Configurazione;
  * 
  * @author gruppo22
  */
-public class AggiungiLibroController {
-    
+public class AggiungiLibroController {   
     // CAMPI TESTO
     @FXML
-    private TextField txtTitolo;
-    
+    private TextField txtTitolo;    
     @FXML
-    private MenuButton menuAutori;
-    
+    private MenuButton menuAutori;    
     @FXML
-    private TextField txtEditore;
-    
+    private TextField txtEditore;    
     @FXML
-    private TextField txtISBN;
-    
+    private TextField txtISBN;    
     // SPINNER PER NUMERI
     @FXML
-    private Spinner<Integer> spinAnno;
-    
+    private Spinner<Integer> spinAnno;   
     @FXML
-    private Spinner<Integer> spinCopie;
-    
+    private Spinner<Integer> spinCopie;    
     // IMAGEVIEW PER COPERTINA
     @FXML
-    private ImageView imgAnteprima;
-    
+    private ImageView imgAnteprima;   
     // BUTTON
     @FXML
-    private Button ScegliFileButton;
-    
+    private Button ScegliFileButton;    
     @FXML
-    private Button AnnullaButton;
-    
+    private Button AnnullaButton;   
     @FXML
     private Button SalvaButton;
     @FXML
-    private Button RimuoviCopButton;
-    
+    private Button RimuoviCopButton;   
     // COSTANTI
     public static final int MAX_AUTORS=Configurazione.getMaxAuthors(); //Numero massimo autori nel sistema
-    public static final int MAX_WRITED=Configurazione.getMaxWrited(); //Numero massimo relazioni libro-autore
-    
-        
+    public static final int MAX_WRITED=Configurazione.getMaxWrited(); //Numero massimo relazioni libro-autore      
     // VARIABILI
     private String urlIM=null; // path della copertina (di default null)
    
@@ -151,9 +138,7 @@ public class AggiungiLibroController {
                 IsbnAlert.setHeaderText("Codice ISBN non valido");
                 IsbnAlert.setContentText("Il codice isbn deve essere a 13 cifre");                
                 DialogPane dialogPane = IsbnAlert.getDialogPane();
-                dialogPane.getStylesheets().add(
-                    getClass().getResource("/CSS/StyleAccess.css").toExternalForm()
-                );  
+                dialogPane.getStylesheets().add(getClass().getResource("/CSS/StyleAccess.css").toExternalForm());  
                 dialogPane.getStyleClass().add("my-alert");       
                 IsbnAlert.showAndWait();
                 return;
@@ -162,9 +147,7 @@ public class AggiungiLibroController {
                 IsbnAlert.setHeaderText("Codice ISBN non valido");
                 IsbnAlert.setContentText("Il codice isbn deve contenere solo numeri");               
                 DialogPane dialogPane = IsbnAlert.getDialogPane();
-                dialogPane.getStylesheets().add(
-                    getClass().getResource("/CSS/StyleAccess.css").toExternalForm()
-                );    
+                dialogPane.getStylesheets().add(getClass().getResource("/CSS/StyleAccess.css").toExternalForm());    
                 dialogPane.getStyleClass().add("my-alert");                
                 IsbnAlert.showAndWait();
             return;
@@ -192,9 +175,7 @@ public class AggiungiLibroController {
                 IsbnAlert.setHeaderText("Errore creazione libro");
                 IsbnAlert.setContentText("Ci sono troppi autori inseriti nel sistema");               
                 DialogPane dialogPane = IsbnAlert.getDialogPane();             
-                dialogPane.getStylesheets().add(
-                    getClass().getResource("/CSS/StyleAccess.css").toExternalForm()
-                );             
+                dialogPane.getStylesheets().add(getClass().getResource("/CSS/StyleAccess.css").toExternalForm());             
                 dialogPane.getStyleClass().add("my-alert");               
                 IsbnAlert.showAndWait();                
                 return;
@@ -218,9 +199,7 @@ public class AggiungiLibroController {
                 IsbnAlert.setHeaderText("Errore creazione libro");
                 IsbnAlert.setContentText("Ci sono troppe relazioni tra libri e autori nel sistema");
                 DialogPane dialogPane = IsbnAlert.getDialogPane();              
-                dialogPane.getStylesheets().add(
-                    getClass().getResource("/CSS/StyleAccess.css").toExternalForm()
-                );                
+                dialogPane.getStylesheets().add(getClass().getResource("/CSS/StyleAccess.css").toExternalForm());                
                 dialogPane.getStyleClass().add("my-alert");               
                 IsbnAlert.showAndWait();                
                 return;            
@@ -230,9 +209,7 @@ public class AggiungiLibroController {
                 IsbnAlert.setHeaderText("Operazione fallita");
                 IsbnAlert.setContentText("Libro con ISBN: "+txtISBN.getText().trim()+" risulta gia registrato nel database");                
                 DialogPane dialogPane = IsbnAlert.getDialogPane();             
-                dialogPane.getStylesheets().add(
-                    getClass().getResource("/CSS/StyleAccess.css").toExternalForm()
-                );                
+                dialogPane.getStylesheets().add(getClass().getResource("/CSS/StyleAccess.css").toExternalForm());                
                 dialogPane.getStyleClass().add("my-alert");               
                 IsbnAlert.showAndWait();
             return;                                  
@@ -242,9 +219,7 @@ public class AggiungiLibroController {
                 AL.setHeaderText("Aggiornamento Catalogo");
                 AL.setContentText("Libro aggiunto al catalogo");                
                 DialogPane dialogPane = AL.getDialogPane();             
-                dialogPane.getStylesheets().add(
-                    getClass().getResource("/CSS/StyleAccess.css").toExternalForm()
-                );             
+                dialogPane.getStylesheets().add(getClass().getResource("/CSS/StyleAccess.css").toExternalForm());             
                 dialogPane.getStyleClass().add("my-alert");                
                 AL.showAndWait();
               }                            
@@ -254,9 +229,7 @@ public class AggiungiLibroController {
                 IsbnAlert.setHeaderText("Chiusura Pannello");
                 IsbnAlert.setContentText("Ci sono troppi Libri nel sistema");               
                 DialogPane dialogPane = IsbnAlert.getDialogPane();              
-                dialogPane.getStylesheets().add(
-                    getClass().getResource("/CSS/StyleAccess.css").toExternalForm()
-                );                
+                dialogPane.getStylesheets().add(getClass().getResource("/CSS/StyleAccess.css").toExternalForm());                
                 dialogPane.getStyleClass().add("my-alert");               
                 IsbnAlert.showAndWait();
                 Stage tu = (Stage)SalvaButton.getScene().getWindow();

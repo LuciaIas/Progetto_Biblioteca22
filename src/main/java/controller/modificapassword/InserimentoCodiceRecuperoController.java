@@ -53,7 +53,7 @@ public class InserimentoCodiceRecuperoController {
         for (int i = 0; i < otpFields.length; i++) {
             final int currentIndex = i;
             TextField field = otpFields[i];
-            // 1. LIMITAZIONE INPUT: Solo numeri e max 1 carattere
+            // LIMITAZIONE INPUT: Solo numeri e max 1 carattere
             field.textProperty().addListener((obs, oldVal, newVal) -> {
                 if (newVal.length() > 1) {
                     field.setText(newVal.substring(0, 1)); // Taglia se scrivi troppo
@@ -61,7 +61,7 @@ public class InserimentoCodiceRecuperoController {
                 if (!newVal.matches("\\d*")) {
                     field.setText(newVal.replaceAll("[^\\d]", "")); // Cancella se non è numero
                 }
-                // 2. AUTO-AVANZAMENTO: Se ho scritto un numero, vai al prossimo
+                //AUTO-AVANZAMENTO: Se ho scritto un numero, vai al prossimo
                 if (field.getText().length() == 1 && currentIndex < otpFields.length - 1) {
                     otpFields[currentIndex+1].requestFocus();
                 }
@@ -70,9 +70,9 @@ public class InserimentoCodiceRecuperoController {
                      else
                         VerifyButton.setDisable(true);
             });
-            // 3. BACKSPACE: Se cancello, torna al precedente
+            //BACKSPACE: Se cancello, torna al precedente
             field.setOnKeyPressed((KeyEvent event) -> {
-                //DIABILITO IL BOTTONE SE NON HO DIGITATO TUTTE LE CIFRE     
+                //DEABILITO IL BOTTONE SE NON HO DIGITATO TUTTE LE CIFRE     
                 switch (event.getCode()) {
                     case BACK_SPACE:
                         if (field.getText().isEmpty() && currentIndex > 0) {

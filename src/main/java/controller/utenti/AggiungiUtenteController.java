@@ -28,23 +28,17 @@ import javafx.stage.Stage;
  * 
  * @author GRUPPO22
  */
-public class AggiungiUtenteController {
-    
+public class AggiungiUtenteController {  
     @FXML
-    private TextField txtMatricola; 
-    
+    private TextField txtMatricola;    
     @FXML
-    private TextField txtNome; 
-    
+    private TextField txtNome;     
     @FXML
-    private TextField txtCognome; 
-    
+    private TextField txtCognome;     
     @FXML
-    private TextField txtEmail; 
-    
+    private TextField txtEmail;    
     @FXML
     private Button AnnullaButton; 
-    
     @FXML
     private Button SalvaButton; 
     
@@ -80,16 +74,13 @@ public class AggiungiUtenteController {
         AnnullaButton.setOnAction(eh->{Stage s = (Stage) AnnullaButton.getScene().getWindow();s.close();});
         SalvaButton.setOnAction(eh->{  //pulsante salva
             String matricola = txtMatricola.getText().trim(); 
-            
             //CONTROLLI SUI CAMPI
             if(matricola.trim().length()!=10){
                 Alert IsbnAlert = new Alert(Alert.AlertType.ERROR);
                 IsbnAlert.setHeaderText("Matricola non valida");
                 IsbnAlert.setContentText("La matricola deve essere a 10 cifre");
                 DialogPane dialogPane = IsbnAlert.getDialogPane();
-                dialogPane.getStylesheets().add(
-                    getClass().getResource("/CSS/StyleAccess.css").toExternalForm()
-                );
+                dialogPane.getStylesheets().add(getClass().getResource("/CSS/StyleAccess.css").toExternalForm());
                 dialogPane.getStyleClass().add("my-alert");
                 IsbnAlert.showAndWait();
                 return;
@@ -98,58 +89,45 @@ public class AggiungiUtenteController {
                 IsbnAlert.setHeaderText("Matricola non valida");
                 IsbnAlert.setContentText("La matricola deve contenere solo numeri");
                 DialogPane dialogPane = IsbnAlert.getDialogPane(); 
-                dialogPane.getStylesheets().add(
-                    getClass().getResource("/CSS/StyleAccess.css").toExternalForm()
-                );
+                dialogPane.getStylesheets().add(getClass().getResource("/CSS/StyleAccess.css").toExternalForm());
                 dialogPane.getStyleClass().add("my-alert");
                 IsbnAlert.showAndWait();
             return;
             }
-            
             //controllo nome e cognome
             String nome = txtNome.getText().trim();
             String cognome = txtCognome.getText().trim();
-            
             //nessun nome e cognome
             if(nome.equals("") && cognome.equals("")){
                 Alert IsbnAlert = new Alert(Alert.AlertType.WARNING);
                 IsbnAlert.setHeaderText("Campi vuoti");
                 IsbnAlert.setContentText("Per favore inserisci un nome e un cognome");
                 DialogPane dialogPane = IsbnAlert.getDialogPane();
-                dialogPane.getStylesheets().add(
-                    getClass().getResource("/CSS/StyleAccess.css").toExternalForm()
-                );
+                dialogPane.getStylesheets().add(getClass().getResource("/CSS/StyleAccess.css").toExternalForm());
                 dialogPane.getStyleClass().add("my-alert");
                 IsbnAlert.showAndWait();
             return;
-                
             //nome mancante
             }else if(nome.equals("")){
                 Alert IsbnAlert = new Alert(Alert.AlertType.WARNING);
                 IsbnAlert.setHeaderText("Campi vuoti");
                 IsbnAlert.setContentText("Per favore inserisci un nome");
                 DialogPane dialogPane = IsbnAlert.getDialogPane();
-                dialogPane.getStylesheets().add(
-                    getClass().getResource("/CSS/StyleAccess.css").toExternalForm()
-                );
+                dialogPane.getStylesheets().add(getClass().getResource("/CSS/StyleAccess.css").toExternalForm());
                 dialogPane.getStyleClass().add("my-alert");
                 IsbnAlert.showAndWait();
             return;
-                
             //cognome mancante
             }else if(cognome.equals("")){
                 Alert IsbnAlert = new Alert(Alert.AlertType.WARNING);
                 IsbnAlert.setHeaderText("Campi vuoti");
                 IsbnAlert.setContentText("Per favore inserisci un cognome"); 
                 DialogPane dialogPane = IsbnAlert.getDialogPane();
-                dialogPane.getStylesheets().add(
-                    getClass().getResource("/CSS/StyleAccess.css").toExternalForm()
-                );
+                dialogPane.getStylesheets().add(getClass().getResource("/CSS/StyleAccess.css").toExternalForm());
                 dialogPane.getStyleClass().add("my-alert");                
                 IsbnAlert.showAndWait();
             return;           
             }
-            
             //controllo email
             String mail = txtEmail.getText().trim();
             if(!model.servizi.ControlloFormato.controlloFormatoEmail(mail)){ 
@@ -157,50 +135,39 @@ public class AggiungiUtenteController {
                 IsbnAlert.setHeaderText("Email non valida");
                 IsbnAlert.setContentText("L'e-mail deve essere del formato \"xxx@xx.xxx\" ");                
                 DialogPane dialogPane = IsbnAlert.getDialogPane();
-                dialogPane.getStylesheets().add(
-                    getClass().getResource("/CSS/StyleAccess.css").toExternalForm()
-                );
+                dialogPane.getStylesheets().add(getClass().getResource("/CSS/StyleAccess.css").toExternalForm());
                 dialogPane.getStyleClass().add("my-alert");            
                 IsbnAlert.showAndWait();
             return;
             }
-            
             //controllo unicità matricola
             if(DataBase.isMatricolaPresent(matricola)){
                 Alert IsbnAlert = new Alert(Alert.AlertType.WARNING);
                 IsbnAlert.setHeaderText("Operazione fallita");
                 IsbnAlert.setContentText("Utente con la matricola "+matricola+" risulta gia registrato nel database");
                 DialogPane dialogPane = IsbnAlert.getDialogPane();
-                dialogPane.getStylesheets().add(
-                    getClass().getResource("/CSS/StyleAccess.css").toExternalForm()
-                );
+                dialogPane.getStylesheets().add(getClass().getResource("/CSS/StyleAccess.css").toExternalForm());
                 dialogPane.getStyleClass().add("my-alert");           
                 IsbnAlert.showAndWait();
             return;
             }else{
                 //salvataggio utente, creo nuovo utente e lo aggiungo al database
                 DataBase.aggiungiUtente(new Utente(matricola,nome,cognome,mail,false));
-                
                 //conferma operazione riuscita
                 Alert IsbnAlert = new Alert(Alert.AlertType.INFORMATION);
                 IsbnAlert.setHeaderText("Utente aggiunto");
                 IsbnAlert.setContentText("Utente con la matricola "+matricola+" e stato correttamente inserito");
                 DialogPane dialogPane = IsbnAlert.getDialogPane();
-                dialogPane.getStylesheets().add(
-                    getClass().getResource("/CSS/StyleAccess.css").toExternalForm()
-                );
+                dialogPane.getStylesheets().add(getClass().getResource("/CSS/StyleAccess.css").toExternalForm());
                 dialogPane.getStyleClass().add("my-alert");    
                 IsbnAlert.showAndWait();
-                
                 //controllo limite massimo utenti
                 if(DataBase.getNumUser()>=UtentiController.MAX_USERS){
                 Alert rt = new Alert(Alert.AlertType.ERROR);//mostro errore
                 rt.setHeaderText("Chiusura Pannello");
                 rt.setContentText("Troppi utenti registrati al sistema");
                 DialogPane dialogPane1 = rt.getDialogPane();
-                dialogPane1.getStylesheets().add(
-                    getClass().getResource("/CSS/StyleAccess.css").toExternalForm()
-                );
+                dialogPane1.getStylesheets().add(getClass().getResource("/CSS/StyleAccess.css").toExternalForm());
                 dialogPane1.getStyleClass().add("my-alert");       
                 rt.showAndWait();
                 Stage opp = (Stage)SalvaButton.getScene().getWindow(); 

@@ -33,8 +33,7 @@ import javafx.scene.layout.VBox;
  */
 public class MailController {
     @FXML
-    private VBox emailContainer; //contenitore verticale dove verranno inserite le card delle email
-    
+    private VBox emailContainer; //contenitore verticale dove verranno inserite le card delle email    
     @FXML private Label lblTotalUsers; //mostra il numero totale di email inviate
     
 /**
@@ -121,7 +120,7 @@ public class MailController {
         VBox boxInfo = new VBox();
         boxInfo.setAlignment(Pos.CENTER_LEFT);
         boxInfo.setPrefWidth(400);        
-        //Oggetto (Titolo) dell'email
+        //Oggetto dell'email
         String oggetto = (mail.getOggetto() != null) ? mail.getOggetto() : "(Nessun Oggetto)";
         Label lblOggetto = new Label(oggetto);
         lblOggetto.getStyleClass().add("row-title");        

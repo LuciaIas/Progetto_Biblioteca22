@@ -30,22 +30,16 @@ import javafx.stage.Stage;
  * @author gruppo22
  */
 public class ModificaUtenteController {
-    
     @FXML
-    private Label lblMatricola; 
-    
+    private Label lblMatricola;    
     @FXML
-    private TextField txtNome; 
-    
+    private TextField txtNome;   
     @FXML
-    private TextField txtCognome; 
-    
+    private TextField txtCognome;  
     @FXML
     private TextField txtEmail; 
-    
     @FXML
-    private Button btnSalva; 
-    
+    private Button btnSalva;  
     @FXML
     private Button btnAnnulla; 
     
@@ -72,16 +66,13 @@ public class ModificaUtenteController {
         //CONTROLLI SUI CAMPI nome e cognome
             String nome = txtNome.getText().trim();
             String cognome = txtCognome.getText().trim();
-            
             //caso entrambi vuoti
             if(nome.equals("") && cognome.equals("")){
                 Alert IsbnAlert = new Alert(Alert.AlertType.WARNING);
                 IsbnAlert.setHeaderText("Campi vuoti");
                 IsbnAlert.setContentText("Per favore inserisci un nome e un cognome");
                 DialogPane dialogPane = IsbnAlert.getDialogPane();
-                dialogPane.getStylesheets().add(
-                    getClass().getResource("/CSS/StyleAccess.css").toExternalForm()
-                );
+                dialogPane.getStylesheets().add(getClass().getResource("/CSS/StyleAccess.css").toExternalForm());
                 dialogPane.getStyleClass().add("my-alert");
                 IsbnAlert.showAndWait();
             return;
@@ -90,9 +81,7 @@ public class ModificaUtenteController {
                 IsbnAlert.setHeaderText("Campi vuoti");
                 IsbnAlert.setContentText("Per favore inserisci un nome");
                 DialogPane dialogPane = IsbnAlert.getDialogPane();
-                dialogPane.getStylesheets().add(
-                    getClass().getResource("/CSS/StyleAccess.css").toExternalForm()
-                );
+                dialogPane.getStylesheets().add(getClass().getResource("/CSS/StyleAccess.css").toExternalForm());
                 dialogPane.getStyleClass().add("my-alert");
                 IsbnAlert.showAndWait();
             return;
@@ -101,14 +90,11 @@ public class ModificaUtenteController {
                 IsbnAlert.setHeaderText("Campi vuoti");
                 IsbnAlert.setContentText("Per favore inserisci un cognome");
                 DialogPane dialogPane = IsbnAlert.getDialogPane();
-                dialogPane.getStylesheets().add(
-                    getClass().getResource("/CSS/StyleAccess.css").toExternalForm()
-                );
+                dialogPane.getStylesheets().add(getClass().getResource("/CSS/StyleAccess.css").toExternalForm());
                 dialogPane.getStyleClass().add("my-alert");
                 IsbnAlert.showAndWait();
             return;
             }
-            
             //controllo formato email
             String mail = txtEmail.getText().trim();
             if(!model.servizi.ControlloFormato.controlloFormatoEmail(mail)){
@@ -116,26 +102,19 @@ public class ModificaUtenteController {
                 IsbnAlert.setHeaderText("Email non valida");
                 IsbnAlert.setContentText("L'e-mail deve essere del formato \"xxx@xx.xxx\" ");
                 DialogPane dialogPane = IsbnAlert.getDialogPane();
-                dialogPane.getStylesheets().add(
-                    getClass().getResource("/CSS/StyleAccess.css").toExternalForm()
-                );
+                dialogPane.getStylesheets().add(getClass().getResource("/CSS/StyleAccess.css").toExternalForm());
                 dialogPane.getStyleClass().add("my-alert");
                 IsbnAlert.showAndWait();
             return;   
             }
-            
             //modifica effettiva nel database
             model.servizi.DataBase.modificaUtente(matricola, nome, cognome, mail);
-            
             //conferma modifica
             Alert IsbnAlert = new Alert(Alert.AlertType.WARNING);
                 IsbnAlert.setHeaderText("Operazione eseguita");
                 IsbnAlert.setContentText("Utente modificato");
                 DialogPane dialogPane = IsbnAlert.getDialogPane();
-                dialogPane.getStylesheets().add(
-                    getClass().getResource("/CSS/StyleAccess.css").toExternalForm()
-                );
-                
+                dialogPane.getStylesheets().add(getClass().getResource("/CSS/StyleAccess.css").toExternalForm());
                 dialogPane.getStyleClass().add("my-alert");
                 IsbnAlert.showAndWait();
                 Stage s = (Stage)btnSalva.getScene().getWindow(); 

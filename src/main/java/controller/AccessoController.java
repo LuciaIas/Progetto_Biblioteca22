@@ -38,67 +38,47 @@ import main.Main;
  * @author gruppo22
  */
 
-public class AccessoController {
-    
+public class AccessoController {   
     //Sliding fxml
     @FXML
-    private Pane LoginPane; //Contiene campo pswd, checkbox mostra pswd login, bottone accedi 
-    
+    private Pane LoginPane; //Contiene campo pswd, checkbox mostra pswd login, bottone accedi    
     @FXML
-    private Pane RegisterForm;//Contiene pswd di registraz, coferma pswd, checkbox mostra pswd, bottoni registrati
-  
+    private Pane RegisterForm;//Contiene pswd di registraz, coferma pswd, checkbox mostra pswd, bottoni registrati 
     @FXML
-    private Pane Sliding; //Pannello che scorre quando clicco pulsante per passare tra login e registrazione
-    
+    private Pane Sliding; //Pannello che scorre quando clicco pulsante per passare tra login e registrazione   
     @FXML
-    private Button SlidingButton; 
-    
+    private Button SlidingButton;    
     @FXML
-    private Label SwitchLabel;// La label che indica l'azione che si eseguirà
-    
+    private Label SwitchLabel;// La label che indica l'azione che si eseguirà   
     // Variabili per animazioni sliding
     boolean direction=true;    // true = verso registrazione, false = verso login
     TranslateTransition ts;   // animazione sliding pane principale
     TranslateTransition tr;   // animazione sliding form registrazione
     final double slidingTiming=1000;  // durata animazione in millisecondi
-
     @FXML
     private Button LoginButton;
-
     @FXML
-    private Button RegisterButton;
-    
-    //REGISTER FORM
-    
+    private Button RegisterButton;    
+    //REGISTER FORM   
     @FXML
-    private TextField emailField;
-    
+    private TextField emailField;    
     @FXML
-    private PasswordField PassRegister;// campo password nascosto
-    
+    private PasswordField PassRegister;// campo password nascosto    
     @FXML
-    private TextField PassRegisterVisible; // campo password visibile
-    
+    private TextField PassRegisterVisible; // campo password visibile    
     @FXML
     private PasswordField PassConRegister; // campo conferma password nascosto
-
     @FXML
     private TextField PassConRegisterVisible; // campo conferma password visibile
-
     @FXML 
-    private CheckBox CheckShowPassRegister;// checkbox per mostrare/nascondere la password
-   
-    
+    private CheckBox CheckShowPassRegister;// checkbox per mostrare/nascondere la password    
     //LOGIN FORM
     @FXML
     private PasswordField PassLogin;// password login nascosta
-
     @FXML
     private TextField PassLoginVisible; // password login visibile
-
     @FXML 
     private CheckBox CheckShowPassLogin;// checkbox per mostrare/nascondere password
-
     
  /**
  * @brief Inizializza il controller.
@@ -111,8 +91,7 @@ public class AccessoController {
         buttonInitialize();
         checkboxInitialize();
     }
-
-    
+   
     /**
      * @brief Configura le azioni dei pulsanti principali.
      *
@@ -148,34 +127,26 @@ public class AccessoController {
                 PassRegisterVisible.setText(PassRegister.getText());
                 PassConRegisterVisible.setText(PassConRegister.getText());
             }                    
-            String password = PassRegister.getText();
-            
+            String password = PassRegister.getText();            
             String email = emailField.getText();
-            if(! model.servizi.ControlloFormato.controlloFormatoEmail(email)){
-            
+            if(! model.servizi.ControlloFormato.controlloFormatoEmail(email)){            
                 Alert al = new Alert(Alert.AlertType.ERROR);
                 al.setTitle("Errore Formato"); // Titolo della finestra
                 al.setHeaderText("Email non valida"); // Titolo interno 
                 al.setContentText("Il formato dell'email deve essere del tipo xxx@xx.xxx");
                 DialogPane dialogPane = al.getDialogPane();
-                dialogPane.getStylesheets().add(
-                    getClass().getResource("/CSS/StyleAccess.css").toExternalForm()
-                );
+                dialogPane.getStylesheets().add(getClass().getResource("/CSS/StyleAccess.css").toExternalForm());
                 dialogPane.getStyleClass().add("my-alert");
                 al.showAndWait();
-                return;
-            
-            }
-            
+                return;           
+            }           
             if(!model.servizi.ControlloFormato.controlloFormatoPassword(password)){
                 Alert al = new Alert(Alert.AlertType.ERROR);
                 al.setTitle("Errore Validazione"); // Titolo della finestra
                 al.setHeaderText("Password non sicura"); // Titolo interno 
                 al.setContentText("La password deve avere:\n- Minimo 8 caratteri\n- Una maiuscola\n- Un numero\n- Un simbolo (@#$%^&+=!)");
                 DialogPane dialogPane = al.getDialogPane();
-                dialogPane.getStylesheets().add(
-                    getClass().getResource("/CSS/StyleAccess.css").toExternalForm()
-                );
+                dialogPane.getStylesheets().add(getClass().getResource("/CSS/StyleAccess.css").toExternalForm());
                 dialogPane.getStyleClass().add("my-alert");
                 al.showAndWait();
                 return;
@@ -187,8 +158,7 @@ public class AccessoController {
                 al.setHeaderText("Password non corrispondenti");
                 DialogPane dialogPane = al.getDialogPane();
                 dialogPane.getStylesheets().add(
-                    getClass().getResource("/CSS/StyleAccess.css").toExternalForm()
-                );
+                    getClass().getResource("/CSS/StyleAccess.css").toExternalForm());
                 dialogPane.getStyleClass().add("my-alert");
                 al.showAndWait();
                 return;    
@@ -199,9 +169,7 @@ public class AccessoController {
                 al.setHeaderText("Registrazione effettuata 🚀"); // Ho aggiunto un'emoji per coerenza
                 al.setContentText("Sei stato registrato correttamente nel sistema.");          
                 DialogPane dialogPane = al.getDialogPane();            
-                dialogPane.getStylesheets().add(
-                    getClass().getResource("/CSS/StyleAccess.css").toExternalForm()
-                );
+                dialogPane.getStylesheets().add(getClass().getResource("/CSS/StyleAccess.css").toExternalForm());
                 dialogPane.getStyleClass().add("my-alert");
                 al.showAndWait();
                 model.TransizioneScena.switchSceneEffect(Main.stage, "/View/Dashboard.fxml");// Passa alla dashboard
@@ -213,9 +181,7 @@ public class AccessoController {
                 al.setContentText("Esiste gia un bibliotecario");
                 al.setHeaderText("Registrazione fallita");           
                 DialogPane dialogPane = al.getDialogPane();
-                dialogPane.getStylesheets().add(
-                    getClass().getResource("/CSS/StyleAccess.css").toExternalForm()
-                );
+                dialogPane.getStylesheets().add(getClass().getResource("/CSS/StyleAccess.css").toExternalForm());               
                 dialogPane.getStyleClass().add("my-alert");
                 al.showAndWait();
                 return;     
@@ -233,9 +199,7 @@ public class AccessoController {
                 al.setContentText("Password sbagliata");
                 al.setHeaderText("La password e sbagliata");                            
                 DialogPane dialogPane = al.getDialogPane();            
-                dialogPane.getStylesheets().add(
-                    getClass().getResource("/CSS/StyleAccess.css").toExternalForm()
-                );              
+                dialogPane.getStylesheets().add(getClass().getResource("/CSS/StyleAccess.css").toExternalForm());              
                 dialogPane.getStyleClass().add("my-alert");              
                 al.showAndWait();
                 return;

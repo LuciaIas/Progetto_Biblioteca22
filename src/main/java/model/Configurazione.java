@@ -22,7 +22,6 @@ import java.util.Properties;
  */
 public class Configurazione {
     private static final Properties properties = new Properties();
-
     static {
         // Uso getResourceAsStream perché il file è dentro "src/main/resources"
         try (InputStream input = Configurazione.class.getResourceAsStream("/config.properties")) {
