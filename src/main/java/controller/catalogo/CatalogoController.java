@@ -266,14 +266,21 @@ public class CatalogoController {
     imageView.setEffect(shadow);    
     bookStack.setDepthTest(javafx.scene.DepthTest.DISABLE); 
     //TITOLO E CONTENITORE VBox
-    Label lblTitolo = new Label(libro.getTitolo() != null ? libro.getTitolo() : "Nuovo Libro");
+    Label lblTitolo = new Label(libro.getTitolo());
     lblTitolo.setWrapText(true);
     lblTitolo.setMaxWidth(200);
     lblTitolo.setAlignment(Pos.CENTER);
     lblTitolo.setStyle("-fx-font-family: 'Segoe UI', sans-serif; -fx-font-weight: 800; -fx-text-fill: #1A2980; -fx-font-size: 14px; -fx-text-alignment: center;");
+    
+    Label lblIsbn = new Label("Isbn: "+libro.getIsbn());
+    lblTitolo.setWrapText(true);
+    lblTitolo.setMaxWidth(200);
+    lblTitolo.setAlignment(Pos.CENTER);
+    lblTitolo.setStyle("-fx-font-family: 'Segoe UI', sans-serif; -fx-font-weight: 800; -fx-text-fill: #1A2980; -fx-font-size: 14px; -fx-text-alignment: center;");
+    
     VBox mainContainer = new VBox(10);
     mainContainer.setAlignment(Pos.TOP_CENTER);
-    mainContainer.getChildren().addAll(bookStack, lblTitolo);    
+    mainContainer.getChildren().addAll(bookStack, lblTitolo, lblIsbn);    
     // ANIMAZIONI (Applicate al mainContainer per evitare sovrapposizioni)
     Duration speed = Duration.millis(300);
     // Zoom su TUTTA la card (così il titolo non viene coperto)

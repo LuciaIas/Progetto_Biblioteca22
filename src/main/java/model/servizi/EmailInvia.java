@@ -11,8 +11,7 @@ import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javafx.application.Platform;
 import model.Configurazione;
 
 
@@ -113,7 +112,7 @@ public class EmailInvia {
      * @param inizioPrestito data di inizio prestito
      * @return true se l'invio è stato avviato correttamente, false altrimenti
      */
-    public static boolean inviaAvviso(String recipientEmail,String titolo,String nome,String cognome,LocalDate inizioPrestito){        
+    public static void inviaAvviso(String recipientEmail,String titolo,String nome,String cognome,LocalDate inizioPrestito){        
        Thread t = new Thread(() -> {
         try {       
             if(titolo!=null)
@@ -129,12 +128,8 @@ public class EmailInvia {
         }
     });
        t.start();
-        try {
-            t.join();
-        } catch (InterruptedException ex) {
-            Logger.getLogger(EmailInvia.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        return ret;
+
+
+
     }    
 }

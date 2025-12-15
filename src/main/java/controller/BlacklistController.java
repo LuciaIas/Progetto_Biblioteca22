@@ -86,7 +86,7 @@ public class BlacklistController {
  * lo mostra. Altrimenti filtra la lista locale degli utenti bloccati controllando
  * se il nome, il cognome o la mail contengono il testo cercato.
  */
-     public void searchFunction(){
+     public void searchFunction(){ 
         ArrayList<Utente> utenti = new ArrayList<>(),app= new ArrayList<>();
            String text = searchUser.getText().trim();      
            //cerco per matricola (o identificatore)
@@ -199,7 +199,7 @@ public class BlacklistController {
         Tooltip tooltip = new Tooltip("Invia email a " + email);
         btnEmail.setTooltip(tooltip);       
         btnEmail.setOnAction(e -> {            
-            if(EmailInvia.inviaAvviso(email, null, nome, cognome, null)){
+            EmailInvia.inviaAvviso(email, null, nome, cognome, null);
             //Alert invio riuscito
             Alert IsbnAlert = new Alert(Alert.AlertType.INFORMATION);
                 IsbnAlert.setHeaderText("Avviso inviato");
@@ -209,18 +209,7 @@ public class BlacklistController {
                 dialogPane.getStyleClass().add("my-alert");
                 IsbnAlert.showAndWait();
                 return;
-            }
-            else{
-                //Alert errore invio
-                Alert IsbnAlert = new Alert(Alert.AlertType.INFORMATION);
-                IsbnAlert.setHeaderText("Errore nell'invio dell'avviso");
-                IsbnAlert.setContentText("L'utente potrebbe aver inserito una mail inesistente");
-                DialogPane dialogPane = IsbnAlert.getDialogPane();
-                dialogPane.getStylesheets().add(getClass().getResource("/CSS/StyleAccess.css").toExternalForm());
-                dialogPane.getStyleClass().add("my-alert");
-                IsbnAlert.showAndWait();
-                return;
-            }
+
         });        
         // Bottone sblocca utente
         Button btnAction = new Button("SBLOCCA");

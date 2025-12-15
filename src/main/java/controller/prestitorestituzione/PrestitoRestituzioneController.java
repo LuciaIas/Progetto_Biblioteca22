@@ -385,7 +385,7 @@ private void aggiungiRigaPrestito(String titoloLibro, String isbn, String nomeUt
             for(Prestito p1: prestiti)
                 if(p1.getIsbn().equals(isbn) && p1.getMatricola().equals(matricola))
                     p = p1;           
-            if(EmailInvia.inviaAvviso(u.getMail(), titoloLibro, u.getNome(), u.getCognome(),p.getInizio_prestito())){            
+            EmailInvia.inviaAvviso(u.getMail(), titoloLibro, u.getNome(), u.getCognome(),p.getInizio_prestito());          
                 Alert IsbnAlert = new Alert(Alert.AlertType.INFORMATION);
                 IsbnAlert.setHeaderText("Avviso inviato");
                 IsbnAlert.setContentText("Il sistema ha inviato un email all'utente");               
@@ -394,16 +394,7 @@ private void aggiungiRigaPrestito(String titoloLibro, String isbn, String nomeUt
                 dialogPane.getStyleClass().add("my-alert");                
                 IsbnAlert.showAndWait();
                 return;
-            }else{            
-                Alert IsbnAlert = new Alert(Alert.AlertType.INFORMATION);
-                IsbnAlert.setHeaderText("Errore nell'invio dell'avviso");
-                IsbnAlert.setContentText("L'utente potrebbe aver inserito una mail inesistente");               
-                DialogPane dialogPane = IsbnAlert.getDialogPane();
-                dialogPane.getStylesheets().add(getClass().getResource("/CSS/StyleAccess.css").toExternalForm());       
-                dialogPane.getStyleClass().add("my-alert");                
-                IsbnAlert.showAndWait();
-                return; 
-            }        
+       
         });    
         actionsBox.getChildren().add(btnMail);
     }  
