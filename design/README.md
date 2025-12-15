@@ -1,4 +1,4 @@
-La cartella "design" contiene il Documento di Progettazione per il sistema di gestione della biblioteca universitaria.
+La cartella "design" contiene la documentazione sul design del sistema di gestione della biblioteca universitaria.
 
 Contenuto cartella:
 
