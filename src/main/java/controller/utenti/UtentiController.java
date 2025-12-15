@@ -10,6 +10,7 @@ import model.servizi.DataBase;
 import model.dataclass.Utente;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.fxml.FXML;
@@ -20,6 +21,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
@@ -312,15 +314,30 @@ public class UtentiController {
         btnDelete.setTooltip(new Tooltip("Elimina"));
         btnDelete.setTooltip(tt);
         btnDelete.setOnAction(e -> { 
-            DataBase.rimuoviUtente(matricola);
-            Alert IsbnAlert = new Alert(Alert.AlertType.INFORMATION);
+            
+            
+                        DataBase.rimuoviUtente(matricola);
+                Alert IsbnAlert = new Alert(Alert.AlertType.CONFIRMATION);
                 IsbnAlert.setHeaderText("Operazione eseguita");
                 IsbnAlert.setContentText("Utente rimosso");
                 DialogPane dialogPane = IsbnAlert.getDialogPane();
                 dialogPane.getStylesheets().add(getClass().getResource("/CSS/StyleAccess.css").toExternalForm());
                 dialogPane.getStyleClass().add("my-alert");       
-                IsbnAlert.showAndWait(); 
-            updateUtentiList(DataBase.getUtenti());           
+                
+                 Optional<ButtonType> result = IsbnAlert.showAndWait();
+            if (result.isPresent() && result.get() == ButtonType.OK) {
+            
+            
+            DataBase.rimuoviUtente(matricola);
+            Alert IsbnAlert1 = new Alert(Alert.AlertType.INFORMATION);
+                IsbnAlert1.setHeaderText("Operazione eseguita");
+                IsbnAlert1.setContentText("Utente rimosso");
+                DialogPane dialogPane1 = IsbnAlert1.getDialogPane();
+                dialogPane1.getStylesheets().add(getClass().getResource("/CSS/StyleAccess.css").toExternalForm());
+                dialogPane1.getStyleClass().add("my-alert");       
+                IsbnAlert1.showAndWait(); 
+            updateUtentiList(DataBase.getUtenti());    
+            }
         });
         // Bottone Blocca/Sblocca
         Button btnAction = new Button(isBlacklisted ? "SBLOCCA" : "BLOCCA");
