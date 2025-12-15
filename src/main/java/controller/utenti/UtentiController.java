@@ -269,17 +269,13 @@ public class UtentiController {
         boxMatricola.setPrefWidth(150);       
         Label lblMatTitle = new Label("   MATRICOLA");
         lblMatTitle.setStyle("-fx-text-fill: #7f8fa6; -fx-font-size: 10px; -fx-font-weight: bold;");      
-
         TextField lblMatValue = new TextField(matricola);
-
         lblMatValue.setEditable(false);lblMatValue.setStyle(
         "-fx-background-color: transparent; " +
-
         "-fx-font-family: 'Consolas', 'Monospaced'; " + // Font da programmatore
         "-fx-font-weight: bold; " +              // Grassetto
         "-fx-focus-color: transparent;"                    
         );
-
         //lblMatValue.setStyle("-fx-text-fill: #2d3436; -fx-font-weight: bold;");      
         boxMatricola.getChildren().addAll(lblMatTitle, lblMatValue);
         //SPAZIATORE (Pane vuoto che spinge tutto a destra)
@@ -313,21 +309,16 @@ public class UtentiController {
         Tooltip tt= new Tooltip("Elimina");
         btnDelete.setTooltip(new Tooltip("Elimina"));
         btnDelete.setTooltip(tt);
-        btnDelete.setOnAction(e -> { 
-            
-            
-                        DataBase.rimuoviUtente(matricola);
+        btnDelete.setOnAction(e -> {        
+                DataBase.rimuoviUtente(matricola);
                 Alert IsbnAlert = new Alert(Alert.AlertType.CONFIRMATION);
                 IsbnAlert.setHeaderText("Operazione eseguita");
                 IsbnAlert.setContentText("Utente rimosso");
                 DialogPane dialogPane = IsbnAlert.getDialogPane();
                 dialogPane.getStylesheets().add(getClass().getResource("/CSS/StyleAccess.css").toExternalForm());
-                dialogPane.getStyleClass().add("my-alert");       
-                
+                dialogPane.getStyleClass().add("my-alert");                      
                  Optional<ButtonType> result = IsbnAlert.showAndWait();
-            if (result.isPresent() && result.get() == ButtonType.OK) {
-            
-            
+            if (result.isPresent() && result.get() == ButtonType.OK) {                   
             DataBase.rimuoviUtente(matricola);
             Alert IsbnAlert1 = new Alert(Alert.AlertType.INFORMATION);
                 IsbnAlert1.setHeaderText("Operazione eseguita");

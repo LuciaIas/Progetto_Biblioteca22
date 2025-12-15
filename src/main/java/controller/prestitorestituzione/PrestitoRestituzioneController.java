@@ -394,7 +394,6 @@ private void aggiungiRigaPrestito(String titoloLibro, String isbn, String nomeUt
                 dialogPane.getStyleClass().add("my-alert");                
                 IsbnAlert.showAndWait();
                 return;
-       
         });    
         actionsBox.getChildren().add(btnMail);
     }  

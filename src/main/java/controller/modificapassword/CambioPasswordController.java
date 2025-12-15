@@ -110,8 +110,6 @@ public class CambioPasswordController {
                     PreparedStatement stat = conn.prepareStatement(query);           
                      rs = stat.executeQuery();           
                      rs.next();
-
-            
                 // Aggiorno password nel database     
                 DataBase.rimuoviBibliotecario();
                 DataBase.inserisciBibliotecario(pass,rs.getString(1));

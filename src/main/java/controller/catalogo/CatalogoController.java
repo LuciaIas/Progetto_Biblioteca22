@@ -122,38 +122,26 @@ public class CatalogoController {
            }
             // Cerco per titolo
             for(Libro l1 : DataBase.getLibriByTitolo(text))
-                libri.aggiungiLibro(l1);            
-         
-            
+                libri.aggiungiLibro(l1);                  
             String[] nomi = text.split(" ");
-            if(nomi.length>1){
-            
-                for(Libro li1 : DataBase.getCatalogo().getLibri()){
-                
+            if(nomi.length>1){            
+                for(Libro li1 : DataBase.getCatalogo().getLibri()){                
                     for(Autore aut : li1.getAutori())
                         if( (aut.getNome().equalsIgnoreCase(nomi[0]) && aut.getCognome().equalsIgnoreCase(nomi[1]) )  || (aut.getNome().equalsIgnoreCase(nomi[1]) && aut.getCognome().equalsIgnoreCase(nomi[0]) ) )
                                 libri.aggiungiLibro(li1);
-                }
-            
-            
+                }                     
             }
             ArrayList<String> isbn_cattivi = new ArrayList<>();
             ArrayList<Libro> lista_Finale = new ArrayList<>();
             for(Libro lib: libri.getLibri()){
                 if( ! isbn_cattivi.contains(lib.getIsbn()))
                 lista_Finale.add(lib);
-                isbn_cattivi.add(lib.getIsbn());
-       
-                    
-                
-                
+                isbn_cattivi.add(lib.getIsbn()); 
             }
             Catalogo cat_finale = new Catalogo();
             for(Libro libh : lista_Finale)
-                cat_finale.aggiungiLibro(libh);
-            
-            updateCatalogo(cat_finale);
-            
+                cat_finale.aggiungiLibro(libh);            
+            updateCatalogo(cat_finale);            
     }
         
     

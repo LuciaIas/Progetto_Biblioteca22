@@ -26,7 +26,6 @@
             <Label fx:id="ResendLabel" layoutX="255.0" layoutY="180.0" styleClass="label-link" text="Invia di nuovo" underline="true" />           
             <Button fx:id="VerifyButton" layoutX="100.0" layoutY="230.0" mnemonicParsing="false" prefWidth="200.0" styleClass="button-primary" text="VERIFICA CODICE" />
          </children>
-      </Pane>
-      
+      </Pane>   
    </children>
 </Pane>
