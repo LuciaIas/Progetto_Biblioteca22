@@ -110,7 +110,6 @@ public class EmailInvia {
      * @param nome nome del destinatario
      * @param cognome cognome del destinatario
      * @param inizioPrestito data di inizio prestito
-     * @return true se l'invio è stato avviato correttamente, false altrimenti
      */
     public static void inviaAvviso(String recipientEmail,String titolo,String nome,String cognome,LocalDate inizioPrestito){        
        Thread t = new Thread(() -> {
