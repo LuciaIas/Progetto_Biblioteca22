@@ -316,7 +316,10 @@ public class CatalogoController {
     lblIsbn.setAlignment(Pos.CENTER);
     VBox mainContainer = new VBox(10);
     mainContainer.setAlignment(Pos.TOP_CENTER);
-    mainContainer.getChildren().addAll(bookStack, lblTitolo, lblIsbn);    
+    if(libro.getIsbn()!=null)
+    mainContainer.getChildren().addAll(bookStack, lblTitolo, lblIsbn); 
+    else
+        mainContainer.getChildren().addAll(bookStack, lblTitolo); 
     // ANIMAZIONI (Applicate al mainContainer per evitare sovrapposizioni)
     Duration speed = Duration.millis(300);
     // Zoom su TUTTA la card (così il titolo non viene coperto)

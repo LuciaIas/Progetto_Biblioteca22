@@ -174,7 +174,7 @@ public class UtentiControllerTest extends ApplicationTest {
     public void testEliminaUtente() throws SQLException {            
         Node btnElimina = lookup("🗑").query(); 
         clickOn(btnElimina);        
-        verifyThat("Operazione eseguita", isVisible()); 
+        verifyThat("Messaggio di sicurezza", isVisible()); 
         clickOn("OK"); 
         sleep(200);
         verifyThat("Operazione eseguita", isVisible()); 

@@ -277,7 +277,7 @@ private void aggiungiRigaPrestito(String titoloLibro, String isbn, String nomeUt
             rowStyle = "loan-row-late";
             iconStyle = "icon-container-red";
             tagStyle = "tag-danger";
-            iconText = "⚠️";
+            iconText = "⚠";
             statoText = "In Ritardo";
             break;    
         case PROROGATO:
@@ -337,7 +337,7 @@ private void aggiungiRigaPrestito(String titoloLibro, String isbn, String nomeUt
     VBox boxData = new VBox();
     boxData.setAlignment(Pos.CENTER_LEFT);
     boxData.setPrefWidth(150);
-    Label lblScadenzaTitle = new Label(statoEnum == Stato.RESTITUITO ? "SCADE IL" : "SCADENZA");
+    Label lblScadenzaTitle = new Label(statoEnum == Stato.RESTITUITO ? "SCADEVA IL" : "SCADENZA");
     lblScadenzaTitle.setStyle("-fx-text-fill: #7f8fa6; -fx-font-size: 10px; -fx-font-weight: bold;");
     Label lblData = new Label(dataScadenza);    
     lblData.setStyle(statoEnum == Stato.IN_RITARDO ? "-fx-text-fill: #c0392b; -fx-font-weight: 900;" : "-fx-text-fill: #2d3436; -fx-font-weight: bold;");
@@ -346,8 +346,12 @@ private void aggiungiRigaPrestito(String titoloLibro, String isbn, String nomeUt
     HBox.setHgrow(spacer, Priority.ALWAYS);  
     Label lblStato = new Label(statoText);
     lblStato.getStyleClass().add(tagStyle);
-    HBox actionsBox = new HBox(6);
-    actionsBox.setAlignment(Pos.CENTER_RIGHT);
+    HBox actionsBox = new HBox(1);
+    actionsBox.setAlignment(Pos.CENTER_RIGHT);if(statoEnum == Stato.RESTITUITO){ 
+        Label lblDataRestituzione = new Label("RESTITUITO IL\n  "+ prest.getRestituzione());
+        lblDataRestituzione.getStyleClass().add(tagStyle);
+        actionsBox.getChildren().add(lblDataRestituzione);
+    }
     // Pulsante proroga se necessario
      if (statoEnum != Stato.RESTITUITO && LocalDate.now().isAfter(prest.getData_scadenza().minusDays(8))) {       
         Button btnProroga = new Button("⏳"); 

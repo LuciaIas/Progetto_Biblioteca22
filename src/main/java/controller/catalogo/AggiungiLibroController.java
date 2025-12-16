@@ -186,7 +186,8 @@ public class AggiungiLibroController {
                 String cognome = parti[1];
                 if(nome.equals("") & cognome.equals("")) continue;                
                 Autore a = new Autore(nome,cognome,0,null);
-                a.setId(model.servizi.DataBase.getNum_Autori()+1);
+                ArrayList<Autore> autoriii  = DataBase.getAutori();
+                a.setId(autoriii.get(autoriii.size()-1).getId()+1);
                 model.servizi.DataBase.aggiungiAutore(a);
                 autori.add(a);        
                 }

@@ -186,7 +186,7 @@ public class ModificaLibroController {
                 if(nome.equals("") & cognome.equals("")) continue;               
                 Autore a = new Autore(nome,cognome,0,null);
                 ArrayList<Autore> autoriii  = DataBase.getAutori();
-                a.setId(autoriii.get(autoriii.size()-1).getId());
+                a.setId(autoriii.get(autoriii.size()-1).getId()+1);
                 model.servizi.DataBase.aggiungiAutore(a);
                 autori.add(a);
                 }               

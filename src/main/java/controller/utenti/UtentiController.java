@@ -312,8 +312,8 @@ public class UtentiController {
         btnDelete.setOnAction(e -> {        
                 DataBase.rimuoviUtente(matricola);
                 Alert IsbnAlert = new Alert(Alert.AlertType.CONFIRMATION);
-                IsbnAlert.setHeaderText("Operazione eseguita");
-                IsbnAlert.setContentText("Utente rimosso");
+                IsbnAlert.setHeaderText("Messaggio di sicurezza");
+                IsbnAlert.setContentText("Sei sicuro di voler rimuovere l'utente "+nome+" "+cognome);
                 DialogPane dialogPane = IsbnAlert.getDialogPane();
                 dialogPane.getStylesheets().add(getClass().getResource("/CSS/StyleAccess.css").toExternalForm());
                 dialogPane.getStyleClass().add("my-alert");                      
