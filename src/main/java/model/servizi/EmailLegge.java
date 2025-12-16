@@ -96,4 +96,4 @@ public class EmailLegge {
     }  
     return listaEmail;
 }
-}
+} //cya
